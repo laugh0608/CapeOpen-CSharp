@@ -157,7 +157,7 @@ this->Add(newList[i]);
 [
     Serializable,
     System.Runtime.InteropServices.ComVisibleAttribute(true),
-    System.Runtime.InteropServices.GuidAttribute(COGuids.CapeValidationStatus_IID)
+    System.Runtime.InteropServices.GuidAttribute(CapeOpenGuids.CapeValidationStatus_IID)
 ]
 public enum CapeValidationStatus
 {
@@ -469,7 +469,7 @@ interface ICapeIdentificationEvents
 /// </remarks>
 [System.Runtime.InteropServices.ComImport()]
 [System.Runtime.InteropServices.ComVisibleAttribute(true)]
-[System.Runtime.InteropServices.GuidAttribute(COGuids.CapeIdentification_IID)]
+[System.Runtime.InteropServices.GuidAttribute(CapeOpenGuids.CapeIdentification_IID)]
 [System.ComponentModel.DescriptionAttribute("CapeIdentification Interface")]
 public interface ICapeIdentification
 {
@@ -912,7 +912,7 @@ abstract public class CapeIdentification : //System.ComponentModel.Component,
 /// </remarks>
 [System.Runtime.InteropServices.ComImport()]
 [System.Runtime.InteropServices.ComVisibleAttribute(false)]
-[System.Runtime.InteropServices.GuidAttribute(COGuids.ICapeCollection_IID)]
+[System.Runtime.InteropServices.GuidAttribute(CapeOpenGuids.ICapeCollection_IID)]
 [System.ComponentModel.DescriptionAttribute("ICapeCollection Interface")]
 interface ICapeCollection
 {
@@ -1128,7 +1128,7 @@ interface ICapeCollection
 /// </remarks>
 [System.Runtime.InteropServices.ComImport()]
 [System.Runtime.InteropServices.ComVisibleAttribute(false)]
-[System.Runtime.InteropServices.Guid(COGuids.ICapeUtilities_IID)]
+[System.Runtime.InteropServices.Guid(CapeOpenGuids.ICapeUtilities_IID)]
 [System.ComponentModel.DescriptionAttribute("ICapeUtilities Interface")]
 interface ICapeUtilitiesCOM
 {

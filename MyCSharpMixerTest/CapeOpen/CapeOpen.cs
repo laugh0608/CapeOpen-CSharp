@@ -196,7 +196,7 @@ public class CapeUnitOperationAttribute : Attribute
     }
 
     /// <summary>获取是否是单元操作对象值</summary>
-    /// <remarks>该属性表示对象是否使用 CAPE-OPEN Unti 操作接口。</remarks>
+    /// <remarks>该属性表示对象是否使用 CAPE-OPEN Unit 操作接口。</remarks>
     /// <value>布尔值，表示 CAPE-OPEN 组件是否为单元操作。</value>
     public bool IsUnit { get; }
 }
@@ -302,36 +302,3 @@ public class CapeSupportsThermodynamics11Attribute : Attribute
     /// <value>是否支持热力学 1.1 版本的布尔值</value>
     public bool Supported { get; }
 }
-
-// 原始相关信息：
-/*
-[odl,uuid(B777A1BD-0C88-11D3-822E-00C04F4F66C9),version(20.0),
-helpstring("IATCapeXRealParameterSpec Interface"),
-dual,oleautomation]
-interface IATCapeXRealParameterSpec : IDispatch {
-[id(0x60040003), propget, helpstring(" Provide the Aspen Plus display units for this parameter.")]
-HRESULT DisplayUnits([out, retval] BSTR* bsUOM);
-};
-
-typedef [version(1.0)]
-enum {
-ErrorSeverityTerminal = 0,
-ErrorSeveritySevere = 1,
-ErrorSeverityError = 2,
-ErrorSeverityWarning = 3
-} __MIDL___MIDL_itf_AspenCapeX_0244_0001;
-
-[odl,uuid(B777A1B9-0C88-11D3-822E-00C04F4F66C9),version(1.0),
-hidden,dual,nonextensible,oleautomation]
-interface IATCapeXDiagnostic : IDispatch {
-[id(0x60040000), helpstring("Print a message to the history device.")]
-HRESULT SendMsgToHistory([in] BSTR message);
-[id(0x60040001), helpstring("Print a message to the terminal device.")]
-HRESULT SendMsgToTerminal([in] BSTR message);
-[id(0x60040002), helpstring("Signal a simulation error.")]
-HRESULT RaiseError(
-[in] ErrorSeverity severity,
-[in] BSTR context,
-[in] BSTR message);
-}
-*/
