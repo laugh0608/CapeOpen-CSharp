@@ -303,16 +303,11 @@ public class CapeSupportsThermodynamics11Attribute : Attribute
     public bool Supported { get; }
 }
 
-// 反编译相关信息：
+// 原始相关信息：
 /*
-[
-odl,
-uuid(B777A1BD-0C88-11D3-822E-00C04F4F66C9),
-version(20.0),
+[odl,uuid(B777A1BD-0C88-11D3-822E-00C04F4F66C9),version(20.0),
 helpstring("IATCapeXRealParameterSpec Interface"),
-dual,
-oleautomation
-]
+dual,oleautomation]
 interface IATCapeXRealParameterSpec : IDispatch {
 [id(0x60040003), propget, helpstring(" Provide the Aspen Plus display units for this parameter.")]
 HRESULT DisplayUnits([out, retval] BSTR* bsUOM);
@@ -326,15 +321,8 @@ ErrorSeverityError = 2,
 ErrorSeverityWarning = 3
 } __MIDL___MIDL_itf_AspenCapeX_0244_0001;
 
-[
-odl,
-uuid(B777A1B9-0C88-11D3-822E-00C04F4F66C9),
-version(1.0),
-hidden,
-dual,
-nonextensible,
-oleautomation
-]
+[odl,uuid(B777A1B9-0C88-11D3-822E-00C04F4F66C9),version(1.0),
+hidden,dual,nonextensible,oleautomation]
 interface IATCapeXDiagnostic : IDispatch {
 [id(0x60040000), helpstring("Print a message to the history device.")]
 HRESULT SendMsgToHistory([in] BSTR message);
@@ -345,5 +333,5 @@ HRESULT RaiseError(
 [in] ErrorSeverity severity,
 [in] BSTR context,
 [in] BSTR message);
-};
+}
 */
