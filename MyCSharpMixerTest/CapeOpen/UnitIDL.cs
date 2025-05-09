@@ -550,86 +550,49 @@ public interface ICapeUnitPort
     [DispId(2), Description("Direction of port, e.g. input, output or unspecified")]
     CapePortDirection direction { get; }
 
-    /// <summary>
-    ///	Returns to the client the object that is connected to this port.
-    /// </summary>
-    /// <remarks>
-    /// Returns the object that is connected to the Port. A client is provided with the 
-    /// Material, Energy or Information object that was previously connected to the Port, 
-    /// using the Connect method.
-    /// </remarks>
+    /// <summary>Returns to the client the object that is connected to this port.</summary>
+    /// <remarks>返回连接到端口的对象。客户端使用 Connect 方法提供先前已连接到端口的材料、能量或信息对象。</remarks>
     /// <value>The object connected to the port.</value>
     /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
     /// <exception cref = "ECapeFailedInitialisation">ECapeFailedInitialisation</exception>
-    [DispId(3),
-     Description(
-         "gets the objet connected to the port, e.g. material, energy or information")]
+    [DispId(3), Description(
+         "Gets the objet connected to the port, e.g. material, energy or information")]
     object connectedObject
     {
-        [return: System.Runtime.InteropServices.MarshalAs(System.Runtime.InteropServices.UnmanagedType.IDispatch)]
-        get;
+        [return: MarshalAs(UnmanagedType.IDispatch)] get;
     }
 
-    /// <summary>
-    ///	Connects an object to the port. For a material port it must 
-    /// be an object implementing the ICapeThermoMaterialObject interface, 
-    /// for Energy and Information ports it must be an object implementing 
-    /// the ICapeParameter interface. 
-    /// </summary>
-    /// <remarks>
-    /// Method used by clients, when they request that a Port connect itself with the object 
-    /// that is passed in as argument of the method. Probably, before accepting the connection, 
-    /// a Port will check that the Object sent as argument is of the expected type and 
-    /// according to the value of its attribute portType.
-    /// </remarks>
+    /// <summary>将对象连接到端口。对于材料端口，它必须是一个实现 ICapeThermoMaterialObject 接口的对象，
+    /// 对于能源和信息端口，它必须是一个实现 ICapeParameter 接口的对象。</summary>
+    /// <remarks>客户端使用的方法，当它们请求一个端口与作为方法参数传递的对象连接时使用。很可能在接收连接之前，
+    /// 端口会检查作为参数发送的对象是否为其预期类型，并根据其属性 portType 的值。</remarks>
     /// <param name = "objectToConnect">The object to connect to the port.</param>
     /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
     /// <exception cref = "ECapeInvalidArgument">To be used when an invalid argument value is passed, for example, an unrecognised Compound identifier or UNDEFINED for the prop's argument.</exception>
-    [DispId(4),
-     Description(
-         "connects the port to the object sent as argument, e.g. material, energy or information")]
-    void Connect(
-        [System.Runtime.InteropServices.MarshalAs(System.Runtime.InteropServices.UnmanagedType.IDispatch)]
-        object objectToConnect);
+    [DispId(4), Description(
+         "Connects the port to the object sent as argument, e.g. material, energy or information")]
+    void Connect( [MarshalAs(UnmanagedType.IDispatch)] object objectToConnect);
 
-    /// <summary>
-    ///	Disconnects whatever object is connected to this port.
-    /// </summary>
-    /// <remarks>
-    /// <para>Disconnects the port from whichever object is connected to it.</para>
-    /// <para>There are no input or output arguments for this method.</para>
-    /// </remarks>
+    /// <summary>断开连接到该端口的任何对象。</summary>
+    /// <remarks>Disconnects the port from whichever object is connected to it.
+    /// There are no input or output arguments for this method.</remarks>
     /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
-    [DispId(5),
-     Description("disconnects the port")]
+    [DispId(5), Description("Disconnects the port")]
     void Disconnect();
-};
+}
 
-/// <summary>
-/// An object was connected to the port.
-/// </summary>
-/// <remarks>
-/// An object was connected to the port.
-/// </remarks>
+/// <summary>对象连接到端口。</summary>
 [ComVisible(true)]
 [Guid("DC735166-8008-4B39-BE1C-6E94A723AD65")]
 [Description("PortConnectedEventArgs Interface")]
-interface IPortConnectedEventArgs
+internal interface IPortConnectedEventArgs
 {
-    /// <summary>
-    /// The name of the port being connected.
-    /// </summary>
+    /// <summary>The name of the port being connected.</summary>
     string PortName { get; }
 };
 
-/// <summary>
-/// An object was connected to the port.
-/// </summary>
-/// <remarks>
-/// An object was connected to the port.
-/// </remarks>
-[Serializable]
-[ComVisible(true)]
+/// <summary>对象连接到端口。</summary>
+[Serializable, ComVisible(true)]
 [Guid("962B9FDE-842E-43F8-9280-41C5BF80DDEC")]
 [ClassInterface(ClassInterfaceType.None)]
 public class PortConnectedEventArgs : EventArgs,
@@ -637,49 +600,33 @@ public class PortConnectedEventArgs : EventArgs,
 {
     /// <summary>Creates an instance of the PortConnectedEventArgs class for the port.</summary>
     /// <remarks>You can use this constructor when raising the PortConnectedEventArgs at run time to  
-    /// inform the system that the port was connected.
-    /// </remarks>
+    /// inform the system that the port was connected.</remarks>
     public PortConnectedEventArgs(string portName)
     {
         PortName = portName;
     }
 
-    /// <summary>
-    /// The name of the port being connected.</summary>
+    /// <summary>The name of the port being connected.</summary>
     /// <value>The name of the port being connected.</value>
     public string PortName { get; }
-};
+}
 
-/// <summary>
-/// Represents the method that will handle disconnecting an object from a unit port.
-/// </summary>
+/// <summary>表示将对象从单元端口断开连接的方法。</summary>
 [ComVisible(false)]
 public delegate void PortDisconnectedHandler(object sender, PortDisconnectedEventArgs args);
 
-/// <summary>
-/// The port was disconnected.
-/// </summary>
-/// <remarks>
-/// The port was disconnected.
-/// </remarks>
+/// <summary>端口断开连接</summary>
 [ComVisible(true)]
 [Guid("5EFDEE16-7858-4119-B8BB-7394FFBCC02D")]
 [Description("PortDisconnectedEventArgs Interface")]
-interface IPortDisconnectedEventArgs
+internal interface IPortDisconnectedEventArgs
 {
-    /// <summary>
-    /// The name of the port being disconnected.</summary>
+    /// <summary>The name of the port being disconnected.</summary>
     string PortName { get; }
-};
+}
 
-/// <summary>
-/// The port was disconnected.
-/// </summary>
-/// <remarks>
-/// The port was disconnected.
-/// </remarks>
-[Serializable]
-[ComVisible(true)]
+/// <summary>端口断开连接</summary>
+[Serializable, ComVisible(true)]
 [Guid("693F33AA-EE4A-4CDF-9BA1-8889086BC8AB")]
 [ClassInterface(ClassInterfaceType.None)]
 public class PortDisconnectedEventArgs : EventArgs,
@@ -687,60 +634,35 @@ public class PortDisconnectedEventArgs : EventArgs,
 {
     /// <summary>Creates an instance of the PortDisconnectedEventArgs class for the port.</summary>
     /// <remarks>You can use this constructor when raising the PortDisconnectedEventArgs at run time to  
-    /// inform the system that the port was disconnected.
-    /// </remarks>
+    /// inform the system that the port was disconnected.</remarks>
     public PortDisconnectedEventArgs(string portName)
     {
         PortName = portName;
     }
 
-    /// <summary>
-    /// The name of the port being disconnected.</summary>
+    /// <summary>The name of the port being disconnected.</summary>
     /// <value>The name of the port being disconnected.</value>
     public string PortName { get; }
-};
+}
 
-/// <summary>
-///	Port variables for equation-oriented simulators.
-/// </summary>
-/// <remarks>
-/// This interface is optional and would be implemented by a port object. It is intended 
-/// to allow a port to describe which Equation-oriented variables are associated with it and 
-/// should only be implemented for the ports contained in a unit operation which supports the
-/// ICapeNumericESO interface described in “CAPE-OPEN Interface Specification – Numerical 
-/// Solvers”.
-/// </remarks>
-[System.Runtime.InteropServices.ComImport()]
-[ComVisible(false)]
-[System.Runtime.InteropServices.Guid(CapeOpenGuids.ICapeUnitPortVariables_IID)]
+/// <summary>面向联立方程 EO 的模拟器的端口变量。</summary>
+/// <remarks>这个接口是可选的，将由端口对象实现。它旨在允许端口描述哪些面向方程的变量与之关联，
+/// 并且仅应实现支持 “CAPE-OPEN 接口规范 - 数值求解器”中描述的 ICapeNumericESO 接口的单元操作中的端口。</remarks>
+[ComImport, ComVisible(false)]
+[Guid(CapeOpenGuids.ICapeUnitPortVariables_IID)]
 [Description("ICapeUnitPortVariables Interface")]
 public interface ICapeUnitPortVariables
 {
-    /// <summary>
-    ///	The position of a port variable in the EO model.
-    /// </summary>
-    /// <remarks>
-    ///	Gets the position of a port variable in the EO model - used to 
-    /// correctly build the equations representing a connection to this port.
-    ///  Variable type can be - flow rate, temperature, pressure, 
-    /// specificEnthalpy, VaporFraction and for Vapour fraction component 
-    /// name must also be specified. 
-    /// </remarks>
+    /// <summary>端口变量在 EO 模型中的位置。</summary>
+    /// <remarks>获取 EO 模型中端口变量的位置 - 用于正确构建表示与该端口连接的方程。
+    /// 变量类型可以是 - 流速、温度、压力、比焓、蒸汽分率和蒸汽分率组件名称也必须指定。 </remarks>
     /// <param name = "Variable_type">The Type of the variable.</param>
     /// <param name = "Component">The component of the variable.</param>
     /// <value>The position of the variable.</value>
-    [DispId(1),
-     Description("Return index of port variable in EO Model given its type")]
+    [DispId(1), Description("Return index of port variable in EO Model given its type")]
     int Variable(string Variable_type, string Component);
 
-    /// <summary>
-    /// Sets the position of port variables: this should ultimately 
-    /// be a private member function.
-    /// </summary>
-    /// <remarks>
-    /// Sets the position of port variables: this should ultimately 
-    /// be a private member function.
-    /// </remarks>
+    /// <summary>设置端口变量的位置：这最终应该是一个私有成员函数。</summary>
     /// <param name = "Variable_type">The Type of the variable.</param>
     /// <param name = "Component">The component of the variable.</param>
     /// <param name = "index">The index of the variable.</param>
@@ -748,261 +670,3 @@ public interface ICapeUnitPortVariables
      Description("Set index of port variable in EO model given its type")]
     void SetIndex(string Variable_type, string Component, int index);
 }
-
-// 旧版本接口，已弃用
-/*	[System.Runtime.InteropServices.ComImport()]
-    [ComVisible(false)]
-    [Guid(ICapeUnit_IID)]
-    public interface class ICapeUnit093
-    {
-        /// <summary>
-        /// Gets the collection of unit operation ports.
-        /// </summary>
-        /// <remarks>
-        /// <para>Return an interface to a collection containing the list of unit ports (e.g.
-        /// <see name = "ICapeCollection"/>).</para>
-        /// <para>Return the collection of unit ports (i.e. ICapeUnitCollection). These are
-        /// delivered as a collection of elements exposing the interfaces <see name = "ICapeUnitPort"/>
-        /// </para>
-        /// </remarks>
-        /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
-        /// <exception cref = "ECapeFailedInitialisation">ECapeFailedInitialisation</exception>
-        /// <exception cref = "ECapeBadInvOrder">ECapeBadInvOrder</exception>
-        [DispId(1), Description("Gets the whole list of ports")]
-        property Object^ ports
-        {
-            [returnvalue: System.Runtime.InteropServices.MarshalAs(System.Runtime.InteropServices.UnmanagedType.IDispatch)]
-            Object^ get();
-        };
-
-        /// <summary>
-        ///	Gets the component's collection of parameters.
-        /// </summary>
-        /// <remarks>
-        /// <para>Return the collection of Public Unit Parameters (i.e.
-        /// <see cref = "ICapeCollection"/>.</para>
-        /// <para>These are delivered as a collection of elements exposing the interface
-        /// <see cref = "ICapeParameter"/>. From there, the client could extract the
-        /// <see cref = "ICapeParameterSpec"/> interface or any of the typed
-        /// interfaces such as <see cref = "ICapeRealParameterSpec"/>, once the client
-        /// establishes that the Parameter is of type double.</para>
-        /// </remarks>
-        /// <value>The parameter collection of the unit operation.</value>
-        /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
-        /// <exception cref = "ECapeFailedInitialisation">ECapeFailedInitialisation</exception>
-        /// <exception cref = "ECapeNoImpl">ECapeNoImpl</exception>
-        [DispId(2)]
-        [Description("Gets the whole list of parameters")]
-        property Object^ parameters
-        {
-            [returnvalue: System.Runtime.InteropServices.MarshalAs(System.Runtime.InteropServices.UnmanagedType.IDispatch)]
-            Object^ get ();
-        };
-
-        /// <summary>
-        /// Gets the flag to indicate the unit operation's validation status
-        /// <see cref= "CapeValidationStatus">CapeValidationStatus</see>.
-        /// </summary>
-        /// <remarks>
-        /// <para>Get the flag that indicates whether the Flowsheet Unit is valid (e.g. some
-        /// parameter values have changed, but they have not been validated by using Validate).
-        /// It has three possible values:</para>
-        /// <para>   (i)   notValidated(CAPE_NOT_VALIDATED): The PMC's <c>Validate()</c>
-        /// method has not been called after the last time that its value had been
-        /// changed.</para>
-        /// <para>   (ii)  invalid(CAPE_INVALID): The last time that the PMC's
-        /// <c>Validate()</c> method was called it returned false.</para>
-        /// <para>   (iii) valid(CAPE_VALID): the last time that the PMC's
-        /// Validate() method was called it returned true.</para>
-        /// </remarks>
-        /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
-        /// <exception cref = "ECapeInvalidArgument">To be used when an invalid argument value is passed, for example, an unrecognised Compound identifier or UNDEFINED for the prop's argument.</exception>
-        [DispId(3), Description("Get the unit's validation status")]
-        property CapeValidationStatus ValStatus
-        {
-            CapeValidationStatus get();
-        };
-
-        /// <summary>
-        ///	Executes the necessary calculations involved in the unit operation model.
-        /// </summary>
-        /// <remarks>
-        /// <para>The Flowsheet Unit performs its calculation, that is, computes the variables
-        /// that are missing at this stage in the complete description of the input and output
-        /// streams and computes any public parameter value that needs to be displayed. Calculate
-        /// will be able to do progress monitoring and checks for interrupts as required using
-        /// the simulation context. At present, there are no standards agreed for this.</para>
-        /// <para>It is recommended that Flowsheet Units perform a suitable flash calculation on
-        /// all output streams. In some cases a Simulation Executive will be able to perform a
-        /// flash calculation but the writer of a Flowsheet Unit is in the best position to
-        /// decide the correct flash to use. </para>
-        /// <para>Before performing the calculation, this method should perform any final
-        /// validation tests that are required. For example, at this point the validity of
-        /// Material Objects connected to ports can be checked.</para>
-        /// <para>There are no input or output arguments for this method.</para>
-        /// </remarks>
-        /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
-        /// <exception cref = "ECapeBadInvOrder">ECapeBadInvOrder</exception>
-        /// <exception cref = "ECapeOutOfResources">ECapeOutOfResources</exception>
-        /// <exception cref = "ECapeTimeOut">ECapeTimeOut</exception>
-        /// <exception cref = "ECapeSolvingError">ECapeSolvingError</exception>
-        /// <exception cref = "ECapeLicenceError">ECapeLicenceError</exception>
-        [DispId(4), Description("Performs unit calculations")]
-        void Calculate();
-
-        /// <summary>
-        /// The unit operation is asked to read its persistent state, from the storage location it has previously chosen in Save.
-        /// </summary>
-        /// <remarks>
-        /// <para>The Flowsheet Unit is restored from a previously saved state. The [in] argument
-        /// identifies the location from which the Flowsheet Unit should read its data. Here, data
-        /// refers to whatever data the writer of the Flowsheet Unit chooses to save. This
-        /// location may bear no relation to any location to which data has previously been saved.
-        /// It can be a CapeString type, identifying a full path of an ASCII file, or it can be a
-        /// type CapeVariant, hosting a reference to any standard COM interface for persistence
-        /// such as IStorage or IStream.</para>
-        /// <para>It is strongly recommended that the IStorage, or IStream variations are not used
-        /// in a COM environment because a Flowsheet Unit written in Visual Basic (versions 6 and
-        /// lower) is not able to make use of an IStorage or IStream pointer. In a COM environment
-        /// the preferred solution is for the Flowsheet Unit and the COSE to support the standard
-        /// COM persistence interfaces and protocols. See section 5.2.8 for a discussion of this
-        /// recommendation.</para>
-        /// </remarks>
-        /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
-        /// <exception cref = "ECapeInvalidArgument">To be used when an invalid argument value is passed, for example, an unrecognised Compound identifier or UNDEFINED for the prop's argument.</exception>
-        /// <exception cref = "ECapePersistenceNotFound">ECapePersistenceNotFound</exception>
-        /// <exception cref = "ECapeIllegalAccess">ECapeIllegalAccess</exception>
-        /// <exception cref = "ECapeNoImpl">ECapeNoImpl</exception>
-        [DispId(5), Description("Recovers unit persistent state")]
-        void Restore(Object^ storage);
-
-        /// <summary>
-        /// The unit operation is asked to save its persistent state, in a given
-        /// location passed in as argument. This unit may choose to use that storage
-        /// (e.g. structured storage) or to use its own internal storage mechanism
-        /// (e.g. a plain ASCII text file). If the storage location is changed by
-        /// the unit, the new location is sent back to the client.
-        /// </summary>
-        /// <remarks>
-        /// <para>The Flowsheet Unit saves its private data in the location indicated by the
-        /// simulator (i.e. storage), that can be a given position in a structured document or a
-        /// file name (CapeString type). The Flowsheet Unit is free to use the storage mechanism
-        /// that the simulator provides, or to use its own internal mechanisms. A valid scenario
-        /// would be that the Flowsheet Unit checks the type of the storage parameter passed in,
-        /// accepting it if it is of type CapeString (e.g. an ASCII file name) or rejecting it if
-        /// it is of another type that the Flowsheet Unit does not handle. In the latter case, the
-        /// Flowsheet Unit may decide to create its own text file, save its data there, and send
-        /// back the full path of the file to the simulator (notice the [in, out] argument) which
-        /// stores that string along with its own simulation data.</para>
-        /// <para>It is recommended that in a COM implementation a component should support one
-        /// of the standard COM persistence methods in addition to this method. See section
-        /// 5.2.8 for a discussion of this recommendation.</para>
-        /// <para>A Flowsheet Unit must save its state completely so that the Restore can
-        /// recreate that state. Flowsheet Unit authors should not rely on Validate being called
-        /// after Restore. The same requirement applies when COM persistence methods are
-        /// implemented.</para>
-        /// </remarks>
-        /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
-        /// <exception cref = "ECapeInvalidArgument">To be used when an invalid argument value is passed, for example, an unrecognised Compound identifier or UNDEFINED for the prop's argument.</exception>
-        /// <exception cref = "ECapePersistenceNotFound">ECapePersistenceNotFound</exception>
-        /// <exception cref = "ECapeIllegalAccess">ECapeIllegalAccess</exception>
-        /// <exception cref = "ECapeNoImpl">ECapeNoImpl</exception>
-        [DispId(6), Description("Saves unit state")]
-        void Save(Object^ storage);
-
-        /// <summary>
-        /// The unit operation is asked to configure itself. Typically, some ports
-        /// and parameters are created here.
-        /// </summary>
-        /// <remarks>
-        /// <para>The Flowsheet Unit initialises itself. Any initialisation that could fail must
-        /// be placed here.</para>
-        /// <para>Initialize is guaranteed to be the first method called by the client. Initialise
-        /// has to be called once when the Flowsheet Unit is instantiated in a particular
-        /// flowsheet.</para>
-        /// <para>Note that the Initialise method is intended to implement software initialisation
-        /// not to perform an initial solution of the Flowsheet Unit. It is expected that the
-        /// method would be used to create and configure ports and parameters and to define
-        /// default values for variables and parameters.</para>
-        /// <para>There are no input or output arguments for this method.</para>
-        /// </remarks>
-        /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
-        /// <exception cref = "ECapeLicenceError">ECapeLicenceError</exception>
-        /// <exception cref = "ECapeFailedInitialisation">ECapeFailedInitialisation</exception>
-        /// <exception cref = "ECapeOutOfResources">ECapeOutOfResources</exception>
-        [DispId(7), Description("Configuration has to take place here")]
-        void Initialize();
-
-        /// <summary>
-        ///	Clean-up tasks for the unit operation can be performed here. In
-        /// particular, references to parameters and objects connected to
-        /// ports are released here.
-        /// </summary>
-        /// <remarks>
-        /// <para>The Flowsheet Unit releases all of its allocated resources. This is called
-        /// before the object destructor. Terminate may check if the data has been saved and return an
-        /// error if not.</para>
-        /// <para>There are no input or output arguments for this method.</para>
-        /// </remarks>
-        /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
-        /// <exception cref = "ECapeBadInvOrder">ECapeBadInvOrder</exception>
-        [DispId(8), Description("Clean up has to take place here")]
-        void Terminate();
-
-        /// <summary>
-        ///	Validate the unit operation to verify that the parameters and ports are
-        /// all valid. If invalid, this method returns a message indicating the
-        /// reason that the unit is invalid.
-        /// </summary>
-        /// <remarks>
-        /// <para>Sets the flag that indicates whether the Flowsheet Unit is valid by validating
-        /// the ports and parameters of the Flowsheet Unit. For example, this method could check
-        /// that all mandatory ports have connections and that the values of all parameters are
-        /// within bounds.</para>
-        /// <para>Note that the Simulation Executive can call the Validate routine at any time,
-        /// in particular it may be called before the executive is ready to call the Calculate
-        /// method. This means that Material Objects connected to unit ports may not be correctly
-        /// configured when Validate is called. The recommended approach is for this method to
-        /// validate parameters and ports but not Material Object configuration. A second level
-        /// of validation to check Material Objects can be implemented as part of Calculate, when
-        /// it is reasonable to expect that the Material Objects connected to ports will be
-        /// correctly configured.</para>
-        /// </remarks>
-        /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
-        /// <exception cref = "ECapeBadCOParameter">ECapeBadCOParameter</exception>
-        /// <exception cref = "ECapeBadInvOrder">ECapeBadInvOrder</exception>
-        [DispId(9), Description("Validate the Unit"), returnvalue: System.Runtime.InteropServices.MarshalAs(System.Runtime.InteropServices.UnmanagedType.VariantBool)]
-        bool Validate(System.String^ %message);
-
-        /// <summary>
-        ///	Set the simulation context for the unit operation.
-        /// </summary>
-        /// <remarks>
-        /// <para>Allows the PME to convey the PMC a reference to the former’s
-        /// simulation  context. The simulation context will be PME objects which will
-        /// expose a given set of CO interfaces. Each of these interfaces will allow
-        /// the PMC to call back the PME in order to benefit from its exposed services
-        /// (such as creation of material templates, diagnostics or measurement unit
-        /// conversion). If the PMC does not support accessing the simulation context,
-        /// it is recommended to raise the ECapeNoImpl error.</para>
-        /// <para>Initially, this method was only present in the ICapeUnit interface.
-        /// Since ICapeUtilities.SetSimulationContext is now available for any kind of
-        /// PMC, ICapeUnit. SetSimulationContext is deprecated.</para>
-        /// </remarks>
-        /// <param name = "simContext">
-        /// The reference to the PME’s simulation context class. For the PMC to use
-        /// this class, this reference will have to be converted to each of the
-        /// defined CO Simulation Context interfaces.
-        /// </param>
-        /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
-        /// <exception cref = "ECapeFailedInitialisation">ECapeFailedInitialisation</exception>
-        /// <exception cref = "ECapeInvalidArgument">To be used when an invalid argument value is passed, for example, an unrecognised Compound identifier or UNDEFINED for the prop's argument.</exception>
-        /// <exception cref = "ECapeNoImpl">ECapeNoImpl</exception>
-        [DispId(11)]
-        [Description("Set the simulation context")]
-        property Object^ simulationContext
-        {
-            void set([System.Runtime.InteropServices.MarshalAs(System.Runtime.InteropServices.UnmanagedType.IDispatch)]Object^ simContext);
-        };
-    };
-*/
