@@ -1,10 +1,4 @@
-﻿//#pragma once
-//#ifndef _COGUIDS_IDL_
-//public const string  _COGUIDS_IDL_
-
-namespace CapeOpen;
-
-/* IMPORTANT NOTICE
+﻿/* IMPORTANT NOTICE
 (c) The CAPE-OPEN Laboratory Network, 2002.
 All rights are reserved unless specifically stated otherwise
 
@@ -15,6 +9,9 @@ This file can view properly with any basic editors and browsers (validation done
 */
 
 // This file was developed/modified by JEAN-PIERRE-BELAUD for CO-LaN organisation - March 2003
+// 大白萝卜重构于 2025.05.09，使用 Microsoft Visual Studio 2022 Preview 和 Rider 2024.3。
+
+namespace CapeOpen;
 
 class CapeOpenGuids
 {
