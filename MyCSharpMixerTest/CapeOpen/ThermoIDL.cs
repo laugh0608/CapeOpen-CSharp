@@ -33,7 +33,7 @@ namespace CapeOpen
     /// </remarks>
     [System.Runtime.InteropServices.ComImport()]
     [System.Runtime.InteropServices.ComVisibleAttribute(false)]
-    [System.Runtime.InteropServices.GuidAttribute(COGuids.ICapeThermoReliability_IID)]
+    [System.Runtime.InteropServices.GuidAttribute(CapeOpenGuids.ICapeThermoReliability_IID)]
     [System.ComponentModel.DescriptionAttribute("ICapeThermoReliability Interface")]
     public interface ICapeThermoReliability
     {
@@ -45,7 +45,7 @@ namespace CapeOpen
     /// </summary>
     [System.Runtime.InteropServices.ComImport()]
     [System.Runtime.InteropServices.ComVisibleAttribute(false)]
-    [System.Runtime.InteropServices.GuidAttribute(COGuids.ICapeThermoMaterialTemplate_IID)]
+    [System.Runtime.InteropServices.GuidAttribute(CapeOpenGuids.ICapeThermoMaterialTemplate_IID)]
     [System.ComponentModel.DescriptionAttribute("ICapeThermoMaterialTemplate Interface")]
     public interface ICapeThermoMaterialTemplate
     {
@@ -93,7 +93,7 @@ namespace CapeOpen
     /// </summary>
     [System.Runtime.InteropServices.ComImport()]
     [System.Runtime.InteropServices.ComVisibleAttribute(false)]
-    [System.Runtime.InteropServices.GuidAttribute(COGuids.ICapeThermoMaterialObject_IID)]
+    [System.Runtime.InteropServices.GuidAttribute(CapeOpenGuids.ICapeThermoMaterialObject_IID)]
     [System.ComponentModel.DescriptionAttribute("ICapeThermoMaterialObject Interface")]
     interface ICapeThermoMaterialObjectCOM
     {
@@ -965,7 +965,7 @@ namespace CapeOpen
     /// </remarks>
     [System.Runtime.InteropServices.ComImport()]
     [System.Runtime.InteropServices.ComVisibleAttribute(false)]
-    [System.Runtime.InteropServices.GuidAttribute(COGuids.ICapeThermoSystem_IID)]
+    [System.Runtime.InteropServices.GuidAttribute(CapeOpenGuids.ICapeThermoSystem_IID)]
     [System.ComponentModel.DescriptionAttribute("ICapeThermoSystem Interface")]
     interface ICapeThermoSystemCOM
     {
@@ -1479,7 +1479,7 @@ namespace CapeOpen
     /// </summary>
     [System.Runtime.InteropServices.ComImport()]
     [System.Runtime.InteropServices.ComVisibleAttribute(false)]
-    [System.Runtime.InteropServices.GuidAttribute(COGuids.ICapeThermoCalculationRoutine_IID)]
+    [System.Runtime.InteropServices.GuidAttribute(CapeOpenGuids.ICapeThermoCalculationRoutine_IID)]
     [System.ComponentModel.DescriptionAttribute("ICapeThermoCalculationRoutine Interface")]
     interface ICapeThermoCalculationRoutineCOM
     {
@@ -1613,7 +1613,7 @@ namespace CapeOpen
     /// </remarks>
     [System.Runtime.InteropServices.ComImport()]
     [System.Runtime.InteropServices.ComVisibleAttribute(false)]
-    [System.Runtime.InteropServices.GuidAttribute(COGuids.ICapeThermoPropertyPackage_IID)]
+    [System.Runtime.InteropServices.GuidAttribute(CapeOpenGuids.ICapeThermoPropertyPackage_IID)]
     [System.ComponentModel.DescriptionAttribute("ICapeThermoPropertyPackage Interface")]
     interface ICapeThermoPropertyPackageCOM
     {
@@ -1900,7 +1900,7 @@ namespace CapeOpen
     /// </summary>
     [System.Runtime.InteropServices.ComImport()]
     [System.Runtime.InteropServices.ComVisibleAttribute(false)]
-    [System.Runtime.InteropServices.GuidAttribute(COGuids.ICapeThermoEquilibriumServer_IID)]
+    [System.Runtime.InteropServices.GuidAttribute(CapeOpenGuids.ICapeThermoEquilibriumServer_IID)]
     [System.ComponentModel.DescriptionAttribute("ICapeThermoEquilibriumServer Interface")]
     public interface ICapeThermoEquilibriumServer
     {

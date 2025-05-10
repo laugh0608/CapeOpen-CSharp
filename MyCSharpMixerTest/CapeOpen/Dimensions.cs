@@ -8,7 +8,7 @@ namespace CapeOpen
 {
 
     /// <summary>
-    /// Provides information related to a unit of measure associated with a parameter.
+    /// 提供与参数相关联的测量单位的相关信息。
     /// </summary>
     /// <remarks>
     /// <para>The unit of maesure can be either an System Internation (SI) or customary unit. Each unit is assigned to a 

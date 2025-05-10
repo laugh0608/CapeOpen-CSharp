@@ -36,7 +36,7 @@ namespace CapeOpen {
 	/// </remarks>
 	[System.Runtime.InteropServices.ComImport()]
 	[System.Runtime.InteropServices.ComVisibleAttribute(false)]
-	[System.Runtime.InteropServices.Guid(COGuids.ICapeSimulationContext_IID)]
+	[System.Runtime.InteropServices.Guid(CapeOpenGuids.ICapeSimulationContext_IID)]
 	[System.ComponentModel.DescriptionAttribute("ICapeSimulation Context Interface")]
 	public interface ICapeSimulationContext
 	{
@@ -58,7 +58,7 @@ namespace CapeOpen {
 	/// </remarks>
 	[System.Runtime.InteropServices.ComImport()]
 	[System.Runtime.InteropServices.ComVisibleAttribute(false)]
-	[System.Runtime.InteropServices.Guid(COGuids.ICapeDiagnostic_IID)]
+	[System.Runtime.InteropServices.Guid(CapeOpenGuids.ICapeDiagnostic_IID)]
 	[System.ComponentModel.DescriptionAttribute("ICapeDiagnostic Interface")]
 	public interface ICapeDiagnostic
 	{
@@ -115,7 +115,7 @@ namespace CapeOpen {
 	/// </remarks>
 	[System.Runtime.InteropServices.ComImport()]
 	[System.Runtime.InteropServices.ComVisibleAttribute(false)]
-	[System.Runtime.InteropServices.Guid(COGuids.ICapeMaterialTemplateSystem_IID)]
+	[System.Runtime.InteropServices.Guid(CapeOpenGuids.ICapeMaterialTemplateSystem_IID)]
 	[System.ComponentModel.DescriptionAttribute("ICapeMaterialTemplateSystem Interface")]
 	public interface ICapeMaterialTemplateSystem
 	{
@@ -203,7 +203,7 @@ namespace CapeOpen {
 	/// </remarks>
 	[System.Runtime.InteropServices.ComImport()]
 	[System.Runtime.InteropServices.ComVisibleAttribute(false)]
-	[System.Runtime.InteropServices.Guid(COGuids.ICapeCOSEUtilities_IID)]
+	[System.Runtime.InteropServices.Guid(CapeOpenGuids.ICapeCOSEUtilities_IID)]
 	[System.ComponentModel.DescriptionAttribute("ICapeCOSEUtilities Interface")]
 	public interface ICapeCOSEUtilities
 	{
