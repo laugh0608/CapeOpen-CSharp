@@ -36,7 +36,7 @@ internal class PortCollectionTypeConverter : ExpandableObjectConverter
 [Serializable]
 [ComSourceInterfaces( typeof(ICapeIdentificationEvents) )]    // 和 , typeof(ICapeCollectionEvents)
 [ComVisible(true)]
-[Guid("1C5F7CC3-31B4-4d81-829F-3EB5D692F7BD")] // ICapeThermoMaterialObject_IID
+[Guid(CapeOpenGuids.PortCollectionIid)] // ICapeThermoMaterialObject_IID 1C5F7CC3-31B4-4d81-829F-3EB5D692F7BD
 [Description("")]
 // [TypeConverter(typeof(PortCollectionTypeConverter))]
 [ClassInterface(ClassInterfaceType.None)]
@@ -312,6 +312,6 @@ internal class PortCollectionPropertyDescriptor : PropertyDescriptor
 
     public override void SetValue(object component, object value)
     {
-        //this.collection[index] = value;
+        // this.collection[index] = value;
     }
 }

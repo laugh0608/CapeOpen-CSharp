@@ -147,7 +147,7 @@ class CapeOpenGuids
     public const string ICapeThermoCalculationRoutine_IID = "678c0991-7d66-11d2-a67d-00105a42887f";
     public const string ICapeThermoReliability_IID = "678c0992-7d66-11d2-a67d-00105a42887f";
     public const string ICapeThermoMaterialTemplate_IID = "678c0993-7d66-11d2-a67d-00105a42887f";
-    public const string ICapeThermoMaterialObject_IID = "277E2E39-70E7-4FBA-89C9-2A19B9D5E576"; // 原始值 678c0994-7d66-11d2-a67d-00105a42887f
+    public const string ICapeThermoMaterialObject_IID = "678c0994-7d66-11d2-a67d-00105a42887f";
     public const string ICapeThermoSystem_IID = "678c0995-7d66-11d2-a67d-00105a42887f";
     public const string ICapeThermoPropertyPackage_IID = "678c0996-7d66-11d2-a67d-00105a42887f";
 
@@ -295,4 +295,26 @@ class CapeOpenGuids
     public const string ICapePSP_IID = "F840ECA2-941B-4af7-84DB-47E2187430A2";
     public const string ICapePetroFractions_IID = "72A94DE9-9A69-4369-B508-C033CDFD4F81";
     public const string CapeCompoundType_IID = "8091E285-3CFA-4a41-A5C4-141D0D709D87";
+    
+    /**************************************
+     额外自定义补充的
+    **************************************/
+    public const string ECapeBadArgument093Iid = "678c0b16-7d66-11d2-a67d-00105a42887f";
+    public const string ECapeThermoPropertyNotAvailableIid = "678C09B6-7D66-11D2-A67D-00105A42887F";
+    public const string ECapeHessianInfoNotAvailableIid = "3FF0B24B-4299-4DAC-A46E-7843728AD205";
+    public const string ECapeOutsideSolverScopeIid = "678c0b0f-7d66-11d2-a67d-00105a42887f";
+    public const string ArrayParameterWrapperIid = "277E2E39-70E7-4FBA-89C9-2A19B9D5E576";
+    public const string PortCollectionIid = "1C5F7CC3-31B4-4d81-829F-3EB5D692F7BD";
+    public const string InUnitOperaValidatedEventArgsIid = "50A759AF-5E38-4399-9050-93F823E5A6E6";
+    public const string UnitOperaValidatedEventArgsIid = "9147E78B-29D6-4D91-956E-75D0FB90CEA7";
+    public const string InUnitOperaCalEventArgsIid = "DDCA3348-074C-4860-AD00-58386327D9AC";
+    public const string UnitOperaCalEventArgsIid = "7831C38B-A1C6-40C5-B9FC-DAC43426AAD4";
+    public const string InUnitOperaBeginCalEventArgsIid = "3E827FD8-5BDB-41E4-81D9-AC438BC9B957";
+    public const string UnitOperaBeginCalEventArgsIid = "763691E8-D792-4B97-A12A-D4AD7F66B5E4";
+    public const string InUnitOperaEndCalEventArgsIid = "951D755F-8831-4691-9B54-CC9935A5B7CC";
+    public const string UnitOperaEndCalEventArgsIid = "172F4D6E-65D1-4D9E-A275-7880FA3A40A5";
+    public const string InPortConnectedEventArgsIid = "DC735166-8008-4B39-BE1C-6E94A723AD65";
+    public const string PortConnectedEventArgsIid = "962B9FDE-842E-43F8-9280-41C5BF80DDEC";
+    public const string InPortDisconnectedEventArgsIid = "5EFDEE16-7858-4119-B8BB-7394FFBCC02D";
+    public const string PortDisconnectedEventArgsIid = "693F33AA-EE4A-4CDF-9BA1-8889086BC8AB";
 }

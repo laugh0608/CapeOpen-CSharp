@@ -12,8 +12,7 @@ internal class ArrayParameter { }
 [Serializable]
 [ComSourceInterfaces(typeof(IRealParameterSpecEvents))]
 [ComVisible(true)]
-// ICapeThermoMaterialObject_IID 277E2E39-70E7-4FBA-89C9-2A19B9D5E576
-[Guid(CapeOpenGuids.ICapeThermoMaterialObject_IID)]
+[Guid(CapeOpenGuids.ArrayParameterWrapperIid)] // ICapeThermoMaterialObject_IID 277E2E39-70E7-4FBA-89C9-2A19B9D5E576
 [ClassInterface(ClassInterfaceType.None)]
 internal class ArrayParameterWrapper : CapeParameter,
     ICapeParameter, ICapeParameterSpec, ICapeArrayParameterSpec

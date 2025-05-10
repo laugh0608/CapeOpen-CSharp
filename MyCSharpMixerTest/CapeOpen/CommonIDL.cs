@@ -175,7 +175,7 @@ public enum CapeValidationStatus
     /// The last time that the PMC's Validate() method was called it returned true.
     /// </summary>
     CAPE_VALID = 2
-};
+}
 // typedef CapeValidationStatus eCapeValidationStatus;
 
 /// <summary>
