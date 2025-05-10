@@ -1,4 +1,6 @@
-﻿using System.Runtime.InteropServices;
+﻿// 大白萝卜重构于 2025.05.09，使用 .NET8.O-windows、Microsoft Visual Studio 2022 Preview 和 Rider 2024.3。
+
+using System.Runtime.InteropServices;
 
 // <summary>
 // CapeOpen 命名空间提供了 CAPE-OPEN 接口的 .Net 翻译，

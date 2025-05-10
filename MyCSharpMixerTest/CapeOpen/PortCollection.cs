@@ -1,4 +1,6 @@
-﻿using System.ComponentModel;
+﻿// 大白萝卜重构于 2025.05.10，使用 .NET8.O-windows、Microsoft Visual Studio 2022 Preview 和 Rider 2024.3。
+
+using System.ComponentModel;
 using System.Globalization;
 using System.Runtime.InteropServices;
 

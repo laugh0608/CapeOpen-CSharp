@@ -1,4 +1,6 @@
-﻿/* IMPORTANT NOTICE
+﻿// 大白萝卜重构于 2025.05.09，使用 .NET8.O-windows、Microsoft Visual Studio 2022 Preview 和 Rider 2024.3。
+
+/* IMPORTANT NOTICE
 (c) The CAPE-OPEN Laboratory Network, 2002.
 All rights are reserved unless specifically stated otherwise
 
@@ -10,7 +12,6 @@ This file can view properly with any basic editors and browsers (validation done
 
 // This file was developed/modified by JEAN-PIERRE-BELAUD for CO-LaN organisation - March 2003
 // This file was modified by Bill Barrett of USE PA to restore CAPE-OPENv0.93 interface - November 30, 2005.
-// 大白萝卜重构于 2025.05.09，使用 .NET8.O-windows、Microsoft Visual Studio 2022 Preview 和 Rider 2024.3。
 
 // ------ 错误信息接口的相关职责范围 ------------
 // 接口文档: Error Common Interface
