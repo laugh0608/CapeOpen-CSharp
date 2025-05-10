@@ -147,7 +147,7 @@ class CapeOpenGuids
     public const string ICapeThermoCalculationRoutine_IID = "678c0991-7d66-11d2-a67d-00105a42887f";
     public const string ICapeThermoReliability_IID = "678c0992-7d66-11d2-a67d-00105a42887f";
     public const string ICapeThermoMaterialTemplate_IID = "678c0993-7d66-11d2-a67d-00105a42887f";
-    public const string ICapeThermoMaterialObject_IID = "678c0994-7d66-11d2-a67d-00105a42887f";
+    public const string ICapeThermoMaterialObject_IID = "277E2E39-70E7-4FBA-89C9-2A19B9D5E576"; // 原始值 678c0994-7d66-11d2-a67d-00105a42887f
     public const string ICapeThermoSystem_IID = "678c0995-7d66-11d2-a67d-00105a42887f";
     public const string ICapeThermoPropertyPackage_IID = "678c0996-7d66-11d2-a67d-00105a42887f";
 
