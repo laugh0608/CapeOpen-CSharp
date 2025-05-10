@@ -19,7 +19,7 @@ namespace CapeOpen;
 // [System.ComponentModel.Description("")]
 // 对 CAPE-OPEN 组件的描述，将被用来设置 CapeDescription[Description] 注册键的值。
 // [CapeOpen.CapeNameAttribute("MixerExample")]
-// 同上。（luobo 注：我也不明白为什么要重复定义一个属性，应该是官方文档中的描述有问题）
+// 同上。（大白萝卜注：我也不明白为什么要重复定义一个属性，应该是官方文档中的描述有问题）
 // [CapeOpen.CapeDescriptionAttribute("An example mixer unit operation.")]
 // 该组件所支持的 CAPE-OPEN 版本号，用来设置 CapeDescription[CapeVersion] 注册键的值。
 // [CapeOpen.CapeVersionAttribute("1.0")]

@@ -1,454 +1,315 @@
-﻿namespace CapeOpen;
+﻿using System.ComponentModel;
+using System.Globalization;
+using System.Runtime.InteropServices;
 
-[System.Runtime.InteropServices.ComVisible(false)]
-class PortCollectionTypeConverter : System.ComponentModel.ExpandableObjectConverter
+namespace CapeOpen;
+
+[ComVisible(false)]
+internal class PortCollectionTypeConverter : ExpandableObjectConverter
 {
-    public override bool CanConvertTo(System.ComponentModel.ITypeDescriptorContext context, System.Type destinationType)
+    public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType)
     {
-        if ((typeof(PortCollection)).IsAssignableFrom(destinationType))
-            return true;
-
-        return base.CanConvertTo(context, destinationType);
+        return typeof(PortCollection).IsAssignableFrom(destinationType) || base.CanConvertTo(context, destinationType);
     }
 
-    public override Object ConvertTo(System.ComponentModel.ITypeDescriptorContext context,
-        System.Globalization.CultureInfo culture, Object value, System.Type destinationType)
+    public override object ConvertTo(ITypeDescriptorContext context,
+        CultureInfo culture, object value, Type destinationType)
     {
-        if ((typeof(System.String)).IsAssignableFrom(destinationType) &&
-            (typeof(PortCollection).IsAssignableFrom(value.GetType())))
+        if (typeof(string).IsAssignableFrom(destinationType) && value is PortCollection)
         {
             return "Port Collection";
         }
 
         return base.ConvertTo(context, culture, value, destinationType);
     }
-};
+}
 
-/// <summary>
-/// A type-safe collection of <see cref="UnitPort"/> objects.
-/// </summary>
-/// <remarks>
-/// <para>This collection uses the BindingList generic collection to create a collection that only
-/// objects that implement the <seealse cref = "ICapeUnitPort"/> interface. This class also implements the 
-/// ICustomTypeDescriptor to provide dynamic infomation about the collection.</para>
-/// <para>
-/// Since this class utilizes a generic collection class, .Net based objects can obtain 
-/// the Port objects directly by using the index of the object. The .Net collection is 0-index, that is, the 
-/// index of the first Port is 0, and the nth Port has an index of n-1.
-/// </para>
-/// <para>
-/// In addition, the collection can be accessed by COM through the <see cref = "ICapeCollection"/> interface.
-/// The ICapeCollection members are explicitly implemented, making them available only available through the COM 
-/// ICapeCollection interface.
-/// </para>
-/// </remarks>
+/// <summary> 对象 <see cref="UnitPort"/> 的类型安全集合。</summary>
+/// <remarks>此集合使用BindingList泛型集合来创建仅实现 <seealse cref = "ICapeUnitPort"/> 接口的对象。
+/// 该类还实现了 <seealse cref = "ICustomTypeDescriptor"/> 来提供有关集合的动态信息。
+/// 由于此类利用泛型集合类，基于点网的对象可以获取通过使用对象的索引直接访问端口对象。
+/// dotNet 集合的索引为 0，即第一个端口的索引为 0，第 n个端口的索引为 n-1。
+/// 此外，COM 可以通过 < see cref = "ICapeCollection"/> 接口访问该集合。
+/// ICapeCollection 成员是显式实现的，使它们只能通过 COM 使用 ICapeCollection 接口。</remarks>
 [Serializable]
-[System.Runtime.InteropServices.ComSourceInterfaces(
-    typeof(ICapeIdentificationEvents) /*, typeof(ICapeCollectionEvents)*/)]
-[System.Runtime.InteropServices.ComVisible(true)]
-[System.Runtime.InteropServices.Guid("1C5F7CC3-31B4-4d81-829F-3EB5D692F7BD")] //ICapeThermoMaterialObject_IID)
-[System.ComponentModel.Description("")]
-//[System.ComponentModel.TypeConverter(typeof(PortCollectionTypeConverter))]
-[System.Runtime.InteropServices.ClassInterface(System.Runtime.InteropServices.ClassInterfaceType.None)]
-public class PortCollection :
-    System.ComponentModel.BindingList<ICapeUnitPort>,
-    ICapeCollection,
-    System.ComponentModel.ICustomTypeDescriptor,
-    ICloneable,
-    ICapeIdentification
+[ComSourceInterfaces( typeof(ICapeIdentificationEvents) )]    // 和 , typeof(ICapeCollectionEvents)
+[ComVisible(true)]
+[Guid("1C5F7CC3-31B4-4d81-829F-3EB5D692F7BD")] // ICapeThermoMaterialObject_IID
+[Description("")]
+// [TypeConverter(typeof(PortCollectionTypeConverter))]
+[ClassInterface(ClassInterfaceType.None)]
+public class PortCollection : BindingList<ICapeUnitPort>,
+    ICapeCollection, ICustomTypeDescriptor, ICloneable, ICapeIdentification
 {
-    private String m_ComponentName;
-    private String m_ComponentDescription;
+    private string _mComponentName;
+    private string _mComponentDescription;
 
-    //These are the ICapeCollection member implementations
+    // 这些是 ICapeCollection 成员实现
 
-    /// <summary>
-    ///	Gets the number of items currently stored in the collection.
-    /// </summary>
-    /// <remarks>
-    ///	Gets the number of items currently stored in the collection.
-    /// </remarks>
-    /// <returns>
-    ///	Gets the number of items currently stored in the collection.
-    /// </returns>
-    /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
+    /// <summary>获取当前存储在集合中的项数。</summary>
+    /// <returns>Gets the number of items currently stored in the collection.</returns>
+    /// <exception cref ="ECapeUnknown">The error to be raised when other error(s), specified for this operation, are not suitable.</exception>
     /// <exception cref = "ECapeFailedInitialisation">ECapeFailedInitialisation</exception>
     int ICapeCollection.Count()
     {
-        return this.Items.Count;
+        return Items.Count;
     }
 
-    /// <summary>
-    ///	Gets the specific item stored within the collection, identified by its 
-    /// ICapeIdentification.ComponentName or 1-based index passed as an argument 
-    /// to the method.
-    /// </summary>
-    /// <remarks>
-    /// Return an element from the collection. The requested element can be 
-    /// identified by its actual name (e.g. type CapeString) or by its position 
-    /// in the collection (e.g. type CapeLong). The name of an element is the 
-    /// value returned by the ComponentName() method of its ICapeIdentification 
-    /// interface. The advantage of retrieving an item by name rather than by 
-    /// position is that it is much more efficient. This is because it is faster 
-    /// to check all names from the server part than checking then from the 
-    /// client, where a lot of COM/CORBA calls would be required.
-    /// </remarks>
-    /// <param name = "index">
-    /// <para>Identifier for the requested item:</para>
+    /// <summary>获取存储在集合中的特定项，由它的 ICapeIdentification 作为参数传递的 ComponentName 或从 1 开始的索引到方法。</summary>
+    /// <remarks>从集合中返回一个元素。请求的元素可以通过其实际名称（例如类型 CapeString）或其在集合中的位置（例如类型CapeLong）来识别。
+    /// 元素的名称是其 ICapeIdentification 接口的 ComponentName() 方法返回的值。通过名称而不是通过位置检索项的优势在于，
+    /// 它更高效。这是因为从服务器部分检查所有名称比从客户端检查要快得多，在客户端需要大量的 COM/CORBA 调用。</remarks>
+    /// <param name = "index"><para>Identifier for the requested item:</para>
     /// <para>name of item (the variant contains a string)</para>
-    /// <para>position in collection (it contains a long)</para>
-    /// </param>
-    /// <returns>
-    /// System.Object containing the requested collection item.
-    /// </returns>
-    /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
-    /// <exception cref = "ECapeInvalidArgument">To be used when an invalid argument value is passed, for example, an unrecognised Compound identifier or UNDEFINED for the props argument.</exception>
+    /// <para>position in collection (it contains a long)</para></param>
+    /// <returns>System.object containing the requested collection item.</returns>
+    /// <exception cref ="ECapeUnknown">The error to be raised when other error(s), specified for this operation, are not suitable.</exception>
+    /// <exception cref = "ECapeInvalidArgument">To be used when an invalid argument value is passed, for example, an unrecognised Compound identifier or UNDEFINED for the prop's argument.</exception>
     /// <exception cref = "ECapeFailedInitialisation">ECapeFailedInitialisation</exception>
     /// <exception cref = "ECapeOutOfBounds">ECapeOutOfBounds</exception>
-    Object ICapeCollection.Item(Object index)
+    object ICapeCollection.Item(object index)
     {
-        Type indexType = index.GetType();
-        if ((indexType == typeof(System.Int16)) || (indexType == typeof(System.Int32)) ||
-            (indexType == typeof(System.Int64)))
+        var indexType = index.GetType();
+        if (indexType == typeof(short) || indexType == typeof(int) || indexType == typeof(long))
         {
-            int i = Convert.ToInt32(index);
-            return this.Items[i - 1];
+            var i = Convert.ToInt32(index);
+            return Items[i - 1];
         }
 
-        if ((indexType == typeof(String)))
+        if (indexType != typeof(string))
+            throw new CapeInvalidArgumentException("Item " + index + " not found.", 0);
         {
-            String name = index.ToString();
-            for (int i = 0; i < this.Items.Count; i++)
+            var name = index.ToString();
+            foreach (var t in Items)
             {
-                ICapeIdentification p_Id = (ICapeIdentification)(this.Items[i]);
-                if (p_Id.ComponentName == name)
+                var pId = (ICapeIdentification) t;
+                if (pId.ComponentName == name)
                 {
-                    return this.Items[i];
+                    return t;
                 }
             }
         }
-
-        throw new CapeInvalidArgumentException("Item " + index.ToString() + " not found.", 0);
+        throw new CapeInvalidArgumentException("Item " + index + " not found.", 0);
     }
 
-    /// <summary>
-    /// Initailizes a new instance of the <see cref = "PortCollection"/> collection class.
-    /// </summary>
-    /// <remarks>This will create a new instance of the collection.
-    /// </remarks>
+    /// <summary>初始化 <see cref = "PortCollection"/> 集合类的新的实例。</summary>
+    /// <remarks>这将创建集合的新实例。</remarks>
     public PortCollection()
     {
     }
 
-    /// <summary>
-    /// Finalizer for the <see cref = "PortCollection"/> collection class.
-    /// </summary>
-    /// <remarks>
-    /// This will finalize the current instance of the collection.
-    /// </remarks>
+    /// <summary>集合类 < see cref = "PortCollection"/> 的终结器。</summary>
+    /// <remarks>这将完成集合的当前实例。</remarks>
     ~PortCollection()
     {
-        foreach (UnitPort item in this.Items)
+        foreach (UnitPort item in Items)
         {
             item.Dispose();
         }
     }
 
-    /// <summary>Creates a new object that is a copy of the current instance.</summary>
-    /// <remarks>
-    /// <para>
-    /// Clone can be implemented either as a deep copy or a shallow copy. In a deep copy, all objects are duplicated; 
-    /// in a shallow copy, only the top-level objects are duplicated and the lower levels contain references.
-    /// </para>
-    /// <para>
-    /// The resulting clone must be of the same type as, or compatible with, the original instance.
-    /// </para>
-    /// <para>
-    /// See <see cref="Object.MemberwiseClone"/> for more information on cloning, deep versus shallow copies, and examples.
-    /// </para>
-    /// </remarks>
-    /// <returns>A new object that is a copy of this instance.</returns>
+    /// <summary>创建作为当前实例副本的新对象。</summary>
+    /// <remarks>克隆可以实现为深层拷贝或浅层拷贝。在深层拷贝中，所有对象都被复制；
+    /// 在浅表副本中，仅复制顶级对象，较低级别的对象包含引用。生成的克隆必须与原始实例的类型相同或兼容。
+    /// 请参见< see cref="object.MemberwiseClone "/>，了解有关克隆、深层副本与浅层副本以及示例的更多信息。</remarks>
+    /// <returns>作为此实例副本的新对象。</returns>
     public object Clone()
     {
-        PortCollection clone = new PortCollection();
-        foreach (ICloneable item in this.Items)
+        var clone = new PortCollection();
+        foreach (ICloneable item in Items)
         {
             clone.Add((UnitPort)item.Clone());
         }
-
         return clone;
     }
 
-    /// <summary>
-    /// Occurs when the user changes of the name of a component.
-    /// </summary>
-    /// <remarks>The event to be handles when the name of the PMC is changed.</remarks> 
+    /// <summary>当用户更改组件名称时发生。</summary>
+    /// <remarks>当 PMC 的名称更改时要处理的事件。</remarks> 
     public event ComponentNameChangedHandler ComponentNameChanged;
 
-    /// <summary>
-    /// Occurs when the user changes of the description of a component.
-    /// </summary>
-    /// <remarks><para>Raising an event invokes the event handler through a delegate.</para>
-    /// <para>The <c>OnComponentNameChanged</c> method also allows derived classes to handle the event without attaching a delegate. This is the preferred 
-    /// technique for handling the event in a derived class.</para>
-    /// <para>Notes to Inheritors: </para>
-    /// <para>When overriding <c>OnComponentNameChanged</c> in a derived class, be sure to call the base class's <c>OnComponentNameChanged</c> method so that registered 
-    /// delegates receive the event.</para>
-    /// </remarks>
+    /// <summary>当用户更改组件的说明时发生。</summary>
+    /// <remarks>通过委托调用事件处理程序时，会引发事件。<c>OnComponentNameChanged</c> 方法还允许
+    /// 子类在不附加委托的情况下处理事件。这是子类处理事件的优选技术。继承者的注意事项：
+    /// 在子类中重写<c>OnComponentNameChanged </c>时，请务必调用基类的<c>OnComponentNameChanged（）</c>方法，以便注册的委托接收事件。</remarks>
     /// <param name = "args">A <see cref = "ComponentNameChangedEventArgs">NameChangedEventArgs</see> that contains information about the event.</param>
     protected void OnComponentNameChanged(ComponentNameChangedEventArgs args)
     {
-        if (ComponentNameChanged != null)
-        {
-            ComponentNameChanged(this, args);
-        }
+        ComponentNameChanged?.Invoke(this, args);
     }
 
-    /// <summary>
-    /// Occurs when the user changes of the description of a component.
-    /// </summary>
-    /// <remarks>The event to be handles when the description of the PMC is changed.</remarks> 
+    /// <summary>当用户更改组件的说明时发生。</summary>
+    /// <remarks>当 PMC 的描述更改时要处理的事件。</remarks> 
     public event ComponentDescriptionChangedHandler ComponentDescriptionChanged;
 
-    /// <summary>
-    /// Occurs when the user changes of the description of a component.
-    /// </summary>
-    /// <remarks><para>Raising an event invokes the event handler through a delegate.</para>
-    /// <para>The <c>OnComponentDescriptionChanged</c> method also allows derived classes to handle the event without attaching a delegate. This is the preferred 
-    /// technique for handling the event in a derived class.</para>
-    /// <para>Notes to Inheritors: </para>
-    /// <para>When overriding <c>OnComponentDescriptionChanged</c> in a derived class, be sure to call the base class's <c>OnComponentDescriptionChanged</c> method so that registered 
-    /// delegates receive the event.</para>
-    /// </remarks>
+    /// <summary>当用户更改组件的说明时发生。</summary>
+    /// <remarks>引发事件通过委托调用事件处理程序。
+    /// 方法 <c>OnComponentDescriptionChanged</c> 还允许子类在不附加委托的情况下处理事件。这是子类处理事件的优选技术。
+    /// 继承时的注意事项: 
+    /// 当在派生类中重写 <c>OnComponentDescriptionChanged</c> 时，请务必调用基类的 <c>OnComponentDescriptionChanged </c> 方法，以便注册的委托接收该事件。</remarks>
     /// <param name = "args">A <see cref = "ComponentDescriptionChangedEventArgs">DescriptionChangedEventArgs</see> that contains information about the event.</param>
     protected void OnComponentDescriptionChanged(ComponentDescriptionChangedEventArgs args)
     {
-        if (ComponentDescriptionChanged != null)
-        {
-            ComponentDescriptionChanged(this, args);
-        }
+        ComponentDescriptionChanged?.Invoke(this, args);
     }
 
-    /// <summary>
-    /// Gets and sets the name of the component.
-    /// </summary>
-    /// <remarks>
-    /// <para>A particular Use Case in a system may contain several CAPE-OPEN components 
-    /// of the same class. The user should be able to assign different names and 
-    /// descriptions to each instance in order to refer to them unambiguously and in a 
-    /// user-friendly way. Since not always the software components that are able to 
-    /// set these identifications and the software components that require this information 
-    /// have been developed by the same vendor, a CAPE-OPEN standard for setting and 
-    /// getting this information is required.</para>
-    /// <para>So, the component will not usually set its own name and description: the 
-    /// user of the component will do it.</para>
-    /// </remarks>
+    /// <summary>获取和设置组件的名称。</summary>
+    /// <remarks>一个系统中的特定用例可能包含多个相同类的 CAPE-OPEN 组件。用户应该能够为每个实例分配不同的名称和描述，
+    /// 以便以不模糊和用户友好的方式引用它们。由于并非总是能够设置这些标识的软件组件和需要此信息的软件组件由同一供应商开发，
+    /// 因此需要设置和获取此信息的 CAPE-OPEN 标准。因此，组件通常不会设置自己的名称和描述：组件的使用者会这样做。</remarks>
     /// <value>The unique name of the component.</value>
-    /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
-    [System.ComponentModel.DescriptionAttribute(
-        "Unit Operation Parameter Collection. Click on the (...) button to edit collection.")]
-    [System.ComponentModel.CategoryAttribute("CapeIdentification")]
-    public String ComponentName
+    /// <exception cref ="ECapeUnknown">为该操作指定的其他错误不适用时引发的错误。</exception>
+    [Description("Unit Operation Parameter Collection. Click on the (...) button to edit collection.")]
+    [Category("CapeIdentification")]
+    public string ComponentName
     {
-        get { return m_ComponentName; }
-
+        get => _mComponentName;
         set
         {
-            ComponentNameChangedEventArgs args = new ComponentNameChangedEventArgs(m_ComponentName, value);
-            m_ComponentName = value;
+            var args = new ComponentNameChangedEventArgs(_mComponentName, value);
+            _mComponentName = value;
             OnComponentNameChanged(args);
         }
     }
 
-    /// <summary>
-    ///  Gets and sets the description of the component.
-    /// </summary>
-    /// <remarks>
-    /// <para>A particular Use Case in a system may contain several CAPE-OPEN components 
-    /// of the same class. The user should be able to assign different names and 
-    /// descriptions to each instance in order to refer to them unambiguously and in a 
-    /// user-friendly way. Since not always the software components that are able to 
-    /// set these identifications and the software components that require this information 
-    /// have been developed by the same vendor, a CAPE-OPEN standard for setting and 
-    /// getting this information is required.</para>
-    /// <para>So, the component will not usually set its own name and description: the 
-    /// user of the component will do it.</para>
-    /// </remarks>
+    /// <summary>获取和设置组件的说明。</summary>
+    /// <remarks>一个系统中的特定用例可能包含多个相同类的 CAPE-OPEN 组件。用户应该能够为每个实例分配不同的名称和描述，
+    /// 以便以不模糊和用户友好的方式引用它们。由于并非总是能够设置这些标识的软件组件和需要此信息的软件组件由同一供应商开发，因
+    /// 此需要设置和获取此信息的 CAPE-OPEN 标准。因此，组件通常不会设置自己的名称和描述：组件的使用者会这样做。</remarks>
     /// <value>The description of the component.</value>
-    /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
-    [System.ComponentModel.DescriptionAttribute(
-        "Unit Operation Parameter Collection. Click on the (...) button to edit collection.")]
-    [System.ComponentModel.CategoryAttribute("CapeIdentification")]
-    public String ComponentDescription
+    /// <exception cref ="ECapeUnknown">为该操作指定的其他错误不适用时引发的错误。</exception>
+    [Description("Unit Operation Parameter Collection. Click on the (...) button to edit collection.")]
+    [Category("CapeIdentification")]
+    public string ComponentDescription
     {
-        get { return m_ComponentDescription; }
+        get => _mComponentDescription;
         set
         {
-            ComponentDescriptionChangedEventArgs args =
-                new ComponentDescriptionChangedEventArgs(m_ComponentDescription, value);
-            m_ComponentDescription = value;
+            var args = new ComponentDescriptionChangedEventArgs(_mComponentDescription, value);
+            _mComponentDescription = value;
             OnComponentDescriptionChanged(args);
         }
     }
 
-    //[System.ComponentModel.TypeConverter(typeof(PortTypeConverter))]
-    //public new UnitPort this[int index]
-    //{
-    //    get
-    //    {
-    //        return (UnitPort)this.Items[index];
-    //    }
-    //}
-
-    // Implementation of ICustomTypeDescriptor: 
-
-    String System.ComponentModel.ICustomTypeDescriptor.GetClassName()
+    // ICustomTypeDescriptor 的实现:
+    string ICustomTypeDescriptor.GetClassName()
     {
-        return System.ComponentModel.TypeDescriptor.GetClassName(this, true);
+        return TypeDescriptor.GetClassName(this, true);
     }
 
-    System.ComponentModel.AttributeCollection System.ComponentModel.ICustomTypeDescriptor.GetAttributes()
+    AttributeCollection ICustomTypeDescriptor.GetAttributes()
     {
-        return System.ComponentModel.TypeDescriptor.GetAttributes(this, true);
+        return TypeDescriptor.GetAttributes(this, true);
     }
 
-    String System.ComponentModel.ICustomTypeDescriptor.GetComponentName()
+    string ICustomTypeDescriptor.GetComponentName()
     {
-        return System.ComponentModel.TypeDescriptor.GetComponentName(this, true);
+        return TypeDescriptor.GetComponentName(this, true);
     }
 
-    System.ComponentModel.TypeConverter System.ComponentModel.ICustomTypeDescriptor.GetConverter()
+    TypeConverter ICustomTypeDescriptor.GetConverter()
     {
-        return System.ComponentModel.TypeDescriptor.GetConverter(this, true);
+        return TypeDescriptor.GetConverter(this, true);
     }
 
-    System.ComponentModel.EventDescriptor System.ComponentModel.ICustomTypeDescriptor.GetDefaultEvent()
+    EventDescriptor ICustomTypeDescriptor.GetDefaultEvent()
     {
-        return System.ComponentModel.TypeDescriptor.GetDefaultEvent(this, true);
+        return TypeDescriptor.GetDefaultEvent(this, true);
     }
 
-    System.ComponentModel.PropertyDescriptor System.ComponentModel.ICustomTypeDescriptor.GetDefaultProperty()
+    PropertyDescriptor ICustomTypeDescriptor.GetDefaultProperty()
     {
-        return System.ComponentModel.TypeDescriptor.GetDefaultProperty(this, true);
+        return TypeDescriptor.GetDefaultProperty(this, true);
     }
 
-    Object System.ComponentModel.ICustomTypeDescriptor.GetEditor(Type editorBaseType)
+    object ICustomTypeDescriptor.GetEditor(Type editorBaseType)
     {
-        return System.ComponentModel.TypeDescriptor.GetEditor(this, editorBaseType, true);
+        return TypeDescriptor.GetEditor(this, editorBaseType, true);
     }
 
-    System.ComponentModel.EventDescriptorCollection System.ComponentModel.ICustomTypeDescriptor.GetEvents(
-        Attribute[] attributes)
+    EventDescriptorCollection ICustomTypeDescriptor.GetEvents(Attribute[] attributes)
     {
-        return System.ComponentModel.TypeDescriptor.GetEvents(this, attributes, true);
+        return TypeDescriptor.GetEvents(this, attributes, true);
     }
 
-    System.ComponentModel.EventDescriptorCollection System.ComponentModel.ICustomTypeDescriptor.GetEvents()
+    EventDescriptorCollection ICustomTypeDescriptor.GetEvents()
     {
-        return System.ComponentModel.TypeDescriptor.GetEvents(this, true);
+        return TypeDescriptor.GetEvents(this, true);
     }
 
-    Object System.ComponentModel.ICustomTypeDescriptor.GetPropertyOwner(System.ComponentModel.PropertyDescriptor pd)
+    object ICustomTypeDescriptor.GetPropertyOwner(PropertyDescriptor pd)
     {
         return this;
     }
 
-    System.ComponentModel.PropertyDescriptorCollection System.ComponentModel.ICustomTypeDescriptor.GetProperties(
-        Attribute[] attributes)
+    PropertyDescriptorCollection ICustomTypeDescriptor.GetProperties(Attribute[] attributes)
     {
-        return ((System.ComponentModel.ICustomTypeDescriptor)this).GetProperties();
+        return ((ICustomTypeDescriptor)this).GetProperties();
     }
 
-    System.ComponentModel.PropertyDescriptorCollection System.ComponentModel.ICustomTypeDescriptor.GetProperties()
+    PropertyDescriptorCollection ICustomTypeDescriptor.GetProperties()
     {
-        // Create a new collection object PropertyDescriptorCollection
-        System.ComponentModel.PropertyDescriptorCollection pds =
-            new System.ComponentModel.PropertyDescriptorCollection(null);
-        // Iterate the list of Ports
-        for (int i = 0; i < this.Items.Count; i++)
+        // 创建新的集合对象 PropertyDescriptorCollection
+        var pds = new PropertyDescriptorCollection(null);
+        // 迭代端口列表
+        for (var i = 0; i < Items.Count; i++)
         {
-            // For each Port create a property descriptor 
-            // and add it to the PropertyDescriptorCollection instance
-            PortCollectionPropertyDescriptor pd = new PortCollectionPropertyDescriptor(this, i);
+            // 为每个端口创建一个属性描述符，并将其添加到 PropertyDescriptorCollection 实例中
+            var pd = new PortCollectionPropertyDescriptor(this, i);
             pds.Add(pd);
         }
-
         return pds;
     }
-};
+}
 
-/// <summary>
-/// Summary description for CollectionPropertyDescriptor.
-/// </summary>
-[System.Runtime.InteropServices.ComVisibleAttribute(false)]
-class PortCollectionPropertyDescriptor : System.ComponentModel.PropertyDescriptor
+/// <summary>CollectionPropertyDescriptor 的摘要说明。</summary>
+[ComVisible(false)]
+internal class PortCollectionPropertyDescriptor : PropertyDescriptor
 {
-    private PortCollection collection;
-    private int index;
+    private PortCollection _collection;
+    private int _index;
 
     public PortCollectionPropertyDescriptor(PortCollection coll, int idx) :
-        base("#" + idx.ToString(), null)
+        base("#" + idx, null)
     {
-        this.collection = coll;
-        this.index = idx;
+        _collection = coll;
+        _index = idx;
     }
 
-    public override System.ComponentModel.AttributeCollection Attributes
-    {
-        get { return new System.ComponentModel.AttributeCollection(null); }
-    }
+    public override AttributeCollection Attributes => new(null);
 
-    public override bool CanResetValue(Object component)
+    public override bool CanResetValue(object component)
     {
         return true;
     }
 
-    public override Type ComponentType
+    public override Type ComponentType => this._collection.GetType();
+
+    public override string DisplayName => ((UnitPort)_collection[_index]).ComponentName;
+
+    public override string Description => ((UnitPort)_collection[_index]).ComponentDescription;
+
+    public override object GetValue(object component)
     {
-        get { return this.collection.GetType(); }
+        return (UnitPort)_collection[_index];
     }
 
-    public override String DisplayName
-    {
-        get { return ((UnitPort)this.collection[index]).ComponentName; }
-    }
+    public override bool IsReadOnly => false;
 
-    public override String Description
-    {
-        get { return ((UnitPort)this.collection[index]).ComponentDescription; }
-    }
+    public override string Name => string.Concat("#", _index.ToString());
 
-    public override Object GetValue(Object component)
-    {
-        return (UnitPort)this.collection[index];
-    }
+    public override Type PropertyType => _collection[_index].GetType();
 
-    public override bool IsReadOnly
-    {
-        get { return false; }
-    }
-
-    public override String Name
-    {
-        get { return String.Concat("#", index.ToString()); }
-    }
-
-    public override Type PropertyType
-    {
-        get { return this.collection[index].GetType(); }
-    }
-
-    public override void ResetValue(Object component)
+    public override void ResetValue(object component)
     {
     }
 
-    public override bool ShouldSerializeValue(Object component)
+    public override bool ShouldSerializeValue(object component)
     {
         return true;
     }
 
-    public override void SetValue(Object component, Object value)
+    public override void SetValue(object component, object value)
     {
         //this.collection[index] = value;
     }
-};
+}

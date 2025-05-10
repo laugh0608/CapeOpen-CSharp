@@ -285,11 +285,8 @@ public interface ICapeUnit
     }
 
     /// <summary>获取表示单位操作验证状态的标志 CapeValidationStatus。</summary>
-    /// <remarks>Get the flag that indicates whether the Flowsheet Unit is valid (e.g. some 
-    /// parameter values have changed, but they have not been validated by using Validate). 
-    /// It has three possible values:
-    /// (i) notValidated(CAPE_NOT_VALIDATED): The PMC's Validate()
-    /// method has not been called after the last time that its value had been changed.
+    /// <remarks>获取指示流图单元是否有效的标志(例如，一些参数值已更改，但尚未使用 Validate 进行验证)。它有三个可能的值:
+    /// (i) notValidated(CAPE_NOT_VALIDATED): The PMC's Validate() method has not been called after the last time that its value had been changed.
     /// (ii) invalid(CAPE_INVALID): The last time that the PMC's Validate() method was called it returned false.
     /// (iii) valid(CAPE_VALID): the last time that the PMC's Validate() method was called it returned true.</remarks>
     /// <value>A flag that indicates the validation status of the unit operation.</value>
