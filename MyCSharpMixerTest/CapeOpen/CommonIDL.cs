@@ -11,6 +11,7 @@ This file can view properly with any basic editors and browsers (validation done
 */
 
 // This file was developed/modified by JEAN-PIERRE-BELAUD for CO-LaN organisation - August 2003
+// 大白萝卜重构于 2025.05.09，使用 .NET8.O-windows、Microsoft Visual Studio 2022 Preview 和 Rider 2024.3。
 
 namespace CapeOpen;
 

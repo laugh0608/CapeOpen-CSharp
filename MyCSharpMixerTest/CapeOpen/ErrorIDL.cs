@@ -10,7 +10,7 @@ This file can view properly with any basic editors and browsers (validation done
 
 // This file was developed/modified by JEAN-PIERRE-BELAUD for CO-LaN organisation - March 2003
 // This file was modified by Bill Barrett of USE PA to restore CAPE-OPENv0.93 interface - November 30, 2005.
-// 大白萝卜重构于 2025.05.09，使用 Microsoft Visual Studio 2022 Preview 和 Rider 2024.3。
+// 大白萝卜重构于 2025.05.09，使用 .NET8.O-windows、Microsoft Visual Studio 2022 Preview 和 Rider 2024.3。
 
 // ------ 错误信息接口的相关职责范围 ------------
 // 接口文档: Error Common Interface
@@ -404,326 +404,175 @@ public interface ECapeInvalidOperation { }
 /// <see cref = "ECapeInvalidOperation"/>, 
 /// <see cref = "ECapeNoMemory"/>, 和 
 /// <see cref = "ECapeTimeOut"/> </remarks>
-[ComImport]
-[ComVisible(false)]
+[ComImport, ComVisible(false)]
 [Guid(CapeOpenGuids.ECapeComputation_IID)]
 [Description("ECapeComputation Interface")]
 public interface ECapeComputation { }
 
-// ECapePersistence interface
-/// <summary>
-/// An exception that indicates that the a persistence-related error has occurred.
-/// </summary>
-/// <remarks>
-/// The base of the errors hierarchy related to the persistence.
-/// </remarks>
-[ComImport]
-[ComVisible(false)]
-[System.Runtime.InteropServices.Guid(CapeOpenGuids.ECapePersistence_IID)]
+// ECapePersistence 接口
+/// <summary>一个异常，指示发生了与持久性相关的错误。</summary>
+/// <remarks>与持久性相关的错误层次结构的基础。</remarks>
+[ComImport, ComVisible(false)]
+[Guid(CapeOpenGuids.ECapePersistence_IID)]
 [Description("ECapePersistence Interface")]
-public interface ECapePersistence
-{
-};
+public interface ECapePersistence { }
 
-// ECapeIllegalAccess interface
-/// <summary>
-/// The access to something within the persistence system is not authorised.
-/// </summary>
-/// <remarks>
-/// This exception is thrown when the access to something within the persistence system is not authorised.
-/// </remarks>
-[ComImport]
-[ComVisible(false)]
-[System.Runtime.InteropServices.Guid(CapeOpenGuids.ECapeIllegalAccess_IID)]
+// ECapeIllegalAccess 接口
+/// <summary>对持久性系统中的某些内容的访问是未经授权的。</summary>
+/// <remarks>当对持久性系统中的某些内容的访问未经授权时，就会抛出这个异常。</remarks>
+[ComImport, ComVisible(false)]
+[Guid(CapeOpenGuids.ECapeIllegalAccess_IID)]
 [Description("ECapeIllegalAccess Interface")]
-public interface ECapeIllegalAccess
-{
-};
+public interface ECapeIllegalAccess { }
 
-// ECapePersistenceNotFound interface
-/// <summary>
-/// An exception that indicates that the persistence was not found.
-/// </summary>
-/// <remarks>
-/// The requested object, table, or something else within the persistence system was not found.
-/// </remarks>
-[ComImport]
-[ComVisible(false)]
-[System.Runtime.InteropServices.Guid(CapeOpenGuids.ECapePersistenceNotFound_IID)]
+// ECapePersistenceNotFound 接口
+/// <summary>指示未找到持久性的异常。</summary>
+/// <remarks>在持久性系统中找不到请求的对象、表或其他内容。</remarks>
+[ComImport, ComVisible(false)]
+[Guid(CapeOpenGuids.ECapePersistenceNotFound_IID)]
 [Description("ECapePersistenceNotFound Interface")]
 public interface ECapePersistenceNotFound
 {
-    /// <summary>
-    /// The name of the item.
-    /// </summary>
-    /// <remarks>
-    /// The name of the requested object, table, or something else within the persistence system 
-    /// that was not found.
-    /// </remarks>
-    /// <value>
-    /// The name of the item not found.
-    /// </value>
-    [DispId(1),
-     Description("The name of the item")]
+    /// <summary>The name of the item.</summary>
+    /// <remarks>所请求的对象、表或持久性系统中未找到的其他内容的名称。</remarks>
+    /// <value>The name of the item not found.</value>
+    [DispId(1), Description("The name of the item")]
     string itemName { get; }
-};
+}
 
-// ECapePersistenceSystemError interface
-/// <summary>
-/// An exception that indicates a severe error occurred within the persistence system.
-/// </summary>
-/// <remarks>
-/// During the persistence process, a severe error occurred within the persistence system.
-/// </remarks>
-[ComImport]
-[ComVisible(false)]
-[System.Runtime.InteropServices.Guid(CapeOpenGuids.ECapePersistenceSystemError_IID)]
+// ECapePersistenceSystemError 接口
+/// <summary>指示持久性系统中发生严重错误的异常。</summary>
+/// <remarks>During the persistence process, a severe error occurred within the persistence system.</remarks>
+[ComImport, ComVisible(false)]
+[Guid(CapeOpenGuids.ECapePersistenceSystemError_IID)]
 [Description("ECapePersistenceSystemError Interface")]
-public interface ECapePersistenceSystemError
-{
-};
+public interface ECapePersistenceSystemError { }
 
-// ECapePersistenceOverflow interface
-/// <summary>
-/// An exception that indicates an overflow of internal persistence system.
-/// </summary>
-/// <remarks>
-/// During the persistence process, an overflow of internal persistence system occurred.
-/// </remarks>
-[ComImport]
-[ComVisible(false)]
-[System.Runtime.InteropServices.Guid(CapeOpenGuids.ECapePersistenceOverflow_IID)]
+// ECapePersistenceOverflow 接口
+/// <summary>指示内部持久性系统溢出的异常。</summary>
+/// <remarks>During the persistence process, an overflow of internal persistence system occurred.</remarks>
+[ComImport, ComVisible(false)]
+[Guid(CapeOpenGuids.ECapePersistenceOverflow_IID)]
 [Description("ECapePersistenceOverflow Interface")]
-public interface ECapePersistenceOverflow
-{
-};
+public interface ECapePersistenceOverflow { }
 
-/// <summary>
-/// An exception that indicates the requested thermodynamic property was not available.
-/// </summary>
-/// <remarks>
-/// At least one item in the requested properties cannot be returned. This could be 
-/// because the property cannot be calculated at the specified conditions or for the 
-/// specified Phase. If the property calculation is not implemented then 
-/// <see cref = "ECapeLimitedImpl"/> should be returned.
-/// </remarks>
-[ComImport]
-[ComVisible(false)]
-[System.Runtime.InteropServices.Guid("678C09B6-7D66-11D2-A67D-00105A42887F")]
+/// <summary>异常表明请求的热力学属性不可用。</summary>
+/// <remarks>请求的属性中至少有一个项目无法返回。这可能是由于属性不能在
+/// 指定的条件下或指定的阶段计算。如果未实现属性计算，则应返回 <see cref = "ECapeLimitedImpl"/>。</remarks>
+[ComImport, ComVisible(false)]
+[Guid("678C09B6-7D66-11D2-A67D-00105A42887F")]
 [Description("ECapeThrmPropertyNotAvailable Interface")]
-public interface ECapeThrmPropertyNotAvailable
-{
-};
+public interface ECapeThrmPropertyNotAvailable { }
 
-/// <summary>
-/// Exception thrown when the Hessian for the MINLP problem is not available.
-/// </summary>
-/// <remarks>
-/// Exception thrown when the Hessian for the MINLP problem is not available.
-/// </remarks>
-[ComImport]
-[ComVisible(false)]
-[System.Runtime.InteropServices.Guid("3FF0B24B-4299-4DAC-A46E-7843728AD205")]
+/// <summary>当 MINLP 问题的海森矩阵不可用时抛出异常。</summary>
+/// <remarks>混合整数非线性规划（MINLP）算法</remarks>
+[ComImport, ComVisible(false)]
+[Guid("3FF0B24B-4299-4DAC-A46E-7843728AD205")]
 [Description("ECapeHessianInfoNotAvailable Interface")]
 public interface ECapeHessianInfoNotAvailable
 {
-    /// <summary>
-    /// Code to designate the subcategory of the error. 
-    /// </summary>
-    /// <remarks>
-    /// The assignment of values is left to each implementation. So that is a 
-    /// proprietary code specific to the CO component provider. By default, set to 
-    /// the CAPE-OPEN error HRESULT <see cref = "CapeErrorInterfaceHR"/>.
-    /// </remarks>
-    /// <value>
-    /// The HRESULT value for the exception.
-    /// </value>
-    [DispId(1),
-     Description(
+    /// <summary>Code to designate the subcategory of the error. </summary>
+    /// <remarks>值的分配留给每个实现。这是一个特定于 CO 组件提供商的专有代码。
+    /// 默认情况下，设置为 CAPE-OPEN 错误 HRESULT <see cref = "CapeErrorInterfaceHR"/>。</remarks>
+    /// <value>The HRESULT value for the exception.</value>
+    [DispId(1), Description(
          "Code to designate the subcategory of the error. The assignment of values is left to each implementation. So that is a proprietary code specific to the CO component provider.")]
     int code { get; }
 
-    /// <summary>
-    /// The description of the error.
-    /// </summary>
-    /// <remarks>
-    /// The error description can include a more verbose description of the condition that
-    /// caused the error.
-    /// </remarks>
-    /// <value>
-    /// A string description of the exception.
-    /// </value>
+    /// <summary>The description of the error.</summary>
+    /// <remarks>错误描述可以包括对导致错误的条件的更详细的描述。</remarks>
+    /// <value>A string description of the exception.</value>
     [DispId(2),
      Description("The description of the error.")]
     string description { get; }
 
-    /// <summary>
-    /// The scope of the error.
-    /// </summary>
-    /// <remarks>
-    /// This property provides a list of packages where the error occurs separated by '.'. 
-    /// For example CapeOpen.Common.Identification.
-    /// </remarks>
+    /// <summary>The scope of the error.</summary>
+    /// <remarks>此属性提供出现错误的包的列表，用“.”分隔。例如 CapeOpen.Common.Identification</remarks>
     /// <value>The source of the error.</value>
-    [DispId(3),
-     Description(
+    [DispId(3), Description(
          "The scope of the error. The list of packages where the error occurs separated by '.'. For example CapeOpen.Common.Identification.")]
     string scope { get; }
 
-    /// <summary>
-    /// The name of the interface where the error is thrown. This is a mandatory field."
-    /// </summary>
-    /// <remarks>
-    /// The interface that the error was thrown.
-    /// </remarks>
+    /// <summary>引发错误的接口的名称。这是必填字段。</summary>
+    /// <remarks>The interface that the error was thrown.</remarks>
     /// <value>The name of the interface.</value>
-    [DispId(4),
-     Description(
+    [DispId(4), Description(
          "The name of the interface where the error is thrown. This is a mandatory field.")]
     string interfaceName { get; }
 
-    /// <summary>
-    /// The name of the operation where the error is thrown. This is a mandatory field.
-    /// </summary>
-    /// <remarks>
-    /// This field provides the name of the operation being perfomed when the exception was raised.
-    /// </remarks>
+    /// <summary>引发错误的操作的名称。这是必填字段。</summary>
+    /// <remarks>此字段提供引发异常时正在执行的操作的名称。</remarks>
     /// <value>The operation name.</value>
-    [DispId(5),
-     Description(
+    [DispId(5), Description(
          "The name of the operation where the error is thrown. This is a mandatory field.")]
     string operation { get; }
 
-    /// <summary>
-    /// An URL to a page, document, web site,  where more information on the error can be found. The content of this information is obviously implementation dependent.
-    /// </summary>
-    /// <remarks>
-    /// This field provides an internet URL where more information about the error can be found.
-    /// </remarks>
+    /// <summary>指向页面、文档、网站的 URL，在那里可以找到有关错误的更多信息。该信息的内容显然是依赖于实现的。</summary>
+    /// <remarks>此字段提供了一个 Internet URL，从中可以找到有关错误的更多信息。</remarks>
     /// <value>The URL.</value>
-    [DispId(6),
-     Description(
+    [DispId(6), Description(
          "An URL to a page, document, web site,  where more information on the error can be found. The content of this information is obviously implementation dependent.")]
     string moreInfo { get; }
-};
+}
 
-/// <summary>
-/// Exception thrown when the problem is outside the scope of the solver.
-/// </summary>
-/// <remarks>
-/// Exception thrown when the problem is outside the scope of the solver.
-/// </remarks>
-[ComImport]
-[ComVisible(false)]
-[System.Runtime.InteropServices.Guid("678c0b0f-7d66-11d2-a67d-00105a42887f")]
+/// <summary>当问题超出求解器的范围时引发异常。</summary>
+[ComImport, ComVisible(false)]
+[Guid("678c0b0f-7d66-11d2-a67d-00105a42887f")]
 [Description("ECapeOutsideSolverScope Interface")]
 public interface ECapeOutsideSolverScope
 {
-    /// <summary>
-    /// Code to designate the subcategory of the error. 
-    /// </summary>
-    /// <remarks>
-    /// The assignment of values is left to each implementation. So that is a 
-    /// proprietary code specific to the CO component provider. By default, set to 
-    /// the CAPE-OPEN error HRESULT <see cref = "CapeErrorInterfaceHR"/>.
-    /// </remarks>
-    /// <value>
-    /// The HRESULT value for the exception.
-    /// </value>
-    [DispId(1),
-     Description(
+    /// <summary>Code to designate the subcategory of the error. </summary>
+    /// <remarks>值的分配留给每个实现。这是一个特定于CO组件提供商的专有代码。默认情况下，
+    /// 设置为 CAPE-OPEN 错误 HRESULT <see cref = "CapeErrorInterfaceHR"/>。</remarks>
+    /// <value>The HRESULT value for the exception.</value>
+    [DispId(1), Description(
          "Code to designate the subcategory of the error. The assignment of values is left to each implementation. So that is a proprietary code specific to the CO component provider.")]
     int code { get; }
 
-    /// <summary>
-    /// The description of the error.
-    /// </summary>
-    /// <remarks>
-    /// The error description can include a more verbose description of the condition that
-    /// caused the error.
-    /// </remarks>
-    /// <value>
-    /// A string description of the exception.
-    /// </value>
-    [DispId(2),
-     Description("The description of the error.")]
+    /// <summary>The description of the error.</summary>
+    /// <remarks>错误描述可以包括更详细的条件描述导致了错误。</remarks>
+    /// <value>A string description of the exception.</value>
+    [DispId(2), Description("The description of the error.")]
     string description { get; }
 
-    /// <summary>
-    /// The scope of the error.
-    /// </summary>
-    /// <remarks>
-    /// This property provides a list of packages where the error occurs separated by '.'. 
-    /// For example CapeOpen.Common.Identification.
-    /// </remarks>
+    /// <summary>The scope of the error.</summary>
+    /// <remarks>此属性提供出现错误的包的列表，用“.”分隔。例如 CapeOpen.Common.Identification</remarks>
     /// <value>The source of the error.</value>
-    [DispId(3),
-     Description(
+    [DispId(3), Description(
          "The scope of the error. The list of packages where the error occurs separated by '.'. For example CapeOpen.Common.Identification.")]
     string scope { get; }
 
-    /// <summary>
-    /// The name of the interface where the error is thrown. This is a mandatory field."
-    /// </summary>
-    /// <remarks>
-    /// The interface that the error was thrown.
-    /// </remarks>
+    /// <summary>引发错误的接口的名称。这是必填字段。</summary>
+    /// <remarks>The interface that the error was thrown.</remarks>
     /// <value>The name of the interface.</value>
-    [DispId(4),
-     Description(
+    [DispId(4), Description(
          "The name of the interface where the error is thrown. This is a mandatory field.")]
     string interfaceName { get; }
 
-    /// <summary>
-    /// The name of the operation where the error is thrown. This is a mandatory field.
-    /// </summary>
-    /// <remarks>
-    /// This field provides the name of the operation being perfomed when the exception was raised.
-    /// </remarks>
+    /// <summary>The name of the operation where the error is thrown. This is a mandatory field.</summary>
+    /// <remarks>此字段提供引发异常时正在执行的操作的名称。</remarks>
     /// <value>The operation name.</value>
-    [DispId(5),
-     Description(
+    [DispId(5), Description(
          "The name of the operation where the error is thrown. This is a mandatory field.")]
     string operation { get; }
 
-    /// <summary>
-    /// An URL to a page, document, web site,  where more information on the error can be found. The content of this information is obviously implementation dependent.
-    /// </summary>
-    /// <remarks>
-    /// This field provides an internet URL where more information about the error can be found.
-    /// </remarks>
+    /// <summary>指向页面、文档、网站的 URL，在那里可以找到有关错误的更多信息。该信息的内容显然是依赖于实现的。</summary>
+    /// <remarks>This field provides an internet URL where more information about the error can be found.</remarks>
     /// <value>The URL.</value>
-    [DispId(6),
-     Description(
+    [DispId(6), Description(
          "An URL to a page, document, web site,  where more information on the error can be found. The content of this information is obviously implementation dependent.")]
     string moreInfo { get; }
-};
+}
 
-// typedef CapeErrorInterfaceHR eCapeErrorInterfaceHR;
-
-/// <summary>
-/// The ECapeErrorDummy interface is not intended to be used. 
-/// </summary>
-/// <remarks>
-/// It is only here to ensure that 
-/// the MIDL compiler exports the CapeErrorInterfaceHR enumeration. The compiler only exports 
-/// an enumeration if it is used in a method of an exported interface. 
-/// </remarks>
-[ComImport]
-[ComVisible(false)]
+/// <summary>ECapeErrorDummy 接口不适合使用。</summary>
+/// <remarks>只有在这里才能确保 MIDL 编译器导出 CapeErrorInterfaceHR 枚举。编译器只导出枚举，如果它用于导出接口的方法中。</remarks>
+[ComImport, ComVisible(false)]
 [Guid(CapeOpenGuids.ECapeErrorDummy_IID)]
 [Description("ECapeErrorDummy Interface")]
 public interface ECapeErrorDummy
 {
-    /// <summary>
-    /// The HRESULT of the Dummy Error.
-    /// </summary>
-    /// <remarks>
-    /// The HRESULT of the Dummy Error.
-    /// </remarks>
-    /// <value>
-    /// The HRESULT of the Dummy Error.
-    /// </value>
-    [DispId(1), Description("property Name")]
+    /// <summary>虚拟错误的 HRESULT。</summary>
+    /// <value>The HRESULT of the Dummy Error.</value>
+    [DispId(1), Description("Property Name")]
     int dummy { get; }
 }
