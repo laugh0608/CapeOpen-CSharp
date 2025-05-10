@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 // 有关组件的一般信息通过以下一组属性进行控制。更改这些属性值以修改与组件关联的信息。
 [assembly: AssemblyTitle("CapeOpen")]
 [assembly: AssemblyDescription("CapeOpen dotNET 翻译类库")]
-[assembly: AssemblyConfiguration("")]
+[assembly: AssemblyConfiguration("Debug")]
 [assembly: AssemblyCompany("CEPD@BBS")]
 [assembly: AssemblyProduct("CapeOpen")]
 [assembly: AssemblyCopyright("Copyright © EPA 2011-8")]
