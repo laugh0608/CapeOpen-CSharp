@@ -368,8 +368,8 @@ namespace CapeOpen
                 {
                     if (units[i] == desiredUnit)
                     {
-                        Factor1 = CapeOpen.CDimensions.ConverionsTimes(desiredUnit);
-                        Factor2 = CapeOpen.CDimensions.ConverionsPlus(desiredUnit);
+                        Factor1 = CapeOpen.CDimensions.ConversionsTimes(desiredUnit);
+                        Factor2 = CapeOpen.CDimensions.ConversionsPlus(desiredUnit);
                         bUnitExisting = true;
                         break;
                     }
@@ -412,8 +412,8 @@ namespace CapeOpen
                 {
                     if (units[i] == unit)
                     {
-                        Factor1 = CapeOpen.CDimensions.ConverionsTimes(unit);
-                        Factor2 = CapeOpen.CDimensions.ConverionsPlus(unit);
+                        Factor1 = CapeOpen.CDimensions.ConversionsTimes(unit);
+                        Factor2 = CapeOpen.CDimensions.ConversionsPlus(unit);
                         bUnitExisting = true;
                         break;
                     }
@@ -708,8 +708,8 @@ namespace CapeOpen
                 {
                     if (units[i] == this.Unit)
                     {
-                        Factor1 = CapeOpen.CDimensions.ConverionsTimes(this.Unit);
-                        Factor2 = CapeOpen.CDimensions.ConverionsPlus(this.Unit);
+                        Factor1 = CapeOpen.CDimensions.ConversionsTimes(this.Unit);
+                        Factor2 = CapeOpen.CDimensions.ConversionsPlus(this.Unit);
                         bUnitExisting = true;
                         break;
                     }
@@ -753,8 +753,8 @@ namespace CapeOpen
                 {
                     if (units[i] == this.Unit)
                     {
-                        Factor1 = CapeOpen.CDimensions.ConverionsTimes(this.Unit);
-                        Factor2 = CapeOpen.CDimensions.ConverionsPlus(this.Unit);
+                        Factor1 = CapeOpen.CDimensions.ConversionsTimes(this.Unit);
+                        Factor2 = CapeOpen.CDimensions.ConversionsPlus(this.Unit);
                         bUnitExisting = true;
                         break;
                     }
@@ -888,8 +888,8 @@ namespace CapeOpen
                 {
                     if (units[i] == this.Unit)
                     {
-                        Factor1 = CapeOpen.CDimensions.ConverionsTimes(this.Unit);
-                        Factor2 = CapeOpen.CDimensions.ConverionsPlus(this.Unit);
+                        Factor1 = CapeOpen.CDimensions.ConversionsTimes(this.Unit);
+                        Factor2 = CapeOpen.CDimensions.ConversionsPlus(this.Unit);
                         bUnitExisting = true;
                         break;
                     }
@@ -977,7 +977,7 @@ namespace CapeOpen
         /// Validates the SI value sent against the specification of the parameter.
         /// </summary>
         /// <remarks>
-        /// The value, in the SI units of measurement appropriate to the <see cref="unitCategory"/> of the parameter
+        /// The value, in the SI units of measurement appropriate to the <see cref="UnitCategory"/> of the parameter
         /// is considered valid if it is between the upper and lower bound of the parameter. The message is used to 
         /// return the reason that the parameter is invalid.
         /// </remarks>
@@ -1039,12 +1039,12 @@ namespace CapeOpen
         }
         
         /// <summary>
-        /// Gets the SI unit for the <see cref="unitCategory"/> of the parameter.
+        /// Gets the SI unit for the <see cref="UnitCategory"/> of the parameter.
         /// </summary>
         /// <remarks>
         /// <para>
         /// Provides the SI unit for the parameter. Parameter values are stored in their SI unit of measure for the 
-        /// <see cref="unitCategory"/>. This provides the user with a mechanism to determine the SI unit of measure 
+        /// <see cref="UnitCategory"/>. This provides the user with a mechanism to determine the SI unit of measure 
         /// used for the current parameter.
         /// </para>
         /// </remarks>
@@ -1230,8 +1230,8 @@ namespace CapeOpen
                 {
                     if (units[i] == desiredUnit)
                     {
-                        Factor1 = CapeOpen.CDimensions.ConverionsTimes(desiredUnit);
-                        Factor2 = CapeOpen.CDimensions.ConverionsPlus(desiredUnit);
+                        Factor1 = CapeOpen.CDimensions.ConversionsTimes(desiredUnit);
+                        Factor2 = CapeOpen.CDimensions.ConversionsPlus(desiredUnit);
                         bUnitExisting = true;
                         break;
                     }
@@ -1274,8 +1274,8 @@ namespace CapeOpen
                 {
                     if (units[i] == unit)
                     {
-                        Factor1 = CapeOpen.CDimensions.ConverionsTimes(unit);
-                        Factor2 = CapeOpen.CDimensions.ConverionsPlus(unit);
+                        Factor1 = CapeOpen.CDimensions.ConversionsTimes(unit);
+                        Factor2 = CapeOpen.CDimensions.ConversionsPlus(unit);
                         bUnitExisting = true;
                         break;
                     }
@@ -1318,8 +1318,8 @@ namespace CapeOpen
                 {
                     if (units[i] == unit)
                     {
-                        Factor1 = CapeOpen.CDimensions.ConverionsTimes(unit);
-                        Factor2 = CapeOpen.CDimensions.ConverionsPlus(unit);
+                        Factor1 = CapeOpen.CDimensions.ConversionsTimes(unit);
+                        Factor2 = CapeOpen.CDimensions.ConversionsPlus(unit);
                         bUnitExisting = true;
                         break;
                     }
@@ -1611,7 +1611,7 @@ namespace CapeOpen
         }
 
         /// <summary>
-        /// Gets and sets the lower bound of the parameter in SI units corresponding to the <see cref="unitCategory"/> of 
+        /// Gets and sets the lower bound of the parameter in SI units corresponding to the <see cref="UnitCategory"/> of 
         /// the parameter.
         /// </summary>
         /// <remarks>
