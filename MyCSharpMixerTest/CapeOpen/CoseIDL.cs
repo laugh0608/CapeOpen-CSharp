@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-//#ifndef _COSE_IDL_
-//#define _COSE_IDL_
+﻿// 大白萝卜重构于 2025.05.11，使用 .NET8.O-windows、Microsoft Visual Studio 2022 Preview 和 Rider 2024.3。
 
 /* IMPORTANT NOTICE
 (c) The CAPE-OPEN Laboratory Network, 2002.
@@ -13,245 +7,130 @@ All rights are reserved unless specifically stated otherwise
 Visit the web site at www.colan.org
 
 This file has been edited using the editor from Microsoft Visual Studio 6.0
-This file can viewed properly with any basic editors and browsers (validation done under MS Windows and Unix)
+This file can view properly with any basic editors and browsers (validation done under MS Windows and Unix)
 */
 
-// This file was developed/modified by JEAN-PIERRE BELAUD for CO-LaN organisation - August 2003
+// This file was developed/modified by JEAN-PIERRE-BELAUD for CO-LaN organisation - August 2003
 
+using System.ComponentModel;
+using System.Runtime.InteropServices;
 
-namespace CapeOpen {
+namespace CapeOpen;
 
-	// -------------------------------------------------------------------
-	// ---- The scope of the COSE interfaces ----------------------------------
-	// -------------------------------------------------------------------
+// ---------------------------------------------------------
+// ---- COSE 接口的职责范围 ----------------------------------
+// ---------------------------------------------------------
 
+/// <summary>包含诊断功能。</summary>
+/// <remarks>由 PME 支持的接口，用于将指向 ICapeUtilities:SetSimulation 的引用传递给 PMC。
+/// 然后，PMC 可以使用 PME COSE 接口中的任何接口。</remarks>
+[ComImport, ComVisible(false)]
+[Guid(CapeOpenGuids.ICapeSimulationContext_IID)]
+[Description("ICapeSimulation Context Interface")]
+public interface ICapeSimulationContext
+{
+    // 这里没有暂时定义方法...
+}
 
-	/// <summary>
-	/// Encloses the diagnostic functionality.
-	/// </summary>
-	/// <remarks>
-	/// An intferace to be supported by the PME in order to pass a reference to the 
-	/// ICapeUtilities:SetSimulation to the PMC. The PMC may then 
-	/// use any of the PME COSE interfaces.
-	/// </remarks>
-	[System.Runtime.InteropServices.ComImport()]
-	[System.Runtime.InteropServices.ComVisibleAttribute(false)]
-	[System.Runtime.InteropServices.Guid(CapeOpenGuids.ICapeSimulationContext_IID)]
-	[System.ComponentModel.DescriptionAttribute("ICapeSimulation Context Interface")]
-	public interface ICapeSimulationContext
-	{
-		// no methods defined here...
-	};
+// ICapeDiagnostic接口的 .NET 翻译。
+/// <summary>提供一种向用户提供详细消息的机制。</summary>
+/// <remarks>从 PMC 向 PME（进而向用户）传递冗余信息。PMC 应该在执行流程图时能够向用户记录或显示信息。
+/// 与其让每个 PMC 通过不同的机制执行这些任务，不如将它们全部重定向到 PME 服务以与用户通信。
+/// 错误通用接口无法满足这些要求，因为它们会停止 PMC 代码的执行并向 PME 发出异常情况信号。
+/// 该文件处理简单信息或警告消息的传递。</remarks>
+[ComImport, ComVisible(false)]
+[Guid(CapeOpenGuids.ICapeDiagnostic_IID)]
+[Description("ICapeDiagnostic Interface")]
+public interface ICapeDiagnostic
+{
+    /// <summary>向终端写入消息。</summary>
+    /// <remarks>将字符串写入终端。当需要引起用户注意的消息时调用此方法。实现应确保将字符串写入对话框或消息列表，
+    /// 以便用户可以轻松查看。预先，此消息必须尽快显示给用户。</remarks>
+    /// <param name = "message">The text to be displayed.</param>
+    /// <exception cref ="ECapeUnknown">The error to be raised when other error(s), specified for this operation, are not suitable.</exception>
+    /// <exception cref = "ECapeInvalidArgument">To be used when an invalid argument value is passed, for example, an unrecognised Compound identifier or UNDEFINED for the props' argument.</exception>
+    [DispId(1), Description("Method PopUpMessage")]
+    void PopUpMessage(string message);
 
-	//.NET Translation of the ICapeDiagnostic Interface.
-	/// <summary>
-	/// Provides a mechanism to provide verbose messages to the user.
-	/// </summary>
-	/// <remarks>
-	/// The communication of verbose information from the PMC to the PME (and hence to the
-	///user). PMCs should be able to log or display information to the user while it is executing 
-	/// a flowsheet. Rather than each PMC performing these tasks by the means of different
-	/// mechanisms, it is much preferable to redirect them all to the PME services for
-	/// communicating with the user. The Error Common Interfaces do not fulfil these requirements,
-	/// since they stop the execution of the PMC code and signal an abnormal situation to the PME.
-	/// The document deals with the transferral of simple informative or warning messages.
-	/// </remarks>
-	[System.Runtime.InteropServices.ComImport()]
-	[System.Runtime.InteropServices.ComVisibleAttribute(false)]
-	[System.Runtime.InteropServices.Guid(CapeOpenGuids.ICapeDiagnostic_IID)]
-	[System.ComponentModel.DescriptionAttribute("ICapeDiagnostic Interface")]
-	public interface ICapeDiagnostic
-	{
-		/// <summary>
-		/// Writes a message to the terminal.
-		/// </summary>
-		/// <remarks>
-		/// <para>Write a string to the terminal.</para>
-		/// <para>This method is called when a message needs to be brought to the user’s attention.
-		/// The implementation should ensure that the string is written out to a dialogue box or 
-		/// to a message list that the user can easily see.</para>
-		/// <para>A priori this message has to be displayed as soon as possible to the user.</para>
-		/// </remarks>
-		/// <param name = "message">The text to be displayed.</param>
-		/// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
-		/// <exception cref = "ECapeInvalidArgument">To be used when an invalid argument value is passed, for example, an unrecognised Compound identifier or UNDEFINED for the props argument.</exception>
-		[System.Runtime.InteropServices.DispId(1)]
-		[System.ComponentModel.DescriptionAttribute("method PopUpMessage")] 
-		void PopUpMessage(String message); 
+    /// <summary>将字符串写入 PME 的日志文件。</summary>
+    /// <remarks>将字符串写入日志。当需要记录消息进行日志记录时，会调用此方法。预计实现会将字符串写入日志文件或其他日志设备。</remarks>
+    /// <param name = "message">The text to be logged.</param>
+    /// <exception cref ="ECapeUnknown">The error to be raised when other error(s), specified for this operation, are not suitable.</exception>
+    /// <exception cref = "ECapeInvalidArgument">To be used when an invalid argument value is passed, for example, an unrecognised Compound identifier or UNDEFINED for the props' argument.</exception>
+    [DispId(2), Description("Method LogMessage")]
+    void LogMessage(string message);
+}
 
-		/// <summary>
-		/// Writes a string to the PME's log file.
-		/// </summary>
-		/// <remarks>
-		/// <para>Write a string to a log.</para>
-		/// <para>This method is called when a message needs to be recorded for logging purposes. 
-		/// The implementation is expected to write the string to a log file or other journaling 
-		/// device.</para>
-		/// </remarks>
-		/// <param name = "message">The text to be logged.</param>
-		/// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
-		/// <exception cref = "ECapeInvalidArgument">To be used when an invalid argument value is passed, for example, an unrecognised Compound identifier or UNDEFINED for the props argument.</exception>
-		[System.Runtime.InteropServices.DispId(2)]
-		[System.ComponentModel.DescriptionAttribute("method LogMessage")] 
-		void LogMessage(String message);
-	};
+/// <summary>创建指定类型的热力学流股对象模板。</summary>
+/// <remarks>当一个单元操作需要获得热力学计算时，它通常会在连接到单元端口的流股对象上执行这些计算。
+/// 然而，在某些情况下，例如蒸馏塔，可能需要使用不同的属性包。甚至可以要求用户选择必须使用的热力学模型。
+/// 所有访问 CAPE-OPEN 属性包的机制都已经在 COSE 中，作为使用 CAPE-OPEN 属性包所需的功能的一部分。
+/// 因此，将执行此选择和创建热力学引擎的责任委托给 COSE，而不是每个 PMC 实现支持，将导致更薄和更易于编码的单元操作组件。
+/// 如果流股对象模板的配置在 PME 侧，则单元操作仅需要额外的功能即可访问已配置的物料模板列表并从中选择一个。</remarks>
+[ComImport, ComVisible(false)]
+[Guid(CapeOpenGuids.ICapeMaterialTemplateSystem_IID)]
+[Description("ICapeMaterialTemplateSystem Interface")]
+public interface ICapeMaterialTemplateSystem
+{
+    /// <summary>创建指定类型的热力学流股对象模板。</summary>
+    /// <remarks>当一个单元操作需要获得热力学计算时，它通常会在连接到单元端口的材料对象上执行这些计算。
+    /// 然而，在某些情况下，例如蒸馏塔，可能需要使用不同的属性包。甚至可以要求用户选择必须使用的热力学模型。
+    /// 所有访问 CAPE-OPEN 属性包的机制都已经在 COSE 接口中，作为使用 CAPE-OPEN 属性包所需的功能的一部分。
+    /// 因此，将执行此选择和创建热力学引擎的责任委托给 COSE，而不是每个 PMC 实现支持，将导致更薄和更易于编码的单元操作组件。
+    /// 如果流股对象模板的配置在 PME 侧，则单元操作仅需要额外的功能即可访问已配置的物料模板列表并从中选择一个。</remarks>
+    /// <value>返回 COSE 支持的流股模板名称的字符串数组。这可以包括：
+    /// <list type="bullet"><item>CAPE-OPEN 独立的物性包，</item>
+    /// <item>CAPE-OPEN 依赖于热力学系统的物性包，</item>
+    /// <item>COSE 本身自带的物性包。</item></list></value>
+    /// <exception cref ="ECapeUnknown">The error to be raised when other error(s), specified for this operation, are not suitable.</exception>
+    /// <exception cref = "ECapeInvalidArgument">To be used when an invalid argument value is passed, for example, an unrecognised Compound identifier or UNDEFINED for the props' argument.</exception>
+    [DispId(1)]
+    [Description("property MaterialTemplates")]
+    object MaterialTemplates { get; }
 
-	/// <summary>
-	/// Creates a new thermo material template of the specified type.
-	/// </summary>
-	/// <remarks>
-	/// When a Unit Operation needs to obtain thermodynamic calculations, it will 
-	/// typically perform them on the material objects attached to the Unit ports. However, 
-	/// in some cases, like distillation columns, there may be the need to utilise a different 
-	/// Property Package. Even the user could be requested to choose which thermodynamic 
-	/// model to must be used. All the mechanisms for accessing CAPE-OPEN Property Packages 
-	/// are already in the COSE´s, as part of the functionality necessary for making use of 
-	/// CAPE-OPEN Property Packages. Therefore, instead of each PMC implementing support for 
-	/// performing this selection and creation of thermo engine, delegating that 
-	/// responsibility to the COSE will result in thinner and easier to code Unit Operation
-	/// Components. If configuration of Material Templates is in the PME side, the only 
-	/// additional functionality the Unit Operation would require is that for accessing the 
-	/// list of already configured Material Templates, and picking one of them.
-	/// </remarks>
-	[System.Runtime.InteropServices.ComImport()]
-	[System.Runtime.InteropServices.ComVisibleAttribute(false)]
-	[System.Runtime.InteropServices.Guid(CapeOpenGuids.ICapeMaterialTemplateSystem_IID)]
-	[System.ComponentModel.DescriptionAttribute("ICapeMaterialTemplateSystem Interface")]
-	public interface ICapeMaterialTemplateSystem
-	{
-		/// <summary>
-		/// Creates a new thermo material template of the specified type.
-		/// </summary>
-		/// <remarks>
-		/// When a Unit Operation needs to obtain thermodynamic calculations, it will 
-		/// typically perform them on the material objects attached to the Unit ports. However, 
-		/// in some cases, like distillation columns, there may be the need to utilise a different 
-		/// Property Package. Even the user could be requested to choose which thermodynamic 
-		/// model to must be used. All the mechanisms for accessing CAPE-OPEN Property Packages 
-		/// are already in the COSE´s, as part of the functionality necessary for making use of 
-		/// CAPE-OPEN Property Packages. Therefore, instead of each PMC implementing support for 
-		/// performing this selection and creation of thermo engine, delegating that 
-		/// responsibility to the COSE will result in thinner and easier to code Unit Operation
-		/// Components. If configuration of Material Templates is in the PME side, the only 
-		/// additional functionality the Unit Operation would require is that for accessing the 
-		/// list of already configured Material Templates, and picking one of them.
-		/// </remarks>
-        /// <value>Returns StringArray of material template names supported by the COSE. This can include:
-        /// <list type="bullet">
-        /// <item>CAPE-OPEN standalone property packages </item>
-        /// <item>CAPE-OPEN property packages that depend on a Property System </item>
-        /// <item>Property packages that are native to the COSE.</item>
-        /// </list>
-        /// </value>
-		/// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
-		/// <exception cref = "ECapeInvalidArgument">To be used when an invalid argument value is passed, for example, an unrecognised Compound identifier or UNDEFINED for the props argument.</exception>
-		[System.Runtime.InteropServices.DispId(1)]
-		[System.ComponentModel.DescriptionAttribute("property MaterialTemplates")] 
-		Object MaterialTemplates
-		{
-			get;
-		}
+    /// <summary>创建指定类型的热力学流股对象模板。</summary>
+    /// <remarks>当一个单元操作需要获得热力学计算时，它通常会在连接到单元端口的材料对象上执行这些计算。
+    /// 然而，在某些情况下，例如蒸馏塔，可能需要使用不同的属性包。甚至可以要求用户选择必须使用的热力学模型。
+    /// 所有访问 CAPE-OPEN 属性包的机制都已经在 COSE 接口中，作为使用 CAPE-OPEN 属性包所需的功能的一部分。
+    /// 因此，将执行此选择和创建热力学引擎的责任委托给 COSE，而不是每个 PMC 实现支持，将导致更薄和更易于编码的单元操作组件。
+    /// 如果流股对象模板的配置在 PME 侧，则单元操作仅需要额外的功能即可访问已配置的物料模板列表并从中选择一个。</remarks>
+    /// <returns>返回COSE支持的流股对象模板名称的字符串数组。这可以包括：CAPE-OPEN 独立的物性包，
+    /// CAPE-OPEN 依赖于热力学系统的物性包，COSE 本身自带的物性包。</returns>
+    /// <param name = "materialTemplateName">The name of the material template to be resolved (which must be included in the list returned by MaterialTemplates)</param>
+    /// <exception cref ="ECapeUnknown">The error to be raised when other error(s), specified for this operation, are not suitable.</exception>
+    /// <exception cref = "ECapeInvalidArgument">To be used when an invalid argument value is passed, for example, an unrecognised Compound identifier or UNDEFINED for the props' argument.</exception>
+    [DispId(2), Description("Method CreateMaterialTemplate")]
+    [return: MarshalAs(UnmanagedType.IDispatch)]
+    object CreateMaterialTemplate(string materialTemplateName);
+}
 
-		/// <summary>
-		/// Creates a new thermo material template of the specified type.
-		/// </summary>
-		/// <remarks>
-		/// When a Unit Operation needs to obtain thermodynamic calculations, it will 
-		/// typically perform them on the material objects attached to the Unit ports. However, 
-		/// in some cases, like distillation columns, there may be the need to utilise a different 
-		/// Property Package. Even the user could be requested to choose which thermodynamic 
-		/// model to must be used. All the mechanisms for accessing CAPE-OPEN Property Packages 
-		/// are already in the COSE´s, as part of the functionality necessary for making use of 
-		/// CAPE-OPEN Property Packages. Therefore, instead of each PMC implementing support for 
-		/// performing this selection and creation of thermo engine, delegating that 
-		/// responsibility to the COSE will result in thinner and easier to code Unit Operation
-		/// Components. If configuration of Material Templates is in the PME side, the only 
-		/// additional functionality the Unit Operation would require is that for accessing the 
-		/// list of already configured Material Templates, and picking one of them.
-		/// </remarks>
-		/// <returns>
-		/// Returns StringArray of material template names supported by the COSE. This can include:
-		/// - CAPE-OPEN standalone property packages
-		/// - CAPE-OPEN property packages that depend on a Property System
-		/// - Property packages that are native to the COSE.
-		/// </returns>
-		/// <param name = "materialTemplateName">TThe name of the material template to be resolved (which 
-		/// must be included in the list returned by MaterialTemplates)</param>
-		/// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
-		/// <exception cref = "ECapeInvalidArgument">To be used when an invalid argument value is passed, for example, an unrecognised Compound identifier or UNDEFINED for the props argument.</exception>
-		[System.Runtime.InteropServices.DispId(2)]
-		[System.ComponentModel.DescriptionAttribute("method CreateMaterialTemplate")]
-		[return: System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.IDispatch)] 
-		Object CreateMaterialTemplate(String materialTemplateName) ;
-	};
+// ICapeCOSEUtilities 接口的 .NET 翻译。
+/// <summary>为 PMC 提供一种从 PME 获取自由 FORTRAN 通道的机制。</summary>
+/// <remarks>当 PMC 封装 FORTRAN DLL 时，如果 PMC 与 PME（如 Simulator Execution）在同一进程中加载，
+/// 可能会遇到技术问题。在这种情况下，如果两个 FORTRAN 模块都选择相同地输出通道进行 FORTRAN 消息传递，
+/// 则它们之间可能会出现冲突。因此，PME 应集中生成每个可能需要它们的 PMC 的唯一输出通道。这一要求仅
+/// 在 PME 和 PMC 属于同一计算进程时出现，显然，这种 FORTRAN 通道功能仅在架构不是分布式时适用。由于我们将来
+/// 可以交换此类信息，因此必须建立一个通用且可扩展的机制。调用模式是一个很好的候选者。因此，FORTRAN 通道的特定字符串值将被标准化。</remarks>
+[ComImport, ComVisible(false)]
+[Guid(CapeOpenGuids.ICapeCOSEUtilities_IID)]
+[Description("ICapeCOSEUtilities Interface")]
+public interface ICapeCOSEUtilities
+{
+    /// <summary>PME 支持的命名值列表。</summary>
+    /// <value>COSE 支持的命名值字符串数组列表。此列表应包括 Free FORTRAN 通道的命名值，该值将提供 Free FORTRAN 通道的名称。</value>
+    /// <exception cref ="ECapeUnknown">The error to be raised when other error(s), specified for this operation, are not suitable.</exception>
+    [DispId(1), Description("property NamedValueList")]
+    object NamedValueList { get; }
 
-	//.NET Translation of the ICapeCOSEUtilities Interface.
-	/// <summary>
-	/// Provides a mechanism for the PMC to obtain a free FORTRAN channel from the PME.
-	/// </summary>
-	/// <remarks>
-	/// When a PMC is wrapping a FORTRAN dll, there may be a technical problem when the PMC
-	/// is loaded in the same process as the PME such as Simulator Execution. In this case, there
-	/// may be a clash between different FORTRAN modules if two of them select the same output 
-	/// channel for FORTRAN messaging. Hence the PME should centralise the generation of
-	/// unique output channels for each PMC that may require them. This requirement only occurs
-	/// when PME and PMC belong to the same computing process, obviously this FORTRAN
-	/// channel functionality is only applicable when the architecture is not distributed. As we can
-	/// have in the future this kind of information to exchange, a generic and extensible mechanism
-	/// has to be set up. The calling pattern is a good candidate. Thus a specific string value for
-	/// FORTRAN channel would be standardised.
-	/// </remarks>
-	[System.Runtime.InteropServices.ComImport()]
-	[System.Runtime.InteropServices.ComVisibleAttribute(false)]
-	[System.Runtime.InteropServices.Guid(CapeOpenGuids.ICapeCOSEUtilities_IID)]
-	[System.ComponentModel.DescriptionAttribute("ICapeCOSEUtilities Interface")]
-	public interface ICapeCOSEUtilities
-	{
-		/// <summary>
-		/// The list of named values supported by the PME.
-		/// </summary>
-		/// <remarks>
-		/// The list of NamedValues provided by the PME.
-		/// </remarks>
-		/// <value>
-		/// A String Array list of named values supported by the COSE. Included in this list
-		/// should be the FreeFORTRANchannel named value which will provide the name of free FORTRAN
-		/// channel.
-		/// </value>
-		/// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
-		[
-			System.Runtime.InteropServices.DispId(1),
-			System.ComponentModel.DescriptionAttribute("property NamedValueList")
-		] 
-		Object NamedValueList
-		{
-			get; 
-		}
-
-		/// <summary>
-		/// Returns a value corresponding to the request name, including a free FORTRAN channel.
-		/// </summary>
-		/// <remarks>
-		/// <para>Returns the value corresponding to the value named name. Be aware that two consecutive calls passing the 
-        /// same name may return different values.</para>
-		/// <para>The COSE will return a different FORTRAN channel each time the FreeFORTRANchannel NamedValue is 
-		/// called for this property. The COSE may not use any of the returned FORTRAN channels 
-		/// for any internally used FORTRAN module.</para>
-        /// </remarks>
-		/// <returns>
-		/// Name of the requested value (which must be included in the list returned by NamedValueList).
-		/// </returns>
-		/// <param name = "value">Name of the requested value (which must be included in the list returned by 
-        /// <see cref = "ICapeCOSEUtilities.NamedValueList"/>.</param>
-		/// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
-		/// <exception cref = "ECapeInvalidArgument">To be used when an invalid argument value is passed, for example, an unrecognised Compound identifier or UNDEFINED for the props argument.</exception>
-        [
-            System.Runtime.InteropServices.DispId(2),
-            System.ComponentModel.DescriptionAttribute("property NamedValue")
-        ]
-        Object NamedValue(String value);
- 
-        };
-
-	//#endif //_COSE_IDL_
+    /// <summary>PME 支持的命名值列表。</summary>
+    /// <remarks>返回与名为 name 的值相对应的值。请注意，连续两次传递相同名称的调用可能会返回不同的值。
+    /// 每次为该属性调用 NamedValue 时，COSE 都会返回不同的 FORTRAN 通道。COSE 可能不会使用任何
+    /// 返回的 FORTRAN 通道用于任何内部使用的 FORTRAN 模块。</remarks>
+    /// <returns>Name of the requested value (which must be included in the list returned by NamedValueList).</returns>
+    /// <param name = "value">Name of the requested value (which must be included in the list returned by 
+    /// <see cref="ICapeCOSEUtilities.NamedValueList"/>).</param>
+    /// <exception cref ="ECapeUnknown">The error to be raised when other error(s), specified for this operation, are not suitable.</exception>
+    /// <exception cref = "ECapeInvalidArgument">To be used when an invalid argument value is passed, for example, an unrecognised Compound identifier or UNDEFINED for the props' argument.</exception>
+    [DispId(2), Description("property NamedValue")]
+    object NamedValue(string value);
 }
