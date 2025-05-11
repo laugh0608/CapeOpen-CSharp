@@ -554,24 +554,11 @@ internal interface ICapeUtilitiesCOM
     }
 
     /// <summary>要求组件对自身进行配置。例如，一个单元操作可能在这个调用期间创建端口和参数。</summary>
-    /// <remarks>
-    /// <para>Initially, this method was only present in the ICapeUnit interface. 
-    /// Since ICapeUtilities.Initialize is now available for any kind of PMC, 
-    /// ICapeUnit. Initialize is deprecated.</para>
-    /// <para>The PME will order the PMC to get initialized through this method. 
-    /// Any initialisation that could fail must be placed here. Initialize is 
-    /// guaranteed to be the first method called by the client (except low level 
-    /// methods such as class constructors or initialisation persistence methods).
-    /// Initialize has to be called once when the PMC is instantiated in a 
-    /// particular flowsheet.</para>
-    /// <para>When the initialisation fails, before signalling an error, the PMC 
-    /// must free all the resources that were allocated before the failure 
-    /// occurred. When the PME receives this error, it may not use the PMC 
-    /// anymore.</para>
-    /// <para>The method terminate of the current interface must not either be 
-    /// called. Hence, the PME may only release the PMC through the middleware 
-    /// native mechanisms.</para>
-    /// </remarks>
+    /// <remarks>最初，此方法仅存在于 ICapeUnit 接口中。由于 ICapeUtilities.Initialize 现在可用于任何类型的 PMC，
+    /// 因此 ICapeUnit.Initialize 已被弃用。PME 将命令 PMC 通过此方法进行初始化。任何可能失败的初始化都必须放在这里。
+    /// 初始化被保证是客户端调用的前一个方法（除了低级方法，如类构造函数或初始化持久性方法）。当 PMC 在特定流程图中实例化时，
+    /// 初始化必须被调用一次。当初始化失败时，在发出错误信号之前，PMC 必须释放所有在失败发生前分配的资源。
+    /// 当 PME 接收到此错误时，它可能不再使用 PMC。当前接口的终止方法也不能被调用。因此，PME 只能通过中间件原生机制释放 PMC。</remarks>
     /// <exception cref ="ECapeUnknown">The error to be raised when other error(s), specified for this operation, are not suitable.</exception>
     /// <exception cref = "ECapeOutOfResources">ECapeOutOfResources</exception>
     /// <exception cref = "ECapeLicenceError">ECapeLicenceError</exception>
@@ -581,45 +568,24 @@ internal interface ICapeUtilitiesCOM
      Description("Configuration has to take place here")]
     void Initialize();
 
-    /// <summary>
-    ///	Clean-up tasks can be performed here. References to parameters and ports are released here.
-    /// </summary>
-    /// <remarks>
-    /// <para>Initially, this method was only present in the ICapeUnit interface. 
-    /// Since ICapeUtilities.Terminate is now available for any kind of PMC, 
-    /// ICapeUnit.Terminate is deprecated.</para>
-    /// <para>The PME will order the PMC to get destroyed through this method. 
-    /// Any uninitialization that could fail must be placed here. ‘Terminate’ is 
-    /// guaranteed to be the last method called by the client (except low level 
-    /// methods such as class destructors). ‘Terminate’ may be called at any time, 
-    /// but may be only called once.</para>
-    /// <para>When this method returns an error, the PME should report the user. 
-    /// However, after that the PME is not allowed to use the PMC anymore.</para>
-    /// <para>The Unit specification stated that “Terminate may check if the data 
-    /// has been saved and return an error if not.” It is suggested not to follow 
-    /// this recommendation, since it’s the PME responsibility to save the state 
-    /// of the PMC before terminating it. In the case that a user wants to close 
-    /// a simulation case without saving it, it’s better to leave the PME to 
-    /// handle the situation instead of each PMC providing a different 
-    /// implementation.</para>
-    /// </remarks>
-    /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
+    /// <summary>可以在这里执行清理任务。这里发布了参数和端口的引用。</summary>
+    /// <remarks>最初，此方法仅存在于 ICapeUnit 接口中。由于 ICapeUtilities.Terminate 现在可用于任何类型的 PMC，
+    /// 因此 ICapeUnit.Terminate 已被弃用。PME 将命令 PMC 通过此方法被销毁。任何可能失败的初始化必须放在这里。
+    /// Terminate 保证是客户端调用的最后一个方法（除了低级方法如类析构函数）。
+    /// Terminate 可以随时调用，但可能只调用一次。当此方法返回错误时，PME 应向用户报告。但是，之后 PME 将不再允许使用 PMC。
+    /// Unit 规范指出，“Terminate 可以检查数据是否已保存，如果未保存则返回错误。”建议不要遵循此建议，
+    /// 因为保存 PMC 状态是 PME 的责任，而不是在终止它之前。在用户想要关闭模拟案例而不保存它的情况下，
+    /// 最好让 PME 来处理这种情况，而不是每个 PMC 提供不同的实现。</remarks>
+    /// <exception cref ="ECapeUnknown">The error to be raised when other error(s), specified for this operation, are not suitable.</exception>
     /// <exception cref = "ECapeOutOfResources">ECapeOutOfResources</exception>
     /// <exception cref = "ECapeBadInvOrder">ECapeBadInvOrder</exception>
-    [DispId(4),
-     Description("Clean up has to take place here")]
+    [DispId(4), Description("Clean up has to take place here")]
     void Terminate();
 
-    /// <summary>
-    ///	Displays the PMC graphic interface, if available.
-    /// </summary>
-    /// <remarks>
-    /// The PMC displays its user interface and allows the Flowsheet User to 
-    /// interact with it. If no user interface is available it returns an error.
-    /// </remarks>
-    /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
-    [DispId(5),
-     Description("Displays the graphic interface")]
+    /// <summary>Displays the PMC graphic interface, if available.</summary>
+    /// <remarks>PMC 显示其用户界面，并允许流程图用户与之交互。如果没有可用的用户界面，则返回一个错误。</remarks>
+    /// <exception cref ="ECapeUnknown">The error to be raised when other error(s), specified for this operation, are not suitable.</exception>
+    [DispId(5), Description("Displays the graphic interface")]
     [PreserveSig]
     int Edit();
 }
@@ -661,128 +627,66 @@ internal interface ICapeUtilitiesCOM
 [Description("ICapeUtilities Interface")]
 public interface ICapeUtilities
 {
-    /// <summary>
-    ///	Gets the component's collection of parameters. 
-    /// </summary>
-    /// <remarks>
-    /// <para>Return the collection of Public Unit Parameters (i.e. 
-    /// <see cref = "ICapeCollection"/>.</para>
-    /// <para>These are delivered as a collection of elements exposing the interface 
-    /// <see cref = "ICapeParameter"/>. From there, the client could extract the 
-    /// <see cref = "ICapeParameterSpec"/> interface or any of the typed
-    /// interfaces such as <see cref = "ICapeRealParameterSpec"/>, once the client 
-    /// establishes that the Parameter is of type double.</para>
-    /// </remarks>
+    /// <summary>获取组件的参数集合。</summary>
+    /// <remarks>返回公共单元参数（即 <see cref="ICapeCollection"/>）的集合。这些参数作为暴露
+    /// 接口 <see cref="ICapeParameter"/> 的元素集合提供。从那里，客户端可以
+    /// 提取 <see cref="ICapeParameterSpec"/> 接口或任何类型化接口，如 <see cref="ICapeRealParameterSpec"/>，
+    /// 一旦客户端确定参数类型为 double。</remarks>
     /// <value>The parameter collection of the unit operation.</value>
-    /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
+    /// <exception cref ="ECapeUnknown">The error to be raised when other error(s), specified for this operation, are not suitable.</exception>
     /// <exception cref = "ECapeFailedInitialisation">ECapeFailedInitialisation</exception>
     /// <exception cref = "ECapeNoImpl">ECapeNoImpl</exception>
-    [DispId(1),
-     Description("Gets parameter collection")]
+    [DispId(1), Description("Gets parameter collection")]
     ParameterCollection Parameters { get; }
 
-    /// <summary>
-    ///	Sets the component's simulation context.
-    /// </summary>
-    /// <remarks>
-    /// <para>Allows the PME to convey the PMC a reference to the former’s 
-    /// simulation  context. The simulation context will be PME objects which will 
-    /// expose a given set of CO interfaces. Each of these interfaces will allow 
-    /// the PMC to call back the PME in order to benefit from its exposed services 
-    /// (such as creation of material templates, diagnostics or measurement unit 
-    /// conversion). If the PMC does not support accessing the simulation context, 
-    /// it is recommended to raise the ECapeNoImpl error.</para>
-    /// <para>Initially, this method was only present in the ICapeUnit interface. 
-    /// Since ICapeUtilities.SetSimulationContext is now available for any kind of 
-    /// PMC, ICapeUnit.SetSimulationContext is deprecated.</para>
-    /// </remarks>
-    /// <value>
-    /// The reference to the PME’s simulation context class. For the PMC to use 
-    /// this class, this reference will have to be converted to each of the 
-    /// defined CO Simulation Context interfaces.
-    /// </value>
-    /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
+    /// <summary>设置组件的模拟上下文。</summary>
+    /// <remarks>允许 PME 向 PMC 传递其模拟上下文的引用。模拟上下文将是 PME 对象，这些对象将暴露一组给定的 CO 接口。
+    /// 这些接口中的每一个都将允许 PMC 调用 PME，以利用其暴露的服务（例如创建材料模板、诊断或测量单位转换）。
+    /// 如果 PMC 不支持访问模拟上下文，建议引发 ECapeNoImpl 错误。最初，此方法仅在 ICapeUnit 接口中可用。
+    /// 由于 ICapeUtilities.SetSimulationContext 现在可用于任何类型的 PMC，因此 ICapeUnit.SetSimulationContext 已被弃用。</remarks>
+    /// <value>引用 PME 的模拟上下文类。对于PMC要使用此类，此引用必须转换为每个定义的 CO 模拟上下文接口。</value>
+    /// <exception cref ="ECapeUnknown">The error to be raised when other error(s), specified for this operation, are not suitable.</exception>
     /// <exception cref = "ECapeFailedInitialisation">ECapeFailedInitialisation</exception>
-    /// <exception cref = "ECapeInvalidArgument">To be used when an invalid argument value is passed, for example, an unrecognised Compound identifier or UNDEFINED for the props argument.</exception>
+    /// <exception cref = "ECapeInvalidArgument">To be used when an invalid argument value is passed, for example, an unrecognised Compound identifier or UNDEFINED for the props' argument.</exception>
     /// <exception cref = "ECapeNoImpl">ECapeNoImpl</exception>
-    [DispId(2),
-     Description("Set the simulation context")]
+    [DispId(2), Description("Set the simulation context")]
     ICapeSimulationContext SimulationContext { get; set; }
 
-    /// <summary>
-    ///	The component is asked to configure itself. For example a Unit Operation might create ports and parameters during this call
-    /// </summary>
-    /// <remarks>
-    /// <para>Initially, this method was only present in the ICapeUnit interface. 
-    /// Since ICapeUtilities.Initialize is now available for any kind of PMC, 
-    /// ICapeUnit. Initialize is deprecated.</para>
-    /// <para>The PME will order the PMC to get initialized through this method. 
-    /// Any initialisation that could fail must be placed here. Initialize is 
-    /// guaranteed to be the first method called by the client (except low level 
-    /// methods such as class constructors or initialisation persistence methods).
-    /// Initialize has to be called once when the PMC is instantiated in a 
-    /// particular flowsheet.</para>
-    /// <para>When the initialisation fails, before signalling an error, the PMC 
-    /// must free all the resources that were allocated before the failure 
-    /// occurred. When the PME receives this error, it may not use the PMC 
-    /// anymore.</para>
-    /// <para>The method terminate of the current interface must not either be 
-    /// called. Hence, the PME may only release the PMC through the middleware 
-    /// native mechanisms.</para>
-    /// </remarks>
-    /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
+    /// <summary>要求组件对自身进行配置。例如，一个单元操作可能在这个调用期间创建端口和参数。</summary>
+    /// <remarks>最初，此方法仅存在于 ICapeUnit 接口中。由于 ICapeUtilities.Initialize 现在可用于任何类型的 PMC，
+    /// 因此 ICapeUnit.Initialize 已被弃用。PME 将命令 PMC 通过此方法进行初始化。任何可能失败的初始化都必须放在这里。
+    /// 初始化被保证是客户端调用的前一个方法（除了低级方法，如类构造函数或初始化持久性方法）。当 PMC 在特定流程图中实例化时，
+    /// 初始化必须被调用一次。当初始化失败时，在发出错误信号之前，PMC 必须释放所有在失败发生前分配的资源。
+    /// 当 PME 接收到此错误时，它可能不再使用 PMC。当前接口的终止方法也不能被调用。因此，PME 只能通过中间件原生机制释放 PMC。</remarks>
+    /// <exception cref ="ECapeUnknown">The error to be raised when other error(s), specified for this operation, are not suitable.</exception>
     /// <exception cref = "ECapeOutOfResources">ECapeOutOfResources</exception>
     /// <exception cref = "ECapeLicenceError">ECapeLicenceError</exception>
     /// <exception cref = "ECapeFailedInitialisation">ECapeFailedInitialisation</exception>
     /// <exception cref = "ECapeBadInvOrder">ECapeBadInvOrder</exception>
-    [DispId(3),
-     Description("Configuration has to take place here")]
+    [DispId(3), Description("Configuration has to take place here")]
     void Initialize();
 
-    /// <summary>
-    ///	Clean-up tasks can be performed here. References to parameters and ports are released here.
-    /// </summary>
-    /// <remarks>
-    /// <para>Initially, this method was only present in the ICapeUnit interface. 
-    /// Since ICapeUtilities.Terminate is now available for any kind of PMC, 
-    /// ICapeUnit.Terminate is deprecated.</para>
-    /// <para>The PME will order the PMC to get destroyed through this method. 
-    /// Any uninitialization that could fail must be placed here. ‘Terminate’ is 
-    /// guaranteed to be the last method called by the client (except low level 
-    /// methods such as class destructors). ‘Terminate’ may be called at any time, 
-    /// but may be only called once.</para>
-    /// <para>When this method returns an error, the PME should report the user. 
-    /// However, after that the PME is not allowed to use the PMC anymore.</para>
-    /// <para>The Unit specification stated that “Terminate may check if the data 
-    /// has been saved and return an error if not.” It is suggested not to follow 
-    /// this recommendation, since it’s the PME responsibility to save the state 
-    /// of the PMC before terminating it. In the case that a user wants to close 
-    /// a simulation case without saving it, it’s better to leave the PME to 
-    /// handle the situation instead of each PMC providing a different 
-    /// implementation.</para>
-    /// </remarks>
-    /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
+    /// <summary>可以在这里执行清理任务。这里发布了参数和端口的引用。</summary>
+    /// <remarks>最初，此方法仅存在于 ICapeUnit 接口中。由于 ICapeUtilities.Terminate 现在可用于任何类型的 PMC，
+    /// 因此 ICapeUnit.Terminate 已被弃用。PME 将命令 PMC 通过此方法被销毁。任何可能失败的初始化必须放在这里。
+    /// Terminate 保证是客户端调用的最后一个方法（除了低级方法如类析构函数）。
+    /// Terminate 可以随时调用，但可能只调用一次。当此方法返回错误时，PME 应向用户报告。但是，之后 PME 将不再允许使用 PMC。
+    /// Unit 规范指出，“Terminate 可以检查数据是否已保存，如果未保存则返回错误。”建议不要遵循此建议，
+    /// 因为保存 PMC 状态是 PME 的责任，而不是在终止它之前。在用户想要关闭模拟案例而不保存它的情况下，
+    /// 最好让 PME 来处理这种情况，而不是每个 PMC 提供不同的实现。</remarks>
+    /// <exception cref ="ECapeUnknown">The error to be raised when other error(s), specified for this operation, are not suitable.</exception>
     /// <exception cref = "ECapeOutOfResources">ECapeOutOfResources</exception>
     /// <exception cref = "ECapeBadInvOrder">ECapeBadInvOrder</exception>
-    [DispId(4),
-     Description("Clean up has to take place here")]
+    [DispId(4), Description("Clean up has to take place here")]
     void Terminate();
 
-    /// <summary>
-    ///	Displays the PMC graphic interface, if available.
-    /// </summary>
-    /// <remarks>
-    /// The PMC displays its user interface and allows the Flowsheet User to 
-    /// interact with it. If no user interface is available it returns an error.
-    /// </remarks>
-    /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
-    [DispId(5),
-     Description("Displays the graphic interface")]
+    /// <summary>显示PMC图形界面(如果有)。</summary>
+    /// <remarks>PMC 显示其用户界面，并允许流程图用户与之交互。如果没有可用的用户界面，则返回一个错误。</remarks>
+    /// <exception cref ="ECapeUnknown">The error to be raised when other error(s), specified for this operation, are not suitable.</exception>
+    [DispId(5), Description("Displays the graphic interface")]
     DialogResult Edit();
 }
 
-/// <summary>
-/// Represents the method that will handle the changing of the simualtion context of a PMC.
-/// </summary>
+/// <summary>表示将处理 PMC 模拟上下文更改的方法。</summary>
 [ComVisible(false)]
-public delegate void SimulationContextChangedHandler(Object sender, EventArgs args);
+public delegate void SimulationContextChangedHandler(object sender, EventArgs args);
