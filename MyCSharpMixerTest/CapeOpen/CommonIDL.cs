@@ -1,5 +1,8 @@
-﻿// This idl file was ported from the CAPE-OPEN common.idl file and 
+﻿// 大白萝卜重构于 2025.05.11，使用 .NET8.O-windows、Microsoft Visual Studio 2022 Preview 和 Rider 2024.3。
+
+// This idl file was ported from the CAPE-OPEN common.idl file and 
 // the interfaces were updated to conform to .NET format.
+
 /* IMPORTANT NOTICE
 (c) The CAPE-OPEN Laboratory Network, 2002.
 All rights are reserved unless specifically stated otherwise
@@ -12,1186 +15,545 @@ This file can view properly with any basic editors and browsers (validation done
 
 // This file was developed/modified by JEAN-PIERRE-BELAUD for CO-LaN organisation - August 2003
 
+using System.ComponentModel;
+using System.Runtime.InteropServices;
+
 namespace CapeOpen;
 
-//typedef System.Int32		CapeLong;
-//typedef System.Int16		CapeShort;
-
-//typedef System.Double		CapeDouble;
-//typedef System.Single		CapeFloat;
-
-//typedef System.Boolean		CapeBoolean;
-
-//typedef System.Byte		CapeChar;
-//typedef System.String		CapeString;
-//typedef System.DateTime	CapeDate;
-//typedef System.String		CapeURL;
-
-//typedef System.Object		CapeVariant;
-//interface class ICapeThermoMaterialObject;
-//interface class ICapeThermoSystem;
-//interface class ICapeThermoPropertyPackage;
-
-// Fundamental CAPE-OPEN array data types (automation compatible)
-/*
-[
-System.Runtime.InteropServices.ComVisible(false),
-System.Runtime.InteropServices.Guid("55A66445-F84A-4f43-A34C-F1B2405B3992"),
-System.ComponentModel.Description("CAPE-OPEN Integer Array Data Type")
-]
-public ref class CapeArrayLong : public System.Collections.Generic.List<System.Int32>
-{
-public:
-CapeArrayLong()
-{
-}
-CapeArrayLong(array<System.Int32> newList)
-{
-for (int i = 0; i < newList->Length; i++){
-this->Add(newList[i]);
-}
-}
-};
-
-[
-System.Runtime.InteropServices.ComVisible(false),
-System.Runtime.InteropServices.Guid("4B65B8FB-9C4F-454f-A717-16370370052D"),
-System.ComponentModel.Description("CAPE-OPEN String Array Data Type")
-]
-public ref class CapeArrayDouble : public System.Collections.Generic.List<System.Double>
-{
-public:
-CapeArrayDouble()
-{
-}
-
-CapeArrayDouble(int count)
-{
-for (int i = 0; i < count; i++)
-{
-this->Add(0);
-}
-}
-
-CapeArrayDouble(array<System.Double> newList)
-{
-for (int i = 0; i < newList->Length; i++){
-this->Add(newList[i]);
-}
-}
-};
-
-[
-System.Runtime.InteropServices.ComVisible(false),
-System.Runtime.InteropServices.Guid("D06E7E49-2E42-4878-8D71-89A48DB95EEC"),
-System.ComponentModel.Description("CAPE-OPEN String Array Data Type"),
-System.Runtime.InteropServices.ClassInterface(System.Runtime.InteropServices.ClassInterfaceType.AutoDispatch)
-]
-public ref class CapeArrayString : public System.Collections.Generic.List<System.String>
-{
-public:
-CapeArrayString()
-{
-}
-
-CapeArrayString(array<System.String> newList)
-{
-for (int i = 0; i < newList->Length; i++){
-this->Add(newList[i]);
-}
-}
-};
-
-[
-System.Runtime.InteropServices.ComVisible(false),
-System.Runtime.InteropServices.Guid("44770A1F-1D51-498e-B7C1-DF4F27A0FC13"),
-System.ComponentModel.Description("CAPE-OPEN Object Array Data Type")
-]
-public ref class CapeArrayBoolean : System.Collections.Generic.List<System.Boolean>
-{
-public:
-CapeArrayBoolean()
-{
-}
-
-CapeArrayBoolean(array<bool> newList)
-{
-for (int i = 0; i < newList->Length; i++){
-this->Add(newList[i]);
-}
-}
-};
-
-[
-System.Runtime.InteropServices.ComVisible(false),
-System.Runtime.InteropServices.Guid("99690C3E-98FB-41eb-A451-DA843A01D9A3"),
-System.ComponentModel.Description("CAPE-OPEN Object Array Data Type")
-]
-public ref class CapeArrayVariant : public System.Collections.Generic.List<System.Object>
-{
-public:
-CapeArrayVariant()
-{
-}
-
-CapeArrayVariant(array<Object> newList)
-{
-for (int i = 0; i < newList->Length; i++){
-this->Add(newList[i]);
-}
-}
-};
-*/
-/// <summary>
-/// Enumeration flag to indicate parameter validation status.
-/// </summary>
-/// <remarks>
-/// <para>The enumeration has the following meanings:</para>
-/// <para>(i)   notValidated(CAPE_NOT_VALIDATED): The PMC's Validate()
-/// method has not been called after the last time that its value had been changed.</para>
-/// <para>(ii)  invalid(CAPE_INVALID): The last time that the PMC's Validate() 
-/// method was called it returned false.</para>
-/// <para>(iii) valid(CAPE_VALID): the last time that the PMC's Validate() method 
-/// was called it returned true.</para>
-/// </remarks>
-[
-    Serializable,
-    System.Runtime.InteropServices.ComVisibleAttribute(true),
-    System.Runtime.InteropServices.GuidAttribute(CapeOpenGuids.CapeValidationStatus_IID)
-]
+/// <summary>表示参数验证状态的枚举标志。</summary>
+/// <remarks>枚举的含义如下：
+/// (i) notValidated(CAPE_NOT_VALIDATED): The PMC's Validate() method has not been called after the last time that its value had been changed.
+/// (ii) invalid(CAPE_INVALID): The last time that the PMC's Validate() method was called it returned false.
+/// (iii) valid(CAPE_VALID): the last time that the PMC's Validate() method was called it returned true.</remarks>
+[Serializable, ComVisible(true)]
+[Guid(CapeOpenGuids.CapeValidationStatus_IID)]
 public enum CapeValidationStatus
 {
-    /// <summary>
-    /// The PMC's Validate() method has not been called after the last time that its value had been changed.
-    /// </summary>
+    /// <summary>PMC 的 Validate() 方法在其值上次更改后未被调用。</summary>
     CAPE_NOT_VALIDATED = 0,
 
-    /// <summary>
-    /// The last time that the PMC's Validate() method was called it returned false.
-    /// </summary>
+    /// <summary>上次调用 PMC 的 Validate() 方法时，返回的是 false。</summary>
     CAPE_INVALID = 1,
 
-    /// <summary>
-    /// The last time that the PMC's Validate() method was called it returned true.
-    /// </summary>
+    /// <summary>上次调用 PMC 的 Validate() 方法时，返回值为 true。</summary>
     CAPE_VALID = 2
 }
-// typedef CapeValidationStatus eCapeValidationStatus;
 
-/// <summary>
-/// Event thrown to indicate that the name of a component has changed.
-/// </summary>
-[System.Runtime.InteropServices.ComVisibleAttribute(true)]
-[System.Runtime.InteropServices.GuidAttribute("F79EA405-4002-4fb2-AED0-C1E48793637D")]
-[System.ComponentModel.DescriptionAttribute("CapeIdentificationEvents Interface")]
-[System.Runtime.InteropServices.InterfaceTypeAttribute(System.Runtime.InteropServices.ComInterfaceType
-    .InterfaceIsIDispatch)]
-interface IComponentNameChangedEventArgs
+/// <summary>事件，表示组件名称已更改。</summary>
+[ComVisible(true)]
+[Guid(CapeOpenGuids.InComNameChEvArgsIid)] // F79EA405-4002-4fb2-AED0-C1E48793637D
+[Description("CapeIdentificationEvents Interface")]
+[InterfaceType(ComInterfaceType.InterfaceIsIDispatch)]
+internal interface IComponentNameChangedEventArgs
 {
-    /// <summary>
-    /// The name of the PMC prior to the name change.</summary>
-    /// <remarks>The former name of the unit can be used to update GUI inforamtion about the PMC.</remarks>
+    /// <summary>项目管理委员会更名前的名称。</summary>
+    /// <remarks>设备的原名称可用于更新有关 PMC 的图形用户界面信息。</remarks>
     /// <value>The name of the unit prior to the name change.</value>
-    String OldName { get; }
+    string OldName { get; }
 
-    /// <summary>
-    /// The name of the PMC after the name change.</summary>
-    /// <remarks>The new name of the unit can be used to update GUI inforamtion about the PMC.</remarks>
+    /// <summary>项目管理委员会更名后的名称。</summary>
+    /// <remarks>设备的新名称可用于更新有关 PMC 的图形用户界面信息。</remarks>
     /// <value>The name of the unit after the name change.</value>
-    String NewName { get; }
-};
+    string NewName { get; }
+}
 
-/// <summary>
-/// Event thrown to indicate that the description of a component has changed.
-/// </summary>
-[System.Runtime.InteropServices.ComVisibleAttribute(true)]
-[System.Runtime.InteropServices.GuidAttribute("34C43BD3-86B2-46d4-8639-E0FA5721EC5C")]
-[System.ComponentModel.DescriptionAttribute("CapeIdentificationEvents Interface")]
-[System.Runtime.InteropServices.InterfaceTypeAttribute(System.Runtime.InteropServices.ComInterfaceType
-    .InterfaceIsIDispatch)]
-interface IComponentDescriptionChangedEventArgs
+/// <summary>抛出的事件，表示组件的描述已更改。</summary>
+[ComVisible(true)]
+[Guid(CapeOpenGuids.InComDescChEvArgsIid)] // 34C43BD3-86B2-46d4-8639-E0FA5721EC5C
+[Description("CapeIdentificationEvents Interface")]
+[InterfaceType(ComInterfaceType.InterfaceIsIDispatch)]
+internal interface IComponentDescriptionChangedEventArgs
 {
-    /// <summary>
-    /// The description of the PMC prior to the name change.</summary>
-    /// <remarks>The former description of the unit can be used to update GUI inforamtion about the PMC.</remarks>
+    /// <summary>项目管理委员会更改前的描述。</summary>
+    /// <remarks>设备的新名称可用于更新有关 PMC 的图形用户界面信息。</remarks>
     /// <value>The description of the unit prior to the description change.</value>
-    String OldDescription { get; }
+    string OldDescription { get; }
 
-    /// <summary>
-    /// The name of the PMC after the name change.</summary>
-    /// <remarks>The description name of the unit can be used to update GUI inforamtion about the PMC.</remarks>
+    /// <summary>项目管理委员会更改后的描述。</summary>
+    /// <remarks>设备的新名称可用于更新有关 PMC 的图形用户界面信息。</remarks>
     /// <value>The description of the unit after the description change.</value>
-    String NewDescription { get; }
-};
+    string NewDescription { get; }
+}
 
-/// <summary>
-/// Provides data for the CapeIdentification.ComponentNameChanged event.
-/// </summary>
-/// <remarks>
-/// A CapeIdentification.NameChangedEventArgs event specifies the old and new name of the PMC.
-/// </remarks>
-[Serializable]
-[System.Runtime.InteropServices.ComVisibleAttribute(true)]
-[System.Runtime.InteropServices.GuidAttribute("D78014E7-FB1D-43ab-B807-B219FAB97E8B")]
-[System.Runtime.InteropServices.ClassInterface(System.Runtime.InteropServices.ClassInterfaceType.None)]
-public class ComponentNameChangedEventArgs : System.EventArgs //,
-//IComponentNameChangedEventArgs
+/// <summary>为 CapeIdentification.ComponentNameChanged 事件提供数据。</summary>
+/// <remarks>CapeIdentification.NameChangedEventArgs 事件指定了 PMC 的新旧名称。</remarks>
+[Serializable, ComVisible(true)]
+[Guid(CapeOpenGuids.ComNameChEvArgsIid)]  // D78014E7-FB1D-43ab-B807-B219FAB97E8B
+[ClassInterface(ClassInterfaceType.None)]
+public class ComponentNameChangedEventArgs : EventArgs //, IComponentNameChangedEventArgs
 {
-    private String m_oldName;
-    private String m_newName;
-
-    /// <summary>Creates an instance of the NameChangedEventArgs class with the old and new name.</summary>
-    /// <remarks>You can use this constructor when raising the NameChangedEvent at run time to specify a 
-    /// specific the name of the PMC having its name changed.
-    /// </remarks>
+    /// <summary>用新旧名称创建 NameChangedEventArgs 类的实例。</summary>
+    /// <remarks>当在运行时引发 NameChangedEvent 时，可以使用此构造函数指定其名称已更改的 PMC 的特定名称。</remarks>
     /// <param name = "oldName">The name of the PMC prior to the name change.</param>
     /// <param name = "newName">The name of the PMC after the name change.</param>
-    public ComponentNameChangedEventArgs(String oldName, String newName)
-        : base()
+    public ComponentNameChangedEventArgs(string oldName, string newName)
     {
-        m_oldName = oldName;
-        m_newName = newName;
+        OldName = oldName;
+        NewName = newName;
     }
 
-    /// <summary>
-    /// The name of the PMC prior to the name change.</summary>
-    /// <remarks>The former name of the unit can be used to update GUI inforamtion about the PMC.</remarks>
+    /// <summary>项目管理委员会更名前的名称。</summary>
+    /// <remarks>设备的原名称可用于更新有关 PMC 的图形用户界面信息。</remarks>
     /// <value>The name of the unit prior to the name change.</value>
-    public String OldName
-    {
-        get { return m_oldName; }
-    }
+    public string OldName { get; }
 
-    /// <summary>
-    /// The name of the PMC after the name change.</summary>
-    /// <remarks>The new name of the unit can be used to update GUI inforamtion about the PMC.</remarks>
+    /// <summary>项目管理委员会更名后的名称。</summary>
+    /// <remarks>设备的新名称可用于更新有关 PMC 的图形用户界面信息。</remarks>
     /// <value>The name of the unit after the name change.</value>
-    public String NewName
-    {
-        get { return m_newName; }
-    }
-};
+    public string NewName { get; }
+}
 
-/// <summary>
-/// Provides data for the CapeIdentification.ComponentDescriptionChanged event.
-/// </summary>
-/// <remarks>
-/// A CapeIdentification.DescriptionChangedEventArgs event specifies the old and new description of the PMC.
-/// </remarks>
-[Serializable]
-[System.Runtime.InteropServices.ComVisibleAttribute(true)]
-[System.Runtime.InteropServices.GuidAttribute("0C51C4F1-20E8-413d-93E1-4704B888354A")]
-[System.Runtime.InteropServices.ClassInterface(System.Runtime.InteropServices.ClassInterfaceType.None)]
-public class ComponentDescriptionChangedEventArgs : System.EventArgs,
-    IComponentDescriptionChangedEventArgs
+/// <summary>为 CapeIdentification.ComponentDescriptionChanged 事件提供数据。</summary>
+/// <remarks>CapeIdentification.NameChangedEventArgs 事件指定了 PMC 的新旧名称。</remarks>
+[Serializable, ComVisible(true)]
+[Guid(CapeOpenGuids.ComDescChEvArgsIid)] // 0C51C4F1-20E8-413d-93E1-4704B888354A
+[ClassInterface(ClassInterfaceType.None)]
+public class ComponentDescriptionChangedEventArgs : EventArgs, IComponentDescriptionChangedEventArgs
 {
-    private String m_oldDescription;
-    private String m_newDescription;
-
-    /// <summary>Creates an instance of the DescriptionChangedEventArgs class with the old and new name.</summary>
-    /// <remarks>You can use this constructor when raising the DescriptionChangedEvent at run time to specify a 
-    /// specific the description of the PMC having its name changed.
-    /// </remarks>
+    /// <summary>用新旧名称创建 DescriptionChangedEventArgs 类的实例。</summary>
+    /// <remarks>当在运行时引发 DescriptionChangedEvent 时，可以使用此构造函数来指定其名称已更改的 PMC 的特定描述。</remarks>
     /// <param name = "oldDescription">The description of the PMC prior to the description change.</param>
     /// <param name = "newDescription">The description of the PMC after the description change.</param>
-    public ComponentDescriptionChangedEventArgs(String oldDescription, String newDescription)
-        : base()
+    public ComponentDescriptionChangedEventArgs(string oldDescription, string newDescription)
     {
-        m_oldDescription = oldDescription;
-        m_newDescription = newDescription;
+        OldDescription = oldDescription;
+        NewDescription = newDescription;
     }
 
-    /// <summary>
-    /// The description of the PMC prior to the name change.</summary>
-    /// <remarks>The former description of the unit can be used to update GUI inforamtion about the PMC.</remarks>
+    /// <summary>项目管理委员会更改前的描述。</summary>
+    /// <remarks>设备的新名称可用于更新有关 PMC 的图形用户界面信息。</remarks>
     /// <value>The description of the unit prior to the description change.</value>
-    public String OldDescription
-    {
-        get { return m_oldDescription; }
-    }
+    public string OldDescription { get; }
 
-    /// <summary>
-    /// The name of the PMC after the name change.</summary>
-    /// <remarks>The description name of the unit can be used to update GUI inforamtion about the PMC.</remarks>
+    /// <summary>项目管理委员会更改后的描述。</summary>
+    /// <remarks>设备的新名称可用于更新有关 PMC 的图形用户界面信息。</remarks>
     /// <value>The description of the unit after the description change.</value>
-    public String NewDescription
-    {
-        get { return m_newDescription; }
-    }
-};
+    public string NewDescription { get; }
+}
 
-/// <summary>
-/// Provides methods to identify and describe a CAPE-OPEN component.
-/// </summary>
-/// <remarks>
-/// <para>As illustration, we remind requirements coming from the existing interface 
-/// specification and being connected with the Identification concept:</para>
-/// <para>The Unit Operations Interfaces have the following requirements:</para>
-/// <para>* If a flowsheet contains two instances of a Unit Operation of a particular 
-/// class, the COSE needs to provide the user a textual identifier to distinguish each 
-/// of the instances. For instance, when the COSE requires to report about an error 
-/// occurred in one of the Unit Operations.</para>
-/// <para>* When the COSE shows the user its GUI to connect the COSE’s streams to the 
-/// Unit Operation ports, the COSE needs to request the Unit for its list of available 
-/// ports. For the user to identify the ports, the user needs some distinctive textual 
-/// information for each of them.</para>
-/// <para>* When the COSE exposes to the user its interfaces to browse or set the 
-/// value of an internal parameter of a Unit Operation, the COSE needs to request the 
-/// Unit for its list of available parameters. No matter if this COSE’s interface is 
-/// a GUI or a programming interface, each parameter must be identified by a textual 
-/// string.</para>
-/// <para>The ICapeThermoMaterialObject (used by both Unit and Thermo interfaces):</para>
-/// <para>* If a Unit Operation has encountered an error accessing a stream 
-/// (<see cref ="ICapeThermoMaterialObject">ICapeThermoMaterialObject</see>), the 
-/// Unit might decide to report it to the user. It would be desirable the stream to 
-/// have a textual identifier for the user to be able to quickly know which stream 
-/// failed.</para>
-/// <para>The Thermodynamic Interfaces have the following requirements:</para>
-/// <para>* The <see cref ="ICapeThermoSystem">ICapeThermoSystem</see>
-/// and the <see cref ="ICapeThermoPropertyPackage">ICapeThermoPropertyPackage</see> 
-/// interfaces don’t require an identification interface, since both of them have been 
-/// designed as singletons (a single instance of each component class is required). 
-/// That means that there is no need to identify this instance: its class description 
-/// would be enough. However, the user might decide anyway to assign a name or a 
-/// description to the CAPE-OPEN property systems or property packages used in her/his 
-/// flowsheet. Furthermore, if these interfaces evolve, the singleton approach could 
-/// be removed. In this case, identifying each instance will be a must.</para>
-/// <para>The Solvers Interfaces have the following requirements:</para>
-/// <para>* Many objects should provide the functionality coming from the 
-/// Identification Common Interface.</para>
-/// <para>The SMST Interfaces have the following requirements:</para>
-/// <para>* The CO SMST component package depends on the Identification Interface 
-/// package. The interface ICapeSMSTFactory must provide the Identification 
-/// capabilities.</para>
-/// <para>Reference document: Identification Common Interface</para>
-/// </remarks>
-[System.Runtime.InteropServices.InterfaceType(System.Runtime.InteropServices.ComInterfaceType.InterfaceIsIDispatch)]
-[System.Runtime.InteropServices.ComVisibleAttribute(true)]
-[System.Runtime.InteropServices.GuidAttribute("5F5087A7-B27B-4b4f-902D-5F66E34A0CBE")]
-[System.ComponentModel.DescriptionAttribute("CapeIdentificationEvents Interface")]
-interface ICapeIdentificationEvents
+/// <summary>提供识别和描述 CAPE-OPEN 组件的方法。</summary>
+/// <remarks>例如，我们提醒来自现有接口规范的要求以及与识别概念相关的要求：
+/// 单位业务接口有以下要求：
+/// 如果流程图中包含特定类型的单元操作的两种实例，COSE需要为用户提供一个文本标识符，以区分每个实例。例如，当 COSE 需要报告一个单元操作中发生错误时。
+/// 当 COSE 向用户显示其 GUI 以将 COSE 的流连接到单元操作端口时，COSE 需要请求单元获取其可用端口列表。为了帮助用户识别端口，用户需要为每个端口提供一些独特的文本信息。
+/// 当 COSE 向用户暴露其接口以浏览或设置单元操作内部参数的值时，COSE 需要请求单元获取其可用参数列表。无论此 COSE 的接口是图形用户界面还是编程接口，每个参数都必须由文本字符串标识。
+/// ICapeThermoMaterialObject（单位接口和热敏接口都使用）：
+/// 如果单元操作在访问流时遇到错误（<see cref="ICapeThermoMaterialObject"></see>），
+/// 单元可能会决定向用户报告。理想情况下，流应该有一个文本标识符，以便用户能够快速知道哪个流失败。
+/// 热力学接口有以下要求：
+/// <see cref="ICapeThermoSystem"></see> 和 <see cref="ICapeThermoPropertyPackage"></see> 接口不需要一个标识接口，
+/// 因为它们都被设计为单例（每个组件类只有一个实例）。这意味着不需要标识这个实例：其类描述就足够了。然而，用户可能仍然决定为其流程中
+/// 使用的 CAPE-OPEN 属性系统或属性包分配一个名称或描述。此外，如果这些接口发生变化，单例方法可以被移除。在这种情况下，标识每个实例将是必须的。
+/// 求解器接口有以下要求：许多对象都应提供来自识别通用接口的功能。
+/// SMST 接口有以下要求：
+/// CO 的 SMST组件包依赖于识别接口组件包。接口 ICapeSMSTFactory 必须提供识别功能。参考 Identification Common 接口。</remarks>
+[InterfaceType(ComInterfaceType.InterfaceIsIDispatch)]
+[ComVisible(true)]
+[Guid(CapeOpenGuids.InCapeIdentEvIid)] // 5F5087A7-B27B-4b4f-902D-5F66E34A0CBE
+[Description("CapeIdentificationEvents Interface")]
+internal interface ICapeIdentificationEvents
 {
-    /// <summary>
-    /// Gets and sets the name of the component.
-    /// </summary>
-    /// <remarks>
-    /// <para>A particular Use Case in a system may contain several CAPE-OPEN components 
-    /// of the same class. The user should be able to assign different names and 
-    /// descriptions to each instance in order to refer to them unambiguously and in a 
-    /// user-friendly way. Since not always the software components that are able to 
-    /// set these identifications and the software components that require this information 
-    /// have been developed by the same vendor, a CAPE-OPEN standard for setting and 
-    /// getting this information is required.</para>
-    /// <para>So, the component will not usually set its own name and description: the 
-    /// user of the component will do it.</para>
-    /// </remarks>
+    /// <summary>获取和设置组件的名称。</summary>
+    /// <remarks>一个系统中的特定用例可能包含多个相同类的 CAPE-OPEN 组件。用户应该能够为每个实例分配不同的名称和描述，
+    /// 以便以不模糊和用户友好的方式引用它们。由于并非总是能够设置这些标识的软件组件和需要此信息的软件组件由同一供应商开发，
+    /// 因此需要设置和获取此信息的 CAPE-OPEN 标准。因此，组件通常不会设置自己的名称和描述：组件的用户将这样做。</remarks>
     /// <value>The unique name of the component.</value>
-    /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
-    /// <param name = "sender">The PMC that raised the event.</param>
-    /// <param name = "args">A <see cref = "ComponentNameChangedEventArgs ">ParameterDefaultValueChanged</see> that contains information about the event.</param>
+    /// <exception cref="ECapeUnknown">The error to be raised when other error(s), specified for this operation, are not suitable.</exception>
+    /// <param name="sender">The PMC that raised the event.</param>
+    /// <param name="args">A <see cref="ComponentNameChangedEventArgs">ParameterDefaultValueChanged</see> that contains information about the event.</param>
     void ComponentNameChanged(
-        [System.Runtime.InteropServices.MarshalAs(System.Runtime.InteropServices.UnmanagedType.IDispatch)]
-        Object sender,
-        [System.Runtime.InteropServices.MarshalAs(System.Runtime.InteropServices.UnmanagedType.IDispatch)]
-        Object args
+        [MarshalAs(UnmanagedType.IDispatch)] object sender,
+        [MarshalAs(UnmanagedType.IDispatch)] object args
     );
 
-    /// <summary>
-    /// Gets and sets the description of the component.
-    /// </summary>
-    /// <remarks>
-    /// <para>A particular Use Case in a system may contain several CAPE-OPEN components 
-    /// of the same class. The user should be able to assign different names and 
-    /// descriptions to each instance in order to refer to them unambiguously and in a 
-    /// user-friendly way. Since not always the software components that are able to 
-    /// set these identifications and the software components that require this information 
-    /// have been developed by the same vendor, a CAPE-OPEN standard for setting and 
-    /// getting this information is required.</para>
-    /// <para>So, the component will not usually set its own name and description: the 
-    /// user of the component will do it.</para>
-    /// </remarks>
+    /// <summary>获取和设置组件的描述。</summary>
+    /// <remarks>一个系统中的特定用例可能包含多个相同类的 CAPE-OPEN 组件。用户应该能够为每个实例分配不同的名称和描述，
+    /// 以便以不模糊和用户友好的方式引用它们。由于并非总是能够设置这些标识的软件组件和需要此信息的软件组件由同一供应商开发，
+    /// 因此需要设置和获取此信息的 CAPE-OPEN 标准。因此，组件通常不会设置自己的名称和描述：组件的用户将这样做。</remarks>
     /// <value>The description of the component.</value>
-    /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
-    /// <param name = "sender">The PMC that raised the event.</param>
-    /// <param name = "args">A <see cref = "ComponentDescriptionChangedEventArgs ">ParameterDefaultValueChanged</see> that contains information about the event.</param>
+    /// <exception cref="ECapeUnknown">The error to be raised when other error(s), specified for this operation, are not suitable.</exception>
+    /// <param name="sender">The PMC that raised the event.</param>
+    /// <param name="args">A <see cref="ComponentDescriptionChangedEventArgs">ParameterDefaultValueChanged</see> that contains information about the event.</param>
     void ComponentDescriptionChanged(
-        [System.Runtime.InteropServices.MarshalAs(System.Runtime.InteropServices.UnmanagedType.IDispatch)]
-        Object sender,
-        [System.Runtime.InteropServices.MarshalAs(System.Runtime.InteropServices.UnmanagedType.IDispatch)]
-        Object args
+        [MarshalAs(UnmanagedType.IDispatch)] object sender,
+        [MarshalAs(UnmanagedType.IDispatch)] object args
     );
-};
+}
 
-/// <summary>
-/// Provides methods to identify and describe a CAPE-OPEN component.
-/// </summary>
-/// <remarks>
-/// <para>As illustration, we remind requirements coming from the existing interface 
-/// specification and being connected with the Identification concept:</para>
-/// <para>The Unit Operations Interfaces have the following requirements:</para>
-/// <para>* If a flowsheet contains two instances of a Unit Operation of a particular 
-/// class, the COSE needs to provide the user a textual identifier to distinguish each 
-/// of the instances. For instance, when the COSE requires to report about an error 
-/// occurred in one of the Unit Operations.</para>
-/// <para>* When the COSE shows the user its GUI to connect the COSE’s streams to the 
-/// Unit Operation ports, the COSE needs to request the Unit for its list of available 
-/// ports. For the user to identify the ports, the user needs some distinctive textual 
-/// information for each of them.</para>
-/// <para>* When the COSE exposes to the user its interfaces to browse or set the 
-/// value of an internal parameter of a Unit Operation, the COSE needs to request the 
-/// Unit for its list of available parameters. No matter if this COSE’s interface is 
-/// a GUI or a programming interface, each parameter must be identified by a textual 
-/// string.</para>
-/// <para>The ICapeThermoMaterialObject (used by both Unit and Thermo interfaces):</para>
-/// <para>* If a Unit Operation has encountered an error accessing a stream 
-/// (<see cref ="ICapeThermoMaterialObject">ICapeThermoMaterialObject</see>), the 
-/// Unit might decide to report it to the user. It would be desirable the stream to 
-/// have a textual identifier for the user to be able to quickly know which stream 
-/// failed.</para>
-/// <para>The Thermodynamic Interfaces have the following requirements:</para>
-/// <para>* The <see cref ="ICapeThermoSystem">ICapeThermoSystem</see>
-/// and the <see cref ="ICapeThermoPropertyPackage">ICapeThermoPropertyPackage</see> 
-/// interfaces don’t require an identification interface, since both of them have been 
-/// designed as singletons (a single instance of each component class is required). 
-/// That means that there is no need to identify this instance: its class description 
-/// would be enough. However, the user might decide anyway to assign a name or a 
-/// description to the CAPE-OPEN property systems or property packages used in her/his 
-/// flowsheet. Furthermore, if these interfaces evolve, the singleton approach could 
-/// be removed. In this case, identifying each instance will be a must.</para>
-/// <para>The Solvers Interfaces have the following requirements:</para>
-/// <para>* Many objects should provide the functionality coming from the 
-/// Identification Common Interface.</para>
-/// <para>The SMST Interfaces have the following requirements:</para>
-/// <para>* The CO SMST component package depends on the Identification Interface 
-/// package. The interface ICapeSMSTFactory must provide the Identification 
-/// capabilities.</para>
-/// <para>Reference document: Identification Common Interface</para>
-/// </remarks>
-[System.Runtime.InteropServices.ComImport()]
-[System.Runtime.InteropServices.ComVisibleAttribute(true)]
-[System.Runtime.InteropServices.GuidAttribute(CapeOpenGuids.CapeIdentification_IID)]
-[System.ComponentModel.DescriptionAttribute("CapeIdentification Interface")]
+/// <summary>提供识别和描述 CAPE-OPEN 组件的方法。</summary>
+/// <remarks>例如，我们提醒来自现有接口规范的要求以及与识别概念相关的要求：
+/// 单位业务接口有以下要求：
+/// 如果流程图中包含特定类型的单元操作的两种实例，COSE需要为用户提供一个文本标识符，以区分每个实例。例如，当 COSE 需要报告一个单元操作中发生错误时。
+/// 当 COSE 向用户显示其 GUI 以将 COSE 的流连接到单元操作端口时，COSE 需要请求单元获取其可用端口列表。为了帮助用户识别端口，用户需要为每个端口提供一些独特的文本信息。
+/// 当 COSE 向用户暴露其接口以浏览或设置单元操作内部参数的值时，COSE 需要请求单元获取其可用参数列表。无论此 COSE 的接口是图形用户界面还是编程接口，每个参数都必须由文本字符串标识。
+/// ICapeThermoMaterialObject（单位接口和热敏接口都使用）：
+/// 如果单元操作在访问流时遇到错误（<see cref="ICapeThermoMaterialObject"></see>），
+/// 单元可能会决定向用户报告。理想情况下，流应该有一个文本标识符，以便用户能够快速知道哪个流失败。
+/// 热力学接口有以下要求：
+/// <see cref="ICapeThermoSystem"></see> 和 <see cref="ICapeThermoPropertyPackage"></see> 接口不需要一个标识接口，
+/// 因为它们都被设计为单例（每个组件类只有一个实例）。这意味着不需要标识这个实例：其类描述就足够了。然而，用户可能仍然决定为其流程中
+/// 使用的 CAPE-OPEN 属性系统或属性包分配一个名称或描述。此外，如果这些接口发生变化，单例方法可以被移除。在这种情况下，标识每个实例将是必须的。
+/// 求解器接口有以下要求：许多对象都应提供来自识别通用接口的功能。
+/// SMST 接口有以下要求：
+/// CO 的 SMST组件包依赖于识别接口组件包。接口 ICapeSMSTFactory 必须提供识别功能。参考 Identification Common 接口。</remarks>
+[ComImport, ComVisible(true)]
+[Guid(CapeOpenGuids.CapeIdentification_IID)]
+[Description("CapeIdentification Interface")]
 public interface ICapeIdentification
 {
-    /// <summary>
-    /// Gets and sets the name of the component.
-    /// </summary>
-    /// <remarks>
-    /// <para>A particular Use Case in a system may contain several CAPE-OPEN components 
-    /// of the same class. The user should be able to assign different names and 
-    /// descriptions to each instance in order to refer to them unambiguously and in a 
-    /// user-friendly way. Since not always the software components that are able to 
-    /// set these identifications and the software components that require this information 
-    /// have been developed by the same vendor, a CAPE-OPEN standard for setting and 
-    /// getting this information is required.</para>
-    /// <para>So, the component will not usually set its own name and description: the 
-    /// user of the component will do it.</para>
-    /// </remarks>
+    /// <summary>获取和设置组件的名称。</summary>
+    /// <remarks>一个系统中的特定用例可能包含多个相同类的 CAPE-OPEN 组件。用户应该能够为每个实例分配不同的名称和描述，
+    /// 以便以不模糊和用户友好的方式引用它们。由于并非总是能够设置这些标识的软件组件和需要此信息的软件组件由同一供应商开发，
+    /// 因此需要设置和获取此信息的 CAPE-OPEN 标准。因此，组件通常不会设置自己的名称和描述：组件的用户将这样做。</remarks>
     /// <value>The unique name of the component.</value>
     /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
-    [System.Runtime.InteropServices.DispIdAttribute(1)]
-    [System.ComponentModel.DescriptionAttribute("property ComponentName")]
-    String ComponentName { get; set; }
+    [DispId(1), Description("property ComponentName")]
+    string ComponentName { get; set; }
 
-    /// <summary>
-    /// Gets and sets the description of the component.
-    /// </summary>
-    /// <remarks>
-    /// <para>A particular Use Case in a system may contain several CAPE-OPEN components 
-    /// of the same class. The user should be able to assign different names and 
-    /// descriptions to each instance in order to refer to them unambiguously and in a 
-    /// user-friendly way. Since not always the software components that are able to 
-    /// set these identifications and the software components that require this information 
-    /// have been developed by the same vendor, a CAPE-OPEN standard for setting and 
-    /// getting this information is required.</para>
-    /// <para>So, the component will not usually set its own name and description: the 
-    /// user of the component will do it.</para>
-    /// </remarks>
+    /// <summary>获取和设置组件的描述。</summary>
+    /// <remarks>一个系统中的特定用例可能包含多个相同类的 CAPE-OPEN 组件。用户应该能够为每个实例分配不同的名称和描述，
+    /// 以便以不模糊和用户友好的方式引用它们。由于并非总是能够设置这些标识的软件组件和需要此信息的软件组件由同一供应商开发，
+    /// 因此需要设置和获取此信息的 CAPE-OPEN 标准。因此，组件通常不会设置自己的名称和描述：组件的用户将这样做。</remarks>
     /// <value>The description of the component.</value>
     /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
-    [System.Runtime.InteropServices.DispIdAttribute(1)]
-    [System.ComponentModel.DescriptionAttribute("property ComponentName")]
-    String ComponentDescription { get; set; }
-};
+    [DispId(1), Description("property ComponentName")]
+    string ComponentDescription { get; set; }
+}
 
-/// <summary>
-/// Represents the method that will handle the changing the name of a component.
-/// </summary>
-/// <remarks>
-/// When you create a ComponentNameChangedHandler delegate, you identify the method that will handle the event. To associate the event with your event handler, add an 
-/// instance of the delegate to the event. The event handler is called whenever the event occurs, unless you remove the delegate. For more information about delegates, 
-/// see Events and Delegates.
-/// </remarks>
+/// <summary>代表处理更改组件名称的方法。</summary>
+/// <remarks>当你创建一个 ComponentNameChangedHandler 委托时，你确定了将处理该事件的方法。要将事件与事件处理程序关联，
+/// 请向事件添加委托的实例。除非你删除委托，否则每当事件发生时都会调用事件处理程序。有关委托的更多信息，请参阅“事件和委托”。</remarks>
 /// <param name = "sender">The PMC that is the source .</param>
 /// <param name = "args">A <see cref = "ComponentNameChangedEventArgs">NameChangedEventArgs</see> that provides information about the name change.</param>
-[System.Runtime.InteropServices.ComVisibleAttribute(true)]
-public delegate void ComponentNameChangedHandler(Object sender, ComponentNameChangedEventArgs args);
+[ComVisible(true)]
+public delegate void ComponentNameChangedHandler(object sender, ComponentNameChangedEventArgs args);
 
-/// <summary>
-/// Represents the method that will handle the changing of the description of a component.
-/// </summary>
-/// <remarks>
-/// When you create a ComponentNameChangedHandler delegate, you identify the method that will handle the event. To 
-/// associate the event with your event handler, add an instance of the delegate to the event. The event handler is 
-/// called whenever the event occurs, unless you remove the delegate. For more information about delegates, see Events 
-/// and Delegates.
-/// </remarks>
-/// <param name = "sender">The PMC that is the source of the event.</param>
-/// <param name = "args">A <see cref = "ComponentDescriptionChangedEventArgs">DescriptionChangedEventArgs</see> that 
-/// provides information about the description change.</param>
-[System.Runtime.InteropServices.ComVisibleAttribute(true)]
-public delegate void ComponentDescriptionChangedHandler(Object sender, ComponentDescriptionChangedEventArgs args);
+/// <summary>代表处理更改组件描述的方法。</summary>
+/// <remarks>当你创建一个 ComponentNameChangedHandler 委托时，你确定了将处理该事件的方法。要将事件与事件处理程序关联，
+/// 请向事件添加委托的实例。除非你删除委托，否则每当事件发生时都会调用事件处理程序。有关委托的更多信息，请参阅“事件和委托”。</remarks>
+/// <param name="sender">The PMC that is the source of the event.</param>
+/// <param name="args">A <see cref="ComponentDescriptionChangedEventArgs">DescriptionChangedEventArgs</see> that provides information about the description change.</param>
+[ComVisible(true)]
+public delegate void ComponentDescriptionChangedHandler(object sender, ComponentDescriptionChangedEventArgs args);
 
-/// <summary>
-/// Provides methods to identify and describe a CAPE-OPEN component.
-/// </summary>
-/// <remarks>
-/// <para>Allows the user to assign different names and descriptions to each 
-/// instance of a PMC in order to refer to them unambiguously and in a 
-/// user-friendly way. Since not always the software components that are able to 
-/// set these identifications and the software components that require this 
-/// information have been developed by the same vendor, a CAPE-OPEN standard for 
-/// setting and getting this information is required.</para>
-/// <para>Reference document: Identification Common Interface</para>
-/// </remarks>
+/// <summary>提供识别和描述 CAPE-OPEN 组件的方法。</summary>
+/// <remarks>允许用户为每个 PMC 实例分配不同的名称和描述，以便以不模糊和用户友好的方式引用它们。由于并非总是能够设置这些标识的软件组件
+/// 和需要此信息的软件组件由同一供应商开发，因此需要设置和获取此信息的 CAPE-OPEN 标准。参考文档：标识通用接口。</remarks>
 [Serializable]
-[System.Runtime.InteropServices.ComSourceInterfaces(typeof(ICapeIdentificationEvents),
-    typeof(System.ComponentModel.INotifyPropertyChanged))]
-[System.Runtime.InteropServices.ComVisibleAttribute(true)]
-[System.Runtime.InteropServices.GuidAttribute("BF54DF05-924C-49a5-8EBB-733E37C38085")]
-[System.ComponentModel.DescriptionAttribute("CapeIdentification Interface")]
-[System.Runtime.InteropServices.ClassInterface(System.Runtime.InteropServices.ClassInterfaceType.None)]
-abstract public class CapeIdentification : //System.ComponentModel.Component,
-    ICapeIdentification,
-    IDisposable,
-    ICloneable,
-    System.ComponentModel.INotifyPropertyChanged
-
+[ComSourceInterfaces(typeof(ICapeIdentificationEvents), typeof(INotifyPropertyChanged))]
+[ComVisible(true)]
+[Guid(CapeOpenGuids.CapeIdentificationIid)] // BF54DF05-924C-49a5-8EBB-733E37C38085
+[Description("CapeIdentification Interface")]
+[ClassInterface(ClassInterfaceType.None)]
+public abstract class CapeIdentification : // System.ComponentModel.Component,
+    ICapeIdentification, IDisposable, ICloneable, INotifyPropertyChanged
 {
-    /// <summary>
-    /// The name of the component.
-    /// </summary>
-    private String m_ComponentName;
+    /// <summary>The name of the component.</summary>
+    private string _mComponentName;
 
-    /// <summary>
-    /// The description of the component.
-    /// </summary>
-    private String m_ComponentDescription;
+    /// <summary>The description of the component.</summary>
+    private string _mComponentDescription;
 
     // Track whether Dispose has been called.
     private bool _disposed;
 
-    /// <summary>
-    /// Creates an instance of the CapeIdentification class with default values for the name and 
-    /// description of the PMC.
-    /// </summary>
-    /// <remarks>
-    /// This constructor uses the <see cref="System.Type"/> of the PMC object being constructed as default 
-    /// values for the ComponentName and ComponentDescription properties. If the PMC object has a 
-    /// <see cref="CapeNameAttribute"/>, then the <see cref="CapeNameAttribute.Name"/> property is used for the name.
-    /// Likewise, if the object has a <see cref="CapeDescriptionAttribute"/>, then the 
-    /// <see cref="CapeDescriptionAttribute.Description"/> property is used for the description.
-    /// </remarks>
-    public CapeIdentification()
+    /// <summary>创建 CapeIdentification 类的一个实例，其中包含 PMC 名称和描述的默认值。</summary>
+    /// <remarks>这个构造函数使用正在构造的 PMC 对象的 <see cref="System.Type"/> 作为 ComponentName 和 ComponentDescription 属性的
+    /// 默认值。如果 PMC 对象具有 <see cref="CapeNameAttribute"></see>，则使用 <see cref="CapeNameAttribute.Name"></see> 属性作为名称。同样，
+    /// 如果对象具有 <see cref="CapeDescriptionAttribute"></see>，则使用 <see cref="CapeDescriptionAttribute.Description"/> 属性作为描述。</remarks>
+    protected CapeIdentification()
     {
         _disposed = false;
-        m_ComponentName = this.GetType().FullName;
-        m_ComponentDescription = this.GetType().FullName;
-        Object[] attributes = this.GetType().GetCustomAttributes(false);
-        for (int i = 0; i < attributes.Length; i++)
+        _mComponentName = GetType().FullName;
+        _mComponentDescription = GetType().FullName;
+        var attributes = GetType().GetCustomAttributes(false);
+        foreach (var mt in attributes)
         {
-            if (attributes[i] is CapeNameAttribute) m_ComponentName = ((CapeNameAttribute)attributes[i]).Name;
-            if (attributes[i] is CapeDescriptionAttribute)
-                m_ComponentDescription = ((CapeDescriptionAttribute)attributes[i]).Description;
+            switch (mt)
+            {
+                case CapeNameAttribute nameAttribute:
+                    _mComponentName = nameAttribute.Name;
+                    break;
+                case CapeDescriptionAttribute descriptionAttribute:
+                    _mComponentDescription = descriptionAttribute.Description;
+                    break;
+            }
         }
     }
 
-    /// <summary>
-    /// Creates an instance of the CapeIdentification class with the name and a default description of the PMC.
-    /// </summary>
-    /// <remarks>
-    /// This constructor uses the provided name for the ComponentName of the PMC object being constructed. A 
-    /// default value for the ComponentDescription properties is then assigned. If the PMC object has a 
-    /// <see cref="CapeDescriptionAttribute"/>, then the <see cref="CapeDescriptionAttribute.Description"/> 
-    /// property is used for the description.
-    /// </remarks>
+    /// <summary>创建 CapeIdentification 类的一个实例，其中包含 PMC 的名称和默认描述。</summary>
+    /// <remarks>这个构造函数使用提供的名称来构建 PMC 对象的ComponentName。然后为 ComponentDescription 属性分配默认值。
+    /// 如果 PMC 对象具有 <see cref="CapeDescriptionAttribute"></see>，则使用 <see cref="CapeDescriptionAttribute.Description"></see> 属性作为描述。</remarks>
     /// <param name = "name">The name of the PMC.</param>
-    public CapeIdentification(String name)
+    protected CapeIdentification(string name)
     {
         _disposed = false;
-        m_ComponentName = name;
-        m_ComponentDescription = this.GetType().FullName;
-        Object[] attributes = this.GetType().GetCustomAttributes(false);
-        for (int i = 0; i < attributes.Length; i++)
+        _mComponentName = name;
+        _mComponentDescription = GetType().FullName;
+        var attributes = GetType().GetCustomAttributes(false);
+        foreach (var mt in attributes)
         {
-            if (attributes[i] is CapeDescriptionAttribute)
-                m_ComponentDescription = ((CapeDescriptionAttribute)attributes[i]).Description;
+            if (mt is CapeDescriptionAttribute descriptionAttribute)
+                _mComponentDescription = descriptionAttribute.Description;
         }
     }
 
-    /// <summary
-    /// >Creates an instance of the CapeIdentification class with the name and description of the PMC.
-    /// </summary>
-    /// <remarks>
-    /// You can use this constructor to specify a specific name and description of the PMC.
-    /// </remarks>
+    /// <summary>用 PMC 的名称和描述创建 CapeIdentification 类的实例。</summary>
+    /// <remarks>您可以使用该构造函数指定 PMC 的具体名称和描述。</remarks>
     /// <param name = "name">The name of the PMC.</param>
     /// <param name = "description">The description of the PMC.</param>
-    public CapeIdentification(String name, String description)
+    protected CapeIdentification(string name, string description)
     {
         _disposed = false;
-        m_ComponentName = name;
-        m_ComponentDescription = description;
+        _mComponentName = name;
+        _mComponentDescription = description;
     }
 
 
-    /// <summary>
-    /// Copy constructor of the CapeIdentification class.
-    /// </summary>
-    /// <remarks>
-    /// Creates an instance of the CapeIdentification class with ComponentName equal to the original PMC's 
-    /// ComponentName + (Copy). The copy has the same CapeDescription as the original.
-    /// </remarks>
+    /// <summary>CapeIdentification 类的复制构造函数。</summary>
+    /// <remarks>创建一个 CapeIdentification 类的实例，其 ComponentName 等于原始 PMC 的 ComponentName + (Copy)。
+    /// 该副本与原始副本具有相同的 CapeDescription。</remarks>
     /// <param name = "objectToBeCopied">The object being copied.</param>
     protected CapeIdentification(CapeIdentification objectToBeCopied)
     {
         _disposed = false;
-        m_ComponentName = objectToBeCopied.ComponentName + "(Copy)";
-        m_ComponentDescription = objectToBeCopied.ComponentDescription;
+        _mComponentName = objectToBeCopied.ComponentName + "(Copy)";
+        _mComponentDescription = objectToBeCopied.ComponentDescription;
     }
 
-    /// <summary>
-    /// Creates a new object that is a copy of the current instance.
-    /// </summary>
-    /// <remarks>
-    /// <para>
-    /// Clone can be implemented either as a deep copy or a shallow copy. In a deep copy, all objects are duplicated; 
-    /// in a shallow copy, only the top-level objects are duplicated and the lower levels contain references.
-    /// </para>
-    /// <para>
-    /// The resulting clone must be of the same type as, or compatible with, the original instance.
-    /// </para>
-    /// <para>
-    /// See <see cref="Object.MemberwiseClone"/> for more information on cloning, deep versus shallow copies, and examples.
-    /// </para>
-    /// </remarks>
+    /// <summary>Creates a new object that is a copy of the current instance.</summary>
+    /// <remarks>克隆可以以深度复制或浅度复制的方式实现。在深度复制中，所有对象都被复制；在浅度复制中，只有顶层对象被复制，
+    /// 较低级别的对象包含引用。生成的克隆对象必须与原始实例具有相同类型或兼容。有关克隆、深度复制与浅度复制
+    /// 以及示例的更多信息，请参阅 <see cref="Object.MemberwiseClone"/>。</remarks>
     /// <returns>A new object that is a copy of this instance.</returns>
     public abstract object Clone();
 
     // Implement IDisposable.
-    // Do not make this method virtual.
-    // A derived class should not be able to override this method.
-    /// <summary>
-    /// Releases all resources used by the CapeIdentification object.
-    /// </summary>
-    /// <remarks>Call Dispose when you are finished using the CapeIdentification object. The Dispose method 
-    /// leaves the CapeIdentification object in an unusable state. After calling Dispose, you must release 
-    /// all references to the Component so the garbage collector can reclaim the memory that the CapeIdentification 
-    /// object was occupying. For more information, see <see href="http://msdn.microsoft.com/en-us/library/498928w2.aspx">
-    /// Cleaning Up Unmanaged Resources and Implementing a Dispose Method.</see></remarks> 
+    // 不要将此方法设为虚拟方法。
+    // 派生类不能覆盖此方法。
+    /// <summary>释放 CapeIdentification 对象使用的所有资源。</summary>
+    /// <remarks>当您完成使用 CapeIdentification 对象时，请调用 Dispose 方法。
+    /// Dispose 方法将 CapeIdentification 对象置于无法使用的状态。调用 Dispose 后，您必须释放所有对 Component 的引用，
+    /// 以便垃圾回收器可以回收 CapeIdentification 对象占用的内存。有关更多信息，请参阅清理非托管资源和实现 Dispose 方法。</remarks> 
     public void Dispose()
     {
-        this.Dispose(true);
-        // This object will be cleaned up by the Dispose method.
-        // Therefore, you should call GC.SupressFinalize to
-        // take this object off the finalization queue
-        // and prevent finalization code for this object
-        // from executing a second time.
+        Dispose(true);
+        // 此对象将由 Dispose 方法清理。因此，您应该调用 GC.SuppressFinalize 将此对象从终结队列中移除，并防止此对象的终结代码再次执行。
         GC.SuppressFinalize(this);
     }
 
-    // Dispose(bool disposing) executes in two distinct scenarios.
-    // If disposing equals true, the method has been called directly
-    // or indirectly by a user's code. Managed and unmanaged resources
-    // can be disposed.
-    // If disposing equals false, the method has been called by the
-    // runtime from inside the finalizer and you should not reference
-    // other objects. Only unmanaged resources can be disposed.
-    /// <summary>
-    /// Releases the unmanaged resources used by the CapeIdentification object and optionally releases 
-    /// the managed resources.
-    /// </summary>
-    /// <remarks><para>This method is called by the public <see href="http://msdn.microsoft.com/en-us/library/system.componentmodel.component.dispose.aspx">Dispose</see>see> 
-    /// method and the <see href="http://msdn.microsoft.com/en-us/library/system.object.finalize.aspx">Finalize</see> method. 
-    /// <bold>Dispose()</bold> invokes the protected <bold>Dispose(Boolean)</bold> method with the disposing
-    /// parameter set to <bold>true</bold>. <see href="http://msdn.microsoft.com/en-us/library/system.object.finalize.aspx">Finalize</see> 
-    /// invokes <bold>Dispose</bold> with disposing set to <bold>false</bold>.</para>
-    /// <para>When the <italic>disposing</italic> parameter is <bold>true</bold>, this method releases all 
-    /// resources held by any managed objects that this Component references. This method invokes the 
-    /// <bold>Dispose()</bold> method of each referenced object.</para>
-    /// <para><bold>Notes to Inheritors</bold></para>
-    /// <para><bold>Dispose</bold> can be called multiple times by other objects. When overriding 
-    /// <bold>Dispose(Boolean)</bold>, be careful not to reference objects that have been previously 
-    /// disposed of in an earlier call to <bold>Dispose</bold>. For more information about how to 
-    /// implement <bold>Dispose(Boolean)</bold>, see <see href="http://msdn.microsoft.com/en-us/library/fs2xkftw.aspx">Implementing a Dispose Method</see>.</para>
-    /// <para>For more information about <bold>Dispose</bold> and <see href="http://msdn.microsoft.com/en-us/library/system.object.finalize.aspx">Finalize</see>, 
-    /// see <see href="http://msdn.microsoft.com/en-us/library/498928w2.aspx">Cleaning Up Unmanaged Resources</see> 
-    /// and <see href="http://msdn.microsoft.com/en-us/library/ddae83kx.aspx">Overriding the Finalize Method</see>.</para>
-    /// </remarks> 
+    // Dispose (bool disposing) 方法在两种不同的情况下执行。如果 disposing 等于 true，则该方法是由用户代码直接或间接调用的。
+    // 托管和非托管资源都可以被处理。如果 disposing 等于 false，则该方法是由运行时从析构函数内部调用的，您不应引用其他对象。只有非托管资源可以被处理。
+    /// <summary> 释放 CapeIdentification 对象使用的不受管资源，并可选地释放受管资源。</summary>
+    /// <remarks>此方法由公共方法 <see href="">Dispose</see> 和 <see href="">Finalize</see>调用。
+    /// Dispose() 方法会调用受保护的 Dispose(Boolean) 方法，并将 disposing 参数设置为 true。
+    /// Finalize() 方法会调用 Dispose，并将 disposing 参数设置为 false。当 disposing 参数为 true 时，
+    /// 此方法会释放此组件引用的任何托管对象持有的所有资源。此方法会调用每个引用对象的 Dispose() 方法。
+    /// 留给继承者的注释：Dispose 可以被其他对象多次调用。在重写 Dispose(Boolean) 方法时，
+    /// 要小心不要引用在之前调用 Dispose 时已经处理过的对象。有关如何实现 Dispose(Boolean) 的更多信息，
+    /// 请参阅 <see href=""> 实现一个 Dispose 方法 </see>。有关 Dispose 和 <see href="">Finalize</see> 的更多信息，
+    /// 请参阅 <see href=""> 清理非托管资源 </see> 和 <see href="">重写 Finalize 方法</see>。</remarks> 
     /// <param name = "disposing">true to release both managed and unmanaged resources; false to release only unmanaged resources.</param>
     protected virtual void Dispose(bool disposing)
     {
-        // Check to see if Dispose has already been called.
-        if (!_disposed)
+        // 检查是否已调用 Dispose。
+        if (_disposed) return;
+        // 如果 disposing 等于 true，则会处置所有托管和非托管资源。
+        if (disposing)
         {
-            //If disposing equals true, dispose all managed
-            // and unmanaged resources.
-            if (disposing)
-            {
-                // Dispose managed resources.
-                //component.Dispose();
-            }
-
-            // Note disposing has been done.
-            _disposed = true;
+            // 处置受管资源。
+            //component.Dispose();
         }
+        // Note disposing has been done.
+        _disposed = true;
     }
 
-    /// <summary>
-    /// Notifies the collection that the value of a property of the parameter has been changed.
-    /// </summary>
-    /// <remarks>The PropertyChanged event can indicate all properties on the object have changed by using either 
-    /// null or String.Empty as the property name in the PropertyChangedEventArgs.
-    /// </remarks>
-    public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+    /// <summary>通知集合参数的属性值已更改。</summary>
+    /// <remarks>PropertyChanged 事件可以使用 null 或 String.Empty 作为 PropertyChangedEventArgs 中的属性名来指示对象上的所有属性都已更改。</remarks>
+    public event PropertyChangedEventHandler PropertyChanged;
 
-    // This method is called by the Set accessor of each property. 
-    // The CallerMemberName attribute that is applied to the optional propertyName 
-    // parameter causes the property name of the caller to be substituted as an argument. 
-    /// <summary>
-    /// Notifies the collection that the value of a proparty of the parameter has been changed.
-    /// </summary>
-    /// <remarks>The PropertyChanged event can indicate all properties on the object have changed by using either 
-    /// null or String.Empty as the property name in the PropertyChangedEventArgs.
-    /// </remarks>
-    /// <param name="propertyName">The name of the property that was chnaged.</param>
-    protected void NotifyPropertyChanged( /* .Net 4.5 [System.Runtime.CompilerServices.CallerMemberName]*/
-        String propertyName)
+    // 此方法由每个属性的 Set 访问器调用。应用于 optional propertyName 参数的 CallerMemberName 属性会导致调用者的属性名被替换为参数。
+    /// <summary>通知集合参数的属性值已更改。</summary>
+    /// <remarks>PropertyChanged 事件可以使用 null 或 String.Empty 作为 PropertyChangedEventArgs 中的属性名来指示对象上的所有属性都已更改。</remarks>
+    /// <param name="propertyName">The name of the property that was changed.</param>
+    protected void NotifyPropertyChanged( // .Net 4.5 [System.Runtime.CompilerServices.CallerMemberName]
+        string propertyName)
     {
-        if (PropertyChanged != null)
-        {
-            PropertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-        }
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 
-    /// <summary>
-    /// Occurs when the user changes of the name of a component.
-    /// </summary>
-    /// <remarks>The event to be handles when the name of the PMC is changed.</remarks> 
+    /// <summary>当用户更改组件名称时发生。</summary>
+    /// <remarks>PMC 名称更改时要处理的事件。</remarks> 
     public event ComponentNameChangedHandler ComponentNameChanged;
 
-    /// <summary>
-    /// Occurs when the user changes of the description of a component.
-    /// </summary>
-    /// <remarks><para>Raising an event invokes the event handler through a delegate.</para>
-    /// <para>The <c>OnComponentNameChanged</c> method also allows derived classes to handle the event without attaching a delegate. This is the preferred 
-    /// technique for handling the event in a derived class.</para>
-    /// <para>Notes to Inheritors: </para>
-    /// <para>When overriding <c>OnComponentNameChanged</c> in a derived class, be sure to call the base class's <c>OnComponentNameChanged</c> method so that registered 
-    /// delegates receive the event.</para>
-    /// </remarks>
-    /// <param name = "args">A <see cref = "ComponentNameChangedEventArgs">NameChangedEventArgs</see> that contains information about the event.</param>
+    /// <summary>当用户更改组件的描述时发生。</summary>
+    /// <remarks>通过委托调用事件处理程序时，会引发事件。<c>OnComponentNameChanged</c> 方法还允许子类在不附加委托的情况下处理事件。这是子类处理事件的优选技术。
+    /// 留给继承者的注释：当在派生类中重写 <c>OnComponentNameChanged</c> 时，请务必调用基类的 <c>OnComponentNameChanged</c> 方法，以便注册的委托接收事件。</remarks>
+    /// <param name = "args">A <see cref="ComponentNameChangedEventArgs">NameChangedEventArgs</see> that contains information about the event.</param>
     protected void OnComponentNameChanged(ComponentNameChangedEventArgs args)
     {
-        if (ComponentNameChanged != null)
-        {
-            ComponentNameChanged(this, args);
-        }
+        ComponentNameChanged?.Invoke(this, args);
     }
 
-    /// <summary>
-    /// Occurs when the user changes of the description of a component.
-    /// </summary>
-    /// <remarks>The event to be handles when the description of the PMC is changed.</remarks> 
+    /// <summary>当用户更改组件的描述时发生。</summary>
+    /// <remarks>当 PMC 的描述发生变化时要处理的事件。</remarks> 
     public event ComponentDescriptionChangedHandler ComponentDescriptionChanged;
 
-    /// <summary>
-    /// Occurs when the user changes of the description of a component.
-    /// </summary>
-    /// <remarks><para>Raising an event invokes the event handler through a delegate.</para>
-    /// <para>The <c>OnComponentDescriptionChanged</c> method also allows derived classes to handle the event without attaching a delegate. This is the preferred 
-    /// technique for handling the event in a derived class.</para>
-    /// <para>Notes to Inheritors: </para>
-    /// <para>When overriding <c>OnComponentDescriptionChanged</c> in a derived class, be sure to call the base class's <c>OnComponentDescriptionChanged</c> method so that registered 
-    /// delegates receive the event.</para>
-    /// </remarks>
-    /// <param name = "args">A <see cref = "ComponentDescriptionChangedEventArgs">DescriptionChangedEventArgs</see> that contains information about the event.</param>
+    /// <summary>当用户更改组件的描述时发生。</summary>
+    /// <remarks>通过委托调用事件处理程序时，会引发事件。<c>OnComponentDescriptionChanged</c> 方法还允许子类在不附加委托的情况下处理事件。
+    /// 这是子类处理事件的优选技术。对继承者的说明：在子类中重写<c>OnComponentDescriptionChanged</c>时，
+    /// 请务必调用基类的<c>OnComponentDescriptionChanged()</c>方法，以便注册过的委托能够接收到事件。</remarks>
+    /// <param name="args">A <see cref="ComponentDescriptionChangedEventArgs">DescriptionChangedEventArgs</see> that contains information about the event.</param>
     protected void OnComponentDescriptionChanged(ComponentDescriptionChangedEventArgs args)
     {
-        if (ComponentDescriptionChanged != null)
-        {
-            ComponentDescriptionChanged(this, args);
-        }
+        ComponentDescriptionChanged?.Invoke(this, args);
     }
 
-    /// <summary>
-    /// Gets and sets the name of the component.
-    /// </summary>
-    /// <remarks>
-    /// <para>A particular Use Case in a system may contain several CAPE-OPEN components 
-    /// of the same class. The user should be able to assign different names and 
-    /// descriptions to each instance in order to refer to them unambiguously and in a 
-    /// user-friendly way. Since not always the software components that are able to 
-    /// set these identifications and the software components that require this information 
-    /// have been developed by the same vendor, a CAPE-OPEN standard for setting and 
-    /// getting this information is required.</para>
-    /// <para>So, the component will not usually set its own name and description: the 
-    /// user of the component will do it.</para>
-    /// </remarks>
+    /// <summary>获取和设置组件的名称。</summary>
+    /// <remarks>一个系统中的特定用例可能包含多个相同类的 CAPE-OPEN 组件。用户应该能够为每个实例分配不同的名称和描述，
+    /// 以便以不模糊和用户友好的方式引用它们。由于并非总是能够设置这些标识的软件组件和需要此信息的软件组件由同一供应商开发，
+    /// 因此需要设置和获取此信息的 CAPE-OPEN 标准。因此，组件通常不会设置自己的名称和描述：组件的使用者会这样做。</remarks>
     /// <value>The unique name of the component.</value>
     /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
-    [System.ComponentModel.DescriptionAttribute(
-        "Unit Operation Parameter Collection. Click on the (...) button to edit collection.")]
-    [System.ComponentModel.CategoryAttribute("Identification")]
-    public virtual String ComponentName
+    [Description("Unit Operation Parameter Collection. Click on the (...) button to edit collection.")]
+    [Category("Identification")]
+    public virtual string ComponentName
     {
-        get { return m_ComponentName; }
-
-        set
-        {
-            ComponentNameChangedEventArgs args = new ComponentNameChangedEventArgs(m_ComponentName, value);
-            m_ComponentName = value;
-            NotifyPropertyChanged("ComponentName");
+        get => _mComponentName;
+        set {
+            var args = new ComponentNameChangedEventArgs(_mComponentName, value);
+            _mComponentName = value;
+            NotifyPropertyChanged(nameof(ComponentName));
             OnComponentNameChanged(args);
         }
     }
 
-    /// <summary>
-    ///  Gets and sets the description of the component.
-    /// </summary>
-    /// <remarks>
-    /// <para>A particular Use Case in a system may contain several CAPE-OPEN components 
-    /// of the same class. The user should be able to assign different names and 
-    /// descriptions to each instance in order to refer to them unambiguously and in a 
-    /// user-friendly way. Since not always the software components that are able to 
-    /// set these identifications and the software components that require this information 
-    /// have been developed by the same vendor, a CAPE-OPEN standard for setting and 
-    /// getting this information is required.</para>
-    /// <para>So, the component will not usually set its own name and description: the 
-    /// user of the component will do it.</para>
-    /// </remarks>
+    /// <summary>获取和设置组件的描述。</summary>
+    /// <remarks>一个系统中的特定用例可能包含多个相同类的 CAPE-OPEN 组件。用户应该能够为每个实例分配不同的名称和描述，
+    /// 以便以不模糊和用户友好的方式引用它们。由于并非总是能够设置这些标识的软件组件和需要此信息的软件组件由同一供应商开发，
+    /// 因此需要设置和获取此信息的 CAPE-OPEN 标准。因此，组件通常不会设置自己的名称和描述：组件的使用者会这样做。</remarks>
     /// <value>The description of the component.</value>
     /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
-    [System.ComponentModel.DescriptionAttribute(
+    [Description(
         "Unit Operation Parameter Collection. Click on the (...) button to edit collection.")]
-    [System.ComponentModel.CategoryAttribute("Identification")]
-    public virtual String ComponentDescription
+    [Category("Identification")]
+    public virtual string ComponentDescription
     {
-        get { return m_ComponentDescription; }
-        set
-        {
-            ComponentDescriptionChangedEventArgs args =
-                new ComponentDescriptionChangedEventArgs(m_ComponentDescription, value);
-            m_ComponentDescription = value;
-            NotifyPropertyChanged("ComponentDescription");
+        get => _mComponentDescription;
+        set {
+            var args =
+                new ComponentDescriptionChangedEventArgs(_mComponentDescription, value);
+            _mComponentDescription = value;
+            NotifyPropertyChanged(nameof(ComponentDescription));
             OnComponentDescriptionChanged(args);
         }
     }
-};
+}
 
-/// <summary>
-/// This interface provides the behaviour for a read-only collection. It can be 
-/// used for storing ports or parameters.
-/// </summary>
-/// <remarks>
-/// <para>The aim of the Collection interface is to give a CAPE-OPEN component 
-/// the possibility to expose a list of objects to any client of the component. 
-/// The client will not be able to modify the collection, i.e. removing, 
-/// replacing or adding elements. However, since the client will have access to 
-/// any CAPE-OPEN interface exposed by the items of the collection, it will be 
-/// able to modify the state of any element.</para>
-/// <para>CAPE-OPEN Collections don’t allow exposing basic types such as 
-/// numerical values or strings. Indeed, using CapeArrays is more convenient 
-/// here.</para>
-/// <para>Not all the items of a collection must belong to the same class. It is 
-/// enough if they implement the same interface or set of interfaces. A CAPE-OPEN 
-/// specification a component that exposes a collection interface must state 
-/// clearly which interfaces must be implemented by all the items of the 
-/// collection.</para>
-/// <para>Reference document: Collection Common Interface</para>
-/// </remarks>
-[System.Runtime.InteropServices.ComImport()]
-[System.Runtime.InteropServices.ComVisibleAttribute(false)]
-[System.Runtime.InteropServices.GuidAttribute(CapeOpenGuids.ICapeCollection_IID)]
-[System.ComponentModel.DescriptionAttribute("ICapeCollection Interface")]
-interface ICapeCollection
+/// <summary>此接口提供了只读集合的行为。它可用于存储端口或参数。</summary>
+/// <remarks>Collection 接口的目的是为 CAPE-OPEN 组件提供向组件的任何客户端展示对象列表的可能性。
+/// 客户端将无法修改集合，即删除、替换或添加元素。但是，由于客户端将能够访问由集合项展示的任何 CAPE-OPEN 接口，
+/// 因此它将能够修改任何元素的状态。CAPE-OPEN 集合不允许暴露基本类型，如数值或字符串。实际上，
+/// 在这里使用 CapeArrays 更方便。集合中的所有项目不一定属于同一类。如果它们实现了相同的接口或一组接口，
+/// 那就足够了。一个暴露集合接口的 CAPE-OPEN 规范必须清楚地说明集合中的所有项目必须实现哪些接口。
+/// 参考文档：Collection Common 接口。</remarks>
+[ComImport, ComVisible(false)]
+[Guid(CapeOpenGuids.ICapeCollection_IID)]
+[Description("ICapeCollection Interface")]
+internal interface ICapeCollection
 {
-    /// <summary>
-    ///	Gets the specific item stored within the collection, identified by its 
-    /// ICapeIdentification.ComponentName or 1-based index passed as an argument 
-    /// to the method.
-    /// </summary>
-    /// <remarks>
-    /// Return an element from the collection. The requested element can be 
-    /// identified by its actual name (e.g. type CapeString) or by its position 
-    /// in the collection (e.g. type CapeLong). The name of an element is the 
-    /// value returned by the ComponentName() method of its ICapeIdentification 
-    /// interface. The advantage of retrieving an item by name rather than by 
-    /// position is that it is much more efficient. This is because it is faster 
-    /// to check all names from the server part than checking then from the 
-    /// client, where a lot of COM/CORBA calls would be required.
-    /// </remarks>
-    /// <param name = "index">
-    /// <para>Identifier for the requested item:</para>
-    /// <para>name of item (the variant contains a string)</para>
-    /// <para>position in collection (it contains a long)</para>
-    /// </param>
-    /// <returns>
-    /// System.Object containing the requested collection item.
-    /// </returns>
-    /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
-    /// <exception cref = "ECapeInvalidArgument">To be used when an invalid argument value is passed, for example, an unrecognised Compound identifier or UNDEFINED for the props argument.</exception>
+    /// <summary>获取集合中存储的特定项，该项由其 ICapeIdentification.ComponentName 或以参数形式传递的基于 1 的索引标识。</summary>
+    /// <remarks>从集合中返回一个元素。请求的元素可以通过其实际名称（例如类型 CapeString）或其在集合中的位置（例如类型 CapeLong）来识别。
+    /// 元素的名称是其 ICapeIdentification 接口的 ComponentName() 方法返回的值。通过名称而不是通过位置检索项的优势在于，它更高效。
+    /// 这是因为从服务器部分检查所有名称比从客户端检查要快得多，在客户端需要大量的 COM/CORBA 调用。</remarks>
+    /// <param name = "index"><para>Identifier for the requested item:</para>
+    /// <para>name of item (the variant contains a string)</para> <para>position in collection (it contains a long)</para></param>
+    /// <returns>System.Object containing the requested collection item.</returns>
+    /// <exception cref ="ECapeUnknown">The error to be raised when other error(s), specified for this operation, are not suitable.</exception>
+    /// <exception cref = "ECapeInvalidArgument">To be used when an invalid argument value is passed, for example, an unrecognised Compound identifier or UNDEFINED for the props' argument.</exception>
     /// <exception cref = "ECapeFailedInitialisation">ECapeFailedInitialisation</exception>
     /// <exception cref = "ECapeOutOfBounds">ECapeOutOfBounds</exception>
-    [System.Runtime.InteropServices.DispIdAttribute(1)]
-    [System.ComponentModel.DescriptionAttribute("gets an item specified by index or name")]
-    [return:
-        System.Runtime.InteropServices.MarshalAs(System.Runtime.InteropServices.UnmanagedType
-            .IDispatch)] // This attribute specifices the return value is an IDispatch pointer.
-    Object Item(Object index);
+    [DispId(1), Description("Gets an item specified by index or name")]
+    [return: MarshalAs(UnmanagedType.IDispatch)] // 该属性说明返回值是 IDispatch 指针。
+    object Item(object index);
 
-    /// <summary>
-    ///	Gets the number of items currently stored in the collection.
-    /// </summary>
-    /// <remarks>Return the number of items in the collection.</remarks>
+    /// <summary>获取当前存储在集合中的项目数。</summary>
     /// <returns>Return the number of items in the collection.</returns>
-    /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
+    /// <exception cref ="ECapeUnknown">The error to be raised when other error(s), specified for this operation, are not suitable.</exception>
     /// <exception cref = "ECapeFailedInitialisation">ECapeFailedInitialisation</exception>
-    [System.Runtime.InteropServices.DispIdAttribute(2)]
-    [System.ComponentModel.DescriptionAttribute("Number of items in the collection")]
+    [DispId(2), Description("Number of items in the collection")]
     int Count();
-};
+}
 
-/*
-   /// <summary>
-   /// Represents the method that will handle the changing the name of a component.
-   /// </summary>
-   /// <remarks>
-   /// When you create a ComponentNameChangedHandler delegate, you identify the method that will handle the event. To associate the event with your event handler, add an
-   /// instance of the delegate to the event. The event handler is called whenever the event occurs, unless you remove the delegate. For more information about delegates,
-   /// see Events and Delegates.
-   /// </remarks>
-   /// <param name = "sender">The PMC that is the source .</param>
-   /// <param name = "args">A <see cref = "System.ComponentModel.AddingNewEventArgs">System.ComponentModel.AddingNewEventArgs</see> that provides information about the name change.</param>
-   [System.Runtime.InteropServices.ComVisibleAttribute(true)]
-   public delegate void CollectionAddingNewHandler(Object sender, System.ComponentModel.AddingNewEventArgs args);
-
-
-   /// <summary>
-   /// Represents the method that will handle the changing the name of a component.
-   /// </summary>
-   /// <remarks>
-   /// When you create a ComponentNameChangedHandler delegate, you identify the method that will handle the event. To associate the event with your event handler, add an
-   /// instance of the delegate to the event. The event handler is called whenever the event occurs, unless you remove the delegate. For more information about delegates,
-   /// see Events and Delegates.
-   /// </remarks>
-   /// <param name = "sender">The PMC that is the source .</param>
-   /// <param name = "args">A <see cref = "System.ComponentModel.ListChangedEventArgs">System.ComponentModel.ListChangedEventArgs</see> that provides information about the name change.</param>
-   [System.Runtime.InteropServices.ComVisibleAttribute(true)]
-   public delegate void CollectionListChangedHandler(Object sender, System.ComponentModel.ListChangedEventArgs args);
-
-   /// <summary>
-   /// </summary>
-   /// <remarks>
-   /// </remarks>
-   [System.Runtime.InteropServices.InterfaceType(System.Runtime.InteropServices.ComInterfaceType.InterfaceIsIDispatch)]
-   [System.Runtime.InteropServices.ComVisibleAttribute(true)]
-   [System.Runtime.InteropServices.GuidAttribute("DE9CDE6E-A2D4-4BFF-AA3A-8699FCF3E0EB")]
-   [System.ComponentModel.DescriptionAttribute("CapeCollectionEvents Interface")]
-   interface ICapeCollectionEvents
-   {
-       /// <summary>
-       /// Occurs when the user changes of the value of a paramter.
-       /// </summary>
-       /// <remarks><para>Raising an event invokes the event handler through a delegate.</para>
-       /// <para>The <c>OnComponentNameChanged</c> method also allows derived classes to handle the event without attaching a delegate. This is the preferred
-       /// technique for handling the event in a derived class.</para>
-       /// <para>Notes to Inheritors: </para>
-       /// <para>When overriding <c>OnParameterValueChanged</c> in a derived class, be sure to call the base class's <c>OnParameterValueChanged</c> method so that registered
-       /// delegates receive the event.</para>
-       /// </remarks>
-       /// <param name = "sender">The <see cref = "RealParameter">RealParameter</see> that raised the event.</param>
-       /// <param name = "args">A <see cref = "CollectionAddingNew">CollectionAddingNew</see> that contains information about the event.</param>
-       void CollectionAddingNew(object sender, object args);
-
-       /// <summary>
-       /// Occurs when the user changes of the mode of a parameter.
-       /// </summary>
-       /// <remarks><para>Raising an event invokes the event handler through a delegate.</para>
-       /// <para>The <c>OnParameterModeChanged</c> method also allows derived classes to handle the event without attaching a delegate. This is the preferred
-       /// technique for handling the event in a derived class.</para>
-       /// <para>Notes to Inheritors: </para>
-       /// <para>When overriding <c>OnParameterModeChanged</c> in a derived class, be sure to call the base class's <c>OnParameterModeChanged</c> method so that registered
-       /// delegates receive the event.</para>
-       /// </remarks>
-       /// <param name = "sender">The <see cref = "RealParameter">RealParameter</see> that raised the event.</param>
-       /// <param name = "args">A <see cref = "CollectionListChanged">CollectionListChanged</see> that contains information about the event.</param>
-       void CollectionListChanged(object sender, object args);
-   }
-*/
-/// <summary>
-///	Interface that exposes a PMC's parameters, controls the PMC's lifecycle, 
-/// provides access to the PME through the simulation context, and provides a 
-/// means for the PME to edit the PMC.
-/// </summary>
-/// <remarks>
-/// <para>When a PME requires some kind of functionality, with the help of the 
-/// CAPE-OPEN categories, the user is able to select and create a CO class which 
-/// will expose the required CO interfaces. There is the need for the PME to 
-/// exchange some information with this instance of the PMC. This information 
-/// consists in a set of simple unrelated functionalities that will be useful for 
-/// any kind of CAPE-OPEN component, since they will allow maximum integration 
-/// between clients and servers. All these functionalities can be grouped in a 
-/// single interface. Some of the functionalities to fulfil consist in exchanging 
-/// interface references between the PMC and the PME. Instead of adding these 
-/// properties to each business interfaces, it is much more convenient to
-/// add them to a single common interface which refers to the whole PMC.</para>
-/// <para>Furthermore, there is a need for getting parameters, editing and 
-/// lifecycling.</para>
-/// <para>The interface should fulfil the following requirements:</para>
-/// <para>Parameters:</para>
-/// <para>So far, only Unit Operations can expose their public parameters, through 
-/// property ICapeUnit.parameters, which returns a collection of parameters. This 
-/// property allows COSEs to support design specs between two CAPE-OPEN Unit 
-/// Operations. That means that the CAPE-OPEN interfaces are powerful enough to 
-/// allow that the design spec of a given Unit Operation (exposed through public 
-/// parameters) depends on transformations of public parameters exposed by other 
-/// CAPE-OPEN Unit Operations. If also other components, such as Material Object, 
-/// would be able to expose public parameters, the functionality the aforementioned 
-/// described functionality could be extended. Other functionalities would be:
-/// </para>
-/// <para>(i) allowing optimizers to use a public variable exposed by any 
-/// CAPE-OPEN component.</para>
-/// <para>(ii) Allow performing regression on the interaction parameters of a 
-/// CAPE-OPEN Property Package.</para>
-/// <para>Centralising the property that accesses these collections in a single 
-/// entry point, helps to clarify the life cycle usage standards for these 
-/// collections. That means that it will be easier for the PMC clients to know 
-/// how often they have to check whether the contents of these collections have 
-/// changed (although the collection object will be valid until the PMC is 
-/// destroyed). Setting general rules for the usage of these collections makes 
-/// the business interface specifications more regular and simpler. Obviously, 
-/// since too general rules may reduce flexibility, PMC specifications might point
-/// out exceptions to the general rule. Let’s see how would this affect the 
-/// particular PMC specifications:</para>
-/// <para>Simulation context:</para>
-/// <para>So far, most of CAPE-OPEN interfaces have been designed to allow a 
-/// client to access the functionality of a CAPE-OPEN component. Since clients 
-/// will often be Simulation Environment, CAPE-OPEN components would benefit from 
-/// using functionality provided by their client, a COSE for instance. These 
-/// services provided by any PMEs are defined within the Simulation Context COSE 
-/// Interface specification document.</para>
-/// <para>The following interfaces are designed:</para>
-/// <para>(i) Thermo Material Template Systems: Theses interface allows a PMC to 
-/// choose between all the Thermo Material factories supported by the PME. These 
-/// factories will allow the PMC to create a thermo material object associated to 
-/// the elected Property Package (which can be CAPE-OPEN or not).</para>
-/// <para>(ii) Diagnostics: This interface will allow to integrate seamlessly the 
-/// diagnostics messages generated by any PMC with the mechanisms supported by 
-/// the PME to display this information to the user.</para>
-/// <para>(iii) COSEUtilities: In the same idea of this specification document, 
-/// PME has also its own utilities interface in order to gather many basic 
-/// operations. For instance that allows the PME to supply a list of standardised 
-/// values.</para>
-/// <para>Edit:</para>
-/// <para>The Edit method defined by the UNIT specification proved to be very useful in 
-/// order to provide Graphical User Interface (GUI) capabilities highly customized 
-/// to each type of UNIT implementation. There’s no reason why other PMCs could 
-/// not benefit of this capability. Obviously, when a PMC provides Edit 
-/// functionality, being able to persist its state is a desired requirements, to 
-/// prevent the user from having to repeatedly reconfigure the PMC.</para>
-/// <para>LifeCycle:</para>
-/// <para>There is probably no strict necessity to expose directly initialization 
-/// nor destruction functions, since these should be invoked automatically by the 
-/// used middleware (COM/CORBA). That is, the initialization could be performed 
-/// in the constructor of the class and the destroy in its destructor. However, 
-/// in some cases the client could need to invoke them explicitly. For example, 
-/// all actions that could fail should be invoked by these methods. If these 
-/// actions were places in the constructor or destructor, potential failures 
-/// would cause memory leak, and they would be difficult to track, since it would 
-/// not be clear if the component has been created/destroyed or not. Examples of 
-/// cases where they are useful:</para>
-/// <para>(i) Initialize: The client might need to initialize a given set of PMC 
-/// in a specific order, in case that there are dependencies between them. Some 
-/// PMC may be wrappers to other components, or may need an external file to get 
-/// initialized. This initialization process may often fail, or the user may even 
-/// decide to cancel it. Moving these actions from the class constructor to the 
-/// initialize method allows communicating the client that the construction of
-/// the component must be aborted in some cases.</para>
-/// <para>(ii) Destructors: The PMC primary object should destroy here all its secondary 
-/// objects. Relying on the native destructor could cause deadlocks when loop 
-/// references exist between PMC objects. See in the example diagram below that 
-/// after the client releases its reference to the Unit Operation, both the Unit 
-/// and the Parameter are being used by another objects. So, without an explicit 
-/// terminate method, none of them would be ever terminated.</para>
-/// <para>Reference document: Utilities Common Interface</para>
-/// </remarks>
-[System.Runtime.InteropServices.ComImport()]
-[System.Runtime.InteropServices.ComVisibleAttribute(false)]
-[System.Runtime.InteropServices.Guid(CapeOpenGuids.ICapeUtilities_IID)]
-[System.ComponentModel.DescriptionAttribute("ICapeUtilities Interface")]
-interface ICapeUtilitiesCOM
+/// <summary>本接口它暴露 PMC 的参数，控制 PMC 的生命周期，通过模拟上下文提供对 PME 的访问，并为 PME 提供编辑 PMC 的手段。</summary>
+/// <remarks>当 PME 需要某种功能时，在 CAPE-OPEN 类别的帮助下，用户可以选择和创建一个 CO 类，该 CO 类将暴露所需的 CO 接口。
+/// PME 需要与 PMC 的此实例交换一些信息。这些信息包括一组简单的、不相关的功能，这些功能对任何类型的 CAPE-OPEN 组件都有用，
+/// 因为它们将允许客户端和服务器之间最大程度的集成。所有这些功能都可以组合在一个接口中。一些需要实现的功能包括在 PMC 和 PME 之间
+/// 交换接口引用。与其将这些属性添加到每个业务接口中，不如将它们添加到单个公共接口中，该接口引用整个 PMC。此外，还需要获取参数、编辑和生命周期。
+/// 接口应满足以下要求:
+/// Parameters:
+/// 到目前为止，只有单元操作可以通过属性 ICapeUnit.Parameters 来暴露其公共参数，该属性返回一组参数。这个属性允许 COSEs 支持
+/// 两个 CAPE-OPEN 单元操作之间的设计规范。这意味着 CAPE-OPEN 接口足够强大，可以允许给定单元操作（通过公共参数暴露）的设计规范
+/// 依赖于其他 CAPE-OPEN 单元操作所暴露的公共参数的转换。如果其他组件，如材料对象，也能够暴露公共参数，则可以扩展上述功能。
+/// 其他功能包括:
+/// (i) 允许优化器使用任何 CAPE-OPEN 组件公开的公共变量。
+/// (ii) 允许对 CAPE-OPEN 属性包的交互参数执行回归。
+/// 将访问这些集合的属性集中在一个单一入口点，有助于澄清这些集合的生存周期使用标准。这意味着 PMC 客户将更容易知道他们需要多频繁地检查
+/// 这些集合的内容是否已更改（尽管集合对象在 PMC 被销毁之前是有效的）。为这些集合的使用设置通用规则，可以使业务接口规范更加规范和简单。
+/// 显然，由于过于笼统的规则可能会降低灵活性，PMC 规范可能会指出笼统规则的例外。让我们看看这会如何影响特定的 PMC 规格:
+/// 模拟环境：
+/// 到目前为止，大多数 CAPE-OPEN 接口的设计都是为了允许客户端访问 CAPE-OPEN 组件的功能。由于客户端通常是仿真环境，
+/// 因此 CAPE-OPEN 组件将受益于使用其客户端提供的服务，例如 COSE。这些由任何 PMEs 提供的服务在仿真上下文 COSE 接口规范文档中进行了定义。
+/// 设计了以下界面:
+/// (i) 热材料模板系统：此接口允许 PMC 在 PME 支持的所有热材料工厂之间进行选择。这些工厂将允许 PMC 创建与所选属性包（可以是 CAPE-OPEN 或非 CAPE-OPEN）相关联的热材料对象。
+/// (ii) 诊断：此接口将允许将任何PMC生成的诊断消息与PME支持的机制无缝集成，以向用户显示此信息。
+/// (iii) COSEUtilities：与这个规范文档的相同理念，PME 也有自己的实用程序接口，以收集许多基本操作。例如，它允许 PME 提供标准化值列表。
+/// Edit:
+/// UNIT 规范定义的 Edit 方法被证明非常有用，因为它提供了高度定制化的图形用户界面（GUI）功能，以适应每种 UNIT 实现。
+/// 没有理由其他 PMC 不能受益于这种功能。显然，当 PMC 提供 Edit 功能时，能够持久化其状态是一个期望的要求，以防止用户不得不反复重新配置 PMC。
+/// LifeCycle:
+/// 可能没有直接暴露初始化或销毁函数的严格必要性，因为这些函数应该由使用的中间件（COM/CORBA）自动调用。也就是说，初始化可以在类的构造函数中执行，
+/// 销毁可以在其析构函数中执行。然而，在某些情况下，客户端可能需要显式调用它们。例如，所有可能失败的操作都应该由这些方法调用。如果这些操作放在构造函数
+/// 或析构函数中，潜在的失败会导致内存泄漏，并且它们将难以追踪，因为不清楚组件是否已创建/销毁。有用的案例示例:
+/// (i) 初始化：客户端可能需要按特定顺序初始化一组给定的 PMC，以防它们之间存在依赖关系。一些 PMC 可能是其他组件的包装器，或者可能需要外部文件才能初始化。这个初始化过程经常可能会失败，或者用户甚至可能会决定取消它。将这些操作从类构造函数移动到初始化方法中，可以让客户端知道在某些情况下必须中止组件的构造。
+/// (ii) 析构函数：PMC 的主要对象应该在这里销毁所有次要对象。如果 PMC 对象之间存在循环引用，依赖原生析构函数可能会导致死锁。在下面的示例图中可以看到，在客户端释放其对 Unit Operation 的引用后，Unit 和 Parameter 都被其他对象使用。因此，如果没有显式的终止方法，它们都不会被终止。
+/// 参考文档： Utilities Common 接口。</remarks>
+[ComImport, ComVisible(false)]
+[Guid(CapeOpenGuids.ICapeUtilities_IID)]
+[Description("ICapeUtilities Interface")]
+internal interface ICapeUtilitiesCOM
 {
-    /// <summary>
-    ///	Gets the component's collection of parameters. 
-    /// </summary>
-    /// <remarks>
-    /// <para>Return the collection of Public Unit Parameters (i.e. 
-    /// <see cref = "ICapeCollection"/>.</para>
-    /// <para>These are delivered as a collection of elements exposing the interface 
-    /// <see cref = "ICapeParameter"/>. From there, the client could extract the 
-    /// <see cref = "ICapeParameterSpec"/> interface or any of the typed
-    /// interfaces such as <see cref = "ICapeRealParameterSpec"/>, once the client 
-    /// establishes that the Parameter is of type double.</para>
-    /// </remarks>
+    /// <summary>获取组件的参数集合。</summary>
+    /// <remarks>返回公共单元参数（即 <see cref="ICapeCollection"/>）的集合。这些参数作为暴露接口 <see cref="ICapeParameter"/> 的元素集合提供。
+    /// 从那里，客户端可以提取 <see cref="ICapeParameterSpec"/> 接口或任何类型化接口，如 <see cref="ICapeRealParameterSpec"/>，一旦客户端确定参数类型为 double。</remarks>
     /// <value>The parameter collection of the unit operation.</value>
-    /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
+    /// <exception cref ="ECapeUnknown">The error to be raised when other error(s), specified for this operation, are not suitable.</exception>
     /// <exception cref = "ECapeFailedInitialisation">ECapeFailedInitialisation</exception>
     /// <exception cref = "ECapeNoImpl">ECapeNoImpl</exception>
-    [System.Runtime.InteropServices.DispIdAttribute(1),
-     System.ComponentModel.DescriptionAttribute("Gets parameter collection")]
+    [DispId(1), Description("Gets parameter collection")]
     //[return: System.Runtime.InteropServices.MarshalAs(System.Runtime.InteropServices.UnmanagedType.IDispatch)]
-    Object parameters
+    object parameters
     {
-        [return: System.Runtime.InteropServices.MarshalAs(System.Runtime.InteropServices.UnmanagedType.IDispatch)]
-        get;
+        [return: MarshalAs(UnmanagedType.IDispatch)] get;
     }
 
-    /// <summary>
-    ///	Sets the component's simulation context.
-    /// </summary>
-    /// <remarks>
-    /// <para>Allows the PME to convey the PMC a reference to the former’s 
-    /// simulation  context. The simulation context will be PME objects which will 
-    /// expose a given set of CO interfaces. Each of these interfaces will allow 
-    /// the PMC to call back the PME in order to benefit from its exposed services 
-    /// (such as creation of material templates, diagnostics or measurement unit 
-    /// conversion). If the PMC does not support accessing the simulation context, 
-    /// it is recommended to raise the ECapeNoImpl error.</para>
-    /// <para>Initially, this method was only present in the ICapeUnit interface. 
-    /// Since ICapeUtilities.SetSimulationContext is now available for any kind of 
-    /// PMC, ICapeUnit.SetSimulationContext is deprecated.</para>
-    /// </remarks>
-    /// <value>
-    /// The reference to the PME’s simulation context class. For the PMC to use 
-    /// this class, this reference will have to be converted to each of the 
-    /// defined CO Simulation Context interfaces.
-    /// </value>
-    /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
+    /// <summary>设置组件的模拟上下文。</summary>
+    /// <remarks>允许 PME 向 PMC传递其模拟上下文的引用。模拟上下文将是 PME 对象，这些对象将暴露一组给定的 CO 接口。
+    /// 这些接口中的每一个都将允许 PMC 调用 PME，以利用其暴露的服务（例如创建材料模板、诊断或测量单位转换）。如果 PMC 不支持访问模拟上下文，
+    /// 建议引发 ECapeNoImpl 错误。最初，此方法仅在 ICapeUnit 接口中可用。由于 ICapeUtilities.SetSimulationContext 现在可用于
+    /// 任何类型的 PMC，因此 ICapeUnit.SetSimulationContext 已被弃用。</remarks>
+    /// <value>引用 PME 的模拟上下文类。对于PMC要使用此类，此引用必须转换为每个定义的 CO 模拟上下文接口。</value>
+    /// <exception cref ="ECapeUnknown">The error to be raised when other error(s), specified for this operation, are not suitable.</exception>
     /// <exception cref = "ECapeFailedInitialisation">ECapeFailedInitialisation</exception>
-    /// <exception cref = "ECapeInvalidArgument">To be used when an invalid argument value is passed, for example, an unrecognised Compound identifier or UNDEFINED for the props argument.</exception>
+    /// <exception cref = "ECapeInvalidArgument">To be used when an invalid argument value is passed, for example, an unrecognised Compound identifier or UNDEFINED for the props' argument.</exception>
     /// <exception cref = "ECapeNoImpl">ECapeNoImpl</exception>
-    [System.Runtime.InteropServices.DispIdAttribute(2),
-     System.ComponentModel.DescriptionAttribute("Set the simulation context")]
-    Object simulationContext
+    [DispId(2), Description("Set the simulation context")]
+    object simulationContext
     {
-        [param: System.Runtime.InteropServices.MarshalAs(System.Runtime.InteropServices.UnmanagedType.IDispatch)]
-        set;
+        [param: MarshalAs(UnmanagedType.IDispatch)] set;
     }
 
-    /// <summary>
-    ///	The component is asked to configure itself. For example a Unit Operation might create ports and parameters during this call
-    /// </summary>
+    /// <summary>要求组件对自身进行配置。例如，一个单元操作可能在这个调用期间创建端口和参数。</summary>
     /// <remarks>
     /// <para>Initially, this method was only present in the ICapeUnit interface. 
     /// Since ICapeUtilities.Initialize is now available for any kind of PMC, 
@@ -1199,10 +561,10 @@ interface ICapeUtilitiesCOM
     /// <para>The PME will order the PMC to get initialized through this method. 
     /// Any initialisation that could fail must be placed here. Initialize is 
     /// guaranteed to be the first method called by the client (except low level 
-    /// methods such as class constructors or initialization persistence methods).
+    /// methods such as class constructors or initialisation persistence methods).
     /// Initialize has to be called once when the PMC is instantiated in a 
     /// particular flowsheet.</para>
-    /// <para>When the initialization fails, before signalling an error, the PMC 
+    /// <para>When the initialisation fails, before signalling an error, the PMC 
     /// must free all the resources that were allocated before the failure 
     /// occurred. When the PME receives this error, it may not use the PMC 
     /// anymore.</para>
@@ -1210,13 +572,13 @@ interface ICapeUtilitiesCOM
     /// called. Hence, the PME may only release the PMC through the middleware 
     /// native mechanisms.</para>
     /// </remarks>
-    /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
+    /// <exception cref ="ECapeUnknown">The error to be raised when other error(s), specified for this operation, are not suitable.</exception>
     /// <exception cref = "ECapeOutOfResources">ECapeOutOfResources</exception>
     /// <exception cref = "ECapeLicenceError">ECapeLicenceError</exception>
     /// <exception cref = "ECapeFailedInitialisation">ECapeFailedInitialisation</exception>
     /// <exception cref = "ECapeBadInvOrder">ECapeBadInvOrder</exception>
-    [System.Runtime.InteropServices.DispIdAttribute(3),
-     System.ComponentModel.DescriptionAttribute("Configuration has to take place here")]
+    [DispId(3),
+     Description("Configuration has to take place here")]
     void Initialize();
 
     /// <summary>
@@ -1244,8 +606,8 @@ interface ICapeUtilitiesCOM
     /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
     /// <exception cref = "ECapeOutOfResources">ECapeOutOfResources</exception>
     /// <exception cref = "ECapeBadInvOrder">ECapeBadInvOrder</exception>
-    [System.Runtime.InteropServices.DispIdAttribute(4),
-     System.ComponentModel.DescriptionAttribute("Clean up has to take place here")]
+    [DispId(4),
+     Description("Clean up has to take place here")]
     void Terminate();
 
     /// <summary>
@@ -1256,111 +618,47 @@ interface ICapeUtilitiesCOM
     /// interact with it. If no user interface is available it returns an error.
     /// </remarks>
     /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
-    [System.Runtime.InteropServices.DispIdAttribute(5),
-     System.ComponentModel.DescriptionAttribute("Displays the graphic interface")]
-    [System.Runtime.InteropServices.PreserveSig]
+    [DispId(5),
+     Description("Displays the graphic interface")]
+    [PreserveSig]
     int Edit();
-};
+}
 
-/// <summary>
-///	Interface that exposes a PMC's parameters, controls the PMC's lifecycle, 
-/// provides access to the PME through the simulation context, and provides a 
-/// means for the PME to edit the PMC.
-/// </summary>
-/// <remarks>
-/// <para>When a PME requires some kind of functionality, with the help of the 
-/// CAPE-OPEN categories, the user is able to select and create a CO class which 
-/// will expose the required CO interfaces. There is the need for the PME to 
-/// exchange some information with this instance of the PMC. This information 
-/// consists in a set of simple unrelated functionalities that will be useful for 
-/// any kind of CAPE-OPEN component, since they will allow maximum integration 
-/// between clients and servers. All these functionalities can be grouped in a 
-/// single interface. Some of the functionalities to fulfil consist in exchanging 
-/// interface references between the PMC and the PME. Instead of adding these 
-/// properties to each business interfaces, it is much more convenient to
-/// add them to a single common interface which refers to the whole PMC.</para>
-/// <para>Furthermore, there is a need for getting parameters, editing and 
-/// lifecycling.</para>
-/// <para>The interface should fulfil the following requirements:</para>
-/// <para>Parameters:</para>
-/// <para>So far, only Unit Operations can expose their public parameters, through 
-/// property ICapeUnit.parameters, which returns a collection of parameters. This 
-/// property allows COSEs to support design specs between two CAPE-OPEN Unit 
-/// Operations. That means that the CAPE-OPEN interfaces are powerful enough to 
-/// allow that the design spec of a given Unit Operation (exposed through public 
-/// parameters) depends on transformations of public parameters exposed by other 
-/// CAPE-OPEN Unit Operations. If also other components, such as Material Object, 
-/// would be able to expose public parameters, the functionality the aforementioned 
-/// described functionality could be extended. Other functionalities would be:
-/// </para>
-/// <para>(i) allowing optimizers to use a public variable exposed by any 
-/// CAPE-OPEN component.</para>
-/// <para>(ii) Allow performing regression on the interaction parameters of a 
-/// CAPE-OPEN Property Package.</para>
-/// <para>Centralising the property that accesses these collections in a single 
-/// entry point, helps to clarify the life cycle usage standards for these 
-/// collections. That means that it will be easier for the PMC clients to know 
-/// how often they have to check whether the contents of these collections have 
-/// changed (although the collection object will be valid until the PMC is 
-/// destroyed). Setting general rules for the usage of these collections makes 
-/// the business interface specifications more regular and simpler. Obviously, 
-/// since too general rules may reduce flexibility, PMC specifications might point
-/// out exceptions to the general rule. Let’s see how would this affect the 
-/// particular PMC specifications:</para>
-/// <para>Simulation context:</para>
-/// <para>So far, most of CAPE-OPEN interfaces have been designed to allow a 
-/// client to access the functionality of a CAPE-OPEN component. Since clients 
-/// will often be Simulation Environment, CAPE-OPEN components would benefit from 
-/// using functionality provided by their client, a COSE for instance. These 
-/// services provided by any PMEs are defined within the Simulation Context COSE 
-/// Interface specification document.</para>
-/// <para>The following interfaces are designed:</para>
-/// <para>(i) Thermo Material Template Systems: Theses interface allows a PMC to 
-/// choose between all the Thermo Material factories supported by the PME. These 
-/// factories will allow the PMC to create a thermo material object associated to 
-/// the elected Property Package (which can be CAPE-OPEN or not).</para>
-/// <para>(ii) Diagnostics: This interface will allow to integrate seamlessly the 
-/// diagnostics messages generated by any PMC with the mechanisms supported by 
-/// the PME to display this information to the user.</para>
-/// <para>(iii) COSEUtilities: In the same idea of this specification document, 
-/// PME has also its own utilities interface in order to gather many basic 
-/// operations. For instance that allows the PME to supply a list of standardised 
-/// values.</para>
-/// <para>Edit:</para>
-/// <para>The Edit method defined by the UNIT specification proved to be very useful in 
-/// order to provide Graphical User Interface (GUI) capabilities highly customized 
-/// to each type of UNIT implementation. There’s no reason why other PMCs could 
-/// not benefit of this capability. Obviously, when a PMC provides Edit 
-/// functionality, being able to persist its state is a desired requirements, to 
-/// prevent the user from having to repeatedly reconfigure the PMC.</para>
-/// <para>LifeCycle:</para>
-/// <para>There is probably no strict necessity to expose directly initialization 
-/// nor destruction functions, since these should be invoked automatically by the 
-/// used middleware (COM/CORBA). That is, the initialization could be performed 
-/// in the constructor of the class and the destroy in its destructor. However, 
-/// in some cases the client could need to invoke them explicitly. For example, 
-/// all actions that could fail should be invoked by these methods. If these 
-/// actions were places in the constructor or destructor, potential failures 
-/// would cause memory leak, and they would be difficult to track, since it would 
-/// not be clear if the component has been created/destroyed or not. Examples of 
-/// cases where they are useful:</para>
-/// <para>(i) Initialize: The client might need to initialize a given set of PMC 
-/// in a specific order, in case that there are dependencies between them. Some 
-/// PMC may be wrappers to other components, or may need an external file to get 
-/// initialized. This initialization process may often fail, or the user may even 
-/// decide to cancel it. Moving these actions from the class constructor to the 
-/// initialize method allows communicating the client that the construction of
-/// the component must be aborted in some cases.</para>
-/// <para>(ii) Destructors: The PMC primary object should destroy here all its secondary 
-/// objects. Relying on the native destructor could cause deadlocks when loop 
-/// references exist between PMC objects. See in the example diagram below that 
-/// after the client releases its reference to the Unit Operation, both the Unit 
-/// and the Parameter are being used by another objects. So, without an explicit 
-/// terminate method, none of them would be ever terminated.</para>
-/// <para>Reference document: Utilities Common Interface</para>
-/// </remarks>
-[System.Runtime.InteropServices.ComVisibleAttribute(false)]
-[System.ComponentModel.DescriptionAttribute("ICapeUtilities Interface")]
+/// <summary>本接口它暴露 PMC 的参数，控制 PMC 的生命周期，通过模拟上下文提供对 PME 的访问，并为 PME 提供编辑 PMC 的手段。</summary>
+/// <remarks>当 PME 需要某种功能时，在 CAPE-OPEN 类别的帮助下，用户可以选择和创建一个 CO 类，该 CO 类将暴露所需的 CO 接口。
+/// PME 需要与 PMC 的此实例交换一些信息。这些信息包括一组简单的、不相关的功能，这些功能对任何类型的 CAPE-OPEN 组件都有用，
+/// 因为它们将允许客户端和服务器之间最大程度的集成。所有这些功能都可以组合在一个接口中。一些需要实现的功能包括在 PMC 和 PME 之间
+/// 交换接口引用。与其将这些属性添加到每个业务接口中，不如将它们添加到单个公共接口中，该接口引用整个 PMC。此外，还需要获取参数、编辑和生命周期。
+/// 接口应满足以下要求:
+/// Parameters:
+/// 到目前为止，只有单元操作可以通过属性 ICapeUnit.Parameters 来暴露其公共参数，该属性返回一组参数。这个属性允许 COSEs 支持
+/// 两个 CAPE-OPEN 单元操作之间的设计规范。这意味着 CAPE-OPEN 接口足够强大，可以允许给定单元操作（通过公共参数暴露）的设计规范
+/// 依赖于其他 CAPE-OPEN 单元操作所暴露的公共参数的转换。如果其他组件，如材料对象，也能够暴露公共参数，则可以扩展上述功能。
+/// 其他功能包括:
+/// (i) 允许优化器使用任何 CAPE-OPEN 组件公开的公共变量。
+/// (ii) 允许对 CAPE-OPEN 属性包的交互参数执行回归。
+/// 将访问这些集合的属性集中在一个单一入口点，有助于澄清这些集合的生存周期使用标准。这意味着 PMC 客户将更容易知道他们需要多频繁地检查
+/// 这些集合的内容是否已更改（尽管集合对象在 PMC 被销毁之前是有效的）。为这些集合的使用设置通用规则，可以使业务接口规范更加规范和简单。
+/// 显然，由于过于笼统的规则可能会降低灵活性，PMC 规范可能会指出笼统规则的例外。让我们看看这会如何影响特定的 PMC 规格:
+/// 模拟环境：
+/// 到目前为止，大多数 CAPE-OPEN 接口的设计都是为了允许客户端访问 CAPE-OPEN 组件的功能。由于客户端通常是仿真环境，
+/// 因此 CAPE-OPEN 组件将受益于使用其客户端提供的服务，例如 COSE。这些由任何 PMEs 提供的服务在仿真上下文 COSE 接口规范文档中进行了定义。
+/// 设计了以下界面:
+/// (i) 热材料模板系统：此接口允许 PMC 在 PME 支持的所有热材料工厂之间进行选择。这些工厂将允许 PMC 创建与所选属性包（可以是 CAPE-OPEN 或非 CAPE-OPEN）相关联的热材料对象。
+/// (ii) 诊断：此接口将允许将任何PMC生成的诊断消息与PME支持的机制无缝集成，以向用户显示此信息。
+/// (iii) COSEUtilities：与这个规范文档的相同理念，PME 也有自己的实用程序接口，以收集许多基本操作。例如，它允许 PME 提供标准化值列表。
+/// Edit:
+/// UNIT 规范定义的 Edit 方法被证明非常有用，因为它提供了高度定制化的图形用户界面（GUI）功能，以适应每种 UNIT 实现。
+/// 没有理由其他 PMC 不能受益于这种功能。显然，当 PMC 提供 Edit 功能时，能够持久化其状态是一个期望的要求，以防止用户不得不反复重新配置 PMC。
+/// LifeCycle:
+/// 可能没有直接暴露初始化或销毁函数的严格必要性，因为这些函数应该由使用的中间件（COM/CORBA）自动调用。也就是说，初始化可以在类的构造函数中执行，
+/// 销毁可以在其析构函数中执行。然而，在某些情况下，客户端可能需要显式调用它们。例如，所有可能失败的操作都应该由这些方法调用。如果这些操作放在构造函数
+/// 或析构函数中，潜在的失败会导致内存泄漏，并且它们将难以追踪，因为不清楚组件是否已创建/销毁。有用的案例示例:
+/// (i) 初始化：客户端可能需要按特定顺序初始化一组给定的 PMC，以防它们之间存在依赖关系。一些 PMC 可能是其他组件的包装器，或者可能需要外部文件才能初始化。这个初始化过程经常可能会失败，或者用户甚至可能会决定取消它。将这些操作从类构造函数移动到初始化方法中，可以让客户端知道在某些情况下必须中止组件的构造。
+/// (ii) 析构函数：PMC 的主要对象应该在这里销毁所有次要对象。如果 PMC 对象之间存在循环引用，依赖原生析构函数可能会导致死锁。在下面的示例图中可以看到，在客户端释放其对 Unit Operation 的引用后，Unit 和 Parameter 都被其他对象使用。因此，如果没有显式的终止方法，它们都不会被终止。
+/// 参考文档： Utilities Common 接口。</remarks>
+[ComVisible(false)]
+[Description("ICapeUtilities Interface")]
 public interface ICapeUtilities
 {
     /// <summary>
@@ -1379,8 +677,8 @@ public interface ICapeUtilities
     /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
     /// <exception cref = "ECapeFailedInitialisation">ECapeFailedInitialisation</exception>
     /// <exception cref = "ECapeNoImpl">ECapeNoImpl</exception>
-    [System.Runtime.InteropServices.DispIdAttribute(1),
-     System.ComponentModel.DescriptionAttribute("Gets parameter collection")]
+    [DispId(1),
+     Description("Gets parameter collection")]
     ParameterCollection Parameters { get; }
 
     /// <summary>
@@ -1407,8 +705,8 @@ public interface ICapeUtilities
     /// <exception cref = "ECapeFailedInitialisation">ECapeFailedInitialisation</exception>
     /// <exception cref = "ECapeInvalidArgument">To be used when an invalid argument value is passed, for example, an unrecognised Compound identifier or UNDEFINED for the props argument.</exception>
     /// <exception cref = "ECapeNoImpl">ECapeNoImpl</exception>
-    [System.Runtime.InteropServices.DispIdAttribute(2),
-     System.ComponentModel.DescriptionAttribute("Set the simulation context")]
+    [DispId(2),
+     Description("Set the simulation context")]
     ICapeSimulationContext SimulationContext { get; set; }
 
     /// <summary>
@@ -1421,10 +719,10 @@ public interface ICapeUtilities
     /// <para>The PME will order the PMC to get initialized through this method. 
     /// Any initialisation that could fail must be placed here. Initialize is 
     /// guaranteed to be the first method called by the client (except low level 
-    /// methods such as class constructors or initialization persistence methods).
+    /// methods such as class constructors or initialisation persistence methods).
     /// Initialize has to be called once when the PMC is instantiated in a 
     /// particular flowsheet.</para>
-    /// <para>When the initialization fails, before signalling an error, the PMC 
+    /// <para>When the initialisation fails, before signalling an error, the PMC 
     /// must free all the resources that were allocated before the failure 
     /// occurred. When the PME receives this error, it may not use the PMC 
     /// anymore.</para>
@@ -1437,8 +735,8 @@ public interface ICapeUtilities
     /// <exception cref = "ECapeLicenceError">ECapeLicenceError</exception>
     /// <exception cref = "ECapeFailedInitialisation">ECapeFailedInitialisation</exception>
     /// <exception cref = "ECapeBadInvOrder">ECapeBadInvOrder</exception>
-    [System.Runtime.InteropServices.DispIdAttribute(3),
-     System.ComponentModel.DescriptionAttribute("Configuration has to take place here")]
+    [DispId(3),
+     Description("Configuration has to take place here")]
     void Initialize();
 
     /// <summary>
@@ -1466,8 +764,8 @@ public interface ICapeUtilities
     /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
     /// <exception cref = "ECapeOutOfResources">ECapeOutOfResources</exception>
     /// <exception cref = "ECapeBadInvOrder">ECapeBadInvOrder</exception>
-    [System.Runtime.InteropServices.DispIdAttribute(4),
-     System.ComponentModel.DescriptionAttribute("Clean up has to take place here")]
+    [DispId(4),
+     Description("Clean up has to take place here")]
     void Terminate();
 
     /// <summary>
@@ -1478,13 +776,13 @@ public interface ICapeUtilities
     /// interact with it. If no user interface is available it returns an error.
     /// </remarks>
     /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
-    [System.Runtime.InteropServices.DispIdAttribute(5),
-     System.ComponentModel.DescriptionAttribute("Displays the graphic interface")]
+    [DispId(5),
+     Description("Displays the graphic interface")]
     DialogResult Edit();
-};
+}
 
 /// <summary>
 /// Represents the method that will handle the changing of the simualtion context of a PMC.
 /// </summary>
-[System.Runtime.InteropServices.ComVisibleAttribute(false)]
-public delegate void SimulationContextChangedHandler(Object sender, System.EventArgs args);
+[ComVisible(false)]
+public delegate void SimulationContextChangedHandler(Object sender, EventArgs args);

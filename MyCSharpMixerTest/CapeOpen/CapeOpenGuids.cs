@@ -317,4 +317,10 @@ internal abstract class CapeOpenGuids
     public const string PortConnectedEventArgsIid = "962B9FDE-842E-43F8-9280-41C5BF80DDEC";
     public const string InPortDisconnectedEventArgsIid = "5EFDEE16-7858-4119-B8BB-7394FFBCC02D";
     public const string PortDisconnectedEventArgsIid = "693F33AA-EE4A-4CDF-9BA1-8889086BC8AB";
+    public const string InComNameChEvArgsIid = "F79EA405-4002-4fb2-AED0-C1E48793637D";
+    public const string InComDescChEvArgsIid = "34C43BD3-86B2-46d4-8639-E0FA5721EC5C";
+    public const string ComNameChEvArgsIid = "D78014E7-FB1D-43ab-B807-B219FAB97E8B";
+    public const string ComDescChEvArgsIid = "0C51C4F1-20E8-413d-93E1-4704B888354A";
+    public const string InCapeIdentEvIid = "5F5087A7-B27B-4b4f-902D-5F66E34A0CBE";
+    public const string CapeIdentificationIid = "BF54DF05-924C-49a5-8EBB-733E37C38085";
 }
