@@ -6,9 +6,9 @@
 
 https://github.com/wbarret1/CapeOpen
 
-### CapeOpen-CSharp Docs
+### CapeOpen-Docs
 
-CAPE-OPEN 的 C# 类库源码相关文档，包括类库、命名空间等，部分由 wbarret1 编写，部分为网络资源。
+关于 CAPE-OPEN 的一些文档，包括类库、命名空间等，部分由 wbarret1 编写，部分为网络资源。
 
 ### MyCSharpMixerTest
 
