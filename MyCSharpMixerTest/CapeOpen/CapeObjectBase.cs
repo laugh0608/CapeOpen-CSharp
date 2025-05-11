@@ -21,8 +21,6 @@ public abstract class CapeObjectBase : CapeIdentification,
     /// <summary>上次验证单元操作时返回的消息。</summary>
     protected string MValidationMessage;
 
-    private ParameterCollection _mParameters;
-
     [NonSerialized] private Exception _pException;
 
     // 跟踪是否调用了 Dispose。
@@ -63,7 +61,7 @@ public abstract class CapeObjectBase : CapeIdentification,
     /// <exception cref = "ECapeFailedInitialisation">ECapeFailedInitialisation</exception>
     /// <exception cref = "ECapeNoImpl">ECapeNoImpl</exception>
     [Browsable(false)]
-    object ICapeUtilitiesCOM.parameters => _mParameters;
+    object ICapeUtilitiesCOM.parameters => Parameters;
 
     /// <summary>设置组件的模拟上下文。</summary>
     /// <remarks>此方法提供对 COSE 接口的访问 <see cref ="ICapeDiagnostic"/>, 
@@ -113,7 +111,7 @@ public abstract class CapeObjectBase : CapeIdentification,
     /// <exception cref = "ECapeBadInvOrder">ECapeBadInvOrder</exception>
     protected CapeObjectBase()
     {
-        _mParameters = [];  // _mParameters = new ParameterCollection();
+        Parameters = [];  // _mParameters = new ParameterCollection();
         _mSimulationContext = null;
         MValidationMessage = "This object has not been validated.";
         _disposed = false;
@@ -137,7 +135,7 @@ public abstract class CapeObjectBase : CapeIdentification,
     protected CapeObjectBase(string name)
         : base(name)
     {
-        _mParameters = [];  // _mParameters = new ParameterCollection();
+        Parameters = [];  // _mParameters = new ParameterCollection();
         _mSimulationContext = null;
         MValidationMessage = "This object has not been validated.";
         _disposed = false;
@@ -155,7 +153,7 @@ public abstract class CapeObjectBase : CapeIdentification,
     protected CapeObjectBase(string name, string description)
         : base(name, description)
     {
-        _mParameters = [];  // _mParameters = new ParameterCollection();
+        Parameters = [];  // _mParameters = new ParameterCollection();
         _mSimulationContext = null;
         MValidationMessage = "This object has not been validated.";
         _disposed = false;
@@ -170,10 +168,10 @@ public abstract class CapeObjectBase : CapeIdentification,
         : base(objectToBeCopied)
     {
         _mSimulationContext = objectToBeCopied._mSimulationContext;
-        _mParameters.Clear();
+        Parameters.Clear();
         foreach (CapeParameter parameter in objectToBeCopied.Parameters)
         {
-            _mParameters.Add((CapeParameter)parameter.Clone());
+            Parameters.Add((CapeParameter)parameter.Clone());
         }
 
         MValidationMessage = "This object has not been validated.";
@@ -228,7 +226,7 @@ public abstract class CapeObjectBase : CapeIdentification,
             }
 
             _mSimulationContext = null;
-            _mParameters.Clear();
+            Parameters.Clear();
             _disposed = true;
         }
         // 原写法：
@@ -356,149 +354,94 @@ public abstract class CapeObjectBase : CapeIdentification,
         baseKey.DeleteSubKeyTree(keyName, false);
     }
 
-    /// <summary>
-    ///	Initialization can be performed here. 
-    /// </summary>
-    /// <remarks>
-    /// <para>The CAPE_OPEN object can allocated resources during this method. This is 
-    /// called after the object constructor by the PME. .</para>
-    /// <para>There are no input or output arguments for this method.</para>
-    /// </remarks>
+    /// <summary>可在此处进行初始化。</summary>
+    /// <remarks>CAPE-OPEN 对象可以在此方法中分配资源。这是由 PME 在对象构造函数之后调用的。此方法没有输入或输出参数。</remarks>
     /// <exception cref ="ECapeUnknown">The error to be raised when other error(s), specified for this operation, are not suitable.</exception>
     /// <exception cref = "ECapeOutOfResources">ECapeOutOfResources</exception>
     /// <exception cref = "ECapeBadInvOrder">ECapeBadInvOrder</exception>
-    public virtual void Initialize()
-    {
-    }
+    public virtual void Initialize() { }
 
-
-    /// <summary>
-    ///	Clean-up tasks can be performed here. 
-    /// </summary>
-    /// <remarks>
-    /// <para>The CAPE-OPEN object should releases all of its allocated resources during this call. This is 
-    /// called before the object destructor by the PME. Terminate may check if the data has been 
-    /// saved and return an error if not.</para>
-    /// <para>There are no input or output arguments for this method.</para>
-    /// </remarks>
-    /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
+    /// <summary>可以在这里执行清理任务。</summary>
+    /// <remarks>CAPE-OPEN 对象应该在调用期间释放所有分配的资源。这是由 PME 在对象析构函数之前调用的。
+    /// Terminate 可以检查数据是否已保存，如果不保存则返回错误。此方法没有输入或输出参数。</remarks>
+    /// <exception cref ="ECapeUnknown">The error to be raised when other error(s), specified for this operation, are not suitable.</exception>
     /// <exception cref = "ECapeOutOfResources">ECapeOutOfResources</exception>
     /// <exception cref = "ECapeBadInvOrder">ECapeBadInvOrder</exception>
-    virtual public void Terminate()
+    public virtual void Terminate()
     {
         Dispose();
     }
 
-    /// <summary>
-    ///	Gets the component's collection of parameters. 
-    /// </summary>
-    /// <remarks>
-    /// <para>Return the collection of Public Parameters (i.e. 
-    /// <see cref = "ICapeCollection"/>.</para>
-    /// <para>These are delivered as a collection of elements exposing the interface 
-    /// <see cref = "ICapeParameter"/>. From there, the client could extract the 
-    /// <see cref = "ICapeParameterSpec"/> interface or any of the typed
-    /// interfaces such as <see cref = "ICapeRealParameterSpec"/>, once the client 
-    /// establishes that the Parameter is of type double.</para>
-    /// </remarks>
+    /// <summary>获取组件的参数集合。</summary>
+    /// <remarks>返回公共参数集合 (i.e. <see cref="ICapeCollection"/>)。这些作为一组暴露接口 <see cref="ICapeParameter"/> 的元素交付。
+    /// 从那里，客户端可以提取 <see cref="ICapeParameterSpec"/> 接口或任何已类型化的接口，例如 <see cref="ICapeRealParameterSpec"/>，
+    /// 一旦客户端确定参数类型为 double。</remarks>
     /// <value>The parameter collection of the unit operation.</value>
-    /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
+    /// <exception cref ="ECapeUnknown">The error to be raised when other error(s), specified for this operation, are not suitable.</exception>
     /// <exception cref = "ECapeFailedInitialisation">ECapeFailedInitialisation</exception>
     /// <exception cref = "ECapeNoImpl">ECapeNoImpl</exception>
     //[System.ComponentModel.EditorAttribute(typeof(ParameterCollectionEditor), typeof(System.Drawing.Design.UITypeEditor))]
     [Category("Parameter Collection")]
     [TypeConverter(typeof(ParameterCollectionTypeConverter))]
-    public ParameterCollection Parameters
-    {
-        get { return _mParameters; }
-    }
+    public ParameterCollection Parameters { get; }
 
-    /// <summary>
-    /// Validates the PMC. 
-    /// </summary>
-    /// <remarks>
-    /// <para>Validates the parameter collection. This base-class implementation of this method 
-    /// traverses the parameter collections and calls the  <see cref = "Validate"/> method of each 
-    /// member parameter. The PMC is valid if all parameters are valid, which is 
-    /// signified by the Validate method returning <c>true</c>.</para>
-    /// </remarks>
-    /// <returns>
-    /// <para>true, if the unit is valid.</para>
-    /// <para>false, if the unit is not valid.</para>
-    /// </returns>
-    /// <param name = "message">Reference to a string that will conain a message regarding the validation of the parameter.</param>
-    /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
+    /// <summary>验证 PMC。</summary>
+    /// <remarks>验证参数集合。此方法的基类实现会遍历参数集合，并调用每个成员参数的 <see cref="Validate"/> 方法。
+    /// 如果所有参数都是有效的，则 PMC 是有效的，这由 Validate 方法返回 <c>true</c> 表示。</remarks>
+    /// <returns>true, if the unit is valid. false, if the unit is not valid.</returns>
+    /// <param name = "message">Reference to a string that will contain a message regarding the validation of the parameter.</param>
+    /// <exception cref ="ECapeUnknown">The error to be raised when other error(s), specified for this operation, are not suitable.</exception>
     /// <exception cref = "ECapeBadCOParameter">ECapeBadCOParameter</exception>
     /// <exception cref = "ECapeBadInvOrder">ECapeBadInvOrder</exception>
     public virtual bool Validate(ref string message)
     {
         message = "Object is valid.";
         MValidationMessage = message;
-        for (int i = 0; i < Parameters.Count; i++)
+        foreach (var mt in Parameters)
         {
-            string testString = string.Empty;
-            if (!_mParameters[i].Validate(ref testString))
-            {
-                message = testString;
-                MValidationMessage = message;
-                return false;
-            }
+            var testString = string.Empty;
+            if (mt.Validate(ref testString)) continue;
+            message = testString;
+            MValidationMessage = message;
+            return false;
         }
-
         return true;
     }
 
-    /// <summary>
-    ///	Displays the PMC graphic interface, if available.
-    /// </summary>
-    /// <remarks>
-    /// <para>By default, this method throws a <see cref="CapeNoImplException">CapeNoImplException</see>
-    /// that according to the CAPE-OPEN specification, is interpreted by the process
-    /// modeling environment as indicating that the PMC does not have a editor 
-    /// GUI, and the PME must perform editing steps.</para>
-    /// <para>In order for a PMC to provide its own editor, the Edit method will
-    /// need to be overridden to create a graphical editor. When the user requests the flowheet
-    /// to show the editor, this method will be called to edit the unit. Overriden classes should
-    /// not return a failure (throw and exception) as this will be interpreted by the flowsheeting 
-    /// tool as the unit not providing its own editor.</para>
-    /// </remarks>
-    /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
+    /// <summary>显示 PMC 图形界面（如果有）。</summary>
+    /// <remarks>默认情况下，此方法抛出一个 <see cref="CapeNoImplException">CapeNoImplException</see>，根据 CAPE-OPEN 规范，
+    /// 该异常被过程建模环境解释为表示 PMC 没有编辑器 GUI，并且 PME 必须执行编辑步骤。为了使 PMC 提供自己的编辑器，
+    /// 需要重写 Edit 方法以创建图形编辑器。当用户请求显示编辑器的流程图时，将调用此方法来编辑单元。重写类不应返回失败（抛出和异常），
+    /// 因为这将被流程图工具解释为单元没有提供自己的编辑器。</remarks>
+    /// <exception cref ="ECapeUnknown">The error to be raised when other error(s), specified for this operation, are not suitable.</exception>
     public virtual DialogResult Edit()
     {
         throw new CapeNoImplException("No Object Editor");
     }
 
 
-    /// <summary>
-    ///	Gets and sets the component's simulation context.
-    /// </summary>
-    /// <remarks>
-    /// This method provides access to the COSE's interfaces <see cref ="ICapeDiagnostic"/>, 
-    /// <see cref ="ICapeMaterialTemplateSystem"/> and <see cref ="ICapeCOSEUtilities"/>.
-    /// </remarks>
+    /// <summary>获取和设置组件的模拟上下文。</summary>
+    /// <remarks>该方法可访问 COSE 接口 <see cref="ICapeDiagnostic"/>, 
+    /// <see cref="ICapeMaterialTemplateSystem"/> 和 <see cref="ICapeCOSEUtilities"/>。</remarks>
     /// <value>The simulation context assigned by the Flowsheeting Environment.</value>
-    /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
+    /// <exception cref ="ECapeUnknown">The error to be raised when other error(s), specified for this operation, are not suitable.</exception>
     /// <exception cref = "ECapeFailedInitialisation">ECapeFailedInitialisation</exception>
-    /// <exception cref = "ECapeInvalidArgument">To be used when an invalid argument value is passed, for example, an unrecognised Compound identifier or UNDEFINED for the props argument.</exception>
+    /// <exception cref = "ECapeInvalidArgument">To be used when an invalid argument value is passed, for example, an unrecognised Compound identifier or UNDEFINED for the props' argument.</exception>
     /// <exception cref = "ECapeNoImpl">ECapeNoImpl</exception>
     [Browsable(false)]
     public ICapeSimulationContext SimulationContext
     {
-        get { return _mSimulationContext; }
-        set { _mSimulationContext = value; }
+        get => _mSimulationContext;
+        set => _mSimulationContext = value;
     }
 
-    /// <summary>
-    ///	Gets the component's flowsheet monitoring object.
-    /// </summary>
-    /// <remarks>
-    /// This method provides access to the COSE's interfaces <see cref ="ICapeDiagnostic"/>, 
-    /// <see cref ="ICapeMaterialTemplateSystem"/> and <see cref ="ICapeCOSEUtilities"/>.
-    /// </remarks>
+    /// <summary>获取组件的流程表监控对象。</summary>
+    /// <remarks>该方法可访问 COSE 接口 <see cref="ICapeDiagnostic"/>, 
+    /// <see cref="ICapeMaterialTemplateSystem"/> 和 <see cref="ICapeCOSEUtilities"/>。</remarks>
     /// <value>The simulation context assigned by the Flowsheeting Environment.</value>
-    /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
+    /// <exception cref ="ECapeUnknown">The error to be raised when other error(s), specified for this operation, are not suitable.</exception>
     /// <exception cref = "ECapeFailedInitialisation">ECapeFailedInitialisation</exception>
-    /// <exception cref = "ECapeInvalidArgument">To be used when an invalid argument value is passed, for example, an unrecognised Compound identifier or UNDEFINED for the props argument.</exception>
+    /// <exception cref = "ECapeInvalidArgument">To be used when an invalid argument value is passed, for example, an unrecognised Compound identifier or UNDEFINED for the props' argument.</exception>
     /// <exception cref = "ECapeNoImpl">ECapeNoImpl</exception>
     [Browsable(false)]
     public ICapeFlowsheetMonitoring FlowsheetMonitoring
@@ -514,173 +457,92 @@ public abstract class CapeObjectBase : CapeIdentification,
         }
     }
 
-    /// <summary>
-    /// Throws an exception and exposes the exception object.
-    /// </summary>
-    /// <remarks>
-    /// This method allows the derived class to conform to the CAPE-OPEN error handling standards and still use .Net 
-    /// exception handling. In order to use this class, create an exception object that derives from <see cref ="ECapeUser"/>.
-    /// Use the exception object as the argument to this function. As a result, the information in the expcetion will be exposed using the CAPE-OPEN 
-    /// exception handing and will be thrown to .Net clients.
-    /// </remarks>
+    /// <summary>抛出异常并公开异常对象。</summary>
+    /// <remarks>这种方法允许派生类遵循 CAPE-OPEN 错误处理标准，同时仍然使用 .Net 异常处理。为了使用此类，
+    /// 创建一个从 <see cref="ECapeUser"/> 派生的异常对象。将异常对象作为此函数的参数使用。
+    /// 这样，异常中的信息将使用 CAPE-OPEN 异常处理进行暴露，并将被抛给 .Net 客户端。</remarks>
     /// <param name="exception">The exception that will the throw.</param>
-    public void throwException(Exception exception)
+    public void ThrowException(Exception exception)
     {
         _pException = exception;
         throw _pException;
     }
 
-    // ECapeRoot method
-    // returns the message string in the System.ApplicationException.
-    /// <summary>
-    /// The name of the exception being thrown.
-    /// </summary>
-    /// <remarks>
-    /// The name of the exception being thrown.
-    /// </remarks>
-    /// <value>
-    /// The name of the exception being thrown.
-    /// </value>
+    // ECapeRoot 方法，返回 System.ApplicationException 中的消息字符串。
+    /// <summary>抛出的异常名称。</summary>
+    /// <value>The name of the exception being thrown.</value>
     [Browsable(false)]
-    string ECapeRoot.Name
-    {
-        get
-        {
-            if (_pException is ECapeRoot) return ((ECapeRoot)_pException).Name;
-            return "";
-        }
-    }
+    string ECapeRoot.Name => _pException is ECapeRoot exCapeRoot ? exCapeRoot.Name : "";
 
-    /// <summary>
-    /// Code to designate the subcategory of the error. 
-    /// </summary>
-    /// <remarks>
-    /// The assignment of values is left to each implementation. So that is a 
-    /// proprietary code specific to the CO component provider. By default, set to 
-    /// the CAPE-OPEN error HRESULT <see cref = "CapeErrorInterfaceHR"/>.
-    /// </remarks>
-    /// <value>
-    /// The HRESULT value for the exception.
-    /// </value>
+    /// <summary>指定错误子类别的代码。</summary>
+    /// <remarks>值的分配留给每个实现。因此，这是 CO 组件提供程序特有的专有代码。默认情况下，
+    /// 设置为 CAPE-OPEN 错误 HRESULT <see cref = "CapeErrorInterfaceHR"/>。</remarks>
+    /// <value>The HRESULT value for the exception.</value>
     [Browsable(false)]
-    int ECapeUser.code
-    {
-        get { return ((ECapeUser)_pException).code; }
-    }
+    int ECapeUser.code => ((ECapeUser)_pException).code;
 
-    /// <summary>
-    /// The description of the error.
-    /// </summary>
-    /// <remarks>
-    /// The error description can include a more verbose description of the condition that
-    /// caused the error.
-    /// </remarks>
-    /// <value>
-    /// A string description of the exception.
-    /// </value>
+    /// <summary>异常或错误的描述信息。</summary>
+    /// <remarks>错误描述可以包括对导致错误的条件的详细描述。</remarks>
+    /// <value>A string description of the exception.</value>
     [Browsable(false)]
-    string ECapeUser.description
-    {
-        get { return ((ECapeUser)_pException).description; }
-    }
+    string ECapeUser.description => ((ECapeUser)_pException).description;
 
-    /// <summary>
-    /// The scope of the error.
-    /// </summary>
-    /// <remarks>
-    /// This property provides a list of packages where the error occurred. 
-    /// For example <see cref = "ICapeIdentification"/>.
-    /// </remarks>
+    /// <summary>异常或错误的范围。</summary>
+    /// <remarks>此属性提供错误发生位置的包列表。例如 <see cref = "ICapeIdentification"/>。</remarks>
     /// <value>The source of the error.</value>
     [Browsable(false)]
-    string ECapeUser.scope
-    {
-        get { return ((ECapeUser)_pException).scope; }
-    }
+    string ECapeUser.scope => ((ECapeUser)_pException).scope;
 
-    /// <summary>
-    /// The name of the interface where the error is thrown. This is a mandatory field."
-    /// </summary>
-    /// <remarks>
-    /// The interface that the error was thrown.
-    /// </remarks>
+    /// <summary>发生错误的接口名称。这是一个必填字段。</summary>
+    /// <remarks>发生错误的接口。</remarks>
     /// <value>The name of the interface.</value>
     [Browsable(false)]
-    string ECapeUser.interfaceName
-    {
-        get { return ((ECapeUser)_pException).interfaceName; }
-    }
+    string ECapeUser.interfaceName => ((ECapeUser)_pException).interfaceName;
 
-    /// <summary>
-    /// The name of the operation where the error is thrown. This is a mandatory field.
-    /// </summary>
-    /// <remarks>
-    /// This field provides the name of the operation being perfomed when the exception was raised.
-    /// </remarks>
+    /// <summary>发生错误的操作名称。这是必填字段。</summary>
+    /// <remarks>该字段提供了异常发生时正在执行的操作的名称。</remarks>
     /// <value>The operation name.</value>
     [Browsable(false)]
-    string ECapeUser.operation
-    {
-        get { return ((ECapeUser)_pException).operation; }
-    }
+    string ECapeUser.operation => ((ECapeUser)_pException).operation;
 
-    /// <summary>
-    /// An URL to a page, document, web site,  where more information on the error can be found. The content of this information is obviously implementation dependent.
-    /// </summary>
-    /// <remarks>
-    /// This field provides an internet URL where more information about the error can be found.
-    /// </remarks>
+    /// <summary>一个页面的 URL，文档，网站，其中可以找到有关错误的更多信息。这些信息的内容显然依赖于实现。</summary>
+    /// <remarks>This field provides an internet URL where more information about the error can be found.</remarks>
     /// <value>The URL.</value>
     [Browsable(false)]
-    string ECapeUser.moreInfo
-    {
-        get { return ((ECapeUser)_pException).moreInfo; }
-    }
+    string ECapeUser.moreInfo => ((ECapeUser)_pException).moreInfo;
 
-    /// <summary>
-    /// Writes a message to the terminal.
-    /// </summary>
-    /// <remarks>
-    /// <para>Write a string to the terminal.</para>
-    /// <para>This method is called when a message needs to be brought to the user’s attention.
-    /// The implementation should ensure that the string is written out to a dialogue box or 
-    /// to a message list that the user can easily see.</para>
-    /// <para>A priori this message has to be displayed as soon as possible to the user.</para>
-    /// </remarks>
+    /// <summary>Writes a message to the terminal.</summary>
+    /// <remarks>将字符串写入终端。当需要引起用户注意的消息时调用此方法。实现应确保将字符串写入
+    /// 对话框或消息列表，以便用户可以轻松查看。预先，此消息必须尽快显示给用户。</remarks>
     /// <param name = "message">The text to be displayed.</param>
-    /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
-    /// <exception cref = "ECapeInvalidArgument">To be used when an invalid argument value is passed, for example, an unrecognised Compound identifier or UNDEFINED for the props argument.</exception>
+    /// <exception cref ="ECapeUnknown">The error to be raised when other error(s), specified for this operation, are not suitable.</exception>
+    /// <exception cref = "ECapeInvalidArgument">To be used when an invalid argument value is passed, for example, an unrecognised Compound identifier or UNDEFINED for the props' argument.</exception>
     public void PopUpMessage(string message)
     {
-        if (_mSimulationContext != null)
+        switch (_mSimulationContext)
         {
-            if (_mSimulationContext is ICapeDiagnostic)
-            {
-                ((ICapeDiagnostic)_mSimulationContext).PopUpMessage(message);
-            }
+            case null:
+                return;
+            case ICapeDiagnostic mCapeDiagnostic:
+                mCapeDiagnostic.PopUpMessage(message);
+                break;
         }
     }
 
-    /// <summary>
-    /// Writes a string to the PME's log file.
-    /// </summary>
-    /// <remarks>
-    /// <para>Write a string to a log.</para>
-    /// <para>This method is called when a message needs to be recorded for logging purposes. 
-    /// The implementation is expected to write the string to a log file or other journaling 
-    /// device.</para>
-    /// </remarks>
+    /// <summary>将字符串写入 PME 的日志文件。</summary>
+    /// <remarks>将字符串写入日志。当需要记录消息进行日志记录时，会调用此方法。预计实现会将字符串写入日志文件或其他日志设备。</remarks>
     /// <param name = "message">The text to be logged.</param>
-    /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
-    /// <exception cref = "ECapeInvalidArgument">To be used when an invalid argument value is passed, for example, an unrecognised Compound identifier or UNDEFINED for the props argument.</exception>
+    /// <exception cref ="ECapeUnknown">The error to be raised when other error(s), specified for this operation, are not suitable.</exception>
+    /// <exception cref = "ECapeInvalidArgument">To be used when an invalid argument value is passed, for example, an unrecognised Compound identifier or UNDEFINED for the props' argument.</exception>
     public void LogMessage(string message)
     {
-        if (_mSimulationContext != null)
+        switch (_mSimulationContext)
         {
-            if (_mSimulationContext is ICapeDiagnostic)
-            {
-                ((ICapeDiagnostic)_mSimulationContext).LogMessage(message);
-            }
+            case null:
+                return;
+            case ICapeDiagnostic mCapeDiagnostic:
+                mCapeDiagnostic.LogMessage(message);
+                break;
         }
     }
 }
