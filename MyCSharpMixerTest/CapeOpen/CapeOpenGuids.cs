@@ -299,12 +299,16 @@ internal abstract class CapeOpenGuids
     /**************************************
      额外自定义补充的
     **************************************/
+    // Error IDL
     public const string ECapeBadArg093Iid = "678c0b16-7d66-11d2-a67d-00105a42887f";
     public const string ECapeThProNotAvIid = "678C09B6-7D66-11D2-A67D-00105A42887F";
     public const string ECapeHeInfoNotAvIid = "3FF0B24B-4299-4DAC-A46E-7843728AD205";
     public const string ECapeOutSoScopeIid = "678c0b0f-7d66-11d2-a67d-00105a42887f";
+    // ArrayParameter
     public const string ArrParaWrapperIid = "277E2E39-70E7-4FBA-89C9-2A19B9D5E576";
+    // Port Collection
     public const string PortCollectionIid = "1C5F7CC3-31B4-4d81-829F-3EB5D692F7BD";
+    // Unit IDL
     public const string InUnitOpValEvArgsIid = "50A759AF-5E38-4399-9050-93F823E5A6E6";
     public const string UnitOpValEvArgsIid = "9147E78B-29D6-4D91-956E-75D0FB90CEA7";
     public const string InUnitOpCalEvArgsIid = "DDCA3348-074C-4860-AD00-58386327D9AC";
@@ -317,12 +321,14 @@ internal abstract class CapeOpenGuids
     public const string PortConEvArgsIid = "962B9FDE-842E-43F8-9280-41C5BF80DDEC";
     public const string InPortDisEvArgsIid = "5EFDEE16-7858-4119-B8BB-7394FFBCC02D";
     public const string PortDisEvArgsIid = "693F33AA-EE4A-4CDF-9BA1-8889086BC8AB";
+    // Common IDL
     public const string InComNameChEvArgsIid = "F79EA405-4002-4fb2-AED0-C1E48793637D";
     public const string InComDescChEvArgsIid = "34C43BD3-86B2-46d4-8639-E0FA5721EC5C";
     public const string ComNameChEvArgsIid = "D78014E7-FB1D-43ab-B807-B219FAB97E8B";
     public const string ComDescChEvArgsIid = "0C51C4F1-20E8-413d-93E1-4704B888354A";
     public const string InCapeIdentEvIid = "5F5087A7-B27B-4b4f-902D-5F66E34A0CBE";
     public const string CapeIdentIid = "BF54DF05-924C-49a5-8EBB-733E37C38085";
+    // Exception
     public const string CapeUserExIid = "28686562-77AD-448f-8A41-8CF9C3264A3E";
     public const string CapeUnKnExIid = "B550B2CA-6714-4e7f-813E-C93248142410";
     public const string CapeUnPeExIid = "16049506-E086-4baf-9905-9ED13D50D0E3";
@@ -347,6 +353,7 @@ internal abstract class CapeOpenGuids
     public const string CapePeSiOverFlExcPtIid = "A119DE0B-C11E-4a14-BA5E-9A2D20B15578";
     public const string CapePeSiSysErExIid = "85CB2D40-48F6-4c33-BF0C-79CB00684440";
     public const string CapeIllAccEssExIid = "45843244-ECC9-495d-ADC3-BF9980A083EB";
+    // Monitoring Interfaces
     public const string CapeSoLvErrExIid = "F617AFEA-0EEE-4395-8C82-288BF8F2A136";
     public const string CapeHeInoNotAvBlExIid = "3044EA08-F054-4315-B67B-4E3CD2CF0B1E";
     public const string CapeTimeOutExPtIid = "0D5CA7D8-6574-4c7b-9B5F-320AA8375A3C";
@@ -354,5 +361,29 @@ internal abstract class CapeOpenGuids
     public const string CapeThProPeNotAvBlExIid = "5BA36B8F-6187-4e5e-B263-0924365C9A81";
     public const string CapeSolutionStatusIid = "D1B15843-C0F5-4CB7-B462-E1B80456808E";
     public const string InCapeFlShMoToIid = "834F65CC-29AE-41c7-AA32-EE8B2BAB7FC2";
+    // Parameter Collection
     public const string PpParameterCollectionIid = "64A1B36C-106B-4d05-B585-D176CD4DD1DB";
+    // Parameter IDL
+    public const string InParameterEventsIid = "3C32AD8E-490D-4822-8A8E-073F5EDFF3F5";
+    public const string IatCapeXRealPaTeSpecIid = "B777A1BD-0C88-11D3-822E-00C04F4F66C9";
+    public const string InParTeVaChEvArgsIid = "41E1A3C4-F23C-4B39-BC54-39851A1D09C9";
+    public const string ParTeVaChEvArgsIid = "C3592B59-92E8-4A24-A2EB-E23C38F88E7F";
+    public const string InParDefValChaEveArgsIid = "E5D9CE6A-9B10-4A81-9E06-1B6C6C5257F3";
+    public const string ParDefValChaEveArgsIid = "355A5BDD-F6B5-4EEE-97C7-F1533DD28889";
+    public const string InParLowBoChaEveArgsIid = "FBCE7FC9-0F58-492B-88F9-8A23A23F93B1";
+    public const string ParLowBoChaEveArgsIid = "A982AD29-10B5-4C86-AF74-3914DD902384";
+    public const string InParUpBoChaEveArgsIid = "A2D0FAAB-F30E-48F5-82F1-4877F61950E9";
+    public const string ParUpBoChaEveArgsIid = "92BF83FE-0855-4382-A15E-744890B5BBF2";
+    public const string InParModeChaEveArgsIid = "5405E831-4B5F-4A57-A410-8E91BBF9FFD3";
+    public const string ParModeChaEveArgsIid = "3C953F15-A1F3-47A9-829A-9F7590CEB5E9";
+    public const string InParValEveArgsIid = "EFD819A4-E4EC-462E-90E6-5D994CA44F8E";
+    public const string ParValEveArgsIid = "5727414A-838D-49F8-AFEF-1CC8C578D756";
+    public const string InParResetEveArgsIid = "12067518-B797-4895-9B26-EA71C60A8803";
+    public const string ParResetEveArgsIid = "01BF391B-415E-4F5E-905D-395A707DC125";
+    public const string InParOpListChEvArgsIid = "78E06E7B-00AB-4295-9915-546DC1CD64A6";
+    // public const string PpParOpListChEvArgsIid = "7B4DE7D2-1E39-4239-B8C5-4F876DDB15A4";
+    public const string ParOpListChEvArgsIid = "2AEC279F-EBEC-4806-AA00-CC215432DB82";
+    public const string InParRestToLiChEvArgsIid = "7F357261-095A-4FD4-99C1-ACDAEDA36141";
+    public const string ParRestToLiChEvArgsIid = "82E0E6C2-3103-4B5A-A5BC-EBAB971B069A";
+    public const string CapeParameterIid = "F027B4D1-A215-4107-AA75-34E929DD00A5";
 }

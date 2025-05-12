@@ -155,7 +155,7 @@ namespace CapeOpen
         {
             m_value = value;
             m_DefaultValue = defaultValue;
-            m_ValStatus = CapeValidationStatus.CAPE_VALID;
+            MValStatus = CapeValidationStatus.CAPE_VALID;
             m_unit = unit;
             m_LowerBound = lowerBound;
             m_UpperBound = upperBound;
@@ -181,7 +181,7 @@ namespace CapeOpen
             m_value = value;
             m_DefaultValue = defaultValue;
             this.Mode = mode;
-            m_ValStatus = CapeValidationStatus.CAPE_VALID;
+            MValStatus = CapeValidationStatus.CAPE_VALID;
             m_unit = unit;
             m_LowerBound = Double.MinValue;
             m_UpperBound = Double.MaxValue;
@@ -205,7 +205,7 @@ namespace CapeOpen
         {
             m_value = value;
             m_DefaultValue = defaultValue;
-            m_ValStatus = CapeValidationStatus.CAPE_VALID;
+            MValStatus = CapeValidationStatus.CAPE_VALID;
             m_unit = unit;
             m_LowerBound = Double.MinValue;
             m_UpperBound = Double.MaxValue;
@@ -599,13 +599,13 @@ namespace CapeOpen
         public override bool Validate(ref String message)
         {
             message = "Value is valid.";
-            ParameterValidatedEventArgs args = new ParameterValidatedEventArgs(this.ComponentName, message, m_ValStatus, CapeValidationStatus.CAPE_VALID);            
+            ParameterValidatedEventArgs args = new ParameterValidatedEventArgs(this.ComponentName, message, MValStatus, CapeValidationStatus.CAPE_VALID);            
             bool retval = true;
             if (m_value < m_LowerBound)
             {
                 message = "Value below the Lower Bound.";
-                args = new ParameterValidatedEventArgs(this.ComponentName, message, m_ValStatus, CapeValidationStatus.CAPE_INVALID);
-                m_ValStatus = CapeValidationStatus.CAPE_INVALID;
+                args = new ParameterValidatedEventArgs(this.ComponentName, message, MValStatus, CapeValidationStatus.CAPE_INVALID);
+                MValStatus = CapeValidationStatus.CAPE_INVALID;
                 this.NotifyPropertyChanged("ValStatus");
                 OnParameterValidated(args);
                 retval = false;
@@ -613,14 +613,14 @@ namespace CapeOpen
             if (m_value > m_UpperBound)
             {
                 message = "Value greater than upper bound.";
-                args = new ParameterValidatedEventArgs(this.ComponentName, message, m_ValStatus, CapeValidationStatus.CAPE_INVALID);
-                m_ValStatus = CapeValidationStatus.CAPE_INVALID;
+                args = new ParameterValidatedEventArgs(this.ComponentName, message, MValStatus, CapeValidationStatus.CAPE_INVALID);
+                MValStatus = CapeValidationStatus.CAPE_INVALID;
                 this.NotifyPropertyChanged("ValStatus");
                 OnParameterValidated(args);
                 retval = false;
             }
             OnParameterValidated(args);
-            m_ValStatus = CapeValidationStatus.CAPE_VALID;
+            MValStatus = CapeValidationStatus.CAPE_VALID;
             this.NotifyPropertyChanged("ValStatus");
             return retval;
         }
