@@ -47,7 +47,7 @@ public delegate void UnitOperationValidatedHandler(object sender, UnitOperationV
 /// <summary>对单元模块运行状态进行了验证。</summary>
 /// <remarks>提供有关单元模块运行验证的信息。</remarks>
 [ComVisible(true)]
-[Guid(CapeOpenGuids.InUnitOperaValidatedEventArgsIid)] // 50A759AF-5E38-4399-9050-93F823E5A6E6
+[Guid(CapeOpenGuids.InUnitOpValEvArgsIid)] // 50A759AF-5E38-4399-9050-93F823E5A6E6
 [Description("IUnitOperationValidatedEventArgs Interface")]
 internal interface IUnitOperationValidatedEventArgs
 {
@@ -73,7 +73,7 @@ internal interface IUnitOperationValidatedEventArgs
 /// <summary>单元操作已验证。</summary>
 /// <remarks>提供有关单元操作验证的信息。</remarks>
 [Serializable, ComVisible(true)]
-[Guid(CapeOpenGuids.UnitOperaValidatedEventArgsIid)] // 9147E78B-29D6-4D91-956E-75D0FB90CEA7
+[Guid(CapeOpenGuids.UnitOpValEvArgsIid)] // 9147E78B-29D6-4D91-956E-75D0FB90CEA7
 [ClassInterface(ClassInterfaceType.None)]
 public class UnitOperationValidatedEventArgs : EventArgs,
     IUnitOperationValidatedEventArgs
@@ -121,7 +121,7 @@ public delegate void UnitOperationCalculateHandler(object sender, UnitOperationC
 /// <summary>在单元操作开始时触发的事件是计算。</summary>
 /// <remarks>提供有关单元操作计算开始的信息。</remarks>
 [ComVisible(true)]
-[Guid(CapeOpenGuids.InUnitOperaCalEventArgsIid)] // DDCA3348-074C-4860-AD00-58386327D9AC
+[Guid(CapeOpenGuids.InUnitOpCalEvArgsIid)] // DDCA3348-074C-4860-AD00-58386327D9AC
 [Description("IUnitOperationCalculateEventArgs Interface")]
 public interface IUnitOperationCalculateEventArgs
 {
@@ -137,7 +137,7 @@ public interface IUnitOperationCalculateEventArgs
 /// <summary>事件在单元操作开始时触发，用于计算。</summary>
 /// <remarks>提供有关单元操作计算开始的信息。</remarks>
 [Serializable, ComVisible(true)]
-[Guid(CapeOpenGuids.UnitOperaCalEventArgsIid)] // 7831C38B-A1C6-40C5-B9FC-DAC43426AAD4
+[Guid(CapeOpenGuids.UnitOpCalEvArgsIid)] // 7831C38B-A1C6-40C5-B9FC-DAC43426AAD4
 [ClassInterface(ClassInterfaceType.None)]
 public class UnitOperationCalculateEventArgs : EventArgs,
     IUnitOperationCalculateEventArgs
@@ -171,7 +171,7 @@ public delegate void UnitOperationBeginCalculationHandler(object sender, UnitOpe
 /// <summary>事件在单元操作开始时触发，用于计算。</summary>
 /// <remarks>提供有关单元操作计算开始的信息。</remarks>
 [ComVisible(true)]
-[Guid(CapeOpenGuids.InUnitOperaBeginCalEventArgsIid)] // 3E827FD8-5BDB-41E4-81D9-AC438BC9B957
+[Guid(CapeOpenGuids.InUnitOpBeCalEvArgsIid)] // 3E827FD8-5BDB-41E4-81D9-AC438BC9B957
 [Description("IUnitOperationBeginCalculationEventArgs Interface")]
 internal interface IUnitOperationBeginCalculationEventArgs
 {
@@ -187,7 +187,7 @@ internal interface IUnitOperationBeginCalculationEventArgs
 /// <summary>事件在单元操作开始时触发，用于计算。</summary>
 /// <remarks>提供有关单元操作计算开始的信息。</remarks>
 [Serializable, ComVisible(true)]
-[Guid(CapeOpenGuids.UnitOperaBeginCalEventArgsIid)] // 763691E8-D792-4B97-A12A-D4AD7F66B5E4
+[Guid(CapeOpenGuids.UnitOpBeCalEvArgsIid)] // 763691E8-D792-4B97-A12A-D4AD7F66B5E4
 [ClassInterface(ClassInterfaceType.None)]
 public class UnitOperationBeginCalculationEventArgs : EventArgs,
     IUnitOperationBeginCalculationEventArgs
@@ -222,7 +222,7 @@ public delegate void UnitOperationEndCalculationHandler(object sender, UnitOpera
 /// <summary>单元操作计算过程已完成。</summary>
 /// <remarks>提供有关单元操作计算过程完成的信息。</remarks>
 [ComVisible(true)]
-[Guid(CapeOpenGuids.InUnitOperaEndCalEventArgsIid)] // 951D755F-8831-4691-9B54-CC9935A5B7CC
+[Guid(CapeOpenGuids.InUnitOpEndCalEvArgsIid)] // 951D755F-8831-4691-9B54-CC9935A5B7CC
 [Description("IUnitOperationEndCalculationEventArgs Interface")]
 internal interface IUnitOperationEndCalculationEventArgs
 {
@@ -239,7 +239,7 @@ internal interface IUnitOperationEndCalculationEventArgs
 /// <summary>单元操作已验证。</summary>
 /// <remarks>提供有关单元操作验证的信息。</remarks>
 [Serializable, ComVisible(true)]
-[Guid(CapeOpenGuids.UnitOperaEndCalEventArgsIid)] // 172F4D6E-65D1-4D9E-A275-7880FA3A40A5
+[Guid(CapeOpenGuids.UnitOpEndCalEvArgsIid)] // 172F4D6E-65D1-4D9E-A275-7880FA3A40A5
 [ClassInterface(ClassInterfaceType.None)]
 public class UnitOperationEndCalculationEventArgs : EventArgs,
     IUnitOperationEndCalculationEventArgs
@@ -583,7 +583,7 @@ public interface ICapeUnitPort
 
 /// <summary>对象连接到端口。</summary>
 [ComVisible(true)]
-[Guid(CapeOpenGuids.InPortConnectedEventArgsIid)] // DC735166-8008-4B39-BE1C-6E94A723AD65
+[Guid(CapeOpenGuids.InPortConEvArgsIid)] // DC735166-8008-4B39-BE1C-6E94A723AD65
 [Description("PortConnectedEventArgs Interface")]
 internal interface IPortConnectedEventArgs
 {
@@ -593,7 +593,7 @@ internal interface IPortConnectedEventArgs
 
 /// <summary>对象连接到端口。</summary>
 [Serializable, ComVisible(true)]
-[Guid(CapeOpenGuids.PortConnectedEventArgsIid)] // 962B9FDE-842E-43F8-9280-41C5BF80DDEC
+[Guid(CapeOpenGuids.PortConEvArgsIid)] // 962B9FDE-842E-43F8-9280-41C5BF80DDEC
 [ClassInterface(ClassInterfaceType.None)]
 public class PortConnectedEventArgs : EventArgs,
     IPortConnectedEventArgs
@@ -617,7 +617,7 @@ public delegate void PortDisconnectedHandler(object sender, PortDisconnectedEven
 
 /// <summary>端口断开连接</summary>
 [ComVisible(true)]
-[Guid(CapeOpenGuids.InPortDisconnectedEventArgsIid)] // 5EFDEE16-7858-4119-B8BB-7394FFBCC02D
+[Guid(CapeOpenGuids.InPortDisEvArgsIid)] // 5EFDEE16-7858-4119-B8BB-7394FFBCC02D
 [Description("PortDisconnectedEventArgs Interface")]
 internal interface IPortDisconnectedEventArgs
 {
@@ -627,7 +627,7 @@ internal interface IPortDisconnectedEventArgs
 
 /// <summary>端口断开连接</summary>
 [Serializable, ComVisible(true)]
-[Guid(CapeOpenGuids.PortDisconnectedEventArgsIid)] // 693F33AA-EE4A-4CDF-9BA1-8889086BC8AB
+[Guid(CapeOpenGuids.PortDisEvArgsIid)] // 693F33AA-EE4A-4CDF-9BA1-8889086BC8AB
 [ClassInterface(ClassInterfaceType.None)]
 public class PortDisconnectedEventArgs : EventArgs,
     IPortDisconnectedEventArgs

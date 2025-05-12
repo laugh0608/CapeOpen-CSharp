@@ -264,7 +264,7 @@ public interface ECapeBadCOParameter
 /// <summary>传递了无效的参数值。</summary>
 /// <remarks>函数调用包含无效的参数值。例如，过渡阶段名称不属于 CO 阶段列表。</remarks>
 [ComImport, ComVisible(false)]
-[Guid(CapeOpenGuids.ECapeBadArgument093Iid)] // 678c0b16-7d66-11d2-a67d-00105a42887f
+[Guid(CapeOpenGuids.ECapeBadArg093Iid)] // 678c0b16-7d66-11d2-a67d-00105a42887f
 [Description("ECapeBadArgument Interface")]
 public interface ECapeBadArgument093
 {
@@ -461,14 +461,14 @@ public interface ECapePersistenceOverflow { }
 /// <remarks>请求的属性中至少有一个项目无法返回。这可能是由于属性不能在
 /// 指定的条件下或指定的阶段计算。如果未实现属性计算，则应返回 <see cref = "ECapeLimitedImpl"/>。</remarks>
 [ComImport, ComVisible(false)]
-[Guid(CapeOpenGuids.ECapeThermoPropertyNotAvailableIid)] // 678C09B6-7D66-11D2-A67D-00105A42887F
+[Guid(CapeOpenGuids.ECapeThProNotAvIid)] // 678C09B6-7D66-11D2-A67D-00105A42887F
 [Description("ECapeThrmPropertyNotAvailable Interface")]
 public interface ECapeThrmPropertyNotAvailable { }
 
 /// <summary>当 MINLP 问题的海森矩阵不可用时抛出异常。</summary>
 /// <remarks>混合整数非线性规划（MINLP）算法</remarks>
 [ComImport, ComVisible(false)]
-[Guid(CapeOpenGuids.ECapeHessianInfoNotAvailableIid)] // 3FF0B24B-4299-4DAC-A46E-7843728AD205
+[Guid(CapeOpenGuids.ECapeHeInfoNotAvIid)] // 3FF0B24B-4299-4DAC-A46E-7843728AD205
 [Description("ECapeHessianInfoNotAvailable Interface")]
 public interface ECapeHessianInfoNotAvailable
 {
@@ -518,7 +518,7 @@ public interface ECapeHessianInfoNotAvailable
 
 /// <summary>当问题超出求解器的范围时引发异常。</summary>
 [ComImport, ComVisible(false)]
-[Guid(CapeOpenGuids.ECapeOutsideSolverScopeIid)] // 678c0b0f-7d66-11d2-a67d-00105a42887f
+[Guid(CapeOpenGuids.ECapeOutSoScopeIid)] // 678c0b0f-7d66-11d2-a67d-00105a42887f
 [Description("ECapeOutsideSolverScope Interface")]
 public interface ECapeOutsideSolverScope
 {

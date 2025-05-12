@@ -299,28 +299,28 @@ internal abstract class CapeOpenGuids
     /**************************************
      额外自定义补充的
     **************************************/
-    public const string ECapeBadArgument093Iid = "678c0b16-7d66-11d2-a67d-00105a42887f";
-    public const string ECapeThermoPropertyNotAvailableIid = "678C09B6-7D66-11D2-A67D-00105A42887F";
-    public const string ECapeHessianInfoNotAvailableIid = "3FF0B24B-4299-4DAC-A46E-7843728AD205";
-    public const string ECapeOutsideSolverScopeIid = "678c0b0f-7d66-11d2-a67d-00105a42887f";
-    public const string ArrayParameterWrapperIid = "277E2E39-70E7-4FBA-89C9-2A19B9D5E576";
+    public const string ECapeBadArg093Iid = "678c0b16-7d66-11d2-a67d-00105a42887f";
+    public const string ECapeThProNotAvIid = "678C09B6-7D66-11D2-A67D-00105A42887F";
+    public const string ECapeHeInfoNotAvIid = "3FF0B24B-4299-4DAC-A46E-7843728AD205";
+    public const string ECapeOutSoScopeIid = "678c0b0f-7d66-11d2-a67d-00105a42887f";
+    public const string ArrParaWrapperIid = "277E2E39-70E7-4FBA-89C9-2A19B9D5E576";
     public const string PortCollectionIid = "1C5F7CC3-31B4-4d81-829F-3EB5D692F7BD";
-    public const string InUnitOperaValidatedEventArgsIid = "50A759AF-5E38-4399-9050-93F823E5A6E6";
-    public const string UnitOperaValidatedEventArgsIid = "9147E78B-29D6-4D91-956E-75D0FB90CEA7";
-    public const string InUnitOperaCalEventArgsIid = "DDCA3348-074C-4860-AD00-58386327D9AC";
-    public const string UnitOperaCalEventArgsIid = "7831C38B-A1C6-40C5-B9FC-DAC43426AAD4";
-    public const string InUnitOperaBeginCalEventArgsIid = "3E827FD8-5BDB-41E4-81D9-AC438BC9B957";
-    public const string UnitOperaBeginCalEventArgsIid = "763691E8-D792-4B97-A12A-D4AD7F66B5E4";
-    public const string InUnitOperaEndCalEventArgsIid = "951D755F-8831-4691-9B54-CC9935A5B7CC";
-    public const string UnitOperaEndCalEventArgsIid = "172F4D6E-65D1-4D9E-A275-7880FA3A40A5";
-    public const string InPortConnectedEventArgsIid = "DC735166-8008-4B39-BE1C-6E94A723AD65";
-    public const string PortConnectedEventArgsIid = "962B9FDE-842E-43F8-9280-41C5BF80DDEC";
-    public const string InPortDisconnectedEventArgsIid = "5EFDEE16-7858-4119-B8BB-7394FFBCC02D";
-    public const string PortDisconnectedEventArgsIid = "693F33AA-EE4A-4CDF-9BA1-8889086BC8AB";
+    public const string InUnitOpValEvArgsIid = "50A759AF-5E38-4399-9050-93F823E5A6E6";
+    public const string UnitOpValEvArgsIid = "9147E78B-29D6-4D91-956E-75D0FB90CEA7";
+    public const string InUnitOpCalEvArgsIid = "DDCA3348-074C-4860-AD00-58386327D9AC";
+    public const string UnitOpCalEvArgsIid = "7831C38B-A1C6-40C5-B9FC-DAC43426AAD4";
+    public const string InUnitOpBeCalEvArgsIid = "3E827FD8-5BDB-41E4-81D9-AC438BC9B957";
+    public const string UnitOpBeCalEvArgsIid = "763691E8-D792-4B97-A12A-D4AD7F66B5E4";
+    public const string InUnitOpEndCalEvArgsIid = "951D755F-8831-4691-9B54-CC9935A5B7CC";
+    public const string UnitOpEndCalEvArgsIid = "172F4D6E-65D1-4D9E-A275-7880FA3A40A5";
+    public const string InPortConEvArgsIid = "DC735166-8008-4B39-BE1C-6E94A723AD65";
+    public const string PortConEvArgsIid = "962B9FDE-842E-43F8-9280-41C5BF80DDEC";
+    public const string InPortDisEvArgsIid = "5EFDEE16-7858-4119-B8BB-7394FFBCC02D";
+    public const string PortDisEvArgsIid = "693F33AA-EE4A-4CDF-9BA1-8889086BC8AB";
     public const string InComNameChEvArgsIid = "F79EA405-4002-4fb2-AED0-C1E48793637D";
     public const string InComDescChEvArgsIid = "34C43BD3-86B2-46d4-8639-E0FA5721EC5C";
     public const string ComNameChEvArgsIid = "D78014E7-FB1D-43ab-B807-B219FAB97E8B";
     public const string ComDescChEvArgsIid = "0C51C4F1-20E8-413d-93E1-4704B888354A";
     public const string InCapeIdentEvIid = "5F5087A7-B27B-4b4f-902D-5F66E34A0CBE";
-    public const string CapeIdentificationIid = "BF54DF05-924C-49a5-8EBB-733E37C38085";
+    public const string CapeIdentIid = "BF54DF05-924C-49a5-8EBB-733E37C38085";
 }

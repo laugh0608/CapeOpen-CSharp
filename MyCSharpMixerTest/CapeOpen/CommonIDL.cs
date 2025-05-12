@@ -242,7 +242,7 @@ public delegate void ComponentDescriptionChangedHandler(object sender, Component
 [Serializable]
 [ComSourceInterfaces(typeof(ICapeIdentificationEvents), typeof(INotifyPropertyChanged))]
 [ComVisible(true)]
-[Guid(CapeOpenGuids.CapeIdentificationIid)] // BF54DF05-924C-49a5-8EBB-733E37C38085
+[Guid(CapeOpenGuids.CapeIdentIid)] // BF54DF05-924C-49a5-8EBB-733E37C38085
 [Description("CapeIdentification Interface")]
 [ClassInterface(ClassInterfaceType.None)]
 public abstract class CapeIdentification : // System.ComponentModel.Component,
