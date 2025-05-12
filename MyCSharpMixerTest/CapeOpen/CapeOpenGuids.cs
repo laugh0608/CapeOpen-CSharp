@@ -354,4 +354,5 @@ internal abstract class CapeOpenGuids
     public const string CapeThProPeNotAvBlExIid = "5BA36B8F-6187-4e5e-B263-0924365C9A81";
     public const string CapeSolutionStatusIid = "D1B15843-C0F5-4CB7-B462-E1B80456808E";
     public const string InCapeFlShMoToIid = "834F65CC-29AE-41c7-AA32-EE8B2BAB7FC2";
+    public const string PpParameterCollectionIid = "64A1B36C-106B-4d05-B585-D176CD4DD1DB";
 }
