@@ -223,7 +223,7 @@ internal abstract class CapeOpenGuids
     public const string ICapeReactionsRoutine_IID = "678c0af9-0100-11d2-a67d-00105a42887f";
 
     // ICapeThermoContext - actually part of the 1.1 thermo specification but 
-    // included here becuase it is required for the Reactions interfaces
+    // included here because it is required for the Reactions interfaces
     public const string ICapeThermoContext_IID = "678c0b5f-0100-11d2-a67d-00105a42887f";
     public const string CapeReactionType_IID = "678c0b00-0100-11d2-a67d-00105a42887f";
     public const string CapeReactionRateBasis_IID = "678c0aff-0100-11d2-a67d-00105a42887f";
@@ -323,4 +323,33 @@ internal abstract class CapeOpenGuids
     public const string ComDescChEvArgsIid = "0C51C4F1-20E8-413d-93E1-4704B888354A";
     public const string InCapeIdentEvIid = "5F5087A7-B27B-4b4f-902D-5F66E34A0CBE";
     public const string CapeIdentIid = "BF54DF05-924C-49a5-8EBB-733E37C38085";
+    public const string CapeUserExIid = "28686562-77AD-448f-8A41-8CF9C3264A3E";
+    public const string CapeUnKnExIid = "B550B2CA-6714-4e7f-813E-C93248142410";
+    public const string CapeUnPeExIid = "16049506-E086-4baf-9905-9ED13D50D0E3";
+    public const string CapeDataExPtIid = "53551E7C-ECB2-4894-B71A-CCD1E7D40995";
+    public const string CapeBadCoParaIid = "667D34E9-7EF7-4ca8-8D17-C7577F2C5B62";
+    public const string CapeBadArExPtiIid = "D168E99F-C1EF-454c-8574-A8E26B62ADB1";
+    public const string CapeBoDaExPtIid = "62B1EE2F-E488-4679-AFA3-D490694D6B33";
+    public const string CapeOutOfBoExPtIid = "4438458A-1659-48c2-9138-03AD8B4C38D8";
+    public const string CapeComPuExPtIid = "9D416BF5-B9E3-429a-B13A-222EE85A92A7";
+    public const string CapeFaInLiExPtIid = "E407595C-6D1C-4b8c-A29D-DB0BE73EFDDA";
+    public const string CapeImTaExPtIid = "7828A87E-582D-4947-9E8F-4F56725B6D75";
+    public const string CapeInValArExPtIid = "B30127DA-8E69-4d15-BAB0-89132126BAC9";
+    public const string CapeInValOpTiExPtIid = "C0B943FE-FB8F-46b6-A622-54D30027D18B";
+    public const string CapeBadInvOrExPtIid = "C0B943FE-FB8F-46b6-A622-54D30027D18B";
+    public const string CapeLiCeErExPtIid = "CF4C55E9-6B0A-4248-9A33-B8134EA393F6";
+    public const string CapeLimitedImplExIid = "CF4C55E9-6B0A-4248-9A33-B8134EA393F6";
+    public const string CapeNoImplExPtIid = "1D2488A6-C428-4e38-AFA6-04F2107172DA";
+    public const string CapeOutOfReCeExPtIid = "42B785A7-2EDD-4808-AC43-9E6E96373616";
+    public const string CapeNoMeMoExPtIid = "1056A260-A996-4a1e-8BAE-9476D643282B";
+    public const string CapePerSiTeExPtIid = "3237C6F8-3D46-47ee-B25F-52485A5253D8";
+    public const string CapePeSiTeNotFoExPtIid = "271B9E29-637E-4eb0-9588-8A53203A3959";
+    public const string CapePeSiOverFlExcPtIid = "A119DE0B-C11E-4a14-BA5E-9A2D20B15578";
+    public const string CapePeSiSysErExIid = "85CB2D40-48F6-4c33-BF0C-79CB00684440";
+    public const string CapeIllAccEssExIid = "45843244-ECC9-495d-ADC3-BF9980A083EB";
+    public const string CapeSoLvErrExIid = "F617AFEA-0EEE-4395-8C82-288BF8F2A136";
+    public const string CapeHeInoNotAvBlExIid = "3044EA08-F054-4315-B67B-4E3CD2CF0B1E";
+    public const string CapeTimeOutExPtIid = "0D5CA7D8-6574-4c7b-9B5F-320AA8375A3C";
+    public const string ComCaOpExPtWrPerIid = "31CD55DE-AEFD-44ff-8BAB-F6252DD43F16";
+    public const string CapeThProPeNotAvBlExIid = "5BA36B8F-6187-4e5e-B263-0924365C9A81";
 }
