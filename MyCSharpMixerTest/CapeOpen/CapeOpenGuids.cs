@@ -18,52 +18,36 @@ internal abstract class CapeOpenGuids
 {
     // CAPE-OPEN Category
     public const string CapeOpenComponent_CATID = "{678c09a1-7d66-11d2-a67d-00105a42887f}";
-
     // External CAPE-OPEN Thermo Routines
     public const string CapeExternalThermoRoutine_CATID = "{678c09a2-7d66-11d2-a67d-00105a42887f}";
-
     // CAPE-OPEN Thermo System
     public const string CapeThermoSystem_CATID = "{678c09a3-7d66-11d2-a67d-00105a42887f}";
-
     // CAPE-OPEN Thermo Property Package
     public const string CapeThermoPropertyPackage_CATID = "{678c09a4-7d66-11d2-a67d-00105a42887f}";
-
     // CAPE-OPEN Thermo Equilibrium Server
     public const string CapeThermoEquilibriumServer_CATID = "{678c09a6-7d66-11d2-a67d-00105a42887f}";
-
     // CAPE-OPEN Unit Operation
     public const string CapeUnitOperation_CATID = "{678c09a5-7d66-11d2-a67d-00105a42887f}";
-
     // CAEP-OPEN Reactions Package manager components
     public const string CAPEOPENReactionsPackageManager_CATID = "{678c09aa-0100-11d2-a67d-00105a42887f}";
-
     // CAPE-OPEN Standalone Reactions Package
     public const string CAPEOPENReactionsPackage_CATID = "{678c09ab-0100-11d2-a67d-00105a42887f}";
-
     // CAPE-OPEN MINLP Solver Package
     public const string CapeMINLPSolverPackage_CATID = "{678c09ac-7d66-11d2-a67d-00105a42887f}";
-
     // CAPE-OPEN PPDB Service
     public const string CapePPDBService_CATID = "{678c09aa-7d66-11d2-a67d-00105a42887f}";
-
     // CAPE-OPEN SMST Package
     public const string CapeSMSTPackage_CATID = "{678c09ab-7d66-11d2-a67d-00105a42887f}";
-
     // CAPE-OPEN Solvers Package
     public const string CapeSolversPackage_CATID = "{79DD785E-27E5-4939-B040-B1E45B1F2C64}";
-
     // CAPE-OPEN PSP Package
     public const string CapePSPPackage_CATID = "{3EFFA2BD-D9E7-4e55-B515-AD3E3623AAD5}";
-
     // CAPE-OPEN Monitoring Object
     public const string CATID_MONITORING_OBJECT = "{7BA1AF89-B2E4-493d-BD80-2970BF4CBE99}";
-
     // CAPE-OPEN Thermodynamics Consuming Object
     public const string Consumes_Thermo_CATID = "{4150C28A-EE06-403f-A871-87AFEC38A249}";
-
     // CAPE-OPEN Object Supporting Thermo 1.0
     public const string SupportsThermodynamics10_CATID = "{0D562DC8-EA8E-4210-AB39-B66513C0CD09}";
-
     // CAPE-OPEN Object Supporting Thermo 1.1
     public const string SupportsThermodynamics11_CATID = "{4667023A-5A8E-4cca-AB6D-9D78C5112FED}";
 
@@ -150,7 +134,6 @@ internal abstract class CapeOpenGuids
     public const string ICapeThermoMaterialObject_IID = "678c0994-7d66-11d2-a67d-00105a42887f";
     public const string ICapeThermoSystem_IID = "678c0995-7d66-11d2-a67d-00105a42887f";
     public const string ICapeThermoPropertyPackage_IID = "678c0996-7d66-11d2-a67d-00105a42887f";
-
     public const string ICapeThermoEquilibriumServer_IID = "678c0997-7d66-11d2-a67d-00105a42887f";
 
     // Example CLSID - not for use 
@@ -197,7 +180,6 @@ internal abstract class CapeOpenGuids
     **************************************/
     public const string ICapeUnit_IID = "678c0998-0100-11d2-a67d-00105a42887f";
     public const string ICapeUnitPort_IID = "678c0999-0093-11d2-a67d-00105a42887f";
-
     public const string ICapeUnitReport_IID = "678c099b-0093-11d2-a67d-00105a42887f";
 
     //public const string  ICapeUnitEdit_IID			"678c0a9a-0093-11d2-a67d-00105a42887f";
@@ -205,7 +187,6 @@ internal abstract class CapeOpenGuids
     // ICapeUnitPortVariables : new interface for mapping EO ESO to port variables
     public const string ICapeUnitPortVariables_IID = "678c09b1-7d66-11d2-a67d-00105a42887f";
     public const string CapePortDirection_IID = "678c0b05-7d66-11d2-a67d-00105a42887f";
-
     public const string CapePortType_IID = "678c0b06-7d66-11d2-a67d-00105a42887f";
 
     // Example CLSID - not for use !
@@ -219,7 +200,6 @@ internal abstract class CapeOpenGuids
     public const string ICapeReactionsPackageManager_IID = "678c0afc-0100-11d2-a67d-00105a42887f";
     public const string ICapeReactionChemistry_IID = "678c0afb-0100-11d2-a67d-00105a42887f";
     public const string ICapeReactionProperties_IID = "678c0afa-0100-11d2-a67d-00105a42887f";
-
     public const string ICapeReactionsRoutine_IID = "678c0af9-0100-11d2-a67d-00105a42887f";
 
     // ICapeThermoContext - actually part of the 1.1 thermo specification but 
@@ -386,4 +366,6 @@ internal abstract class CapeOpenGuids
     public const string InParRestToLiChEvArgsIid = "7F357261-095A-4FD4-99C1-ACDAEDA36141";
     public const string ParRestToLiChEvArgsIid = "82E0E6C2-3103-4B5A-A5BC-EBAB971B069A";
     public const string CapeParameterIid = "F027B4D1-A215-4107-AA75-34E929DD00A5";
+    // Material Object Wrapper
+    public const string MaterObjWrapIid = "5A65B4B2-2FDD-4208-813D-7CC527FB91BD";
 }
