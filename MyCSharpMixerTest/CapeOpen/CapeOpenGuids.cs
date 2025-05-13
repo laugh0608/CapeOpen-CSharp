@@ -376,4 +376,7 @@ internal abstract class CapeOpenGuids
     public const string InRealPaSpecEveIid = "058B416C-FC61-4E64-802A-19070CB39703";
     public const string PpRealParTerIid = "77E39C43-046B-4b1f-9EE0-AA9EFC55D2EE";
     public const string PpRealParTerWapIid = "C7095FE4-E61D-4FFF-BA02-013FD38DBAE9";
+    // Unit Port
+    public const string InUnitPortEventsIid = "3530B780-5E59-42B1-801B-3C18F2AD08EE";
+    public const string PpUnitPortIid = "51066F52-C0F9-48d7-939E-3A229010E77C";
 }
