@@ -1,4 +1,6 @@
-﻿using System.ComponentModel;
+﻿// 大白萝卜重构于 2025.05.13，使用 .NET8.O-windows、Microsoft Visual Studio 2022 Preview 和 Rider 2024.3。
+
+using System.ComponentModel;
 using System.Runtime.InteropServices;
 
 namespace CapeOpen;
@@ -11,7 +13,7 @@ namespace CapeOpen;
 /// ICapeThermoMaterialObject</see> interface to the desired .Net object types. This eliminates the need to convert the data types
 /// when you use a COM-based CAPE-OPEN material object.</para></remarks>
 [ComVisible(false)]
-[Guid(CapeOpenGuids.MaterObjWrap10Iid)]  // "5A65B4B2-2FDD-4208-813D-7CC527FB91BD"
+[Guid(CapeOpenGuids.MaterObjWrapIid)]  // "5A65B4B2-2FDD-4208-813D-7CC527FB91BD"
 [Description("ICapeThermoMaterialObject Interface")]
 internal class MaterialObjectWrapper10 : CapeObjectBase, ICapeThermoMaterialObject
 {
@@ -141,7 +143,6 @@ internal class MaterialObjectWrapper10 : CapeObjectBase, ICapeThermoMaterialObje
         "Unit Operation Parameter Collection. Click on the (...) button to edit collection.")]
     [Category("CapeIdentification")]
     public object MaterialObject10 => _pMaterialObject;
-
 
     /// <summary> Gets the wrapped Thermo Version 1.1 Material Object.</summary>
     /// <remarks><para>Provides direct access to the Thermo Version 1.1 material object.</para>
