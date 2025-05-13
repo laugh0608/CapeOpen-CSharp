@@ -15,6 +15,7 @@ namespace CapeOpen;
 /// Equilibrium Calculation. The stored values are available but there is no guarantee 
 /// that they will be used.</remarks>
 [Serializable]
+[Flags]
 public enum CapeFugacityFlag
 {
     /// <summary>No Calculation.</summary>

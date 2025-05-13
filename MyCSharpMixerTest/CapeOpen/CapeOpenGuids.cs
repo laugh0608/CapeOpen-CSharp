@@ -400,6 +400,8 @@ internal abstract class CapeOpenGuids
     public const string CofeStreamTypeIid = "D1B15843-C0F5-4CB7-B462-E1B80456808E";
     public const string InCofeStreamIid = "B2A15C45-D878-4E56-A19A-DED6A6AD6F91";
     public const string InCofeMaterialIid = "2BFFCBD3-7DAB-439D-9E25-FBECC8146BE8";
-    public const string InCofeIconIid = "5F6333E0-434F-4C03-85E2-6EB493EAE846";
+    public const string InCofeIconIid = "5F6333E0-434F-4C03-85E2-6EB493EAE846"; 
+    // COM Material Object Wrapper
+    public const string ComMateObjWrapIid = "5A65B4B2-2FDD-4208-813D-7CC527FB91BD"; 
 
 }
