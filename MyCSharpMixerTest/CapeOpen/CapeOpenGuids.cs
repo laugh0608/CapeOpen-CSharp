@@ -392,4 +392,8 @@ internal abstract class CapeOpenGuids
     public const string InCapeTheProPackManComIid = "678C0AA2-7D66-11D2-A67D-00105A42887F";
     // Cape Thermo System
     public const string PpCapeThermoSystemIid = "B5483FD2-E8AB-4ba4-9EA6-53BBDB77CE81";
+    // Boolean Parameter
+    public const string InCaBoolParaSpecEveIid = "07D17ED3-B25A-48EA-8261-5ED2D076ABDD";
+    public const string PpBooleanParameterIid = "8B8BC504-EEB5-4a13-B016-9614543E4536";
+    public const string BooleanParameterWrapIid = "A6751A39-8A2C-4AFC-AD57-6395FFE0A7FE";
 }

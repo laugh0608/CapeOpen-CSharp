@@ -1,5 +1,8 @@
 ﻿// 大白萝卜重构于 2025.05.13，使用 .NET8.O-windows、Microsoft Visual Studio 2022 Preview 和 Rider 2024.3。
 
+using System.ComponentModel;
+using System.Runtime.InteropServices;
+
 namespace CapeOpen;
 
 /// <summary>
@@ -11,11 +14,11 @@ namespace CapeOpen;
 /// <para>This interface is not a part of the CAPE-OPEN specifications. This interface and its implementation is 
 /// provided to give COM-based developers similar functionality as .NET-based developers.</para>
 /// </remarks>
-[System.Runtime.InteropServices.InterfaceType(System.Runtime.InteropServices.ComInterfaceType.InterfaceIsIDispatch)]
-[System.Runtime.InteropServices.ComVisibleAttribute(true)]
-[System.Runtime.InteropServices.GuidAttribute("07D17ED3-B25A-48EA-8261-5ED2D076ABDD")]
-[System.ComponentModel.DescriptionAttribute("CapeRealParameterEvents Interface")]
-interface ICapeBooleanParameterSpecEvents
+[InterfaceType(ComInterfaceType.InterfaceIsIDispatch)]
+[ComVisible(true)]
+[Guid(CapeOpenGuids.InCaBoolParaSpecEveIid)]  // "07D17ED3-B25A-48EA-8261-5ED2D076ABDD"
+[Description("CapeRealParameterEvents Interface")]
+internal interface ICapeBooleanParameterSpecEvents
 {
     /// <summary>
     /// Occurs when the user changes of the default value of a parameter.
@@ -55,19 +58,16 @@ interface ICapeBooleanParameterSpecEvents
 /// Boolean-Valued parameter for use in the CAPE-OPEN parameter collection.
 /// </remarks>
 [Serializable]
-[System.Runtime.InteropServices.ComSourceInterfaces(typeof(ICapeBooleanParameterSpecEvents))]
-[System.Runtime.InteropServices.ComVisible(true)]
-[System.Runtime.InteropServices.Guid("8B8BC504-EEB5-4a13-B016-9614543E4536")]
-[System.Runtime.InteropServices.ClassInterface(System.Runtime.InteropServices.ClassInterfaceType.None)]
+[ComSourceInterfaces(typeof(ICapeBooleanParameterSpecEvents))]
+[ComVisible(true)]
+[Guid(CapeOpenGuids.PpBooleanParameterIid)]  // "8B8BC504-EEB5-4a13-B016-9614543E4536"
+[ClassInterface(ClassInterfaceType.None)]
 public class BooleanParameter : CapeParameter,
-    ICapeParameter,
-    ICapeParameterSpec,
-    ICapeParameterSpecCOM,
-    ICapeBooleanParameterSpec,
-    System.ComponentModel.INotifyPropertyChanged
+    ICapeParameter, ICapeParameterSpec, ICapeParameterSpecCOM,
+    ICapeBooleanParameterSpec //, INotifyPropertyChanged
 {
-    private bool m_value;
-    private bool m_DefaultValue;
+    private bool _mValue;
+    private bool _mDefaultValue;
 
     /// <summary>
     /// Gets and sets the value for this Parameter.
@@ -81,17 +81,14 @@ public class BooleanParameter : CapeParameter,
     /// <value>A boxed boolean value of the parameter.</value>
     /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
     /// <exception cref = "ECapeInvalidArgument">To be used when an invalid argument value is passed, for example, an unrecognised Compound identifier or UNDEFINED for the props argument.</exception>
-    [System.ComponentModel.BrowsableAttribute(false)]
-    override public Object value
+    [Browsable(false)]
+    public override object value
     {
-        get
-        {
-            return m_value;
-        }
+        get => _mValue;
         set
         {
-            ParameterValueChangedEventArgs args = new ParameterValueChangedEventArgs(this.ComponentName, m_value, Convert.ToBoolean(value));
-            m_value = Convert.ToBoolean(value);
+            var args = new ParameterValueChangedEventArgs(ComponentName, _mValue, Convert.ToBoolean(value));
+            _mValue = Convert.ToBoolean(value);
             OnParameterValueChanged(args);
         }
     }
@@ -107,13 +104,14 @@ public class BooleanParameter : CapeParameter,
     /// <param name = "name">Sets as the ComponentName of the parameter's ICapeIdentification interface.</param>
     /// <param name = "value">Sets the inital and default value of the parameter.</param>
     /// <param name = "mode">Sets the CapeParamMode mode of the parameter.</param>
-    public BooleanParameter(String name, bool value, CapeParamMode mode)
-        : base(name, String.Empty, mode)
+    public BooleanParameter(string name, bool value, CapeParamMode mode)
+        : base(name, string.Empty, mode)
     {
-        m_value = value;
-        m_DefaultValue = value;
-        this.Mode = mode;            
+        _mValue = value;
+        _mDefaultValue = value;
+        Mode = mode;            
     }
+    
     /// <summary>
     /// Constructor for the boolean-valued parameter
     /// </summary>
@@ -128,13 +126,13 @@ public class BooleanParameter : CapeParameter,
     /// <param name = "value">Sets the inital value of the parameter.</param>
     /// <param name = "defaultValue">Sets the default value of the parameter.</param>
     /// <param name = "mode">Sets the CapeParamMode mode of the parameter.</param>
-    public BooleanParameter(String name, String description, bool value, bool defaultValue, CapeParamMode mode)
+    public BooleanParameter(string name, string description, bool value, bool defaultValue, CapeParamMode mode)
         : base(name, description, mode)
     {
-        m_value = value;
-        this.Mode = mode;
-        m_DefaultValue = defaultValue;
-        MValStatus = CapeOpen.CapeValidationStatus.CAPE_VALID;
+        _mValue = value;
+        Mode = mode;
+        _mDefaultValue = defaultValue;
+        MValStatus = CapeValidationStatus.CAPE_VALID;
     }
 
     // ICloneable
@@ -144,9 +142,9 @@ public class BooleanParameter : CapeParameter,
     /// <remarks><para>The clone method is used to create a deep copy of the parameter.</para>
     /// </remarks>
     /// <returns>A copy of the current parameter.</returns>
-    override public object Clone()
+    public override object Clone()
     {
-        return new BooleanParameter(this.ComponentName, this.ComponentDescription, m_value, m_DefaultValue, this.Mode);
+        return new BooleanParameter(ComponentName, ComponentDescription, _mValue, _mDefaultValue, Mode);
     }
 
     /// <summary>
@@ -161,17 +159,14 @@ public class BooleanParameter : CapeParameter,
     /// </value>
     /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
     /// <exception cref = "ECapeInvalidArgument">To be used when an invalid argument value is passed, for example, an unrecognised Compound identifier or UNDEFINED for the props argument.</exception>
-    [System.ComponentModel.CategoryAttribute("ICapeParameter")]
+    [Category("ICapeParameter")]
     public bool Value
     {
-        get
-        {
-            return m_value;
-        }
+        get => _mValue;
         set
         {
-            ParameterValueChangedEventArgs args = new ParameterValueChangedEventArgs(this.ComponentName, m_value, value);
-            m_value = value;
+            var args = new ParameterValueChangedEventArgs(ComponentName, _mValue, value);
+            _mValue = value;
             OnParameterValueChanged(args);
         }
     }
@@ -189,11 +184,11 @@ public class BooleanParameter : CapeParameter,
     /// <param name = "message">The message is used to return the reason that the parameter is invalid.</param>
     /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
     /// <exception cref = "ECapeInvalidArgument">To be used when an invalid argument value is passed.</exception>
-    public override bool Validate(ref String message)
+    public override bool Validate(ref string message)
     {
         message = "Value is valid.";
         MValStatus = CapeValidationStatus.CAPE_VALID;
-        ParameterValidatedEventArgs args = new ParameterValidatedEventArgs(this.ComponentName, message, CapeValidationStatus.CAPE_VALID, CapeValidationStatus.CAPE_VALID);
+        var args = new ParameterValidatedEventArgs(ComponentName, message, CapeValidationStatus.CAPE_VALID, CapeValidationStatus.CAPE_VALID);
         OnParameterValidated(args);
         return true;
     }
@@ -207,8 +202,8 @@ public class BooleanParameter : CapeParameter,
     /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
     public override void Reset()
     {
-        ParameterResetEventArgs args = new ParameterResetEventArgs(this.ComponentName);
-        m_value = m_DefaultValue;
+        var args = new ParameterResetEventArgs(ComponentName);
+        _mValue = _mDefaultValue;
         OnParameterReset(args);
     }
 
@@ -224,14 +219,8 @@ public class BooleanParameter : CapeParameter,
     /// <value>The parameter type. </value>
     /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
     /// <exception cref = "ECapeInvalidArgument">To be used when an invalid argument value is passed.</exception>
-    [System.ComponentModel.CategoryAttribute("ICapeParameterSpec")]
-    public override CapeParamType Type
-    {
-        get
-        {
-            return CapeParamType.CAPE_BOOLEAN;
-        }
-    }
+    [Category("ICapeParameterSpec")]
+    public override CapeParamType Type => CapeParamType.CAPE_BOOLEAN;
 
     //ICapeBooleanParameterSpec
 
@@ -246,17 +235,14 @@ public class BooleanParameter : CapeParameter,
     /// </value>
     /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
     /// <exception cref = "ECapeInvalidArgument">To be used when an invalid argument value is passed, for example, an unrecognised Compound identifier or UNDEFINED for the props argument.</exception>
-    [System.ComponentModel.CategoryAttribute("ICapeBooleanParameterSpec")]
+    [Category("ICapeBooleanParameterSpec")]
     public bool DefaultValue
     {
-        get
-        {
-            return m_DefaultValue;
-        }
+        get => _mDefaultValue;
         set
         {
-            ParameterDefaultValueChangedEventArgs args = new ParameterDefaultValueChangedEventArgs(this.ComponentName, m_DefaultValue, value);
-            m_DefaultValue = value;
+            var args = new ParameterDefaultValueChangedEventArgs(ComponentName, _mDefaultValue, value);
+            _mDefaultValue = value;
             OnParameterDefaultValueChanged(args);
         }
     }
@@ -272,16 +258,16 @@ public class BooleanParameter : CapeParameter,
     /// <returns>
     /// True if the parameter is valid, false if not valid.
     /// </returns>
-    /// <param name = "value">Boolean value that will be validated against the parameter's current specification.</param>
+    /// <param name = "pValue">Boolean value that will be validated against the parameter's current specification.</param>
     /// <param name = "message">Reference to a string that will conain a message regarding the validation of the parameter.</param>
     /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
     /// <exception cref = "ECapeInvalidArgument">To be used when an invalid argument value is passed, for example, an unrecognised Compound identifier or UNDEFINED for the props argument.</exception>
-    public bool Validate(bool value, ref String message)
+    public bool Validate(bool pValue, ref string message)
     {
         message = "Value is valid.";
         return true;
     }
-};
+}
 
 /// <summary>
 /// Boolean-Valued parameter for use in the CAPE-OPEN parameter collection.
@@ -290,17 +276,15 @@ public class BooleanParameter : CapeParameter,
 /// Boolean-Valued parameter for use in the CAPE-OPEN parameter collection.
 /// </remarks>
 [Serializable]
-[System.Runtime.InteropServices.ComSourceInterfaces(typeof(ICapeBooleanParameterSpecEvents))]
-[System.Runtime.InteropServices.ComVisible(true)]
-[System.Runtime.InteropServices.Guid("A6751A39-8A2C-4AFC-AD57-6395FFE0A7FE")]
-[System.Runtime.InteropServices.ClassInterface(System.Runtime.InteropServices.ClassInterfaceType.None)]
-class BooleanParameterWrapper : CapeParameter,
-    ICapeParameter,
-    ICapeParameterSpec,
-    ICapeBooleanParameterSpec,        
-    System.ComponentModel.INotifyPropertyChanged
+[ComSourceInterfaces(typeof(ICapeBooleanParameterSpecEvents))]
+[ComVisible(true)]
+[Guid(CapeOpenGuids.BooleanParameterWrapIid)]  // "A6751A39-8A2C-4AFC-AD57-6395FFE0A7FE"
+[ClassInterface(ClassInterfaceType.None)]
+internal class BooleanParameterWrapper : CapeParameter,
+    ICapeParameter, ICapeParameterSpec, ICapeBooleanParameterSpec   
+    //, INotifyPropertyChanged
 {
-    private ICapeParameter m_Parameter;
+    private ICapeParameter _mParameter;
 
     /// <summary>
     /// Gets and sets the value for this Parameter.
@@ -312,17 +296,14 @@ class BooleanParameterWrapper : CapeParameter,
     /// <value>A boxed boolean value of the parameter.</value>
     /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
     /// <exception cref = "ECapeInvalidArgument">To be used when an invalid argument value is passed, for example, an unrecognised Compound identifier or UNDEFINED for the props argument.</exception>
-    [System.ComponentModel.BrowsableAttribute(false)]
-    override public Object value
+    [Browsable(false)]
+    public override object value
     {
-        get
-        {
-            return m_Parameter.value;
-        }
+        get => _mParameter.value;
         set
         {
-            ParameterValueChangedEventArgs args = new ParameterValueChangedEventArgs(this.ComponentName, m_Parameter.value, Convert.ToBoolean(value));
-            m_Parameter.value = value;
+            var args = new ParameterValueChangedEventArgs(ComponentName, _mParameter.value, Convert.ToBoolean(value));
+            _mParameter.value = value;
             OnParameterValueChanged(args);
         }
     }
@@ -336,12 +317,12 @@ class BooleanParameterWrapper : CapeParameter,
     /// </remarks>
     /// <param name = "parameter">The parameter to be wrapped.</param>
     public BooleanParameterWrapper(ICapeParameter parameter)
-        : base(String.Empty, string.Empty, parameter.Mode)
+        : base(string.Empty, string.Empty, parameter.Mode)
     {
-        m_Parameter = parameter;
-        this.ComponentName = ((ICapeIdentification)parameter).ComponentName;
-        this.ComponentDescription = ((ICapeIdentification)parameter).ComponentDescription;
-        this.Mode = parameter.Mode;
+        _mParameter = parameter;
+        ComponentName = ((ICapeIdentification)parameter).ComponentName;
+        ComponentDescription = ((ICapeIdentification)parameter).ComponentDescription;
+        Mode = parameter.Mode;
         MValStatus = parameter.ValStatus;
     }
         
@@ -353,9 +334,9 @@ class BooleanParameterWrapper : CapeParameter,
     /// and the clone refer to the same COM-based parameter.</para>
     /// </remarks>
     /// <returns>A copy of the current parameter.</returns>
-    override public object Clone()
+    public override object Clone()
     {
-        return new BooleanParameterWrapper(m_Parameter);
+        return new BooleanParameterWrapper(_mParameter);
     }
 
     /// <summary>
@@ -369,17 +350,14 @@ class BooleanParameterWrapper : CapeParameter,
     /// </value>
     /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
     /// <exception cref = "ECapeInvalidArgument">To be used when an invalid argument value is passed, for example, an unrecognised Compound identifier or UNDEFINED for the props argument.</exception>
-    [System.ComponentModel.CategoryAttribute("ICapeParameter")]
+    [Category("ICapeParameter")]
     public bool Value
     {
-        get
-        {
-            return (bool)m_Parameter.value;
-        }
+        get => (bool)_mParameter.value;
         set
         {
-            ParameterValueChangedEventArgs args = new ParameterValueChangedEventArgs(this.ComponentName, (bool)m_Parameter.value, value);
-            m_Parameter.value = value;
+            var args = new ParameterValueChangedEventArgs(ComponentName, (bool)_mParameter.value, value);
+            _mParameter.value = value;
             OnParameterValueChanged(args);
         }
     }
@@ -398,11 +376,11 @@ class BooleanParameterWrapper : CapeParameter,
     /// <param name = "message">The message is used to return the reason that the parameter is invalid.</param>
     /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
     /// <exception cref = "ECapeInvalidArgument">To be used when an invalid argument value is passed.</exception>
-    public override bool Validate(ref String message)
+    public override bool Validate(ref string message)
     {
-        CapeValidationStatus valid = m_Parameter.ValStatus;
-        bool retVal = m_Parameter.Validate(message);
-        ParameterValidatedEventArgs args = new ParameterValidatedEventArgs(this.ComponentName, message, valid, m_Parameter.ValStatus);
+        var valid = _mParameter.ValStatus;
+        var retVal = _mParameter.Validate(message);
+        var args = new ParameterValidatedEventArgs(ComponentName, message, valid, _mParameter.ValStatus);
         OnParameterValidated(args);
         return retVal;
     }
@@ -416,8 +394,8 @@ class BooleanParameterWrapper : CapeParameter,
     /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
     public override void Reset()
     {
-        ParameterResetEventArgs args = new ParameterResetEventArgs(this.ComponentName);
-        m_Parameter.Reset();
+        var args = new ParameterResetEventArgs(ComponentName);
+        _mParameter.Reset();
         OnParameterReset(args);
     }
 
@@ -431,14 +409,8 @@ class BooleanParameterWrapper : CapeParameter,
     /// <value>The parameter type. </value>
     /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
     /// <exception cref = "ECapeInvalidArgument">To be used when an invalid argument value is passed.</exception>
-    [System.ComponentModel.CategoryAttribute("ICapeParameterSpec")]
-    public override CapeParamType Type
-    {
-        get
-        {
-            return CapeParamType.CAPE_BOOLEAN;
-        }
-    }
+    [Category("ICapeParameterSpec")]
+    public override CapeParamType Type => CapeParamType.CAPE_BOOLEAN;
 
     //ICapeBooleanParameterSpec
 
@@ -454,13 +426,10 @@ class BooleanParameterWrapper : CapeParameter,
     /// </value>
     /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
     /// <exception cref = "ECapeInvalidArgument">To be used when an invalid argument value is passed, for example, an unrecognised Compound identifier or UNDEFINED for the props argument.</exception>
-    [System.ComponentModel.CategoryAttribute("ICapeBooleanParameterSpec")]
+    [Category("ICapeBooleanParameterSpec")]
     public bool DefaultValue
     {
-        get
-        {
-            return ((ICapeBooleanParameterSpec)m_Parameter.Specification).DefaultValue;
-        }
+        get => ((ICapeBooleanParameterSpec)_mParameter.Specification).DefaultValue;
         set
         {
         }
@@ -477,12 +446,12 @@ class BooleanParameterWrapper : CapeParameter,
     /// <returns>
     /// True if the parameter is valid, false if not valid.
     /// </returns>
-    /// <param name = "value">Boolean value that will be validated against the parameter's current specification.</param>
+    /// <param name = "pValue">Boolean value that will be validated against the parameter's current specification.</param>
     /// <param name = "message">Reference to a string that will contain a message regarding the validation of the parameter.</param>
     /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
     /// <exception cref = "ECapeInvalidArgument">To be used when an invalid argument value is passed, for example, an unrecognised Compound identifier or UNDEFINED for the props argument.</exception>
-    public bool Validate(bool value, ref String message)
+    public bool Validate(bool pValue, ref string message)
     {
-        return ((ICapeBooleanParameterSpec)m_Parameter.Specification).Validate(value, message);
+        return ((ICapeBooleanParameterSpec)_mParameter.Specification).Validate(pValue, message);
     }
-};
+}
