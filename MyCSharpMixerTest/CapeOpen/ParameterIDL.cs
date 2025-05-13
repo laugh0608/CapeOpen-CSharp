@@ -348,13 +348,13 @@ public interface ICapeOptionParameterSpec
     /// value of <see cref = "RestrictedToList">RestrictedToList</see> is <c>false</c>
     /// any valid String is a valid value for the parameter.</remarks>
     /// <returns>True if the parameter is valid, false if not valid.</returns>
-    /// <param name = "value">A candidate value for the parameter to be tested to determine whether the value is valid.</param>
+    /// <param name = "pValue">A candidate value for the parameter to be tested to determine whether the value is valid.</param>
     /// <param name = "message">Reference to a string that will contain a message regarding the validation of the parameter.</param>
     /// <exception cref ="ECapeUnknown">The error to be raised when other error(s), specified for this operation, are not suitable.</exception>
     /// <exception cref = "ECapeInvalidArgument">To be used when an invalid argument value is passed, for example, an unrecognised Compound identifier or UNDEFINED for the props' argument.</exception>
     [DispId(4), Description("Check if value is OK for this spec as string")]
     [return: MarshalAs(UnmanagedType.VariantBool)]
-    bool Validate(string value, ref string message);
+    bool Validate(string pValue, ref string message);
 }
 
 /// <summary>当参数是选项时，此接口用于参数规范，它表示从其中选择一个的字符串列表。</summary>
@@ -395,13 +395,13 @@ internal interface ICapeOptionParameterSpecCOM
     /// value of <see cref = "RestrictedToList">RestrictedToList</see> is <c>false</c>
     /// any valid String is a valid value for the parameter.</remarks>
     /// <returns>True if the parameter is valid, false if not valid.</returns>
-    /// <param name = "value">A candidate value for the parameter to be tested to determine whether the value is valid.</param>
+    /// <param name = "pValue">A candidate value for the parameter to be tested to determine whether the value is valid.</param>
     /// <param name = "message">Reference to a string that will contain a message regarding the validation of the parameter.</param>
     /// <exception cref ="ECapeUnknown">The error to be raised when other error(s), specified for this operation, are not suitable.</exception>
     /// <exception cref = "ECapeInvalidArgument">To be used when an invalid argument value is passed, for example, an unrecognised Compound identifier or UNDEFINED for the props' argument.</exception>
     [DispId(4), Description("Check if value is OK for this spec as string")]
     [return: MarshalAs(UnmanagedType.VariantBool)]
-    bool Validate(string value, ref string message);
+    bool Validate(string pValue, ref string message);
 }
 
 /// <summary>当参数是布尔值时，该接口用于参数规范。</summary>

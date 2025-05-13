@@ -407,5 +407,8 @@ internal abstract class CapeOpenGuids
     public const string InCapeIntParaSpecEveIid = "2EA7C47A-A4E0-47A2-8AC1-658F96A0B79D";
     public const string PpIntegerParameterIid = "2C57DC9F-1368-42eb-888F-5BC6ED7DDFA7";
     public const string IntegerParaWrapperIid = "EFC01B53-9A6A-4AD9-97BE-3F0294B3BBFB";
-
+    // Option Parameter
+    public const string InOptParSpecEveIid = "991F95FB-2210-4E44-99B3-4AB793FF46C2";
+    public const string PpOptionParameterIid = "8EB0F647-618C-4fcc-A16F-39A9D57EA72E";
+    public const string OptParaWrapperIid = "70994E8C-179E-40E1-A51B-54A5C0F64A84";
 }
