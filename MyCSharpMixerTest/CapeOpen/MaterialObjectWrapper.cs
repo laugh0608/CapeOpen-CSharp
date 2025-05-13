@@ -2315,7 +2315,7 @@ internal class MaterialObjectWrapper : CapeObjectBase,
     /// of Phases at equilibrium. CalcEquilibrium will calculate temperature and/or 
     /// pressure if these are not among the two specifications that are mandatory for 
     /// each Equilibrium Calculation considered.</summary>
-    /// <remarks><para>The specification1 and specification2 arguments provide the information 
+    /// <remarks><para>The pSpSpecification and mSpecification arguments provide the information 
     /// necessary to retrieve the values of two specifications, for example the 
     /// pressure and temperature, for the Equilibrium Calculation. The CheckEquilibriumSpec 
     /// method can be used to check for supported specifications. Each specification 
@@ -2390,11 +2390,11 @@ internal class MaterialObjectWrapper : CapeObjectBase,
     /// set the Phase status flags to Cape_AtEquilibrium.</para>
     /// <para>- Use SetSinglePhaseProp to set pressure, temperature, Phase amount 
     /// (or Phase fraction) and composition for all Phases present.</para></remarks>
-    /// <param name = "specification1">First specification for the Equilibrium 
+    /// <param name = "pSpecification">First specification for the Equilibrium 
     /// Calculation. The specification information is used to retrieve the value of
     /// the specification from the Material Object. See below for details.</param>
-    /// <param name = "specification2">Second specification for the Equilibrium 
-    /// Calculation in the same format as specification1.</param>
+    /// <param name = "mSpecification">Second specification for the Equilibrium 
+    /// Calculation in the same format as pSpSpecification.</param>
     /// <param name = "solutionType"><para>The identifier for the required solution type. 
     /// The standard identifiers are given in the following list:</para>
     /// <para>Unspecified</para>
@@ -2435,15 +2435,15 @@ internal class MaterialObjectWrapper : CapeObjectBase,
     /// <para>• Any other necessary input information is not available.</para></exception>
     /// <exception cref ="ECapeUnknown">The error to be raised when other error(s), 
     /// specified for this operation, are not suitable.</exception>
-    void ICapeThermoEquilibriumRoutine.CalcEquilibrium(string[] specification1, string[] specification2,
+    void ICapeThermoEquilibriumRoutine.CalcEquilibrium(string[] pSpecification, string[] mSpecification,
         string solutionType)
     {
-        _pIEquilibriumRoutine.CalcEquilibrium(specification1, specification2, solutionType);
+        _pIEquilibriumRoutine.CalcEquilibrium(pSpecification, mSpecification, solutionType);
     }
     
     /// <summary>Checks whether the Property Package can support a particular type of 
     /// Equilibrium Calculation.</summary>
-    /// <remarks><para>The meaning of the specification1, specification2 and solutionType 
+    /// <remarks><para>The meaning of the pSpecification, mSpecificationmSpecification and solutionType 
     /// arguments is the same as for the CalcEquilibrium method.</para>
     /// <para>The result of the check should only depend on the capabilities and 
     /// configuration (compounds and phases present) of the component that implements 
@@ -2451,12 +2451,12 @@ internal class MaterialObjectWrapper : CapeObjectBase,
     /// not depend on whether a Material Object has been set nor on the state 
     /// (temperature, pressure, composition etc.) or configuration of a Material 
     /// Object that might be set.</para>
-    /// <para>If solutionType, specification1 and specification2 arguments appear 
+    /// <para>If solutionType, pSpecification and mSpecification arguments appear 
     /// valid but the actual specifications are not supported or not recognised a 
     /// False value should be returned.</para></remarks>
-    /// <param name = "specification1">First specification for the Equilibrium 
+    /// <param name = "pSpecification">First specification for the Equilibrium 
     /// Calculation.</param>
-    /// <param name = "specification2">Second specification for the Equilibrium 
+    /// <param name = "mSpecification">Second specification for the Equilibrium 
     /// Calculation.</param>
     /// <param name = "solutionType">The required solution type.</param>
     /// <returns>Set to True if the combination of specifications and solutionType is 
@@ -2466,13 +2466,13 @@ internal class MaterialObjectWrapper : CapeObjectBase,
     /// That is to say that the operation exists, but it is not supported by the 
     /// current implementation.</exception>
     /// <exception cref = "ECapeInvalidArgument">To be used when an invalid argument 
-    /// value is passed, for example UNDEFINED for solutionType, specification1 or 
-    /// specification2 argument.</exception>
+    /// value is passed, for example UNDEFINED for solutionType, pSpecification or 
+    /// mSpecification argument.</exception>
     /// <exception cref ="ECapeUnknown">The error to be raised when other error(s), 
     /// specified for this operation, are not suitable.</exception>
-    bool ICapeThermoEquilibriumRoutine.CheckEquilibriumSpec(string[] specification1, string[] specification2,
+    bool ICapeThermoEquilibriumRoutine.CheckEquilibriumSpec(string[] pSpecification, string[] mSpecification,
         string solutionType)
     {
-        return _pIEquilibriumRoutine.CheckEquilibriumSpec(specification1, specification2, solutionType);
+        return _pIEquilibriumRoutine.CheckEquilibriumSpec(pSpecification, mSpecification, solutionType);
     }
 }

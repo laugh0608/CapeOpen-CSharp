@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿// 大白萝卜重构于 2025.05.13，使用 .NET8.O-windows、Microsoft Visual Studio 2022 Preview 和 Rider 2024.3。
 
 /* IMPORTANT NOTICE
 (c) The CAPE-OPEN Laboratory Network, 2002.
@@ -10,14 +7,17 @@ All rights are reserved unless specifically stated otherwise
 Visit the web site at www.colan.org
 
 This file has been edited using the editor from Microsoft Visual Studio 6.0
-This file can viewed properly with any basic editors and browsers (validation done under MS Windows and Unix)
+This file can view properly with any basic editors and browsers (validation done under MS Windows and Unix)
 */
 
-// This file was developed/modified by JEAN-PIERRE BELAUD for CO-LaN organisation - March 2003
-
+// This file was developed/modified by JEAN-PIERRE-BELAUD for CO-LaN organisation - March 2003
 
 // ---- The scope of thermodynamic and physical properties interface
 // Reference document: Thermodynamic and physical properties
+// ThermoIDL 文件拆分，序号 04
+
+using System.ComponentModel;
+using System.Runtime.InteropServices;
 
 namespace CapeOpen;
 
@@ -33,11 +33,11 @@ namespace CapeOpen;
 /// delegated either to proprietary methods within a PME or to methods in an 
 /// associated CAPE-OPEN Property Package or Calculation Routine component.</para>
 ///</remarks>
-[System.Runtime.InteropServices.ComImport()]
-[System.Runtime.InteropServices.ComVisibleAttribute(false)]
-[System.Runtime.InteropServices.GuidAttribute("678C0A9F-7D66-11D2-A67D-00105A42887F")]
-[System.ComponentModel.DescriptionAttribute("ICapeThermoPropertyRoutine Interface")]
-interface ICapeThermoPropertyRoutineCOM
+[ComImport]
+[ComVisible(false)]
+[Guid(CapeOpenGuids.InCapeTheProPerRouComIid)]  // "678C0A9F-7D66-11D2-A67D-00105A42887F"
+[Description("ICapeThermoPropertyRoutine Interface")]
+internal interface ICapeThermoPropertyRoutineCOM
 {
     /// <summary>This method is used to calculate the natural logarithm of the 
     /// fugacity coefficients (and optionally their derivatives) in a single Phase 
@@ -49,7 +49,7 @@ interface ICapeThermoPropertyRoutineCOM
     /// the GetPhaseList method on the ICapeThermoPhases interface.</param>
     /// <param name = "temperature">The temperature (K) for the calculation.</param>
     /// <param name = "pressure">The pressure (Pa) for the calculation.</param>
-    /// <param name ="lnPhiDT">Derivatives of natural logarithm of the fugacity
+    /// <param name ="lnPhiDt">Derivatives of natural logarithm of the fugacity
     /// coefficients w.r.t. temperature (if requested).</param>
     /// <param name ="moleNumbers">Number of moles of each Compound in the mixture.</param>
     /// <param name = "fFlags">Code indicating whether natural logarithm of the 
@@ -59,7 +59,7 @@ interface ICapeThermoPropertyRoutineCOM
     /// requested).</param>
     /// <param anem = "lnPhiDT">Derivatives of natural logarithm of the fugacity
     /// coefficients w.r.t. temperature (if requested).</param>
-    /// <param name ="lnPhiDP">Derivatives of natural logarithm of the fugacity
+    /// <param name ="lnPhiDp">Derivatives of natural logarithm of the fugacity
     /// coefficients w.r.t. pressure (if requested).</param>
     /// <param name ="lnPhiDn">Derivatives of natural logarithm of the fugacity
     /// coefficients w.r.t. mole numbers (if requested).</param>
@@ -172,18 +172,18 @@ interface ICapeThermoPropertyRoutineCOM
     /// phaseLabel argument.</exception>
     /// <exception cref = "ECapeUnknown">The error to be raised when other error(s), 
     /// specified for this operation, are not suitable.</exception>
-    [System.Runtime.InteropServices.DispIdAttribute(0x00000001)]
-    [System.ComponentModel.DescriptionAttribute("method CalcAndGetLnPhi")]
+    [DispId(0x00000001)]
+    [Description("Method CalcAndGetLnPhi")]
     void CalcAndGetLnPhi(
-        [System.Runtime.InteropServices.InAttribute()] String phaseLabel,
-        [System.Runtime.InteropServices.InAttribute()] double temperature,
-        [System.Runtime.InteropServices.InAttribute()] double pressure,
-        [System.Runtime.InteropServices.InAttribute()] Object moleNumbers,
-        [System.Runtime.InteropServices.InAttribute()] int fFlags,
-        [System.Runtime.InteropServices.InAttribute()][System.Runtime.InteropServices.OutAttribute()]ref  Object lnPhi,
-        [System.Runtime.InteropServices.InAttribute()][System.Runtime.InteropServices.OutAttribute()]ref  Object lnPhiDT,
-        [System.Runtime.InteropServices.InAttribute()][System.Runtime.InteropServices.OutAttribute()]ref  Object lnPhiDP,
-        [System.Runtime.InteropServices.InAttribute()][System.Runtime.InteropServices.OutAttribute()]ref  Object lnPhiDn);
+        [In] string phaseLabel,
+        [In] double temperature,
+        [In] double pressure,
+        [In] object moleNumbers,
+        [In] int fFlags,
+        [In][Out]ref  object lnPhi,
+        [In][Out]ref  object lnPhiDt,
+        [In][Out]ref  object lnPhiDp,
+        [In][Out]ref  object lnPhiDn);
 
     /// <summary>CalcSinglePhaseProp is used to calculate properties and property 
     /// derivatives of a mixture in a single Phase at the current values of 
@@ -269,11 +269,11 @@ interface ICapeThermoPropertyRoutineCOM
     /// cannot be calculated at the specified conditions or for the specified phase. 
     /// If the property calculation is not implemented then ECapeLimitedImpl should be 
     /// returned.</exception>
-    [System.Runtime.InteropServices.DispIdAttribute(0x00000002)]
-    [System.ComponentModel.DescriptionAttribute("method CalcSinglePhaseProp")]
+    [DispId(0x00000002)]
+    [Description("Method CalcSinglePhaseProp")]
     void CalcSinglePhaseProp(
-        [System.Runtime.InteropServices.InAttribute()] Object props,
-        [System.Runtime.InteropServices.InAttribute()] String phaseLabel);
+        [In] object props,
+        [In] string phaseLabel);
 
     /// <summary>CalcTwoPhaseProp is used to calculate mixture properties and property 
     /// derivatives that depend on two Phases at the current values of temperature, 
@@ -371,11 +371,11 @@ interface ICapeThermoPropertyRoutineCOM
     /// phaseLabels argument or UNDEFINED for the props argument.</exception>
     /// <exception cref = "ECapeUnknown">The error to be raised when other error(s), 
     /// specified for this operation, are not suitable.</exception>
-    [System.Runtime.InteropServices.DispIdAttribute(0x00000003)]
-    [System.ComponentModel.DescriptionAttribute("method CalcTwoPhaseProp")]
+    [DispId(0x00000003)]
+    [Description("Method CalcTwoPhaseProp")]
     void CalcTwoPhaseProp(
-        [System.Runtime.InteropServices.InAttribute()] Object props,
-        [System.Runtime.InteropServices.InAttribute()] Object phaseLabels);
+        [In] object props,
+        [In] object phaseLabels);
 
     /// <summary>Checks whether it is possible to calculate a property with the 
     /// CalcSinglePhaseProp method for a given Phase.</summary>
@@ -419,12 +419,12 @@ interface ICapeThermoPropertyRoutineCOM
     /// phaseLabel argument.</exception>
     /// <exception cref = "ECapeUnknown">The error to be raised when other error(s), 
     /// specified for the CheckSinglePhasePropSpec operation, are not suitable.</exception>
-    [System.Runtime.InteropServices.DispIdAttribute(0x00000004)]
-    [System.ComponentModel.DescriptionAttribute("method CheckSinglePhasePropSpec")]
-    [return: System.Runtime.InteropServices.MarshalAs(System.Runtime.InteropServices.UnmanagedType.VariantBool)]
+    [DispId(0x00000004)]
+    [Description("Method CheckSinglePhasePropSpec")]
+    [return: MarshalAs(UnmanagedType.VariantBool)]
     bool CheckSinglePhasePropSpec(
-        [System.Runtime.InteropServices.InAttribute()] String property,
-        [System.Runtime.InteropServices.InAttribute()] String phaseLabel);
+        [In] string property,
+        [In] string phaseLabel);
 
     /// <summary>Checks whether it is possible to calculate a property with the 
     /// CalcTwoPhaseProp method for a given set of Phases.</summary>
@@ -470,12 +470,12 @@ interface ICapeThermoPropertyRoutineCOM
     /// two.</exception>
     /// <exception cref = "ECapeUnknown">The error to be raised when other error(s), 
     /// specified for the CheckTwoPhasePropSpec operation, are not suitable.</exception>
-    [System.Runtime.InteropServices.DispIdAttribute(0x00000005)]
-    [System.ComponentModel.DescriptionAttribute("method CheckTwoPhasePropSpec")]
-    [return: System.Runtime.InteropServices.MarshalAs(System.Runtime.InteropServices.UnmanagedType.VariantBool)]
+    [DispId(0x00000005)]
+    [Description("Method CheckTwoPhasePropSpec")]
+    [return: MarshalAs(UnmanagedType.VariantBool)]
     bool CheckTwoPhasePropSpec(
-        [System.Runtime.InteropServices.InAttribute()] String property,
-        [System.Runtime.InteropServices.InAttribute()] Object phaseLabels);
+        [In] string property,
+        [In] object phaseLabels);
 
     /// <summary>Returns the list of supported non-constant single-phase Physical 
     /// Properties.</summary>
@@ -503,9 +503,9 @@ interface ICapeThermoPropertyRoutineCOM
     /// the current implementation.</exception>
     /// <exception cref = "ECapeUnknown">The error to be raised when other error(s), 
     /// specified for the GetSinglePhasePropList operation, are not suitable.</exception>
-    [System.Runtime.InteropServices.DispIdAttribute(0x00000006)]
-    [System.ComponentModel.DescriptionAttribute("method GetSinglePhasePropList")]
-    Object GetSinglePhasePropList();
+    [DispId(0x00000006)]
+    [Description("Method GetSinglePhasePropList")]
+    object GetSinglePhasePropList();
 
     /// <summary>Returns the list of supported non-constant two-phase properties.</summary>
     /// <returns>List of all supported non-constant two-phase property identifiers. 
@@ -534,10 +534,10 @@ interface ICapeThermoPropertyRoutineCOM
     /// current implementation.</exception>
     /// <exception cref = "ECapeUnknown">The error to be raised when other error(s), 
     /// specified for the GetTwoPhasePropList operation, are not suitable.</exception>
-    [System.Runtime.InteropServices.DispIdAttribute(0x00000007)]
-    [System.ComponentModel.DescriptionAttribute("method GetTwoPhasePropList")]
-    Object GetTwoPhasePropList();
-};
+    [DispId(0x00000007)]
+    [Description("Method GetTwoPhasePropList")]
+    object GetTwoPhasePropList();
+}
 
 /// <summary>
 /// Implemented by any component or object that can perform an Equilibrium Calculation.
@@ -554,17 +554,16 @@ interface ICapeThermoPropertyRoutineCOM
 /// methods within a PME, or to methods in an associated CAPE-OPEN Property Package or 
 /// Equilibrium Calculator component.</para>
 /// </remarks>
-[System.Runtime.InteropServices.ComVisibleAttribute(false)]
-[System.ComponentModel.DescriptionAttribute("ICapeThermoEquilibriumRoutine Interface")]
+[ComVisible(false)]
+[Description("ICapeThermoEquilibriumRoutine Interface")]
 public interface ICapeThermoEquilibriumRoutine
 {
-
     /// <summary> CalcEquilibrium is used to calculate the amounts and compositions 
     /// of Phases at equilibrium. CalcEquilibrium will calculate temperature and/or 
     /// pressure if these are not among the two specifications that are mandatory for 
     /// each Equilibrium Calculation considered.</summary>
     /// <remarks>
-    /// <para>The specification1 and specification2 arguments provide the information 
+    /// <para>The pSpecification and mSmSpecification arguments provide the information 
     /// necessary to retrieve the values of two specifications, for example the 
     /// pressure and temperature, for the Equilibrium Calculation. The CheckEquilibriumSpec 
     /// method can be used to check for supported specifications. Each specification 
@@ -640,11 +639,11 @@ public interface ICapeThermoEquilibriumRoutine
     /// <para>- Use SetSinglePhaseProp to set pressure, temperature, Phase amount 
     /// (or Phase fraction) and composition for all Phases present.</para>
     /// </remarks>
-    /// <param name = "specification1">First specification for the Equilibrium 
+    /// <param name = "pSpecification">First specification for the Equilibrium 
     /// Calculation. The specification information is used to retrieve the value of
     /// the specification from the Material Object. See below for details.</param>
-    /// <param name = "specification2">Second specification for the Equilibrium 
-    /// Calculation in the same format as specification1.</param>
+    /// <param name = "mSpecification">Second specification for the Equilibrium 
+    /// Calculation in the same format as pSpecificationpSpecification.</param>
     /// <param name = "solutionType"><para>The identifier for the required solution type. 
     /// The standard identifiers are given in the following list:</para>
     /// <para>Unspecified</para>
@@ -685,15 +684,14 @@ public interface ICapeThermoEquilibriumRoutine
     /// <para>• Any other necessary input information is not available.</para></exception>
     /// <exception cref ="ECapeUnknown">The error to be raised when other error(s), 
     /// specified for this operation, are not suitable.</exception>
-    [System.Runtime.InteropServices.DispIdAttribute(0x00000001)]
-    [System.ComponentModel.DescriptionAttribute("method CalcEquilibrium")]
-    void CalcEquilibrium(string[] specification1, string[] specification2, String solutionType);
-
-
+    [DispId(0x00000001)]
+    [Description("Method CalcEquilibrium")]
+    void CalcEquilibrium(string[] pSpecification, string[] mSpecification, string solutionType);
+    
     /// <summary>Checks whether the Property Package can support a particular type of 
     /// Equilibrium Calculation.</summary>
     /// <remarks>
-    /// <para>The meaning of the specification1, specification2 and solutionType 
+    /// <para>The meaning of the pSpecificationpSpecification, mSpecificationmSpecification and solutionType 
     /// arguments is the same as for the CalcEquilibrium method.</para>
     /// <para>The result of the check should only depend on the capabilities and 
     /// configuration (compounds and phases present) of the component that implements 
@@ -701,13 +699,13 @@ public interface ICapeThermoEquilibriumRoutine
     /// not depend on whether a Material Object has been set nor on the state 
     /// (temperature, pressure, composition etc.) or configuration of a Material 
     /// Object that might be set.</para>
-    /// <para>If solutionType, specification1 and specification2 arguments appear 
+    /// <para>If solutionType, pSpecificationpSpecification and mSpecificationmSpecification arguments appear 
     /// valid but the actual specifications are not supported or not recognised a 
     /// False value should be returned.</para>
     /// </remarks>
-    /// <param name = "specification1">First specification for the Equilibrium 
+    /// <param name = "pSpecification">First specification for the Equilibrium 
     /// Calculation.</param>
-    /// <param name = "specification2">Second specification for the Equilibrium 
+    /// <param name = "mSpecification">Second specification for the Equilibrium 
     /// Calculation.</param>
     /// <param name = "solutionType">The required solution type.</param>
     /// <returns>Set to True if the combination of specifications and solutionType is 
@@ -717,15 +715,14 @@ public interface ICapeThermoEquilibriumRoutine
     /// That is to say that the operation exists, but it is not supported by the 
     /// current implementation.</exception>
     /// <exception cref = "ECapeInvalidArgument">To be used when an invalid argument 
-    /// value is passed, for example UNDEFINED for solutionType, specification1 or 
-    /// specification2 argument.</exception>
+    /// value is passed, for example UNDEFINED for solutionType, pSpecification or 
+    /// mSpecification argument.</exception>
     /// <exception cref ="ECapeUnknown">The error to be raised when other error(s), 
     /// specified for this operation, are not suitable.</exception>
-    [System.Runtime.InteropServices.DispIdAttribute(0x00000002)]
-    [System.ComponentModel.DescriptionAttribute("method CheckEquilibriumSpec")]
-    bool CheckEquilibriumSpec(string[]  specification1, string[] specification2, String solutionType);
-};
-
+    [DispId(0x00000002)]
+    [Description("Method CheckEquilibriumSpec")]
+    bool CheckEquilibriumSpec(string[]  pSpecification, string[] mSpecification, string solutionType);
+}
 
 /// <summary>
 /// Implemented by any component or object that can perform an Equilibrium Calculation.
@@ -742,13 +739,12 @@ public interface ICapeThermoEquilibriumRoutine
 /// methods within a PME, or to methods in an associated CAPE-OPEN Property Package or 
 /// Equilibrium Calculator component.</para>
 /// </remarks>
-[System.Runtime.InteropServices.ComImport()]
-[System.Runtime.InteropServices.ComVisibleAttribute(false)]
-[System.Runtime.InteropServices.GuidAttribute("678C0AA0-7D66-11D2-A67D-00105A42887F")]
-[System.ComponentModel.DescriptionAttribute("ICapeThermoEquilibriumRoutine Interface")]
-interface ICapeThermoEquilibriumRoutineCOM
+[ComImport]
+[ComVisible(false)]
+[Guid(CapeOpenGuids.InCapeTheEqBrRouComIid)]  // "678C0AA0-7D66-11D2-A67D-00105A42887F"
+[Description("ICapeThermoEquilibriumRoutine Interface")]
+internal interface ICapeThermoEquilibriumRoutineCOM
 {
-
     /// <summary> CalcEquilibrium is used to calculate the amounts and compositions 
     /// of Phases at equilibrium. CalcEquilibrium will calculate temperature and/or 
     /// pressure if these are not among the two specifications that are mandatory for 
@@ -875,13 +871,12 @@ interface ICapeThermoEquilibriumRoutineCOM
     /// <para>• Any other necessary input information is not available.</para></exception>
     /// <exception cref ="ECapeUnknown">The error to be raised when other error(s), 
     /// specified for this operation, are not suitable.</exception>
-    [System.Runtime.InteropServices.DispIdAttribute(0x00000001)]
-    [System.ComponentModel.DescriptionAttribute("method CalcEquilibrium")]
+    [DispId(0x00000001)]
+    [Description("Method CalcEquilibrium")]
     void CalcEquilibrium(
-        [System.Runtime.InteropServices.InAttribute()] Object specification1,
-        [System.Runtime.InteropServices.InAttribute()] Object specification2,
-        [System.Runtime.InteropServices.InAttribute()] String solutionType);
-
+        [In] object specification1,
+        [In] object specification2,
+        [In] string solutionType);
 
     /// <summary>Checks whether the Property Package can support a particular type of 
     /// Equilibrium Calculation.</summary>
@@ -914,14 +909,14 @@ interface ICapeThermoEquilibriumRoutineCOM
     /// specification2 argument.</exception>
     /// <exception cref ="ECapeUnknown">The error to be raised when other error(s), 
     /// specified for this operation, are not suitable.</exception>
-    [System.Runtime.InteropServices.DispIdAttribute(0x00000002)]
-    [System.ComponentModel.DescriptionAttribute("method CheckEquilibriumSpec")]
-    [return: System.Runtime.InteropServices.MarshalAs(System.Runtime.InteropServices.UnmanagedType.VariantBool)]
+    [DispId(0x00000002)]
+    [Description("Method CheckEquilibriumSpec")]
+    [return: MarshalAs(UnmanagedType.VariantBool)]
     bool CheckEquilibriumSpec(
-        [System.Runtime.InteropServices.InAttribute()] Object specification1,
-        [System.Runtime.InteropServices.InAttribute()] Object specification2,
-        [System.Runtime.InteropServices.InAttribute()] String solutionType);
-};
+        [In] object specification1,
+        [In] object specification2,
+        [In] string solutionType);
+}
 
 /// <summary>Implemented by a component that can return the value of a Universal 
 /// Constant.</summary>
@@ -930,11 +925,11 @@ interface ICapeThermoEquilibriumRoutineCOM
 /// access these values. This interface is optional for all components. It is 
 /// recommended that it is implemented by Property Package components and Material 
 /// Objects being used by CAPE-OPEN Unit Operations.</remarks>
-[System.Runtime.InteropServices.ComImport()]
-[System.Runtime.InteropServices.ComVisibleAttribute(false)]
-[System.Runtime.InteropServices.GuidAttribute("678C0AA1-7D66-11D2-A67D-00105A42887F")]
-[System.ComponentModel.DescriptionAttribute("ICapeThermoUniversalConstant Interface")]
-interface ICapeThermoUniversalConstantCOM
+[ComImport]
+[ComVisible(false)]
+[Guid(CapeOpenGuids.InCapeTheUnSalConComIid)]  // "678C0AA1-7D66-11D2-A67D-00105A42887F"
+[Description("ICapeThermoUniversalConstant Interface")]
+internal interface ICapeThermoUniversalConstantCOM
 {
     /// <summary>Retrieves the value of a Universal Constant.</summary>
     /// <param name = "constantId">Identifier of Universal Constant. The list of 
@@ -954,9 +949,9 @@ interface ICapeThermoUniversalConstantCOM
     /// list of recognised values.</exception>
     /// <exception cref = "ECapeUnknown">The error to be raised when other error(s), 
     /// specified for the GetUniversalConstant operation, are not suitable.</exception>	
-    [System.Runtime.InteropServices.DispIdAttribute(0x00000001)]
-    [System.ComponentModel.DescriptionAttribute("method GetUniversalConstant")]
-    Object GetUniversalConstant([System.Runtime.InteropServices.InAttribute()] String constantId);
+    [DispId(0x00000001)]
+    [Description("Method GetUniversalConstant")]
+    object GetUniversalConstant([In] string constantId);
 
     /// <summary>Returns the identifiers of the supported Universal Constants.</summary>
     /// <returns>List of identifiers of Universal Constants. The list of standard 
@@ -975,11 +970,10 @@ interface ICapeThermoUniversalConstantCOM
     /// <exception cref = "ECapeUnknown">The error to be raised when other error(s), 
     /// specified for the GetUniversalConstantList operation, are not suitable.
     /// </exception>
-    [System.Runtime.InteropServices.DispIdAttribute(0x00000002)]
-    [System.ComponentModel.DescriptionAttribute("method GetUniversalConstantList")]
-    Object GetUniversalConstantList();
-};
-
+    [DispId(0x00000002)]
+    [Description("Method GetUniversalConstantList")]
+    object GetUniversalConstantList();
+}
 
 /// <summary>Implemented by a component that can return the value of a Universal 
 /// Constant.</summary>
@@ -988,8 +982,8 @@ interface ICapeThermoUniversalConstantCOM
 /// access these values. This interface is optional for all components. It is 
 /// recommended that it is implemented by Property Package components and Material 
 /// Objects being used by CAPE-OPEN Unit Operations.</remarks>
-[System.Runtime.InteropServices.ComVisibleAttribute(false)]
-[System.ComponentModel.DescriptionAttribute("ICapeThermoUniversalConstant Interface")]
+[ComVisible(false)]
+[Description("ICapeThermoUniversalConstant Interface")]
 public interface ICapeThermoUniversalConstant
 {
     /// <summary>Retrieves the value of a Universal Constant.</summary>
@@ -1010,9 +1004,9 @@ public interface ICapeThermoUniversalConstant
     /// list of recognised values.</exception>
     /// <exception cref = "ECapeUnknown">The error to be raised when other error(s), 
     /// specified for the GetUniversalConstant operation, are not suitable.</exception>	
-    [System.Runtime.InteropServices.DispIdAttribute(0x00000001)]
-    [System.ComponentModel.DescriptionAttribute("method GetUniversalConstant")]
-    object GetUniversalConstant(String constantId);
+    [DispId(0x00000001)]
+    [Description("Method GetUniversalConstant")]
+    object GetUniversalConstant(string constantId);
 
     /// <summary>Returns the identifiers of the supported Universal Constants.</summary>
     /// <returns>List of identifiers of Universal Constants. The list of standard 
@@ -1031,19 +1025,19 @@ public interface ICapeThermoUniversalConstant
     /// <exception cref = "ECapeUnknown">The error to be raised when other error(s), 
     /// specified for the GetUniversalConstantList operation, are not suitable.
     /// </exception>
-    [System.Runtime.InteropServices.DispIdAttribute(0x00000002)]
-    [System.ComponentModel.DescriptionAttribute("method GetUniversalConstantList")]
+    [DispId(0x00000002)]
+    [Description("Method GetUniversalConstantList")]
     string[] GetUniversalConstantList();
-};
+}
 
 /// <summary>The ICapeThermoPropertyPackageManager interface should only be implemented 
 /// by a Property Package Manager component. This interface is used to access the 
 /// Property Packages managed by such a component.</summary>
-[System.Runtime.InteropServices.ComImport()]
-[System.Runtime.InteropServices.ComVisibleAttribute(false)]
-[System.Runtime.InteropServices.GuidAttribute("678C0AA2-7D66-11D2-A67D-00105A42887F")]
-[System.ComponentModel.DescriptionAttribute("ICapeThermoPropertyPackageManager Interface")]
-interface ICapeThermoPropertyPackageManagerCOM
+[ComImport]
+[ComVisible(false)]
+[Guid(CapeOpenGuids.InCapeTheProPackManComIid)]  // "678C0AA2-7D66-11D2-A67D-00105A42887F"
+[Description("ICapeThermoPropertyPackageManager Interface")]
+internal interface ICapeThermoPropertyPackageManagerCOM
 {
     /// <summary>Retrieves the names of the Property Packages being managed by a 
     /// Property Package Manager component.</summary>
@@ -1056,13 +1050,13 @@ interface ICapeThermoPropertyPackageManagerCOM
     /// not supported by the current implementation.</exception>
     /// <exception cref = "ECapeUnknown">The error to be raised when other error(s), 
     /// specified for the GetPropertyPackageList operation, are not suitable.</exception>
-    [System.Runtime.InteropServices.DispIdAttribute(0x00000001)]
-    [System.ComponentModel.DescriptionAttribute("method GetPropertyPackageList")]
-    Object GetPropertyPackageList();
+    [DispId(0x00000001)]
+    [Description("Method GetPropertyPackageList")]
+    object GetPropertyPackageList();
 
     /// <summary>Creates a new instance of a Property Package with the configuration 
     /// specified by the PackageName argument.</summary>
-    /// <param name = "PackageName">The name of one of the Property Packages managed 
+    /// <param name = "packageName">The name of one of the Property Packages managed 
     /// by this Property Package Manager component.</param>
     /// <returns>The ICapeThermoPropertyRoutine interface of the named Property 
     /// Package.</returns>
@@ -1083,18 +1077,17 @@ interface ICapeThermoPropertyPackageManagerCOM
     /// recognised names. Comparison of names is not case sensitive.</exception>
     /// <exception cref = "ECapeUnknown">The error to be raised when other error(s), 
     /// specified for the GetPropertyPackage operation, are not suitable.</exception>
-    [System.Runtime.InteropServices.DispIdAttribute(0x00000002)]
-    [System.ComponentModel.DescriptionAttribute("method GetPropertyPackage")]
-    [return: System.Runtime.InteropServices.MarshalAs(System.Runtime.InteropServices.UnmanagedType.IDispatch)]
-    object GetPropertyPackage([System.Runtime.InteropServices.InAttribute()] String PackageName);
-};
-
+    [DispId(0x00000002)]
+    [Description("Method GetPropertyPackage")]
+    [return: MarshalAs(UnmanagedType.IDispatch)]
+    object GetPropertyPackage([In] string packageName);
+}
 
 /// <summary>The ICapeThermoPropertyPackageManager interface should only be implemented 
 /// by a Property Package Manager component. This interface is used to access the 
 /// Property Packages managed by such a component.</summary>
-[System.Runtime.InteropServices.ComVisibleAttribute(false)]
-[System.ComponentModel.DescriptionAttribute("ICapeThermoPropertyPackageManager Interface")]
+[ComVisible(false)]
+[Description("ICapeThermoPropertyPackageManager Interface")]
 public interface ICapeThermoPropertyPackageManager
 {
     /// <summary>Retrieves the names of the Property Packages being managed by a 
@@ -1108,13 +1101,13 @@ public interface ICapeThermoPropertyPackageManager
     /// not supported by the current implementation.</exception>
     /// <exception cref = "ECapeUnknown">The error to be raised when other error(s), 
     /// specified for the GetPropertyPackageList operation, are not suitable.</exception>
-    [System.Runtime.InteropServices.DispIdAttribute(0x00000001)]
-    [System.ComponentModel.DescriptionAttribute("method GetPropertyPackageList")]
+    [DispId(0x00000001)]
+    [Description("Method GetPropertyPackageList")]
     string[] GetPropertyPackageList();
 
     /// <summary>Creates a new instance of a Property Package with the configuration 
     /// specified by the PackageName argument.</summary>
-    /// <param name = "PackageName">The name of one of the Property Packages managed 
+    /// <param name = "packageName">The name of one of the Property Packages managed 
     /// by this Property Package Manager component.</param>
     /// <returns>The ICapeThermoPropertyRoutine interface of the named Property 
     /// Package.</returns>
@@ -1135,11 +1128,11 @@ public interface ICapeThermoPropertyPackageManager
     /// recognised names. Comparison of names is not case sensitive.</exception>
     /// <exception cref = "ECapeUnknown">The error to be raised when other error(s), 
     /// specified for the GetPropertyPackage operation, are not suitable.</exception>
-    [System.Runtime.InteropServices.DispIdAttribute(0x00000002)]
-    [System.ComponentModel.DescriptionAttribute("method GetPropertyPackage")]
-    [return: System.Runtime.InteropServices.MarshalAs(System.Runtime.InteropServices.UnmanagedType.IDispatch)]
-    ICapeThermoPropertyRoutine GetPropertyPackage(String PackageName);
-};
+    [DispId(0x00000002)]
+    [Description("Method GetPropertyPackage")]
+    [return: MarshalAs(UnmanagedType.IDispatch)]
+    ICapeThermoPropertyRoutine GetPropertyPackage(string packageName);
+}
 
 /// <summary>
 /// A flag that indicates the desired calculations for the <see cref = "ICapeThermoPropertyRoutine.CalcAndGetLnPhi">ICapeThermoPropertyRoutine.CalcAndGetLnPhi</see> method.
@@ -1199,8 +1192,7 @@ public enum CapeCalculationCode
     CAPE_P_DERIVATIVE = 4,
     /// <summary>Calculate the value of the mole number derivates.</summary>
     CAPE_MOLE_NUMBERS_DERIVATIVES = 8
-};
-//typedef CapeCalculationCode eCapeCalculationCode;
+}
 
 /// <summary>
 /// Status of the phases present in the material object.
@@ -1217,18 +1209,11 @@ public enum CapeCalculationCode
 [Serializable]
 public enum CapePhaseStatus
 {
-    /// <summary>
-    /// This is the normal setting when a Phase is specified as being available for 
-    /// an Equilibrium Calculation.
-    /// </summary>
+    /// <summary>This is the normal setting when a Phase is specified as being available for 
+    /// an Equilibrium Calculation.</summary>
     CAPE_UNKNOWNPHASESTATUS = 0,
-    /// <summary>
-    /// The Phase has been set as present as a result of an Equilibrium Calculation.
-    /// </summary>
+    /// <summary>The Phase has been set as present as a result of an Equilibrium Calculation.</summary>
     CAPE_ATEQUILIBRIUM = 1,
-    /// <summary>
-    /// Estimates of the equilibrium state have been set in the Material Object.
-    /// </summary>
+    /// <summary>Estimates of the equilibrium state have been set in the Material Object.</summary>
     CAPE_ESTIMATES = 2
-};
-//typedef CapePhaseStatus eCapePhaseStatus;
+}

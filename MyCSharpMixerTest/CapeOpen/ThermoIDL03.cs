@@ -1,18 +1,34 @@
+// 大白萝卜重构于 2025.05.13，使用 .NET8.O-windows、Microsoft Visual Studio 2022 Preview 和 Rider 2024.3。
+
+/* IMPORTANT NOTICE
+(c) The CAPE-OPEN Laboratory Network, 2002.
+All rights are reserved unless specifically stated otherwise
+
+Visit the web site at www.colan.org
+
+This file has been edited using the editor from Microsoft Visual Studio 6.0
+This file can view properly with any basic editors and browsers (validation done under MS Windows and Unix)
+*/
+
+// This file was developed/modified by JEAN-PIERRE-BELAUD for CO-LaN organisation - March 2003
+
+// ---- The scope of thermodynamic and physical properties interface
+// Reference document: Thermodynamic and physical properties
+// ThermoIDL 文件拆分，序号 03
+
+using System.ComponentModel;
+using System.Runtime.InteropServices;
+
 namespace CapeOpen;
 
-
-/// <summary>
-/// This interface should be implemented by all Thermodynamic and Physical 
+/// <summary>This interface should be implemented by all Thermodynamic and Physical 
 /// Properties components that need an ICapeThermoMaterial interface in order to set 
-/// and get a Material’s property values.
-/// </summary>
-[System.Runtime.InteropServices.ComImport()]
-[System.Runtime.InteropServices.ComVisibleAttribute(false)]
-[System.Runtime.InteropServices.GuidAttribute("678C0A9C-7D66-11D2-A67D-00105A42887F")]
-[System.ComponentModel.DescriptionAttribute("ICapeThermoMaterialContext Interface")]
-interface ICapeThermoMaterialContextCOM
+/// and get a Material’s property values.</summary>
+[ComImport,ComVisible(false)]
+[Guid(CapeOpenGuids.InCapeTheMateConComIid)]  // "678C0A9C-7D66-11D2-A67D-00105A42887F"
+[Description("ICapeThermoMaterialContext Interface")]
+internal interface ICapeThermoMaterialContextCOM
 {
-
     /// <summary>Allows the client of a component that implements this interface to 
     /// pass an ICapeThermoMaterial interface to the component, so that it can 
     /// access the properties of a Material.</summary>
@@ -35,8 +51,7 @@ interface ICapeThermoMaterialContextCOM
     /// information concerning the Compounds.</para>
     /// <para>Calling the UnsetMaterial method of the ICapeThermoMaterialContext 
     /// interface has the effect of removing the interface set by the SetMaterial 
-    /// method.</para>
-    /// </remarks>
+    /// method.</para></remarks>
     /// <exception cref = "ECapeNoImpl">The operation is “not” implemented even if 
     /// this method can be called for reasons of compatibility with the CAPE-OPEN 
     /// standards. That is to say that the operation exists, but it is not supported 
@@ -53,10 +68,10 @@ interface ICapeThermoMaterialContextCOM
     /// </exception>
     /// <exception cref = "ECapeUnknown">The error to be raised when other error(s), 
     /// specified for the operation, are not suitable.</exception>
-    [System.Runtime.InteropServices.DispIdAttribute(0x00000001)]
-    [System.ComponentModel.DescriptionAttribute("method SetMaterial")]
-    void SetMaterial([System.Runtime.InteropServices.InAttribute()]
-        [System.Runtime.InteropServices.MarshalAs(System.Runtime.InteropServices.UnmanagedType.IDispatch)]Object material);
+    [DispId(0x00000001)]
+    [Description("Method SetMaterial")]
+    void SetMaterial([In]
+        [MarshalAs(UnmanagedType.IDispatch)]object material);
 
     /// <summary>Removes any previously set Material interface.</summary>
     /// <remarks><para>The UnsetMaterial method removes any Material interface previously 
@@ -74,21 +89,18 @@ interface ICapeThermoMaterialContextCOM
     /// implementation.</exception>
     /// <exception cref = "ECapeUnknown">The error to be raised when other error(s), 
     /// specified for the operation, are not suitable.</exception>
-    [System.Runtime.InteropServices.DispIdAttribute(0x00000002)]
-    [System.ComponentModel.DescriptionAttribute("method UnsetMaterial")]
+    [DispId(0x00000002)]
+    [Description("Method UnsetMaterial")]
     void UnsetMaterial();
-};
+}
 
-/// <summary>
-/// This interface should be implemented by all Thermodynamic and Physical 
+/// <summary>This interface should be implemented by all Thermodynamic and Physical 
 /// Properties components that need an ICapeThermoMaterial interface in order to set 
-/// and get a Material’s property values.
-/// </summary>
-[System.Runtime.InteropServices.ComVisibleAttribute(false)]
-[System.ComponentModel.DescriptionAttribute("ICapeThermoMaterialContext Interface")]
+/// and get a Material’s property values.</summary>
+[ComVisible(false)]
+[Description("ICapeThermoMaterialContext Interface")]
 public interface ICapeThermoMaterialContext
 {
-
     /// <summary>Allows the client of a component that implements this interface to 
     /// pass an ICapeThermoMaterial interface to the component, so that it can 
     /// access the properties of a Material.</summary>
@@ -129,8 +141,8 @@ public interface ICapeThermoMaterialContext
     /// </exception>
     /// <exception cref = "ECapeUnknown">The error to be raised when other error(s), 
     /// specified for the operation, are not suitable.</exception>
-    [System.Runtime.InteropServices.DispIdAttribute(0x00000001)]
-    [System.ComponentModel.DescriptionAttribute("method SetMaterial")]
+    [DispId(0x00000001)]
+    [Description("Method SetMaterial")]
     void SetMaterial(ICapeThermoMaterial material);
 
     /// <summary>Removes any previously set Material interface.</summary>
@@ -149,10 +161,10 @@ public interface ICapeThermoMaterialContext
     /// implementation.</exception>
     /// <exception cref = "ECapeUnknown">The error to be raised when other error(s), 
     /// specified for the operation, are not suitable.</exception>
-    [System.Runtime.InteropServices.DispIdAttribute(0x00000002)]
-    [System.ComponentModel.DescriptionAttribute("method UnsetMaterial")]
+    [DispId(0x00000002)]
+    [Description("Method UnsetMaterial")]
     void UnsetMaterial();
-};
+}
 
 /// <summary>When implemented by a Property Package, this 
 /// interface is used to access the list of Compounds that the Property Package can 
@@ -173,8 +185,8 @@ public interface ICapeThermoMaterialContext
 /// it supports or it may rely on the PME to provide these data through the Material 
 /// Object.</para>
 /// </remarks>
-[System.Runtime.InteropServices.ComVisibleAttribute(false)]
-[System.ComponentModel.DescriptionAttribute("ICapeThermoCompounds Interface")]
+[ComVisible(false)]
+[Description("ICapeThermoCompounds Interface")]
 public interface ICapeThermoCompounds
 {
     /// <summary>Returns the values of constant Physical Properties for the specified Compounds.</summary>
@@ -232,9 +244,9 @@ public interface ICapeThermoCompounds
     /// Property Package required the SetMaterial method to be called before calling 
     /// the GetCompoundConstant method. The error would not be raised when the 
     /// GetCompoundConstant method is implemented by a Material Object.</exception>
-    [System.Runtime.InteropServices.DispIdAttribute(0x00000001)]
-    [System.ComponentModel.DescriptionAttribute("method GetCompoundConstant")]
-    Object[] GetCompoundConstant(string[] props, string[] compIds);
+    [DispId(0x00000001)]
+    [Description("Method GetCompoundConstant")]
+    object[] GetCompoundConstant(string[] props, string[] compIds);
 
     /// <summary>Returns the list of all Compounds. This includes the Compound 
     /// identifiers recognised and extra information that can be used to further 
@@ -287,9 +299,10 @@ public interface ICapeThermoCompounds
     /// Package required the SetMaterial method to be called before calling the 
     /// GetCompoundList method. The error would not be raised when the 
     /// GetCompoundList method is implemented by a Material Object.</exception>
-    [System.Runtime.InteropServices.DispIdAttribute(0x00000002)]
-    [System.ComponentModel.DescriptionAttribute("method GetCompoundList")]
-    void GetCompoundList(ref string[] compIds, ref string[] formulae, ref string[] names, ref double[] boilTemps, ref double[] molwts, ref string[] casnos);
+    [DispId(0x00000002)]
+    [Description("Method GetCompoundList")]
+    void GetCompoundList(ref string[] compIds, ref string[] formulae, 
+        ref string[] names, ref double[] boilTemps, ref double[] molwts, ref string[] casnos);
 
     /// <summary>
     /// Returns the list of supported constant Physical Properties.
@@ -320,8 +333,8 @@ public interface ICapeThermoCompounds
     /// Property Package required the SetMaterial method to be called before calling 
     /// the GetConstPropList method. The error would not be raised when the 
     /// GetConstPropList method is implemented by a Material Object.</exception>
-    [System.Runtime.InteropServices.DispIdAttribute(0x00000003)]
-    [System.ComponentModel.DescriptionAttribute("method GetConstPropList")]
+    [DispId(0x00000003)]
+    [Description("Method GetConstPropList")]
     string[] GetConstPropList();
 
     /// <summary>Returns the number of Compounds supported.</summary>
@@ -339,8 +352,8 @@ public interface ICapeThermoCompounds
     /// Property Package required the SetMaterial method to be called before calling 
     /// the GetNumCompounds method. The error would not be raised when the 
     /// GetNumCompounds method is implemented by a Material Object.</exception>
-    [System.Runtime.InteropServices.DispIdAttribute(0x00000004)]
-    [System.ComponentModel.DescriptionAttribute("method GetNumCompounds")]
+    [DispId(0x00000004)]
+    [Description("Method GetNumCompounds")]
     int GetNumCompounds();
 
     /// <summary>Returns the values of pressure-dependent Physical Properties for 
@@ -400,8 +413,8 @@ public interface ICapeThermoCompounds
     /// Property Package required the SetMaterial method to be called before calling 
     /// the GetPDependentProperty method. The error would not be raised when the 
     /// GetPDependentProperty method is implemented by a Material Object.</exception>
-    [System.Runtime.InteropServices.DispIdAttribute(0x00000005)]
-    [System.ComponentModel.DescriptionAttribute("method GetPDependentProperty")]
+    [DispId(0x00000005)]
+    [Description("Method GetPDependentProperty")]
     void GetPDependentProperty(string[] props, double pressure, string[] compIds, ref double[] propVals);
 
     ///<summary>Returns the list of supported pressure-dependent properties.</summary>
@@ -429,8 +442,8 @@ public interface ICapeThermoCompounds
     /// Package required the SetMaterial method to be called before calling the 
     /// GetPDependentPropList method. The error would not be raised when the 
     /// GetPDependentPropList method is implemented by a Material Object.</exception>
-    [System.Runtime.InteropServices.DispIdAttribute(0x00000006)]
-    [System.ComponentModel.DescriptionAttribute("method GetPDependentPropList")]
+    [DispId(0x00000006)]
+    [Description("Method GetPDependentPropList")]
     string[] GetPDependentPropList();
 
     /// <summary>Returns the values of temperature-dependent Physical Properties for 
@@ -491,8 +504,8 @@ public interface ICapeThermoCompounds
     /// Property Package required the SetMaterial method to be called before calling 
     /// the GetTDependentProperty method. The error would not be raised when the 
     /// GetTDependentProperty method is implemented by a Material Object.</exception>
-    [System.Runtime.InteropServices.DispIdAttribute(0x00000007)]
-    [System.ComponentModel.DescriptionAttribute("method GetTDependentProperty")]
+    [DispId(0x00000007)]
+    [Description("Method GetTDependentProperty")]
     void GetTDependentProperty(string[] props, double temperature, string[] compIds, ref double[] propVals);
 
     /// <summary>Returns the list of supported temperature-dependent Physical 
@@ -521,11 +534,10 @@ public interface ICapeThermoCompounds
     /// Package required the SetMaterial method to be called before calling the 
     /// GetTDependentPropList method. The error would not be raised when the 
     /// GetTDependentPropList method is implemented by a Material Object.</exception>
-    [System.Runtime.InteropServices.DispIdAttribute(0x00000008)]
-    [System.ComponentModel.DescriptionAttribute("method GetTDependentPropList")]
+    [DispId(0x00000008)]
+    [Description("Method GetTDependentPropList")]
     string[] GetTDependentPropList();
-};
-
+}
 
 /// <summary>When implemented by a Property Package, this 
 /// interface is used to access the list of Compounds that the Property Package can 
@@ -546,11 +558,11 @@ public interface ICapeThermoCompounds
 /// it supports or it may rely on the PME to provide these data through the Material 
 /// Object.</para>
 /// </remarks>
-[System.Runtime.InteropServices.ComImport()]
-[System.Runtime.InteropServices.ComVisibleAttribute(false)]
-[System.Runtime.InteropServices.GuidAttribute("678C0A9D-7D66-11D2-A67D-00105A42887F")]
-[System.ComponentModel.DescriptionAttribute("ICapeThermoCompounds Interface")]
-interface ICapeThermoCompoundsCOM
+[ComImport]
+[ComVisible(false)]
+[Guid(CapeOpenGuids.InCapeTheCompUndComIid)]  // "678C0A9D-7D66-11D2-A67D-00105A42887F"
+[Description("ICapeThermoCompounds Interface")]
+internal interface ICapeThermoCompoundsCOM
 {
     /// <summary>Returns the values of constant Physical Properties for the specified Compounds.</summary>
     /// <remarks><para>The GetConstPropList method can be used in order to check 
@@ -607,11 +619,10 @@ interface ICapeThermoCompoundsCOM
     /// Property Package required the SetMaterial method to be called before calling 
     /// the GetCompoundConstant method. The error would not be raised when the 
     /// GetCompoundConstant method is implemented by a Material Object.</exception>
-    [System.Runtime.InteropServices.DispIdAttribute(0x00000001)]
-    [System.ComponentModel.DescriptionAttribute("method GetCompoundConstant")]
-    Object GetCompoundConstant(
-        [System.Runtime.InteropServices.InAttribute()] Object props,
-        [System.Runtime.InteropServices.InAttribute()] Object compIds);
+    [DispId(0x00000001)]
+    [Description("Method GetCompoundConstant")]
+    object GetCompoundConstant(
+        [In] object props, [In] object compIds);
 
     /// <summary>Returns the list of all Compounds. This includes the Compound 
     /// identifiers recognised and extra information that can be used to further 
@@ -664,15 +675,15 @@ interface ICapeThermoCompoundsCOM
     /// Package required the SetMaterial method to be called before calling the 
     /// GetCompoundList method. The error would not be raised when the 
     /// GetCompoundList method is implemented by a Material Object.</exception>
-    [System.Runtime.InteropServices.DispIdAttribute(0x00000002)]
-    [System.ComponentModel.DescriptionAttribute("method GetCompoundList")]
+    [DispId(0x00000002)]
+    [Description("Method GetCompoundList")]
     void GetCompoundList(
-        [System.Runtime.InteropServices.InAttribute()][System.Runtime.InteropServices.OutAttribute()]ref  Object compIds,
-        [System.Runtime.InteropServices.InAttribute()][System.Runtime.InteropServices.OutAttribute()]ref  Object formulae,
-        [System.Runtime.InteropServices.InAttribute()][System.Runtime.InteropServices.OutAttribute()]ref  Object names,
-        [System.Runtime.InteropServices.InAttribute()][System.Runtime.InteropServices.OutAttribute()]ref  Object boilTemps,
-        [System.Runtime.InteropServices.InAttribute()][System.Runtime.InteropServices.OutAttribute()]ref  Object molwts,
-        [System.Runtime.InteropServices.InAttribute()][System.Runtime.InteropServices.OutAttribute()]ref  Object casnos);
+        [In][Out]ref  object compIds,
+        [In][Out]ref  object formulae,
+        [In][Out]ref  object names,
+        [In][Out]ref  object boilTemps,
+        [In][Out]ref  object molwts,
+        [In][Out]ref  object casnos);
 
     /// <summary>
     /// Returns the list of supported constant Physical Properties.
@@ -703,9 +714,9 @@ interface ICapeThermoCompoundsCOM
     /// Property Package required the SetMaterial method to be called before calling 
     /// the GetConstPropList method. The error would not be raised when the 
     /// GetConstPropList method is implemented by a Material Object.</exception>
-    [System.Runtime.InteropServices.DispIdAttribute(0x00000003)]
-    [System.ComponentModel.DescriptionAttribute("method GetConstPropList")]
-    Object GetConstPropList();
+    [DispId(0x00000003)]
+    [Description("Method GetConstPropList")]
+    object GetConstPropList();
 
     /// <summary>Returns the number of Compounds supported.</summary>
     /// <returns>Number of Compounds supported.</returns>
@@ -722,8 +733,8 @@ interface ICapeThermoCompoundsCOM
     /// Property Package required the SetMaterial method to be called before calling 
     /// the GetNumCompounds method. The error would not be raised when the 
     /// GetNumCompounds method is implemented by a Material Object.</exception>
-    [System.Runtime.InteropServices.DispIdAttribute(0x00000004)]
-    [System.ComponentModel.DescriptionAttribute("method GetNumCompounds")]
+    [DispId(0x00000004)]
+    [Description("Method GetNumCompounds")]
     int GetNumCompounds();
 
     /// <summary>Returns the values of pressure-dependent Physical Properties for 
@@ -783,13 +794,13 @@ interface ICapeThermoCompoundsCOM
     /// Property Package required the SetMaterial method to be called before calling 
     /// the GetPDependentProperty method. The error would not be raised when the 
     /// GetPDependentProperty method is implemented by a Material Object.</exception>
-    [System.Runtime.InteropServices.DispIdAttribute(0x00000005)]
-    [System.ComponentModel.DescriptionAttribute("method GetPDependentProperty")]
+    [DispId(0x00000005)]
+    [Description("Method GetPDependentProperty")]
     void GetPDependentProperty(
-        [System.Runtime.InteropServices.InAttribute()] Object props,
-        [System.Runtime.InteropServices.InAttribute()] double pressure,
-        [System.Runtime.InteropServices.InAttribute()] Object compIds,
-        [System.Runtime.InteropServices.InAttribute()][System.Runtime.InteropServices.OutAttribute()]ref  Object propVals);
+        [In] object props,
+        [In] double pressure,
+        [In] object compIds,
+        [In][Out]ref  object propVals);
 
     ///<summary>Returns the list of supported pressure-dependent properties.</summary>
     ///<returns>The list of Physical Property identifiers for all supported 
@@ -816,9 +827,9 @@ interface ICapeThermoCompoundsCOM
     /// Package required the SetMaterial method to be called before calling the 
     /// GetPDependentPropList method. The error would not be raised when the 
     /// GetPDependentPropList method is implemented by a Material Object.</exception>
-    [System.Runtime.InteropServices.DispIdAttribute(0x00000006)]
-    [System.ComponentModel.DescriptionAttribute("method GetPDependentPropList")]
-    Object GetPDependentPropList();
+    [DispId(0x00000006)]
+    [Description("Method GetPDependentPropList")]
+    object GetPDependentPropList();
 
     /// <summary>Returns the values of temperature-dependent Physical Properties for 
     /// the specified pure Compounds.</summary>
@@ -878,13 +889,13 @@ interface ICapeThermoCompoundsCOM
     /// Property Package required the SetMaterial method to be called before calling 
     /// the GetTDependentProperty method. The error would not be raised when the 
     /// GetTDependentProperty method is implemented by a Material Object.</exception>
-    [System.Runtime.InteropServices.DispIdAttribute(0x00000007)]
-    [System.ComponentModel.DescriptionAttribute("method GetTDependentProperty")]
+    [DispId(0x00000007)]
+    [Description("Method GetTDependentProperty")]
     void GetTDependentProperty(
-        [System.Runtime.InteropServices.InAttribute()] Object props,
-        [System.Runtime.InteropServices.InAttribute()] double temperature,
-        [System.Runtime.InteropServices.InAttribute()] Object compIds,
-        [System.Runtime.InteropServices.InAttribute()][System.Runtime.InteropServices.OutAttribute()]ref  Object propVals);
+        [In] object props,
+        [In] double temperature,
+        [In] object compIds,
+        [In][Out]ref  object propVals);
 
     /// <summary>Returns the list of supported temperature-dependent Physical 
     /// Properties.</summary>
@@ -912,23 +923,21 @@ interface ICapeThermoCompoundsCOM
     /// Package required the SetMaterial method to be called before calling the 
     /// GetTDependentPropList method. The error would not be raised when the 
     /// GetTDependentPropList method is implemented by a Material Object.</exception>
-    [System.Runtime.InteropServices.DispIdAttribute(0x00000008)]
-    [System.ComponentModel.DescriptionAttribute("method GetTDependentPropList")]
-    Object GetTDependentPropList();
-};
+    [DispId(0x00000008)]
+    [Description("Method GetTDependentPropList")]
+    object GetTDependentPropList();
+}
 
-/// <summary>
-/// Provides information about the number and types of Phases supported by 
-/// the component that implements it.
-/// </summary>
+/// <summary>Provides information about the number and types of Phases supported by 
+/// the component that implements it.</summary>
 /// <remarks>This interface is designed to provide information about the number and 
 /// types of Phases supported by the component that implements it. It defines all the
 /// Phases that a component such as a Physical Property Calculator can handle. It 
 /// does not provide information about the Phases that are actually present in a 
 /// Material Object. This function is provided by the Get-PresentPhases method of the 
 /// ICapeThermoMaterial interface.</remarks>
-[System.Runtime.InteropServices.ComVisibleAttribute(false)]
-[System.ComponentModel.DescriptionAttribute("ICapeThermoPhases Interface")]
+[ComVisible(false)]
+[Description("ICapeThermoPhases Interface")]
 public interface ICapeThermoPhases
 {
     /// <summary>Returns the number of Phases.</summary>
@@ -942,8 +951,8 @@ public interface ICapeThermoPhases
     /// by the current implementation.</exception>
     /// <exception cref ="ECapeUnknown">The error to be raised when other error(s), 
     /// specified for this operation, are not suitable.</exception>
-    [System.Runtime.InteropServices.DispIdAttribute(0x00000001)]
-    [System.ComponentModel.DescriptionAttribute("method GetNumPhases")]
+    [DispId(0x00000001)]
+    [Description("Method GetNumPhases")]
     int GetNumPhases();
 
     /// <summary>Returns information on an attribute associated with a Phase for the 
@@ -984,9 +993,9 @@ public interface ICapeThermoPhases
     /// UNDEFINED, or phaseAttribute is not recognised.</exception>
     /// <exception cref ="ECapeUnknown">The error to be raised when other error(s), 
     /// specified for this operation, are not suitable..</exception>
-    [System.Runtime.InteropServices.DispIdAttribute(0x00000002)]
-    [System.ComponentModel.DescriptionAttribute("method GetPhaseInfo")]
-    string[] GetPhaseInfo(String phaseLabel, String phaseAttribute);
+    [DispId(0x00000002)]
+    [Description("Method GetPhaseInfo")]
+    string[] GetPhaseInfo(string phaseLabel, string phaseAttribute);
 
     /// <summary>
     /// Returns Phase labels and other important descriptive information for all the 
@@ -1027,27 +1036,24 @@ public interface ICapeThermoPhases
     /// current implementation.</exception>
     /// <exception cref = "ECapeUnknown">The error to be raised when other error(s), 
     /// specified for this operation, are not suitable.</exception>
-    [System.Runtime.InteropServices.DispIdAttribute(0x00000003)]
-    [System.ComponentModel.DescriptionAttribute("method GetPhaseList")]
+    [DispId(0x00000003)]
+    [Description("Method GetPhaseList")]
     void GetPhaseList(ref string[] phaseLabels, ref string[] stateOfAggregation, ref string[] keyCompoundId);
-};
+}
 
-
-/// <summary>
-/// Provides information about the number and types of Phases supported by 
-/// the component that implements it.
-/// </summary>
+/// <summary>Provides information about the number and types of Phases supported by 
+/// the component that implements it.</summary>
 /// <remarks>This interface is designed to provide information about the number and 
 /// types of Phases supported by the component that implements it. It defines all the
 /// Phases that a component such as a Physical Property Calculator can handle. It 
 /// does not provide information about the Phases that are actually present in a 
 /// Material Object. This function is provided by the Get-PresentPhases method of the 
 /// ICapeThermoMaterial interface.</remarks>
-[System.Runtime.InteropServices.ComImport()]
-[System.Runtime.InteropServices.ComVisibleAttribute(false)]
-[System.Runtime.InteropServices.GuidAttribute("678C0A9E-7D66-11D2-A67D-00105A42887F")]
-[System.ComponentModel.DescriptionAttribute("ICapeThermoPhases Interface")]
-interface ICapeThermoPhasesCOM
+[ComImport]
+[ComVisible(false)]
+[Guid(CapeOpenGuids.InCapeThePhasesComIid)]  // "678C0A9E-7D66-11D2-A67D-00105A42887F"
+[Description("ICapeThermoPhases Interface")]
+internal interface ICapeThermoPhasesCOM
 {
     /// <summary>Returns the number of Phases.</summary>
     /// <returns>The number of Phases supported.</returns>
@@ -1060,8 +1066,8 @@ interface ICapeThermoPhasesCOM
     /// by the current implementation.</exception>
     /// <exception cref ="ECapeUnknown">The error to be raised when other error(s), 
     /// specified for this operation, are not suitable.</exception>
-    [System.Runtime.InteropServices.DispIdAttribute(0x00000001)]
-    [System.ComponentModel.DescriptionAttribute("method GetNumPhases")]
+    [DispId(0x00000001)]
+    [Description("Method GetNumPhases")]
     int GetNumPhases();
 
     /// <summary>Returns information on an attribute associated with a Phase for the 
@@ -1102,11 +1108,11 @@ interface ICapeThermoPhasesCOM
     /// UNDEFINED, or phaseAttribute is not recognised.</exception>
     /// <exception cref ="ECapeUnknown">The error to be raised when other error(s), 
     /// specified for this operation, are not suitable..</exception>
-    [System.Runtime.InteropServices.DispIdAttribute(0x00000002)]
-    [System.ComponentModel.DescriptionAttribute("method GetPhaseInfo")]
-    Object GetPhaseInfo(
-        [System.Runtime.InteropServices.InAttribute()] String phaseLabel,
-        [System.Runtime.InteropServices.InAttribute()] String phaseAttribute);
+    [DispId(0x00000002)]
+    [Description("Method GetPhaseInfo")]
+    object GetPhaseInfo(
+        [In] string phaseLabel,
+        [In] string phaseAttribute);
 
     /// <summary>
     /// Returns Phase labels and other important descriptive information for all the 
@@ -1147,13 +1153,13 @@ interface ICapeThermoPhasesCOM
     /// current implementation.</exception>
     /// <exception cref = "ECapeUnknown">The error to be raised when other error(s), 
     /// specified for this operation, are not suitable.</exception>
-    [System.Runtime.InteropServices.DispIdAttribute(0x00000003)]
-    [System.ComponentModel.DescriptionAttribute("method GetPhaseList")]
+    [DispId(0x00000003)]
+    [Description("Method GetPhaseList")]
     void GetPhaseList(
-        [System.Runtime.InteropServices.InAttribute()][System.Runtime.InteropServices.OutAttribute()] ref Object phaseLabels,
-        [System.Runtime.InteropServices.InAttribute()][System.Runtime.InteropServices.OutAttribute()] ref Object stateOfAggregation,
-        [System.Runtime.InteropServices.InAttribute()][System.Runtime.InteropServices.OutAttribute()] ref Object keyCompoundId);
-};
+        [In][Out] ref object phaseLabels,
+        [In][Out] ref object stateOfAggregation,
+        [In][Out] ref object keyCompoundId);
+}
 
 /// <remarks>
 /// <para>Any Component or object that can calculate a Physical Property must 
@@ -1167,8 +1173,8 @@ interface ICapeThermoPhasesCOM
 /// delegated either to proprietary methods within a PME or to methods in an 
 /// associated CAPE-OPEN Property Package or Calculation Routine component.</para>
 ///</remarks>
-[System.Runtime.InteropServices.ComVisibleAttribute(false)]
-[System.ComponentModel.DescriptionAttribute("ICapeThermoPropertyRoutine Interface")]
+[ComVisible(false)]
+[Description("ICapeThermoPropertyRoutine Interface")]
 public interface ICapeThermoPropertyRoutine
 {
     /// <summary>This method is used to calculate the natural logarithm of the 
@@ -1181,7 +1187,7 @@ public interface ICapeThermoPropertyRoutine
     /// the GetPhaseList method on the ICapeThermoPhases interface.</param>
     /// <param name = "temperature">The temperature (K) for the calculation.</param>
     /// <param name = "pressure">The pressure (Pa) for the calculation.</param>
-    /// <param name ="lnPhiDT">Derivatives of natural logarithm of the fugacity
+    /// <param name ="lnPhiDt">Derivatives of natural logarithm of the fugacity
     /// coefficients w.r.t. temperature (if requested).</param>
     /// <param name ="moleNumbers">Number of moles of each Compound in the mixture.</param>
     /// <param name = "fFlags">Code indicating whether natural logarithm of the 
@@ -1191,7 +1197,7 @@ public interface ICapeThermoPropertyRoutine
     /// requested).</param>
     /// <param anem = "lnPhiDT">Derivatives of natural logarithm of the fugacity
     /// coefficients w.r.t. temperature (if requested).</param>
-    /// <param name ="lnPhiDP">Derivatives of natural logarithm of the fugacity
+    /// <param name ="lnPhiDp">Derivatives of natural logarithm of the fugacity
     /// coefficients w.r.t. pressure (if requested).</param>
     /// <param name ="lnPhiDn">Derivatives of natural logarithm of the fugacity
     /// coefficients w.r.t. mole numbers (if requested).</param>
@@ -1304,15 +1310,15 @@ public interface ICapeThermoPropertyRoutine
     /// phaseLabel argument.</exception>
     /// <exception cref = "ECapeUnknown">The error to be raised when other error(s), 
     /// specified for this operation, are not suitable.</exception>
-    [System.Runtime.InteropServices.DispIdAttribute(0x00000001)]
-    [System.ComponentModel.DescriptionAttribute("method CalcAndGetLnPhi")]
-    void CalcAndGetLnPhi(String phaseLabel, double temperature,
+    [DispId(0x00000001)]
+    [Description("Method CalcAndGetLnPhi")]
+    void CalcAndGetLnPhi(string phaseLabel, double temperature,
         double pressure,
         double[] moleNumbers,
         CapeFugacityFlag fFlags,
         ref double[] lnPhi,
-        ref double[] lnPhiDT,
-        ref double[] lnPhiDP,
+        ref double[] lnPhiDt,
+        ref double[] lnPhiDp,
         ref double[] lnPhiDn);
 
     /// <summary>CalcSinglePhaseProp is used to calculate properties and property 
@@ -1399,9 +1405,9 @@ public interface ICapeThermoPropertyRoutine
     /// cannot be calculated at the specified conditions or for the specified phase. 
     /// If the property calculation is not implemented then ECapeLimitedImpl should be 
     /// returned.</exception>
-    [System.Runtime.InteropServices.DispIdAttribute(0x00000002)]
-    [System.ComponentModel.DescriptionAttribute("method CalcSinglePhaseProp")]
-    void CalcSinglePhaseProp(string[] props, String phaseLabel);
+    [DispId(0x00000002)]
+    [Description("Method CalcSinglePhaseProp")]
+    void CalcSinglePhaseProp(string[] props, string phaseLabel);
 
     /// <summary>CalcTwoPhaseProp is used to calculate mixture properties and property 
     /// derivatives that depend on two Phases at the current values of temperature, 
@@ -1499,8 +1505,8 @@ public interface ICapeThermoPropertyRoutine
     /// phaseLabels argument or UNDEFINED for the props argument.</exception>
     /// <exception cref = "ECapeUnknown">The error to be raised when other error(s), 
     /// specified for this operation, are not suitable.</exception>
-    [System.Runtime.InteropServices.DispIdAttribute(0x00000003)]
-    [System.ComponentModel.DescriptionAttribute("method CalcTwoPhaseProp")]
+    [DispId(0x00000003)]
+    [Description("Method CalcTwoPhaseProp")]
     void CalcTwoPhaseProp(string[] props, string[] phaseLabels);
 
     /// <summary>Checks whether it is possible to calculate a property with the 
@@ -1545,9 +1551,9 @@ public interface ICapeThermoPropertyRoutine
     /// phaseLabel argument.</exception>
     /// <exception cref = "ECapeUnknown">The error to be raised when other error(s), 
     /// specified for the CheckSinglePhasePropSpec operation, are not suitable.</exception>
-    [System.Runtime.InteropServices.DispIdAttribute(0x00000004)]
-    [System.ComponentModel.DescriptionAttribute("method CheckSinglePhasePropSpec")]
-    bool CheckSinglePhasePropSpec(String property, String phaseLabel);
+    [DispId(0x00000004)]
+    [Description("Method CheckSinglePhasePropSpec")]
+    bool CheckSinglePhasePropSpec(string property, string phaseLabel);
 
     /// <summary>Checks whether it is possible to calculate a property with the 
     /// CalcTwoPhaseProp method for a given set of Phases.</summary>
@@ -1593,10 +1599,10 @@ public interface ICapeThermoPropertyRoutine
     /// two.</exception>
     /// <exception cref = "ECapeUnknown">The error to be raised when other error(s), 
     /// specified for the CheckTwoPhasePropSpec operation, are not suitable.</exception>
-    [System.Runtime.InteropServices.DispIdAttribute(0x00000005)]
-    [System.ComponentModel.DescriptionAttribute("method CheckTwoPhasePropSpec")]
-    [return: System.Runtime.InteropServices.MarshalAs(System.Runtime.InteropServices.UnmanagedType.VariantBool)]
-    bool CheckTwoPhasePropSpec(String property, string[] phaseLabels);
+    [DispId(0x00000005)]
+    [Description("Method CheckTwoPhasePropSpec")]
+    [return: MarshalAs(UnmanagedType.VariantBool)]
+    bool CheckTwoPhasePropSpec(string property, string[] phaseLabels);
 
     /// <summary>Returns the list of supported non-constant single-phase Physical 
     /// Properties.</summary>
@@ -1624,8 +1630,8 @@ public interface ICapeThermoPropertyRoutine
     /// the current implementation.</exception>
     /// <exception cref = "ECapeUnknown">The error to be raised when other error(s), 
     /// specified for the GetSinglePhasePropList operation, are not suitable.</exception>
-    [System.Runtime.InteropServices.DispIdAttribute(0x00000006)]
-    [System.ComponentModel.DescriptionAttribute("method GetSinglePhasePropList")]
+    [DispId(0x00000006)]
+    [Description("Method GetSinglePhasePropList")]
     string[] GetSinglePhasePropList();
 
     /// <summary>Returns the list of supported non-constant two-phase properties.</summary>
@@ -1655,7 +1661,7 @@ public interface ICapeThermoPropertyRoutine
     /// current implementation.</exception>
     /// <exception cref = "ECapeUnknown">The error to be raised when other error(s), 
     /// specified for the GetTwoPhasePropList operation, are not suitable.</exception>
-    [System.Runtime.InteropServices.DispIdAttribute(0x00000007)]
-    [System.ComponentModel.DescriptionAttribute("method GetTwoPhasePropList")]
+    [DispId(0x00000007)]
+    [Description("Method GetTwoPhasePropList")]
     string[] GetTwoPhasePropList();
-};
+}

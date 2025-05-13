@@ -379,4 +379,15 @@ internal abstract class CapeOpenGuids
     // Unit Port
     public const string InUnitPortEventsIid = "3530B780-5E59-42B1-801B-3C18F2AD08EE";
     public const string PpUnitPortIid = "51066F52-C0F9-48d7-939E-3A229010E77C";
+    // Thermo IDL 02
+    public const string InCapeTheMateComIid = "678C0A9B-7D66-11D2-A67D-00105A42887F";
+    // Thermo IDL 03
+    public const string InCapeTheMateConComIid = "678C0A9C-7D66-11D2-A67D-00105A42887F";
+    public const string InCapeTheCompUndComIid = "678C0A9D-7D66-11D2-A67D-00105A42887F";
+    public const string InCapeThePhasesComIid = "678C0A9E-7D66-11D2-A67D-00105A42887F";
+    // Thermo IDL 04
+    public const string InCapeTheProPerRouComIid = "678C0A9F-7D66-11D2-A67D-00105A42887F";
+    public const string InCapeTheEqBrRouComIid = "678C0AA0-7D66-11D2-A67D-00105A42887F";
+    public const string InCapeTheUnSalConComIid = "678C0AA1-7D66-11D2-A67D-00105A42887F";
+    public const string InCapeTheProPackManComIid = "678C0AA2-7D66-11D2-A67D-00105A42887F";
 }
