@@ -1,239 +1,198 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿// 大白萝卜重构于 2025.05.12，使用 .NET8.O-windows、Microsoft Visual Studio 2022 Preview 和 Rider 2024.3。
+
+using System.ComponentModel;
+using System.Globalization;
+using System.Runtime.InteropServices;
 
 namespace CapeOpen;
 
-class UnitConverter : System.ComponentModel.StringConverter
+internal class UnitConverter : StringConverter
 {
-    public override bool GetStandardValuesSupported(System.ComponentModel.ITypeDescriptorContext context)
+    public override bool GetStandardValuesSupported(ITypeDescriptorContext context)
     {
         return true;
     }
-    public override System.ComponentModel.TypeConverter.StandardValuesCollection GetStandardValues(System.ComponentModel.ITypeDescriptorContext context)
+    public override StandardValuesCollection GetStandardValues(ITypeDescriptorContext context)
     {
-        CapeOpen.RealParameter unit = (CapeOpen.RealParameter)context.Instance;
-        string[] retVal = CapeOpen.CDimensions.UnitsMatchingCategory(CapeOpen.CDimensions.UnitCategory(unit.Unit));
-        return new System.ComponentModel.TypeConverter.StandardValuesCollection(retVal);
+        var unit = (RealParameter)context.Instance;
+        var retVal = CDimensions.UnitsMatchingCategory(CDimensions.UnitCategory(unit.Unit));
+        return new StandardValuesCollection(retVal);
     }
-    public override bool GetStandardValuesExclusive(System.ComponentModel.ITypeDescriptorContext context)
+    public override bool GetStandardValuesExclusive(ITypeDescriptorContext context)
     {
         return true;
     }
-};
+}
 
-class RealParameterTypeConverter : ParameterTypeConverter
+internal class RealParameterTypeConverter : ParameterTypeConverter
 {
-    public override bool CanConvertTo(System.ComponentModel.ITypeDescriptorContext context, System.Type destinationType)
+    public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType)
     {
-        if (typeof(CapeOpen.RealParameter).IsAssignableFrom(destinationType))
-            return true;
-        return base.CanConvertTo(context, destinationType);
+        return typeof(RealParameter).IsAssignableFrom(destinationType) 
+               || base.CanConvertTo(context, destinationType);
     }
-    public override Object ConvertTo(System.ComponentModel.ITypeDescriptorContext context, System.Globalization.CultureInfo culture, Object value, System.Type destinationType)
+    public override object ConvertTo(ITypeDescriptorContext context, 
+        CultureInfo culture, object value, Type destinationType)
     {
-        if ((typeof(System.String).IsAssignableFrom(destinationType)) && typeof(CapeOpen.RealParameter).IsAssignableFrom(value.GetType()))
-        {
-            CapeOpen.RealParameter param = (CapeOpen.RealParameter)value;
-            return String.Concat(param.DimensionedValue.ToString(), " ", param.Unit);
-        }
-        return base.ConvertTo(context, culture, value, destinationType);
+        if (!typeof(string).IsAssignableFrom(destinationType) 
+            // || !typeof(RealParameter).IsAssignableFrom(value.GetType()))
+            || value is not RealParameter pRealParameter)
+            return base.ConvertTo(context, culture, value, destinationType);
+        return string.Concat(pRealParameter.DimensionedValue.ToString(), " ", pRealParameter.Unit);
     }
-};
+}
 
-
-/// <summary>
-/// </summary>
-/// <remarks>
-/// </remarks>
-[System.Runtime.InteropServices.InterfaceType(System.Runtime.InteropServices.ComInterfaceType.InterfaceIsIDispatch)]
-[System.Runtime.InteropServices.ComVisible(true)]
-[System.Runtime.InteropServices.GuidAttribute("058B416C-FC61-4E64-802A-19070CB39703")]
-[System.ComponentModel.DescriptionAttribute("CapeRealParameterEvents Interface")]
-interface IRealParameterSpecEvents
+[InterfaceType(ComInterfaceType.InterfaceIsIDispatch)]
+[ComVisible(true)]
+[Guid(CapeOpenGuids.InRealPaSpecEveIid)]  // "058B416C-FC61-4E64-802A-19070CB39703"
+[Description("CapeRealParameterEvents Interface")]
+internal interface IRealParameterSpecEvents
 {
-    /// <summary>
-    /// Occurs when the user changes of the default value of a parameter.
-    /// </summary>
+    /// <summary>Occurs when the user changes of the default value of a parameter.</summary>
     /// <remarks><para>Raising an event invokes the event handler through a delegate.</para>
     /// <para>The <c>OnParameterDefaultValueChanged</c> method also allows derived classes to handle the event without attaching a delegate. This is the preferred 
     /// technique for handling the event in a derived class.</para>
     /// <para>Notes to Inheritors: </para>
     /// <para>When overriding <c>OnParameterDefaultValueChanged</c> in a derived class, be sure to call the base class's <c>OnParameterDefaultValueChanged</c> method so that registered 
-    /// delegates receive the event.</para>
-    /// </remarks>
+    /// delegates receive the event.</para></remarks>
     /// <param name = "sender">The <see cref = "RealParameter">RealParameter</see> that raised the event.</param>
     /// <param name = "args">A <see cref = "ParameterDefaultValueChanged">ParameterDefaultValueChanged</see> that contains information about the event.</param>
     void ParameterDefaultValueChanged(object sender, object args);
 
-    /// <summary>
-    /// Occurs when the user changes of the lower bound of a parameter.
-    /// </summary>
+    /// <summary>Occurs when the user changes of the lower bound of a parameter.</summary>
     /// <remarks><para>Raising an event invokes the event handler through a delegate.</para>
     /// <para>The <c>OnComponentNameChanged</c> method also allows derived classes to handle the event without attaching a delegate. This is the preferred 
     /// technique for handling the event in a derived class.</para>
     /// <para>Notes to Inheritors: </para>
     /// <para>When overriding <c>OnComponentNameChanged</c> in a derived class, be sure to call the base class's <c>OnComponentNameChanged</c> method so that registered 
-    /// delegates receive the event.</para>
-    /// </remarks>
+    /// delegates receive the event.</para></remarks>
     /// <param name = "sender">The <see cref = "RealParameter">RealParameter</see> that raised the event.</param>
     /// <param name = "args">A <see cref = "ParameterValueChangedEventArgs">ParameterValueChangedEventArgs</see> that contains information about the event.</param>
     void ParameterLowerBoundChanged(object sender, object args);
 
-    /// <summary>
-    /// Occurs when the user changes of the upper bound of a parameter.
-    /// </summary>
+    /// <summary>Occurs when the user changes of the upper bound of a parameter.</summary>
     /// <remarks><para>Raising an event invokes the event handler through a delegate.</para>
     /// <para>The <c>OnParameterUpperBoundChanged</c> method also allows derived classes to handle the event without attaching a delegate. This is the preferred 
     /// technique for handling the event in a derived class.</para>
     /// <para>Notes to Inheritors: </para>
     /// <para>When overriding <c>OnParameterUpperBoundChanged</c> in a derived class, be sure to call the base class's <c>OnParameterUpperBoundChanged</c> method so that registered 
-    /// delegates receive the event.</para>
-    /// </remarks>
+    /// delegates receive the event.</para></remarks>
     /// <param name = "sender">The <see cref = "RealParameter">RealParameter</see> that raised the event.</param>
     /// <param name = "args">A <see cref = "ParameterLowerBoundChangedEventArgs">ParameterUpperBoundChangedEventArgs</see> that contains information about the event.</param>
     void ParameterUpperBoundChanged(object sender, object args);
 
-    /// <summary>
-    /// Occurs when a parameter is validated.
-    /// </summary>
+    /// <summary>Occurs when a parameter is validated.</summary>
     /// <remarks><para>Raising an event invokes the event handler through a delegate.</para>
     /// <para>The <c>OnParameterValidated</c> method also allows derived classes to handle the event without attaching a delegate. This is the preferred 
     /// technique for handling the event in a derived class.</para>
     /// <para>Notes to Inheritors: </para>
     /// <para>When overriding <c>OnParameterValidated</c> in a derived class, be sure to call the base class's <c>OnParameterValidated</c> method so that registered 
-    /// delegates receive the event.</para>
-    /// </remarks>
+    /// delegates receive the event.</para></remarks>
     /// <param name = "sender">The <see cref = "RealParameter">RealParameter</see> that raised the event.</param>
     /// <param name = "args">A <see cref = "ParameterValidatedEventArgs">ParameterValidatedEventArgs</see> that contains information about the event.</param>
     void ParameterValidated(object sender, object args);
 }
 
-/// <summary>
-/// Real-Valued parameter for use in the CAPE-OPEN parameter collection.
-/// </summary>
+/// <summary>Real-Valued parameter for use in the CAPE-OPEN parameter collection.</summary>
 [Serializable]
-[System.Runtime.InteropServices.ComSourceInterfaces(typeof(IParameterEvents), typeof(IRealParameterSpecEvents))]
-[System.Runtime.InteropServices.ComVisible(true)]
-[System.Runtime.InteropServices.Guid("77E39C43-046B-4b1f-9EE0-AA9EFC55D2EE")]//ICapeThermoMaterialObject_IID)
-[System.Runtime.InteropServices.ClassInterface(System.Runtime.InteropServices.ClassInterfaceType.None)]
-[System.ComponentModel.TypeConverter(typeof(CapeOpen.RealParameterTypeConverter))]
+[ComSourceInterfaces(typeof(IParameterEvents), typeof(IRealParameterSpecEvents))]
+[ComVisible(true)]
+[Guid(CapeOpenGuids.PpRealParTerIid)]  //ICapeThermoMaterialObject_IID  "77E39C43-046B-4b1f-9EE0-AA9EFC55D2EE"
+[ClassInterface(ClassInterfaceType.None)]
+[TypeConverter(typeof(RealParameterTypeConverter))]
 public class RealParameter : CapeParameter,
-    ICapeParameter,
-    ICapeParameterSpec,
-    ICapeParameterSpecCOM,
-    ICapeRealParameterSpec,
-    ICapeRealParameterSpecCOM,
-    IATCapeXRealParameterSpec
+    ICapeParameter, ICapeParameterSpec, ICapeParameterSpecCOM,
+    ICapeRealParameterSpec, ICapeRealParameterSpecCOM, IATCapeXRealParameterSpec
 {
-    private double m_value = 0.0;
-    private double m_DefaultValue = 0.0;
-    private double m_LowerBound = 0.0;
-    private double m_UpperBound = 0.0;
+    private double _mValue;
+    private double _mDefaultValue;
+    private double _mLowerBound;
+    private double _mUpperBound;
     //private String m_Category = String.Empty;
-    private String m_unit = String.Empty;
+    //private String m_Unit = String.Empty;
+    private string _mUnit;
 
-    /// <summary>
-    /// Creates a new instance of the double precision-valued parameter class. 
-    /// </summary>
-    /// <remarks>
-    /// The mode is set to CapeParamMode.CAPE_INPUT_OUTPUT. The dimensionality 
-    /// of the parameter is determined from the unit string.
-    /// </remarks>
+    /// <summary>Creates a new instance of the double precision-valued parameter class. </summary>
+    /// <remarks>The mode is set to CapeParamMode.CAPE_INPUT_OUTPUT. The dimensionality 
+    /// of the parameter is determined from the unit string.</remarks>
     /// <param name = "name">Sets as the ComponentName of the parameter's ICapeIdentification interface.</param>
     /// <param name = "description">Sets as the ComponentDescription of the parameter's ICapeIdentification interface.</param>
-    /// <param name = "value">Sets the inital value of the parameter.</param>
+    /// <param name = "value">Sets the initial value of the parameter.</param>
     /// <param name = "defaultValue">Sets the default value of the parameter.</param>
     /// <param name = "lowerBound">Sets the lower bound of the parameter.</param>
     /// <param name = "upperBound">Sets the upper bound of the parameter.</param>
     /// <param name = "mode">Sets the CapeParamMode mode of the parameter.</param>
     /// <param name = "unit">Use to Set the dimensionality of the parameter.</param>
-    public RealParameter(System.String name, System.String description, double value, double defaultValue, double lowerBound, double upperBound, CapeParamMode mode, string unit)
+    public RealParameter(string name, string description, double value, 
+        double defaultValue, double lowerBound, double upperBound, CapeParamMode mode, string unit)
         : base(name, description, mode)
     {
-        m_value = value;
-        m_DefaultValue = defaultValue;
+        _mValue = value;
+        _mDefaultValue = defaultValue;
         MValStatus = CapeValidationStatus.CAPE_VALID;
-        m_unit = unit;
-        m_LowerBound = lowerBound;
-        m_UpperBound = upperBound;
+        _mUnit = unit;
+        _mLowerBound = lowerBound;
+        _mUpperBound = upperBound;
     }
-    /// <summary>
-    /// Creates a new instance of the double precision-valued parameter class. 
-    /// </summary>
-    /// <remarks>
-    /// The upper bound is set to Double.MaxValue (1.79769313486232e308) and the 
+    
+    /// <summary>Creates a new instance of the double precision-valued parameter class. </summary>
+    /// <remarks>The upper bound is set to Double.MaxValue (1.79769313486232e308) and the 
     /// lower bound is set to Double.MinValue (negative 1.79769313486232e308). 
     /// The mode is set to CapeParamMode.CAPE_INPUT_OUTPUT. 
-    /// The dimensionality of the parameter is determined from the unit string.
-    /// </remarks>
+    /// The dimensionality of the parameter is determined from the unit string.</remarks>
     /// <param name = "name">Sets as the ComponentName of the parameter's ICapeIdentification interface.</param>
     /// <param name = "description">Sets as the ComponentDescription of the parameter's ICapeIdentification interface.</param>
-    /// <param name = "value">Sets the inital value of the parameter.</param>
+    /// <param name = "value">Sets the initial value of the parameter.</param>
     /// <param name = "defaultValue">Sets the default value of the parameter.</param>
     /// <param name = "mode">Sets the CapeParamMode mode of the parameter.</param>
     /// <param name = "unit">Use to Set the dimensionality of the parameter.</param>
-    public RealParameter(System.String name, System.String description, double value, double defaultValue, CapeParamMode mode, string unit)
+    public RealParameter(string name, string description, double value, 
+        double defaultValue, CapeParamMode mode, string unit)
         : base(name, description, mode)
     {
-        m_value = value;
-        m_DefaultValue = defaultValue;
-        this.Mode = mode;
+        _mValue = value;
+        _mDefaultValue = defaultValue;
+        Mode = mode;
         MValStatus = CapeValidationStatus.CAPE_VALID;
-        m_unit = unit;
-        m_LowerBound = Double.MinValue;
-        m_UpperBound = Double.MaxValue;
+        _mUnit = unit;
+        _mLowerBound = double.MinValue;
+        _mUpperBound = double.MaxValue;
     }
 
-    /// <summary>
-    /// Creates a new instance of the double precision-valued parameter class. 
-    /// </summary>
-    /// <remarks>
-    /// The upper bound is set to Double.MaxValue (1.79769313486232e308) and the 
+    /// <summary>Creates a new instance of the double precision-valued parameter class. </summary>
+    /// <remarks>The upper bound is set to Double.MaxValue (1.79769313486232e308) and the 
     /// lower bound is set to Double.MinValue (negative 1.79769313486232e308). 
     /// The mode is set to CapeParamMode.CAPE_INPUT_OUTPUT. 
-    /// The dimensionality of the parameter is determined from the unit string.
-    /// </remarks>
+    /// The dimensionality of the parameter is determined from the unit string.</remarks>
     /// <param name = "name">Sets as the ComponentName of the parameter's ICapeIdentification interface.</param>
-    /// <param name = "value">Sets the inital value of the parameter.</param>
+    /// <param name = "value">Sets the initial value of the parameter.</param>
     /// <param name = "defaultValue">Sets the default value of the parameter.</param>
     /// <param name = "unit">Use to Set the dimensionality of the parameter.</param>
-    public RealParameter(String name, double value, double defaultValue, String unit)
+    public RealParameter(string name, double value, double defaultValue, string unit)
         : base(name, "", CapeParamMode.CAPE_INPUT_OUTPUT)
     {
-        m_value = value;
-        m_DefaultValue = defaultValue;
+        _mValue = value;
+        _mDefaultValue = defaultValue;
         MValStatus = CapeValidationStatus.CAPE_VALID;
-        m_unit = unit;
-        m_LowerBound = Double.MinValue;
-        m_UpperBound = Double.MaxValue;
+        _mUnit = unit;
+        _mLowerBound = double.MinValue;
+        _mUpperBound = double.MaxValue;
     }
 
     /// <summary>Creates a new object that is a copy of the current instance.</summary>
-    /// <remarks>
-    /// <para>
-    /// Clone can be implemented either as a deep copy or a shallow copy. In a deep copy, all objects are duplicated; 
-    /// in a shallow copy, only the top-level objects are duplicated and the lower levels contain references.
-    /// </para>
-    /// <para>
-    /// The resulting clone must be of the same type as, or compatible with, the original instance.
-    /// </para>
-    /// <para>
-    /// See <see cref="Object.MemberwiseClone"/> for more information on cloning, deep versus shallow copies, and examples.
-    /// </para>
-    /// </remarks>
+    /// <remarks><para>Clone can be implemented either as a deep copy or a shallow copy. In a deep copy, all objects are duplicated; 
+    /// in a shallow copy, only the top-level objects are duplicated and the lower levels contain references.</para>
+    /// <para>The resulting clone must be of the same type as, or compatible with, the original instance.</para>
+    /// <para>See <see cref="Object.MemberwiseClone"/> for more information on cloning, deep versus shallow copies, and examples.</para></remarks>
     /// <returns>A new object that is a copy of this instance.</returns>
-    override public object Clone()
+    public override object Clone()
     {
-        return new RealParameter(this.ComponentName, this.ComponentDescription, this.DimensionedValue, this.DimensionedDefaultValue, this.DimensionedLowerBound, this.DimensionedUpperBound, this.Mode, this.Unit);
+        return new RealParameter(ComponentName, ComponentDescription, DimensionedValue, 
+            DimensionedDefaultValue, DimensionedLowerBound, DimensionedUpperBound, Mode, Unit);
     }
 
-    /// <summary>
-    /// Gets the dimensionality of the parameter.
-    /// </summary>
-    /// <remarks>
-    /// <para>Gets the dimensionality of the parameter for which this is the 
+    /// <summary>Gets the dimensionality of the parameter.</summary>
+    /// <remarks><para>Gets the dimensionality of the parameter for which this is the 
     /// specification. The dimensionality represents the physical dimensional 
     /// axes of this parameter. It is expected that the dimensionality must cover 
     /// at least 6 fundamental axes (length, mass, time, angle, temperature and 
@@ -244,25 +203,14 @@ public class RealParameter : CapeParameter,
     /// &lt;1,0,-1,0,0,0&gt;: that is m1 * s-1 =m/s. We have suggested to the 
     /// CO Scientific Committee to use the SI base units plus the SI derived units 
     /// with special symbols (for a better usability and for allowing the 
-    /// definition of angles).</para>
-    /// </remarks>
+    /// definition of angles).</para></remarks>
     /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
-    /// <exception cref = "ECapeInvalidArgument">To be used when an invalid argument value is passed, for example, an unrecognised Compound identifier or UNDEFINED for the props argument.</exception>
-    [System.ComponentModel.BrowsableAttribute(false)]
-    Object ICapeParameterSpecCOM.Dimensionality
-    {
-        get
-        {
-            return CDimensions.Dimensionality(m_unit);
-        }
-    }
-
-
-    /// <summary>
-    /// Gets the dimensionality of the parameter.
-    /// </summary>
-    /// <remarks>
-    /// <para>Gets the dimensionality of the parameter for which this is the 
+    /// <exception cref = "ECapeInvalidArgument">To be used when an invalid argument value is passed, for example, an unrecognised Compound identifier or UNDEFINED for the props' argument.</exception>
+    [Browsable(false)]
+    object ICapeParameterSpecCOM.Dimensionality => CDimensions.Dimensionality(_mUnit);
+    
+    /// <summary>Gets the dimensionality of the parameter.</summary>
+    /// <remarks><para>Gets the dimensionality of the parameter for which this is the 
     /// specification. The dimensionality represents the physical dimensional 
     /// axes of this parameter. It is expected that the dimensionality must cover 
     /// at least 6 fundamental axes (length, mass, time, angle, temperature and 
@@ -273,302 +221,216 @@ public class RealParameter : CapeParameter,
     /// &lt;1,0,-1,0,0,0&gt;: that is m1 * s-1 =m/s. We have suggested to the 
     /// CO Scientific Committee to use the SI base units plus the SI derived units 
     /// with special symbols (for a better usability and for allowing the 
-    /// definition of angles).</para>
-    /// </remarks>
+    /// definition of angles).</para></remarks>
     /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
-    /// <exception cref = "ECapeInvalidArgument">To be used when an invalid argument value is passed, for example, an unrecognised Compound identifier or UNDEFINED for the props argument.</exception>
-    [System.ComponentModel.BrowsableAttribute(false)]
-    override public double[] Dimensionality
-    {
-        get
-        {
-            return CDimensions.Dimensionality(m_unit);
-        }
-    }
-        
-    /// <summary>
-    /// Gets and sets the value for this Parameter.
-    /// </summary>
-    /// <remarks>
-    /// This value uses the System.Object data type for compatibility with 
-    /// COM-based CAPE-OPEN.
-    /// </remarks>
+    /// <exception cref = "ECapeInvalidArgument">To be used when an invalid argument value is passed, for example, an unrecognised Compound identifier or UNDEFINED for the props' argument.</exception>
+    [Browsable(false)]
+    public override double[] Dimensionality => CDimensions.Dimensionality(_mUnit);
+
+    /// <summary>Gets and sets the value for this Parameter.</summary>
+    /// <remarks>This value uses the System.Object data type for compatibility with 
+    /// COM-based CAPE-OPEN.</remarks>
     /// <returns>A boxed boolean value of the parameter.</returns>
     /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
-    /// <exception cref = "ECapeInvalidArgument">To be used when an invalid argument value is passed, for example, an unrecognised Compound identifier or UNDEFINED for the props argument.</exception>
-    [System.ComponentModel.BrowsableAttribute(false)]
-    override public Object value
+    /// <exception cref = "ECapeInvalidArgument">To be used when an invalid argument value is passed, for example, an unrecognised Compound identifier or UNDEFINED for the props' argument.</exception>
+    [Browsable(false)]
+    public override object value
     {
-        get
-        {
-            return m_value;
-        }
-        set
-        {
-            ParameterValueChangedEventArgs args = new ParameterValueChangedEventArgs(this.ComponentName, m_value, value);
-            string message = string.Empty;
-            if (this.SIValidate((double)value, ref message))
-            {
-                m_value = (double)value;
-                this.NotifyPropertyChanged("Value");
+        get => _mValue;
+        set {
+            var args = new ParameterValueChangedEventArgs(ComponentName, _mValue, value);
+            var message = string.Empty;
+            if (SIValidate((double)value, ref message)) {
+                _mValue = (double)value;
+                NotifyPropertyChanged("Value");
                 OnParameterValueChanged(args);
-            }
-            else
-            {
+            } else {
                 throw new CapeInvalidArgumentException(message, 1);
             }
         }
     }
-
-
-    /// <summary>
-    /// Validates the value sent against the specification of the parameter.
-    /// </summary>
-    /// <remarks>
-    /// The value is considered valid if it is between the upper and lower 
+    
+    /// <summary>Validates the pValue sent against the specification of the parameter.</summary>
+    /// <remarks>The pValue is considered valid if it is between the upper and lower 
     /// bound of the parameter. The message is used to return the reason that 
-    /// the parameter is invalid.
-    /// </remarks>
-    /// <returns>
-    /// True if the parameter is valid, false if not valid.
-    /// </returns>
-    /// <param name = "value">The name of the unit that the value should be converted to.</param>
-    /// <param name = "message">Reference to a string that will conain a message regarding the validation of the parameter.</param>
+    /// the parameter is invalid.</remarks>
+    /// <returns>True if the parameter is valid, false if not valid.</returns>
+    /// <param name = "pValue">The name of the unit that the pValue should be converted to.</param>
+    /// <param name = "message">Reference to a string that will contain a message regarding the validation of the parameter.</param>
     /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
-    /// <exception cref = "ECapeInvalidArgument">To be used when an invalid argument value is passed, for example, an unrecognised Compound identifier or UNDEFINED for the props argument.</exception>
-    bool ICapeRealParameterSpecCOM.Validate(double value, ref String message)
+    /// <exception cref = "ECapeInvalidArgument">To be used when an invalid argument pValue is passed, for example, an unrecognised Compound identifier or UNDEFINED for the props' argument.</exception>
+    bool ICapeRealParameterSpecCOM.Validate(double pValue, ref string message)
     {
-        return this.SIValidate(value, ref message);
+        return SIValidate(pValue, ref message);
     }
         
-    /// <summary>
-    /// Returns the current value of the parameter in the dimensional unit
-    /// specified.
-    /// </summary>
-    /// <remarks>
-    /// The value of the parameter in the unit requested. The unit must be a valid
+    /// <summary>Returns the current value of the parameter in the dimensional unit
+    /// specified.</summary>
+    /// <remarks>The value of the parameter in the unit requested. The unit must be a valid
     /// parameter. For example, if the parameter was set as 101325 Pa, if the desiredUnit was "atm" the return
-    /// value would be 1 (the value of 101325 Pa in atmospheres).
-    /// </remarks>
+    /// value would be 1 (the value of 101325 Pa in atmospheres).</remarks>
     /// <returns>The value of the parameter in the requested unit of measurement.</returns>
     /// <param name = "desiredUnit">The unit that the parameter is desired to be reported in.</param>
     /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
     /// <exception cref = "ECapeInvalidArgument">To be used when an invalid argument value is passed, for example, an unrecognised unit identifier.</exception>
-    public double ConvertTo(String desiredUnit)
+    public double ConvertTo(string desiredUnit)
     {
-        bool bUnitExisting = false;
-        double Factor1 = 1;
-        double Factor2 = 0;
-        double retVal = m_value;
-        if ((desiredUnit != null) || (desiredUnit == String.Empty))
+        var bUnitExisting = false;
+        double pFactor = 1;
+        double mFactor = 0;
+        var retVal = _mValue;
+        // if ((desiredUnit != null) || (desiredUnit == String.Empty))
+        if (desiredUnit is not null or "")
         {
-            String[] units = CapeOpen.CDimensions.Units;
-            for (int i = 0; i < units.Length; i++)
+            var units = CDimensions.Units;
+            if (units.Any(mt => mt == desiredUnit))
             {
-                if (units[i] == desiredUnit)
-                {
-                    Factor1 = CapeOpen.CDimensions.ConversionsTimes(desiredUnit);
-                    Factor2 = CapeOpen.CDimensions.ConversionsPlus(desiredUnit);
-                    bUnitExisting = true;
-                    break;
-                }
+                pFactor = CDimensions.ConversionsTimes(desiredUnit);
+                mFactor = CDimensions.ConversionsPlus(desiredUnit);
+                bUnitExisting = true;
             }
         }
         if (!bUnitExisting)
-            System.Windows.Forms.MessageBox.Show("There is no unit named" + desiredUnit, "Unit Warning!");
+            MessageBox.Show("There is no unit named" + desiredUnit, "Unit Warning!");
         else
         {
-            retVal = (Convert.ToDouble(retVal) - Factor2) / Factor1;
-            m_unit = desiredUnit;
+            retVal = (Convert.ToDouble(retVal) - mFactor) / pFactor;
+            _mUnit = desiredUnit;
         }
         return retVal;
     }
 
-    /// <summary>
-    /// Returns the value in the SI unit of the specified unit.
-    /// </summary>
-    /// <remarks>
-    /// The value is returned in the SI units for the dimensionality of the 
+    /// <summary>Returns the pValue in the SI unit of the specified unit.</summary>
+    /// <remarks>The pValue is returned in the SI units for the dimensionality of the 
     /// parameter. For example, if the parameter was set as 1 atm, the return
-    /// value would be 101325 (the value of 1 atm in the SI pressure 
-    /// unit of Pascals, Pa).
-    /// </remarks>
-    /// <returns>The value of the parameter in SI units.</returns>
-    /// <param name = "value">Reference to a string that will conain a message regarding the validation of the parameter.</param>
-    /// <param name = "unit">Reference to a string that will conain a message regarding the validation of the parameter.</param>
+    /// pValue would be 101325 (the pValue of 1 atm in the SI pressure 
+    /// unit of Pascals, Pa).</remarks>
+    /// <returns>The pValue of the parameter in SI units.</returns>
+    /// <param name = "pValue">Reference to a string that will contain a message regarding the validation of the parameter.</param>
+    /// <param name = "unit">Reference to a string that will contain a message regarding the validation of the parameter.</param>
     /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
-    /// <exception cref = "ECapeInvalidArgument">To be used when an invalid argument value is passed, for example, an unrecognised unit identifier.</exception>
-    public double ConvertToSI(double value, String unit)
+    /// <exception cref = "ECapeInvalidArgument">To be used when an invalid argument pValue is passed, for example, an unrecognised unit identifier.</exception>
+    public double ConvertToSI(double pValue, string unit)
     {
-        bool bUnitExisting = false;
-        double Factor1 = 1;
-        double Factor2 = 0;
-        double retVal = value;
-        if ((unit != null) || (unit == String.Empty))
+        var bUnitExisting = false;
+        double pFactor = 1;
+        double mFactor = 0;
+        var retVal = pValue;
+        // if (unit != null || unit == string.Empty)
+        if (unit is not null or "")
         {
-            String[] units = CapeOpen.CDimensions.Units;
-            for (int i = 0; i < units.Length; i++)
+            var units = CDimensions.Units;
+            if (units.Any(mt => mt == unit))
             {
-                if (units[i] == unit)
-                {
-                    Factor1 = CapeOpen.CDimensions.ConversionsTimes(unit);
-                    Factor2 = CapeOpen.CDimensions.ConversionsPlus(unit);
-                    bUnitExisting = true;
-                    break;
-                }
+                pFactor = CDimensions.ConversionsTimes(unit);
+                mFactor = CDimensions.ConversionsPlus(unit);
+                bUnitExisting = true;
             }
         }
         if (!bUnitExisting)
-            System.Windows.Forms.MessageBox.Show("There is no unit named" + unit, "Unit Warning!");
+            MessageBox.Show("There is no unit named" + unit, "Unit Warning!");
         else
         {
-            retVal = (retVal * Factor1) + Factor2;
+            retVal = retVal * pFactor + mFactor;
         }
         return retVal;
     }
 
-
-    /// <summary>
-    /// Gets and sets the dimensional unit for the parameter.
-    /// </summary>
-    /// <remarks>
-    /// The value is returned in the SI units for the dimensionality of the 
+    /// <summary>Gets and sets the dimensional unit for the parameter.</summary>
+    /// <remarks>The value is returned in the SI units for the dimensionality of the 
     /// parameter. For example, if the parameter was set as 1 atm, the return
     /// value would be 101325 (the value of 1 atm in the SI pressure 
-    /// unit of Pascals, Pa).
-    /// </remarks>
+    /// unit of Pascals, Pa).</remarks>
     /// <value>The value of the parameter in SI units.</value>
     /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
     /// <exception cref = "ECapeInvalidArgument">To be used when an invalid argument value is passed, for example, an unrecognised unit identifier.</exception>
-    [System.ComponentModel.Browsable(true)]
-    [System.ComponentModel.Category("Value")]
-    [System.ComponentModel.TypeConverter(typeof(UnitConverter))]
-    [System.ComponentModel.DescriptionAttribute("Dimensional unit of the parameter.")]
-    public String Unit
+    [Browsable(true),Category("Value")]
+    [TypeConverter(typeof(UnitConverter))]
+    [Description("Dimensional unit of the parameter.")]
+    public string Unit
     {
-        get
-        {
-            return m_unit;
-        }
-
-        set
-        {
-            m_unit = value;
+        get => _mUnit;
+        set {
+            _mUnit = value;
             //m_Category = CapeOpen.CDimensions.UnitCategory(m_unit); 
-            this.NotifyPropertyChanged("Unit");
+            NotifyPropertyChanged(nameof(Unit));
         }
     }
 
-    /// <summary>
-    /// Occurs when the user changes of the lower bound of the parameter changes.
-    /// </summary>
+    /// <summary>Occurs when the user changes of the lower bound of the parameter changes.</summary>
     public event ParameterLowerBoundChangedHandler ParameterLowerBoundChanged;
-    /// <summary>
-    /// Occurs when the user changes of the lower bound of a parameter.
-    /// </summary>
+    
+    /// <summary>Occurs when the user changes of the lower bound of a parameter.</summary>
     /// <remarks><para>Raising an event invokes the event handler through a delegate.</para>
     /// <para>The <c>OnComponentNameChanged</c> method also allows derived classes to handle the event without attaching a delegate. This is the preferred 
     /// technique for handling the event in a derived class.</para>
     /// <para>Notes to Inheritors: </para>
     /// <para>When overriding <c>OnComponentNameChanged</c> in a derived class, be sure to call the base class's <c>OnComponentNameChanged</c> method so that registered 
-    /// delegates receive the event.</para>
-    /// </remarks>
+    /// delegates receive the event.</para></remarks>
     /// <param name = "args">A <see cref = "ParameterValueChangedEventArgs">ParameterValueChangedEventArgs</see> that contains information about the event.</param>
     protected void OnParameterLowerBoundChanged(ParameterLowerBoundChangedEventArgs args)
     {
-        if (ParameterLowerBoundChanged != null)
-        {
-            ParameterLowerBoundChanged(this, args);
-        }
+        ParameterLowerBoundChanged?.Invoke(this, args);
     }
 
-    /// <summary>
-    /// Occurs when the user changes of the upper bound of the parameter changes.
-    /// </summary>
+    /// <summary>Occurs when the user changes of the upper bound of the parameter changes.</summary>
     public event ParameterUpperBoundChangedHandler ParameterUpperBoundChanged;
-    /// <summary>
-    /// Occurs when the user changes of the upper bound of a parameter.
-    /// </summary>
+    
+    /// <summary>Occurs when the user changes of the upper bound of a parameter.</summary>
     /// <remarks><para>Raising an event invokes the event handler through a delegate.</para>
     /// <para>The <c>OnParameterUpperBoundChanged</c> method also allows derived classes to handle the event without attaching a delegate. This is the preferred 
     /// technique for handling the event in a derived class.</para>
     /// <para>Notes to Inheritors: </para>
     /// <para>When overriding <c>OnParameterUpperBoundChanged</c> in a derived class, be sure to call the base class's <c>OnParameterUpperBoundChanged</c> method so that registered 
-    /// delegates receive the event.</para>
-    /// </remarks>
+    /// delegates receive the event.</para></remarks>
     /// <param name = "args">A <see cref = "ParameterLowerBoundChangedEventArgs">ParameterUpperBoundChangedEventArgs</see> that contains information about the event.</param>
     protected void OnParameterUpperBoundChanged(ParameterUpperBoundChangedEventArgs args)
     {
-        if (ParameterUpperBoundChanged != null)
-        {
-            ParameterUpperBoundChanged(this, args);
-        }
+        ParameterUpperBoundChanged?.Invoke(this, args);
     }
 
-
-    /// <summary>
-    /// Gets and sets the parameter value in the SI unit for its current dimensionality.
-    /// </summary>
-    /// <remarks>
-    /// The value is returned in the SI units for the dimensionality of the 
+    /// <summary>Gets and sets the parameter value in the SI unit for its current dimensionality.</summary>
+    /// <remarks>The value is returned in the SI units for the dimensionality of the 
     /// parameter. For example, if the parameter was set as 1 atm, the return
     /// value would be 101325 (the value of 1 atm in the SI pressure 
-    /// unit of Pascals, Pa).
-    /// </remarks>
+    /// unit of Pascals, Pa).</remarks>
     /// <value>The value of the parameter in SI units.</value>
     /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
     /// <exception cref = "ECapeInvalidArgument">To be used when an invalid argument value is passed.</exception>
-    [System.ComponentModel.Browsable(true)]
-    [System.ComponentModel.Category("Value")]
+    [Browsable(true),Category("Value")]
     public double SIValue
     {
-        get
-        {
-            return m_value;
-        }
-
-        set
-        {
-            string message = string.Empty;
-            if (this.SIValidate(value, ref message))
-            {
-                ParameterValueChangedEventArgs args = new ParameterValueChangedEventArgs(this.ComponentName, m_value, value);
-                OnParameterValueChanged(args);
-                m_value = value;
-                this.NotifyPropertyChanged("Value");
-            }
+        get => _mValue;
+        set {
+            var message = string.Empty;
+            if (!SIValidate(value, ref message)) return;
+            var args = new ParameterValueChangedEventArgs(ComponentName, _mValue, value);
+            OnParameterValueChanged(args);
+            _mValue = value;
+            NotifyPropertyChanged("Value");
         }
     }
 
-    /// <summary>
-    /// Gets and sets the parameter value in the current unit for its dimensionality.
-    /// </summary>
-    /// <remarks>
-    /// The value is returned in the parameter's current unit. For example, if the 
+    /// <summary>Gets and sets the parameter value in the current unit for its dimensionality.</summary>
+    /// <remarks>The value is returned in the parameter's current unit. For example, if the 
     /// parameter was set as 101325 Pa and the unit was changed to atm, 
-    /// the return value would be 1 (the value of 101325 Pa in atmospheres).
-    /// </remarks>
+    /// the return value would be 1 (the value of 101325 Pa in atmospheres).</remarks>
     /// <value>The value of the parameter in the current unit.</value>
     /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
-    /// <exception cref = "ECapeInvalidArgument">To be used when an invalid argument value is passed, for example, an unrecognised Compound identifier or UNDEFINED for the props argument.</exception>
-    [System.ComponentModel.Browsable(true)]
-    [System.ComponentModel.Category("Value")]
+    /// <exception cref = "ECapeInvalidArgument">To be used when an invalid argument value is passed, for example, an unrecognised Compound identifier or UNDEFINED for the props' argument.</exception>
+    [Browsable(true),Category("Value")]
     public double DimensionedValue
     {
-        get
-        {
-            return ConvertTo(this.Unit);
-        }
-
+        get => ConvertTo(Unit);
         set
         {
-            double newValue = this.ConvertToSI(value, this.Unit);
-            ParameterValueChangedEventArgs args = new ParameterValueChangedEventArgs(this.ComponentName, m_value, newValue);
-            string message = string.Empty;
-            if (this.DimensionedValidate((double)value, ref message))
+            var newValue = ConvertToSI(value, Unit);
+            var args = new ParameterValueChangedEventArgs(ComponentName, _mValue, newValue);
+            var message = string.Empty;
+            if (DimensionedValidate(value, ref message))
             {
-                m_value = newValue;
-                this.NotifyPropertyChanged("Value");
+                _mValue = newValue;
+                NotifyPropertyChanged("Value");
                 OnParameterValueChanged(args);
             }
             else
@@ -578,423 +440,322 @@ public class RealParameter : CapeParameter,
         }
     }
 
-    /// <summary>
-    /// Validates the current value of the parameter against the 
-    /// specification of the parameter. 
-    /// </summary>
-    /// <remarks>
-    /// The parameter is considered valid if the current value is 
+    /// <summary>Validates the current value of the parameter against the 
+    /// specification of the parameter. </summary>
+    /// <remarks>The parameter is considered valid if the current value is 
     /// between the upper and lower bound. The message is used to 
     /// return the reason that the parameter is invalid. This function also
     /// sets the CapeValidationStatus of the parameter based upon the results
-    /// of the validation.
-    /// </remarks>
-    /// <returns>
-    /// True if the parameter is valid, false if not valid.
-    /// </returns>
-    /// <param name = "message">Reference to a string that will conain a message regarding the validation of the parameter.</param>
+    /// of the validation.</remarks>
+    /// <returns>True if the parameter is valid, false if not valid.</returns>
+    /// <param name = "message">Reference to a string that will contain a message regarding the validation of the parameter.</param>
     /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
-    /// <exception cref = "ECapeInvalidArgument">To be used when an invalid argument value is passed, for example, an unrecognised Compound identifier or UNDEFINED for the props argument.</exception>
-    public override bool Validate(ref String message)
+    /// <exception cref = "ECapeInvalidArgument">To be used when an invalid argument value is passed, for example, an unrecognised Compound identifier or UNDEFINED for the props' argument.</exception>
+    public override bool Validate(ref string message)
     {
         message = "Value is valid.";
-        ParameterValidatedEventArgs args = new ParameterValidatedEventArgs(this.ComponentName, message, MValStatus, CapeValidationStatus.CAPE_VALID);            
-        bool retval = true;
-        if (m_value < m_LowerBound)
+        var args = new ParameterValidatedEventArgs(ComponentName, message, MValStatus, 
+            CapeValidationStatus.CAPE_VALID);            
+        var retVal = true;
+        if (_mValue < _mLowerBound)
         {
             message = "Value below the Lower Bound.";
-            args = new ParameterValidatedEventArgs(this.ComponentName, message, MValStatus, CapeValidationStatus.CAPE_INVALID);
+            args = new ParameterValidatedEventArgs(ComponentName, message, MValStatus, 
+                CapeValidationStatus.CAPE_INVALID);
             MValStatus = CapeValidationStatus.CAPE_INVALID;
-            this.NotifyPropertyChanged("ValStatus");
+            NotifyPropertyChanged("ValStatus");
             OnParameterValidated(args);
-            retval = false;
+            retVal = false;
         }
-        if (m_value > m_UpperBound)
+        if (_mValue > _mUpperBound)
         {
             message = "Value greater than upper bound.";
-            args = new ParameterValidatedEventArgs(this.ComponentName, message, MValStatus, CapeValidationStatus.CAPE_INVALID);
+            args = new ParameterValidatedEventArgs(ComponentName, message, MValStatus, 
+                CapeValidationStatus.CAPE_INVALID);
             MValStatus = CapeValidationStatus.CAPE_INVALID;
-            this.NotifyPropertyChanged("ValStatus");
+            NotifyPropertyChanged("ValStatus");
             OnParameterValidated(args);
-            retval = false;
+            retVal = false;
         }
         OnParameterValidated(args);
         MValStatus = CapeValidationStatus.CAPE_VALID;
-        this.NotifyPropertyChanged("ValStatus");
-        return retval;
+        NotifyPropertyChanged("ValStatus");
+        return retVal;
     }
 
-    /// <summary>
-    /// Sets the value of the parameter to its default value.
-    /// </summary>
-    /// <remarks>
-    ///  This method sets the parameter's value to the default value.
-    /// </remarks>
+    /// <summary>Sets the value of the parameter to its default value.</summary>
+    /// <remarks> This method sets the parameter's value to the default value.</remarks>
     /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
     public override void Reset()
     {
-        ParameterResetEventArgs args = new ParameterResetEventArgs(this.ComponentName);
-        m_value = m_DefaultValue;
-        this.NotifyPropertyChanged("Value");
+        var args = new ParameterResetEventArgs(ComponentName);
+        _mValue = _mDefaultValue;
+        NotifyPropertyChanged("Value");
         OnParameterReset(args);
     }
 
     // ICapeParameterSpec
-    // ICapeParameterSpec
-    /// <summary>
-    /// Gets the type of the parameter. 
-    /// </summary>
-    /// <remarks>
-    /// Gets the <see cref = "CapeParamType"/> of the parameter for which this is a specification: real 
+    /// <summary>Gets the type of the parameter. </summary>
+    /// <remarks>Gets the <see cref = "CapeParamType"/> of the parameter for which this is a specification: real 
     /// (CAPE_REAL), integer(CAPE_INT), option(CAPE_OPTION), boolean(CAPE_BOOLEAN) 
-    /// or array(CAPE_ARRAY).
-    /// </remarks>
+    /// or array(CAPE_ARRAY).</remarks>
     /// <value>The parameter type. </value>
     /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
     /// <exception cref = "ECapeInvalidArgument">To be used when an invalid argument value is passed.</exception>
-    [System.ComponentModel.Browsable(false)]
-    [System.ComponentModel.Category("ICapeParameterSpec")]
-    public override CapeParamType Type
-    {
-        get
-        {
-            return CapeParamType.CAPE_REAL;
-        }
-    }
+    [Browsable(false),Category("ICapeParameterSpec")]
+    public override CapeParamType Type => CapeParamType.CAPE_REAL;
 
     //ICapeRealParameterSpec
-
-    /// <summary>
-    /// Gets and sets the default value of the parameter.
-    /// </summary>
-    /// <remarks>
-    /// The default value is the value that the specification is set to after
-    /// the Reset() method is called.
-    /// </remarks>
+    /// <summary>Gets and sets the default value of the parameter.</summary>
+    /// <remarks>The default value is the value that the specification is set to after
+    /// the Reset() method is called.</remarks>
     /// <value>The parameter type. </value>
     /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
     /// <exception cref = "ECapeInvalidArgument">To be used when an invalid argument value is passed.</exception>
-    [System.ComponentModel.BrowsableAttribute(false)]
-    double ICapeRealParameterSpecCOM.DefaultValue
-    {
-        get
-        {
-            return this.m_DefaultValue;
-        }
-    }
+    [Browsable(false)]
+    double ICapeRealParameterSpecCOM.DefaultValue => _mDefaultValue;
 
-    /// <summary>
-    /// Gets and sets the default value of the parameter.
-    /// </summary>
-    /// <remarks>
-    /// The default value is the value that the specification is set to after
-    /// the Reset() method is called.
-    /// </remarks>
+    /// <summary>Gets and sets the default value of the parameter.</summary>
+    /// <remarks>The default value is the value that the specification is set to after
+    /// the Reset() method is called.</remarks>
     /// <value>The parameter type. </value>
     /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
     /// <exception cref = "ECapeInvalidArgument">To be used when an invalid argument value is passed.</exception>
-    [System.ComponentModel.Category("Parameter Specification")]
+    [Category("Parameter Specification")]
     public double DimensionedDefaultValue
     {
-        get
-        {
-            bool bUnitExisting = false;
-            double Factor1 = 1;
-            double Factor2 = 0;
-            double retVal = m_DefaultValue;
-            String[] units = CapeOpen.CDimensions.Units;
-            for (int i = 0; i < units.Length; i++)
+        get {
+            var bUnitExisting = false;
+            double pFactor = 1;
+            double mFactor = 0;
+            var retVal = _mDefaultValue;
+            var units = CDimensions.Units;
+            if (units.Any(mt => mt == Unit))
             {
-                if (units[i] == this.Unit)
-                {
-                    Factor1 = CapeOpen.CDimensions.ConversionsTimes(this.Unit);
-                    Factor2 = CapeOpen.CDimensions.ConversionsPlus(this.Unit);
-                    bUnitExisting = true;
-                    break;
-                }
+                pFactor = CDimensions.ConversionsTimes(Unit);
+                mFactor = CDimensions.ConversionsPlus(Unit);
+                bUnitExisting = true;
             }
-            retVal = (Convert.ToDouble(retVal) - Factor2) / Factor1;
+            retVal = (Convert.ToDouble(retVal) - mFactor) / pFactor;
             if (!bUnitExisting)
-                System.Windows.Forms.MessageBox.Show("There is no unit named" + this.Unit, "Unit Warning!");
+                MessageBox.Show("There is no unit named" + Unit, "Unit Warning!");
             return retVal;
         }
         set
         {
-            ParameterDefaultValueChangedEventArgs args = new ParameterDefaultValueChangedEventArgs(this.ComponentName, m_DefaultValue, this.ConvertToSI(value, this.Unit));
-            m_DefaultValue = this.ConvertToSI(value, this.Unit);
-            this.NotifyPropertyChanged("DefaultValue");
+            ParameterDefaultValueChangedEventArgs args = new ParameterDefaultValueChangedEventArgs(ComponentName, _mDefaultValue, ConvertToSI(value, Unit));
+            _mDefaultValue = ConvertToSI(value, Unit);
+            NotifyPropertyChanged("DefaultValue");
             OnParameterDefaultValueChanged(args);
         }
     }
 
-    /// <summary>
-    /// Gets and sets the lower bound of the parameter. 
-    /// </summary>
-    /// <remarks>
-    /// The lower bound can be a valid double precision value. 
-    /// By default, it is set to Double.MinValue, negative 1.79769313486232e308.
-    /// </remarks>			
+    /// <summary>Gets and sets the lower bound of the parameter. </summary>
+    /// <remarks>The lower bound can be a valid double precision value. 
+    /// By default, it is set to Double.MinValue, negative 1.79769313486232e308.</remarks>			
     /// <value>The parameter type. </value>
     /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
     /// <exception cref = "ECapeInvalidArgument">To be used when an invalid argument value is passed.</exception>
-    [System.ComponentModel.Category("Parameter Specification")]
+    [Category("Parameter Specification")]
     public double DimensionedLowerBound
     {
         get
         {
-            if (m_LowerBound == Double.MinValue) return Double.MinValue;
-            bool bUnitExisting = false;
-            double Factor1 = 1;
-            double Factor2 = 0;
-            double retVal = m_LowerBound;
-            String[] units = CapeOpen.CDimensions.Units;
-            for (int i = 0; i < units.Length; i++)
+            if (_mLowerBound == double.MinValue) return double.MinValue;
+            var bUnitExisting = false;
+            double pFactor = 1;
+            double mFactor = 0;
+            var retVal = _mLowerBound;
+            var units = CDimensions.Units;
+            if (units.Any(t => t == Unit))
             {
-                if (units[i] == this.Unit)
-                {
-                    Factor1 = CapeOpen.CDimensions.ConversionsTimes(this.Unit);
-                    Factor2 = CapeOpen.CDimensions.ConversionsPlus(this.Unit);
-                    bUnitExisting = true;
-                    break;
-                }
+                pFactor = CDimensions.ConversionsTimes(Unit);
+                mFactor = CDimensions.ConversionsPlus(Unit);
+                bUnitExisting = true;
             }
-            retVal = (Convert.ToDouble(retVal) - Factor2) / Factor1;
+            retVal = (Convert.ToDouble(retVal) - mFactor) / pFactor;
             if (!bUnitExisting)
-                System.Windows.Forms.MessageBox.Show("There is no unit named" + this.Unit, "Unit Warning!");
+                MessageBox.Show("There is no unit named" + Unit, "Unit Warning!");
             return retVal;
         }
         set
         {
             ParameterLowerBoundChangedEventArgs args;
-            if (value == Double.MinValue)
+            if (value == double.MinValue)
             {
-                args = new ParameterLowerBoundChangedEventArgs(this.ComponentName, m_UpperBound, Double.MinValue);
-                m_LowerBound = Double.MaxValue;
-                this.NotifyPropertyChanged("LowerBound");
+                args = new ParameterLowerBoundChangedEventArgs(ComponentName, _mUpperBound, double.MinValue);
+                _mLowerBound = double.MaxValue;
+                NotifyPropertyChanged("LowerBound");
                 OnParameterLowerBoundChanged(args);
                 return;
             }
-            args = new ParameterLowerBoundChangedEventArgs(this.ComponentName, m_UpperBound, this.ConvertToSI(value, this.Unit));
-            m_LowerBound = this.ConvertToSI(value, this.Unit);
-            this.NotifyPropertyChanged("LowerBound");
+            args = new ParameterLowerBoundChangedEventArgs(ComponentName, _mUpperBound, ConvertToSI(value, Unit));
+            _mLowerBound = ConvertToSI(value, Unit);
+            NotifyPropertyChanged("LowerBound");
             OnParameterLowerBoundChanged(args);
         }
     }
 
-    /// <summary>
-    /// Gets and sets the default value of the parameter.
-    /// </summary>
-    /// <remarks>
-    /// The default value is the value that the specification is set to after
-    /// the Reset() method is called.
-    /// </remarks>
+    /// <summary>Gets and sets the default value of the parameter.</summary>
+    /// <remarks>The default value is the value that the specification is set to after
+    /// the Reset() method is called.</remarks>
     /// <value>The parameter type. </value>
     /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
     /// <exception cref = "ECapeInvalidArgument">To be used when an invalid argument value is passed.</exception>
-    [System.ComponentModel.Category("Parameter Specification")]
+    [Category("Parameter Specification")]
     public double SIDefaultValue
     {
-        get
-        {
-            return m_DefaultValue;
-        }
+        get => _mDefaultValue;
         set
         {
-            ParameterDefaultValueChangedEventArgs args = new ParameterDefaultValueChangedEventArgs(this.ComponentName, m_DefaultValue, this.ConvertToSI(value, this.Unit));
-            m_DefaultValue = this.ConvertToSI(value, this.SIUnit);
-            this.NotifyPropertyChanged("DefaultValue");
+            var args = new ParameterDefaultValueChangedEventArgs(ComponentName, _mDefaultValue, 
+                ConvertToSI(value, Unit));
+            _mDefaultValue = ConvertToSI(value, SIUnit);
+            NotifyPropertyChanged("DefaultValue");
             OnParameterDefaultValueChanged(args);
         }
     }
 
-    /// <summary>
-    /// Gets and sets the lower bound of the parameter. 
-    /// </summary>
-    /// <remarks>
-    /// The lower bound can be a valid double precision value. 
-    /// By default, it is set to Double.MinValue, negative 1.79769313486232e308.
-    /// </remarks>			
+    /// <summary>Gets and sets the lower bound of the parameter. </summary>
+    /// <remarks>The lower bound can be a valid double precision value. 
+    /// By default, it is set to Double.MinValue, negative 1.79769313486232e308.</remarks>			
     /// <value>The parameter type. </value>
     /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
     /// <exception cref = "ECapeInvalidArgument">To be used when an invalid argument value is passed.</exception>
-    [System.ComponentModel.Category("Parameter Specification")]
+    [Category("Parameter Specification")]
     public double SILowerBound
     {
-        get
-        {                
-            return m_LowerBound;
-        }
+        get => _mLowerBound;
         set
         {
             ParameterLowerBoundChangedEventArgs args;
-            if (value == Double.MinValue)
+            if (value == double.MinValue)
             {
-                args = new ParameterLowerBoundChangedEventArgs(this.ComponentName, m_UpperBound, Double.MinValue);
-                m_LowerBound = Double.MaxValue;
-                this.NotifyPropertyChanged("LowerBound");
+                args = new ParameterLowerBoundChangedEventArgs(ComponentName, _mUpperBound, double.MinValue);
+                _mLowerBound = double.MaxValue;
+                NotifyPropertyChanged("LowerBound");
                 OnParameterLowerBoundChanged(args);
                 return;
             }
-            args = new ParameterLowerBoundChangedEventArgs(this.ComponentName, m_UpperBound, value);
-            m_LowerBound = this.ConvertToSI(value, this.SIUnit);
-            this.NotifyPropertyChanged("LowerBound");
+            args = new ParameterLowerBoundChangedEventArgs(ComponentName, _mUpperBound, value);
+            _mLowerBound = ConvertToSI(value, SIUnit);
+            NotifyPropertyChanged("LowerBound");
             OnParameterLowerBoundChanged(args);
         }
     }
 
-    /// <summary>
-    /// Gets and sets the lower bound of the parameter. 
-    /// </summary>
-    /// <remarks>
-    /// The lower bound can be a valid double precision value. 
+    /// <summary>Gets and sets the lower bound of the parameter. </summary>
+    /// <remarks>The lower bound can be a valid double precision value. 
     /// By default, it is set to Double.MaxValue, 
-    /// 1.79769313486232e308.
-    /// </remarks>			
+    /// 1.79769313486232e308.</remarks>			
     /// <value>The upper bound for the parameter. </value>
     /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
-    /// <exception cref = "ECapeInvalidArgument">To be used when an invalid argument value is passed, for example, an unrecognised Compound identifier or UNDEFINED for the props argument.</exception>
-    [System.ComponentModel.BrowsableAttribute(false)]
-    double ICapeRealParameterSpecCOM.LowerBound
-    {
-        get
-        {
-            return this.m_LowerBound;
-        }
-    }
+    /// <exception cref = "ECapeInvalidArgument">To be used when an invalid argument value is passed, for example, an unrecognised Compound identifier or UNDEFINED for the props' argument.</exception>
+    [Browsable(false)]
+    double ICapeRealParameterSpecCOM.LowerBound => _mLowerBound;
 
-    /// <summary>
-    /// Gets and sets the upper bound of the parameter. 
-    /// </summary>
-    /// <remarks>
-    /// The lower bound can be a valid double precision value. 
+    /// <summary>Gets and sets the upper bound of the parameter. </summary>
+    /// <remarks>The lower bound can be a valid double precision value. 
     /// By default, it is set to Double.MaxValue, 
-    /// 1.79769313486232e308.
-    /// </remarks>			
+    /// 1.79769313486232e308.</remarks>			
     /// <value>The upper bound for the parameter. </value>
     /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
-    /// <exception cref = "ECapeInvalidArgument">To be used when an invalid argument value is passed, for example, an unrecognised Compound identifier or UNDEFINED for the props argument.</exception>
-    [System.ComponentModel.Category("Parameter Specification")]
+    /// <exception cref = "ECapeInvalidArgument">To be used when an invalid argument value is passed, for example, an unrecognised Compound identifier or UNDEFINED for the props' argument.</exception>
+    [Category("Parameter Specification")]
     public double DimensionedUpperBound
     {
         get
         {
-            bool bUnitExisting = false;
-            double Factor1 = 1;
-            double Factor2 = 0;
-            double retVal = m_UpperBound;
-            String[] units = CapeOpen.CDimensions.Units;
-            for (int i = 0; i < units.Length; i++)
+            var bUnitExisting = false;
+            double pFactor = 1;
+            double mFactor = 0;
+            var retVal = _mUpperBound;
+            var units = CDimensions.Units;
+            if (units.Any(t => t == Unit))
             {
-                if (units[i] == this.Unit)
-                {
-                    Factor1 = CapeOpen.CDimensions.ConversionsTimes(this.Unit);
-                    Factor2 = CapeOpen.CDimensions.ConversionsPlus(this.Unit);
-                    bUnitExisting = true;
-                    break;
-                }
+                pFactor = CDimensions.ConversionsTimes(Unit);
+                mFactor = CDimensions.ConversionsPlus(Unit);
+                bUnitExisting = true;
             }
-            retVal = (Convert.ToDouble(retVal) - Factor2) / Factor1;
+            retVal = (Convert.ToDouble(retVal) - mFactor) / pFactor;
             if (!bUnitExisting)
-                System.Windows.Forms.MessageBox.Show("There is no unit named" + this.Unit, "Unit Warning!");
+                MessageBox.Show("There is no unit named" + Unit, "Unit Warning!");
             return retVal;
-
         }
         set
         {
             ParameterUpperBoundChangedEventArgs args;
-            if (value == Double.MaxValue)
+            if (value == double.MaxValue)
             {
-                args = new ParameterUpperBoundChangedEventArgs(this.ComponentName, m_UpperBound, Double.MaxValue);
-                m_UpperBound = Double.MaxValue;
-                this.NotifyPropertyChanged("UpperBound");
+                args = new ParameterUpperBoundChangedEventArgs(ComponentName, _mUpperBound, double.MaxValue);
+                _mUpperBound = double.MaxValue;
+                NotifyPropertyChanged("UpperBound");
                 OnParameterUpperBoundChanged(args);
                 return;
             }
-            args = new ParameterUpperBoundChangedEventArgs(this.ComponentName, m_UpperBound, this.ConvertToSI(value, this.Unit));
-            m_UpperBound = this.ConvertToSI(value, this.Unit);
-            this.NotifyPropertyChanged("UpperBound");
+            args = new ParameterUpperBoundChangedEventArgs(ComponentName, _mUpperBound, ConvertToSI(value, Unit));
+            _mUpperBound = ConvertToSI(value, Unit);
+            NotifyPropertyChanged("UpperBound");
             OnParameterUpperBoundChanged(args);
         }
     }
-    /// <summary>
-    /// Gets and sets the upper bound of the parameter. 
-    /// </summary>
-    /// <remarks>
-    /// The lower bound can be a valid double precision value. 
+    
+    /// <summary>Gets and sets the upper bound of the parameter. </summary>
+    /// <remarks>The lower bound can be a valid double precision value. 
     /// By default, it is set to Double.MaxValue, 
-    /// 1.79769313486232e308.
-    /// </remarks>			
+    /// 1.79769313486232e308.</remarks>			
     /// <value>The upper bound for the parameter. </value>
     /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
-    /// <exception cref = "ECapeInvalidArgument">To be used when an invalid argument value is passed, for example, an unrecognised Compound identifier or UNDEFINED for the props argument.</exception>
-    [System.ComponentModel.Category("Parameter Specification")]
+    /// <exception cref = "ECapeInvalidArgument">To be used when an invalid argument value is passed, for example, an unrecognised Compound identifier or UNDEFINED for the props' argument.</exception>
+    [Category("Parameter Specification")]
     public double SIUpperBound
     {
-        get
-        {                
-            return m_UpperBound;
-        }
+        get => _mUpperBound;
         set
         {
             ParameterUpperBoundChangedEventArgs args;
-            if (value == Double.MaxValue)
+            if (value == double.MaxValue)
             {
-                args = new ParameterUpperBoundChangedEventArgs(this.ComponentName, m_UpperBound, Double.MaxValue);
-                m_UpperBound = Double.MaxValue;
-                this.NotifyPropertyChanged("UpperBound");
+                args = new ParameterUpperBoundChangedEventArgs(ComponentName, _mUpperBound, double.MaxValue);
+                _mUpperBound = double.MaxValue;
+                NotifyPropertyChanged("UpperBound");
                 OnParameterUpperBoundChanged(args);
                 return;
             }
-            args = new ParameterUpperBoundChangedEventArgs(this.ComponentName, m_UpperBound, value);
-            m_UpperBound = value;
-            this.NotifyPropertyChanged("UpperBound");
+            args = new ParameterUpperBoundChangedEventArgs(ComponentName, _mUpperBound, value);
+            _mUpperBound = value;
+            NotifyPropertyChanged("UpperBound");
             OnParameterUpperBoundChanged(args);
         }
     }
 
-    /// <summary>
-    /// Gets and sets the upper bound of the parameter. 
-    /// </summary>
-    /// <remarks>
-    /// The lower bound can be a valid double precision value. 
+    /// <summary>Gets and sets the upper bound of the parameter. </summary>
+    /// <remarks>The lower bound can be a valid double precision value. 
     /// By default, it is set to Double.MaxValue, 
-    /// 1.79769313486232e308.
-    /// </remarks>			
+    /// 1.79769313486232e308.</remarks>			
     /// <value>The upper bound for the parameter. </value>
     /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
-    /// <exception cref = "ECapeInvalidArgument">To be used when an invalid argument value is passed, for example, an unrecognised Compound identifier or UNDEFINED for the props argument.</exception>
-    [System.ComponentModel.BrowsableAttribute(false)]
-    double ICapeRealParameterSpecCOM.UpperBound
-    {
-        get
-        {
-            return this.m_UpperBound;
-        }
-    }
+    /// <exception cref = "ECapeInvalidArgument">To be used when an invalid argument value is passed, for example, an unrecognised Compound identifier or UNDEFINED for the props' argument.</exception>
+    [Browsable(false)]
+    double ICapeRealParameterSpecCOM.UpperBound => _mUpperBound;
 
-    /// <summary>
-    /// Validates the SI value sent against the specification of the parameter.
-    /// </summary>
-    /// <remarks>
-    /// The value, in the SI units of measurement appropriate to the <see cref="UnitCategory"/> of the parameter
+    /// <summary>Validates the SI pValue sent against the specification of the parameter.</summary>
+    /// <remarks>The pValue, in the SI units of measurement appropriate to the <see cref="UnitCategory"/> of the parameter
     /// is considered valid if it is between the upper and lower bound of the parameter. The message is used to 
-    /// return the reason that the parameter is invalid.
-    /// </remarks>
-    /// <returns>
-    /// True if the parameter is valid, false if not valid.
-    /// </returns>
-    /// <param name = "value">The name of the unit that the value should be converted to.</param>
-    /// <param name = "message">Reference to a string that will conain a message regarding the validation of the parameter.</param>
+    /// return the reason that the parameter is invalid.</remarks>
+    /// <returns>True if the parameter is valid, false if not valid.</returns>
+    /// <param name = "pValue">The name of the unit that the pValue should be converted to.</param>
+    /// <param name = "message">Reference to a string that will contain a message regarding the validation of the parameter.</param>
     /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
-    /// <exception cref = "ECapeInvalidArgument">To be used when an invalid argument value is passed, for example, an unrecognised Compound identifier or UNDEFINED for the props argument.</exception>
-    public bool SIValidate(double value, ref String message)
+    /// <exception cref = "ECapeInvalidArgument">To be used when an invalid argument pValue is passed, for example, an unrecognised Compound identifier or UNDEFINED for the props' argument.</exception>
+    public bool SIValidate(double pValue, ref string message)
     {
-        if (value < m_LowerBound)
+        if (pValue < _mLowerBound)
         {
             message = "Value below the Lower Bound.";
             return false;
         }
-        if (value > m_UpperBound)
+        if (pValue > _mUpperBound)
         {
             message = "Value greater than upper bound.";
             return false;
@@ -1003,32 +764,26 @@ public class RealParameter : CapeParameter,
         return true;
     }
 
-    /// <summary>
-    /// Validates the dimensioned value sent against the specification of the parameter.
-    /// </summary>
-    /// <remarks>
-    /// <para>The value sent in is converted from its dimensioned value using the current unit of the parameter 
-    /// to an SI value and is then validated against the parameter specification.</para>
-    /// <para>The value is considered valid if it is between the upper and lower 
+    /// <summary>Validates the dimensioned pValue sent against the specification of the parameter.</summary>
+    /// <remarks><para>The pValue sent in is converted from its dimensioned pValue using the current unit of the parameter 
+    /// to an SI pValue and is then validated against the parameter specification.</para>
+    /// <para>The pValue is considered valid if it is between the upper and lower 
     /// bound of the parameter. The message is used to return the reason that 
-    /// the parameter is invalid.</para>
-    /// </remarks>
-    /// <returns>
-    /// True if the parameter is valid, false if not valid.
-    /// </returns>
-    /// <param name = "value">The name of the unit that the value should be converted to.</param>
-    /// <param name = "message">Reference to a string that will conain a message regarding the validation of the parameter.</param>
+    /// the parameter is invalid.</para></remarks>
+    /// <returns>True if the parameter is valid, false if not valid.</returns>
+    /// <param name = "pValue">The name of the unit that the pValue should be converted to.</param>
+    /// <param name = "message">Reference to a string that will contain a message regarding the validation of the parameter.</param>
     /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
-    /// <exception cref = "ECapeInvalidArgument">To be used when an invalid argument value is passed, for example, an unrecognised Compound identifier or UNDEFINED for the props argument.</exception>
-    public bool DimensionedValidate(double value, ref String message)
+    /// <exception cref = "ECapeInvalidArgument">To be used when an invalid argument pValue is passed, for example, an unrecognised Compound identifier or UNDEFINED for the props' argument.</exception>
+    public bool DimensionedValidate(double pValue, ref string message)
     {
-        double testVal = this.ConvertToSI(value, this.Unit);
-        if (testVal < m_LowerBound)
+        var testVal = ConvertToSI(pValue, Unit);
+        if (testVal < _mLowerBound)
         {
             message = "Value below the Lower Bound.";
             return false;
         }
-        if (testVal > m_UpperBound)
+        if (testVal > _mUpperBound)
         {
             message = "Value greater than upper bound.";
             return false;
@@ -1037,115 +792,70 @@ public class RealParameter : CapeParameter,
         return true;
     }
         
-    /// <summary>
-    /// Gets the SI unit for the <see cref="UnitCategory"/> of the parameter.
-    /// </summary>
-    /// <remarks>
-    /// <para>
-    /// Provides the SI unit for the parameter. Parameter values are stored in their SI unit of measure for the 
+    /// <summary>Gets the SI unit for the <see cref="UnitCategory"/> of the parameter.</summary>
+    /// <remarks><para>Provides the SI unit for the parameter. Parameter values are stored in their SI unit of measure for the 
     /// <see cref="UnitCategory"/>. This provides the user with a mechanism to determine the SI unit of measure 
-    /// used for the current parameter.
-    /// </para>
-    /// </remarks>
-    /// <value>
-    /// Defines the SI unit for the parameter.
-    /// </value>
+    /// used for the current parameter.</para></remarks>
+    /// <value>Defines the SI unit for the parameter.</value>
     /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
-    [System.ComponentModel.Category("Value")]
-    [System.ComponentModel.DescriptionAttribute(" Provide the Aspen Plus display units for for this parameter.")]
-    [System.ComponentModel.Browsable(true)]
-    [System.ComponentModel.TypeConverter(typeof(System.ComponentModel.StringConverter))]
-    public String SIUnit
-    {
-        get
-        {
-            return CapeOpen.CDimensions.FindSIUnit(m_unit);
-        }
-    }
-    /// <summary>
-    /// Gets the Aspen display unit for the parameter.
-    /// </summary>
-    /// <remarks>
-    /// <para>DisplayUnits defines the unit of measurement symbol for a parameter.</para>
+    [Category("Value")]
+    [Description("Provide the Aspen Plus display units for for this parameter.")]
+    [Browsable(true)]
+    [TypeConverter(typeof(StringConverter))]
+    public string SIUnit => CDimensions.FindSIUnit(_mUnit);
+
+    /// <summary>Gets the Aspen display unit for the parameter.</summary>
+    /// <remarks><para>DisplayUnits defines the unit of measurement symbol for a parameter.</para>
     /// <para>Note: The symbol must be one of the uppercase strings recognized by Aspen
     /// Plus to ensure that it can perform unit of measurement conversions on the 
     /// parameter value. The system converts the parameter's value from SI units for
-    /// display in the data browser and converts updated values back into SI.
-    /// </para>
-    /// </remarks>
-    /// <value>
-    /// Defines the display unit for the parameter.
-    /// </value>
+    /// display in the data browser and converts updated values back into SI.</para></remarks>
+    /// <value>Defines the display unit for the parameter.</value>
     /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
-    [System.ComponentModel.Category("Dimensionality")]
-    [System.ComponentModel.DescriptionAttribute(" Provide the Aspen Plus display units for for this parameter.")]
-    [System.ComponentModel.Browsable(false)]
-    String IATCapeXRealParameterSpec.DisplayUnits
-    {
-        get
-        {
-            return CapeOpen.CDimensions.AspenUnit(m_unit);
-        }
-    }
+    [Category("Dimensionality")]
+    [Description("Provide the Aspen Plus display units for for this parameter.")]
+    [Browsable(false)]
+    string IATCapeXRealParameterSpec.DisplayUnits => CDimensions.AspenUnit(_mUnit);
+}
 
-};
-
-
-/// <summary>
-/// Real-Valued parameter for use in the CAPE-OPEN parameter collection.
-/// </summary>
-/// <remarks>
-/// Real-Valued parameter for use in the CAPE-OPEN parameter collection.
-/// </remarks>
+/// <summary>Real-Valued parameter for use in the CAPE-OPEN parameter collection.</summary>
+/// <remarks>Real-Valued parameter for use in the CAPE-OPEN parameter collection.</remarks>
 [Serializable]
-[System.Runtime.InteropServices.ComSourceInterfaces(typeof(IRealParameterSpecEvents))]
-[System.Runtime.InteropServices.ComVisible(true)]
-[System.Runtime.InteropServices.Guid("C7095FE4-E61D-4FFF-BA02-013FD38DBAE9")]//ICapeThermoMaterialObject_IID)
-[System.Runtime.InteropServices.ClassInterface(System.Runtime.InteropServices.ClassInterfaceType.None)]
-[System.ComponentModel.TypeConverter(typeof(RealParameterTypeConverter))]
-class RealParameterWrapper : CapeParameter,
-    ICapeParameter,
-    ICapeParameterSpec,
-    ICapeRealParameterSpec,
-    ICloneable,
-    IATCapeXRealParameterSpec
+[ComSourceInterfaces(typeof(IRealParameterSpecEvents))]
+[ComVisible(true)]
+[Guid(CapeOpenGuids.PpRealParTerWapIid)]  //ICapeThermoMaterialObject_IID)  "C7095FE4-E61D-4FFF-BA02-013FD38DBAE9"
+[ClassInterface(ClassInterfaceType.None)]
+[TypeConverter(typeof(RealParameterTypeConverter))]
+internal class RealParameterWrapper : CapeParameter,
+    ICapeParameter, ICapeParameterSpec, ICapeRealParameterSpec,
+    ICloneable, IATCapeXRealParameterSpec
 {
-    private String m_unit = String.Empty;
+    private string _mUnit = string.Empty;
     [NonSerialized]
-    private ICapeParameter m_parameter = null;
-
-
-
-    /// <summary>
-    /// Creates a new instance of the double precision-valued parameter class. 
-    /// </summary>
-    /// <remarks>
-    /// The mode is set to CapeParamMode.CAPE_INPUT_OUTPUT. The dimensionality 
-    /// of the parameter is determined from the unit string.
-    /// </remarks>
+    private ICapeParameter _mParameter;
+    
+    /// <summary>Creates a new instance of the double precision-valued parameter class. </summary>
+    /// <remarks>The mode is set to CapeParamMode.CAPE_INPUT_OUTPUT. The dimensionality 
+    /// of the parameter is determined from the unit string.</remarks>
     /// <param name = "parameter">Use to Set the dimensionality of the parameter.</param>
     public RealParameterWrapper(ICapeParameter parameter)
-        : base(((ICapeIdentification)parameter).ComponentName, ((ICapeIdentification)parameter).ComponentDescription, parameter.Mode)
+        : base(((ICapeIdentification)parameter).ComponentName, 
+            ((ICapeIdentification)parameter).ComponentDescription, parameter.Mode)
     {
-        m_parameter = parameter;
-        object dims = ((ICapeParameterSpecCOM)parameter.Specification).Dimensionality;
-        if (typeof(int[]).IsAssignableFrom(dims.GetType()))
+        _mParameter = parameter;
+        var dims = ((ICapeParameterSpecCOM)parameter.Specification).Dimensionality;
+        _mUnit = dims switch
         {
-            int[] dimVals = (int[])dims;
-            m_unit = CDimensions.SIUnit(dimVals);
-        }
-        else if (typeof(double[]).IsAssignableFrom(dims.GetType()))
-        {
-            double[] dimVals = (double[])dims;
-            m_unit = CDimensions.SIUnit(dimVals);
-        }
+            // if (typeof(int[]).IsAssignableFrom(dims.GetType()))
+            int[] mInts => CDimensions.SIUnit(mInts),
+            // else if (typeof(double[]).IsAssignableFrom(dims.GetType()))
+            double[] mDimVals => CDimensions.SIUnit(mDimVals),
+            _ => _mUnit
+        };
     }
 
-    /// <summary>
-    /// Gets the dimensionality of the parameter.
-    /// </summary>
-    /// <remarks>
-    /// <para>Gets the dimensionality of the parameter for which this is the 
+    /// <summary>Gets the dimensionality of the parameter.</summary>
+    /// <remarks><para>Gets the dimensionality of the parameter for which this is the 
     /// specification. The dimensionality represents the physical dimensional 
     /// axes of this parameter. It is expected that the dimensionality must cover 
     /// at least 6 fundamental axes (length, mass, time, angle, temperature and 
@@ -1156,44 +866,30 @@ class RealParameterWrapper : CapeParameter,
     /// &lt;1,0,-1,0,0,0&gt;: that is m1 * s-1 =m/s. We have suggested to the 
     /// CO Scientific Committee to use the SI base units plus the SI derived units 
     /// with special symbols (for a better usability and for allowing the 
-    /// definition of angles).</para>
-    /// </remarks>
+    /// definition of angles).</para></remarks>
     /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
-    /// <exception cref = "ECapeInvalidArgument">To be used when an invalid argument value is passed, for example, an unrecognised Compound identifier or UNDEFINED for the props argument.</exception>
-    [System.ComponentModel.BrowsableAttribute(false)]
-    double[] ICapeParameterSpec.Dimensionality
-    {
-        get
-        {
-            return CDimensions.Dimensionality(m_unit);
-        }
-    }
+    /// <exception cref = "ECapeInvalidArgument">To be used when an invalid argument value is passed, for example, an unrecognised Compound identifier or UNDEFINED for the props' argument.</exception>
+    [Browsable(false)]
+    double[] ICapeParameterSpec.Dimensionality => CDimensions.Dimensionality(_mUnit);
 
-    /// <summary>
-    /// Gets and sets the value for this Parameter.
-    /// </summary>
-    /// <remarks>
-    /// This value uses the System.Object data type for compatibility with 
-    /// COM-based CAPE-OPEN.
-    /// </remarks>
+    /// <summary>Gets and sets the value for this Parameter.</summary>
+    /// <remarks>This value uses the System.Object data type for compatibility with 
+    /// COM-based CAPE-OPEN.</remarks>
     /// <returns>A boxed boolean value of the parameter.</returns>
     /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
-    /// <exception cref = "ECapeInvalidArgument">To be used when an invalid argument value is passed, for example, an unrecognised Compound identifier or UNDEFINED for the props argument.</exception>
-    [System.ComponentModel.BrowsableAttribute(false)]
-    override public Object value
+    /// <exception cref = "ECapeInvalidArgument">To be used when an invalid argument value is passed, for example, an unrecognised Compound identifier or UNDEFINED for the props' argument.</exception>
+    [Browsable(false)]
+    public override object value
     {
-        get
-        {
-            return m_parameter.value;
-        }
+        get => _mParameter.value;
         set
         {
-            ParameterValueChangedEventArgs args = new ParameterValueChangedEventArgs(this.ComponentName, m_parameter.value, value);
-            string message = string.Empty;
-            if (((ICapeRealParameterSpecCOM)this.m_parameter).Validate((double)value, ref message))
+            var args = new ParameterValueChangedEventArgs(ComponentName, _mParameter.value, value);
+            var message = string.Empty;
+            if (((ICapeRealParameterSpecCOM)_mParameter).Validate((double)value, ref message))
             {
-                m_parameter.value = value;
-                this.NotifyPropertyChanged("Value");
+                _mParameter.value = value;
+                NotifyPropertyChanged("Value");
                 OnParameterValueChanged(args);
             }
             else
@@ -1203,291 +899,224 @@ class RealParameterWrapper : CapeParameter,
         }
     }
 
-    /// <summary>
-    /// Returns the current value of the parameter in the dimensional unit
-    /// specified.
-    /// </summary>
-    /// <remarks>
-    /// The value of the parameter in the unit requested. The unit must be a valid
+    /// <summary>Returns the current value of the parameter in the dimensional unit
+    /// specified.</summary>
+    /// <remarks>The value of the parameter in the unit requested. The unit must be a valid
     /// parameter. For example, if the parameter was set as 101325 Pa, if the desiredUnit was "atm" the return
-    /// value would be 1 (the value of 101325 Pa in atmospheres).
-    /// </remarks>
+    /// value would be 1 (the value of 101325 Pa in atmospheres).</remarks>
     /// <value>The value of the parameter in the requested unit of measurement.</value>
     /// <param name = "desiredUnit">The unit that the parameter is desired to be reported in.</param>
     /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
     /// <exception cref = "ECapeInvalidArgument">To be used when an invalid argument value is passed, for example, an unrecognised unit identifier.</exception>
-    public double ConvertTo(String desiredUnit)
+    public double ConvertTo(string desiredUnit)
     {
-        bool bUnitExisting = false;
-        double Factor1 = 1;
-        double Factor2 = 0;
-        double retVal = (double)m_parameter.value;
-        if ((desiredUnit != null) || (desiredUnit == String.Empty))
+        var bUnitExisting = false;
+        double pFactor = 1;
+        double mFactor = 0;
+        var retVal = (double)_mParameter.value;
+        // if ((desiredUnit != null) || (desiredUnit == string.Empty))
+        if (desiredUnit is not null or "")
         {
-            String[] units = CapeOpen.CDimensions.Units;
-            for (int i = 0; i < units.Length; i++)
+            var units = CDimensions.Units;
+            if (units.Any(t => t == desiredUnit))
             {
-                if (units[i] == desiredUnit)
-                {
-                    Factor1 = CapeOpen.CDimensions.ConversionsTimes(desiredUnit);
-                    Factor2 = CapeOpen.CDimensions.ConversionsPlus(desiredUnit);
-                    bUnitExisting = true;
-                    break;
-                }
+                pFactor = CDimensions.ConversionsTimes(desiredUnit);
+                mFactor = CDimensions.ConversionsPlus(desiredUnit);
+                bUnitExisting = true;
             }
         }
         if (!bUnitExisting)
-            System.Windows.Forms.MessageBox.Show("There is no unit named" + desiredUnit, "Unit Warning!");
+            MessageBox.Show("There is no unit named" + desiredUnit, "Unit Warning!");
         else
         {
-            retVal = (Convert.ToDouble(retVal) - Factor2) / Factor1;
-            m_unit = desiredUnit;
+            retVal = (Convert.ToDouble(retVal) - mFactor) / pFactor;
+            _mUnit = desiredUnit;
         }
         return retVal;
     }
 
-    /// <summary>
-    /// Returns the value in the SI unit of the specified unit.
-    /// </summary>
-    /// <remarks>
-    /// The value is returned in the SI units for the dimensionality of the 
+    /// <summary>Returns the pValue in the SI unit of the specified unit.</summary>
+    /// <remarks>The pValue is returned in the SI units for the dimensionality of the 
     /// parameter. For example, if the parameter was set as 1 atm, the return
-    /// value would be 101325 (the value of 1 atm in the SI pressure 
-    /// unit of Pascals, Pa).
-    /// </remarks>
-    /// <value>The value of the parameter in SI units.</value>
-    /// <param name = "value">Reference to a string that will conain a message regarding the validation of the parameter.</param>
-    /// <param name = "unit">Reference to a string that will conain a message regarding the validation of the parameter.</param>
+    /// pValue would be 101325 (the pValue of 1 atm in the SI pressure 
+    /// unit of Pascals, Pa).</remarks>
+    /// <pValue>The pValue of the parameter in SI units.</pValue>
+    /// <param name = "pValue">Reference to a string that will contain a message regarding the validation of the parameter.</param>
+    /// <param name = "unit">Reference to a string that will contain a message regarding the validation of the parameter.</param>
     /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
-    /// <exception cref = "ECapeInvalidArgument">To be used when an invalid argument value is passed, for example, an unrecognised unit identifier.</exception>
-    public double ConvertToSI(double value, String unit)
+    /// <exception cref = "ECapeInvalidArgument">To be used when an invalid argument pValue is passed, for example, an unrecognised unit identifier.</exception>
+    public double ConvertToSI(double pValue, string unit)
     {
-        bool bUnitExisting = false;
-        double Factor1 = 1;
-        double Factor2 = 0;
-        double retVal = (double)m_parameter.value;
-        if ((unit != null) || (unit == String.Empty))
+        var bUnitExisting = false;
+        double pFactor = 1;
+        double mFactor = 0;
+        var retVal = (double)_mParameter.value;
+        // if ((unit != null) || (unit == string.Empty))
+        if (unit is not null or "")
         {
-            String[] units = CapeOpen.CDimensions.Units;
-            for (int i = 0; i < units.Length; i++)
+            var units = CDimensions.Units;
+            if (units.Any(t => t == unit))
             {
-                if (units[i] == unit)
-                {
-                    Factor1 = CapeOpen.CDimensions.ConversionsTimes(unit);
-                    Factor2 = CapeOpen.CDimensions.ConversionsPlus(unit);
-                    bUnitExisting = true;
-                    break;
-                }
+                pFactor = CDimensions.ConversionsTimes(unit);
+                mFactor = CDimensions.ConversionsPlus(unit);
+                bUnitExisting = true;
             }
         }
         if (!bUnitExisting)
-            System.Windows.Forms.MessageBox.Show("There is no unit named" + unit, "Unit Warning!");
+            MessageBox.Show("There is no unit named" + unit, "Unit Warning!");
         else
         {
-            retVal = (retVal * Factor1) + Factor2;
+            retVal = (retVal * pFactor) + mFactor;
         }
         return retVal;
     }
-
-
-    /// <summary>
-    /// Returns the value in the SI unit of the specified unit.
-    /// </summary>
-    /// <remarks>
-    /// The value is returned in the SI units for the dimensionality of the 
+    
+    /// <summary>Returns the pValue in the SI unit of the specified unit.</summary>
+    /// <remarks>The pValue is returned in the SI units for the dimensionality of the 
     /// parameter. For example, if the parameter was set as 1 atm, the return
-    /// value would be 101325 (the value of 1 atm in the SI pressure 
-    /// unit of Pascals, Pa).
-    /// </remarks>
-    /// <value>The value of the parameter in SI units.</value>
-    /// <param name = "value">Reference to a string that will conain a message regarding the validation of the parameter.</param>
-    /// <param name = "unit">Reference to a string that will conain a message regarding the validation of the parameter.</param>
+    /// pValue would be 101325 (the pValue of 1 atm in the SI pressure 
+    /// unit of Pascals, Pa).</remarks>
+    /// <pValue>The pValue of the parameter in SI units.</pValue>
+    /// <param name = "pValue">Reference to a string that will contain a message regarding the validation of the parameter.</param>
+    /// <param name = "unit">Reference to a string that will contain a message regarding the validation of the parameter.</param>
     /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
-    /// <exception cref = "ECapeInvalidArgument">To be used when an invalid argument value is passed, for example, an unrecognised unit identifier.</exception>
-    public double ConvertToDimensioned(double value, String unit)
+    /// <exception cref = "ECapeInvalidArgument">To be used when an invalid argument pValue is passed, for example, an unrecognised unit identifier.</exception>
+    public double ConvertToDimensioned(double pValue, string unit)
     {
-        bool bUnitExisting = false;
-        double Factor1 = 1;
-        double Factor2 = 0;
-        double retVal = (double)m_parameter.value;
-        if ((unit != null) || (unit == String.Empty))
+        var bUnitExisting = false;
+        double pFactor = 1;
+        double mFactor = 0;
+        var retVal = (double)_mParameter.value;
+        // if ((unit != null) || (unit == string.Empty))
+        if (unit is not null or "")
         {
-            String[] units = CapeOpen.CDimensions.Units;
-            for (int i = 0; i < units.Length; i++)
+            var units = CDimensions.Units;
+            if (units.Any(t => t == unit))
             {
-                if (units[i] == unit)
-                {
-                    Factor1 = CapeOpen.CDimensions.ConversionsTimes(unit);
-                    Factor2 = CapeOpen.CDimensions.ConversionsPlus(unit);
-                    bUnitExisting = true;
-                    break;
-                }
+                pFactor = CDimensions.ConversionsTimes(unit);
+                mFactor = CDimensions.ConversionsPlus(unit);
+                bUnitExisting = true;
             }
         }
         if (!bUnitExisting)
-            System.Windows.Forms.MessageBox.Show("There is no unit named" + unit, "Unit Warning!");
+            MessageBox.Show("There is no unit named" + unit, "Unit Warning!");
         else
         {
-            retVal = (retVal - Factor2)/Factor1;
+            retVal = (retVal - mFactor)/pFactor;
         }
         return retVal;
     }
-    /// <summary>
-    /// Gets and sets the dimensional unit for the parameter.
-    /// </summary>
-    /// <remarks>
-    /// The value is returned in the SI units for the dimensionality of the 
+    
+    /// <summary>Gets and sets the dimensional unit for the parameter.</summary>
+    /// <remarks>The value is returned in the SI units for the dimensionality of the 
     /// parameter. For example, if the parameter was set as 1 atm, the return
     /// value would be 101325 (the value of 1 atm in the SI pressure 
-    /// unit of Pascals, Pa).
-    /// </remarks>
+    /// unit of Pascals, Pa).</remarks>
     /// <value>The value of the parameter in SI units.</value>
     /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
     /// <exception cref = "ECapeInvalidArgument">To be used when an invalid argument value is passed, for example, an unrecognised unit identifier.</exception>
-    [System.ComponentModel.Browsable(true)]
-    [System.ComponentModel.Category("Value")]
-    [System.ComponentModel.TypeConverter(typeof(UnitConverter))]
-    [System.ComponentModel.DescriptionAttribute("Dimensional unit of the parameter.")]
-    public String Unit
+    [Browsable(true),Category("Value")]
+    [TypeConverter(typeof(UnitConverter))]
+    [Description("Dimensional unit of the parameter.")]
+    public string Unit
     {
-        get
-        {
-            return m_unit;
-        }
-
+        get => _mUnit;
         set
         {
-            m_unit = value;
+            _mUnit = value;
             //m_Category = CapeOpen.CDimensions.UnitCategory(m_unit); 
-            this.NotifyPropertyChanged("Unit");
+            NotifyPropertyChanged(nameof(Unit));
         }
     }
 
     /// <summary>Creates a new object that is a copy of the current instance.</summary>
-    /// <remarks>
+    /// <remarks><para>Clone can be implemented either as a deep copy or a shallow copy. In a deep copy, all objects are duplicated; 
+    /// in a shallow copy, only the top-level objects are duplicated and the lower levels contain references.</para>
     /// <para>
-    /// Clone can be implemented either as a deep copy or a shallow copy. In a deep copy, all objects are duplicated; 
-    /// in a shallow copy, only the top-level objects are duplicated and the lower levels contain references.
-    /// </para>
+    /// The resulting clone must be of the same type as, or compatible with, the original instance.</para>
     /// <para>
-    /// The resulting clone must be of the same type as, or compatible with, the original instance.
-    /// </para>
-    /// <para>
-    /// See <see cref="Object.MemberwiseClone"/> for more information on cloning, deep versus shallow copies, and examples.
-    /// </para>
-    /// </remarks>
+    /// See <see cref="Object.MemberwiseClone"/> for more information on cloning, deep versus shallow copies, and examples.</para></remarks>
     /// <returns>A new object that is a copy of this instance.</returns>
-    override public object Clone()
+    public override object Clone()
     {
-        return new RealParameterWrapper(m_parameter);
+        return new RealParameterWrapper(_mParameter);
     }
 
-    /// <summary>
-    /// Occurs when the user changes of the lower bound of the parameter changes.
-    /// </summary>
+    /// <summary>Occurs when the user changes of the lower bound of the parameter changes.</summary>
     public event ParameterLowerBoundChangedHandler ParameterLowerBoundChanged;
-    /// <summary>
-    /// Occurs when the user changes of the lower bound of a parameter.
-    /// </summary>
+    
+    /// <summary>Occurs when the user changes of the lower bound of a parameter.</summary>
     /// <remarks><para>Raising an event invokes the event handler through a delegate.</para>
     /// <para>The <c>OnComponentNameChanged</c> method also allows derived classes to handle the event without attaching a delegate. This is the preferred 
     /// technique for handling the event in a derived class.</para>
     /// <para>Notes to Inheritors: </para>
     /// <para>When overriding <c>OnComponentNameChanged</c> in a derived class, be sure to call the base class's <c>OnComponentNameChanged</c> method so that registered 
-    /// delegates receive the event.</para>
-    /// </remarks>
+    /// delegates receive the event.</para></remarks>
     /// <param name = "args">A <see cref = "ParameterValueChangedEventArgs">ParameterValueChangedEventArgs</see> that contains information about the event.</param>
     protected void OnParameterLowerBoundChanged(ParameterLowerBoundChangedEventArgs args)
     {
-        if (ParameterLowerBoundChanged != null)
-        {
-            ParameterLowerBoundChanged(this, args);
-        }
+        ParameterLowerBoundChanged?.Invoke(this, args);
     }
 
-    /// <summary>
-    /// Occurs when the user changes of the upper bound of the parameter changes.
-    /// </summary>
+    /// <summary>Occurs when the user changes of the upper bound of the parameter changes.</summary>
     public event ParameterUpperBoundChangedHandler ParameterUpperBoundChanged;
-    /// <summary>
-    /// Occurs when the user changes of the upper bound of a parameter.
-    /// </summary>
+    
+    /// <summary>Occurs when the user changes of the upper bound of a parameter.</summary>
     /// <remarks><para>Raising an event invokes the event handler through a delegate.</para>
     /// <para>The <c>OnParameterUpperBoundChanged</c> method also allows derived classes to handle the event without attaching a delegate. This is the preferred 
     /// technique for handling the event in a derived class.</para>
     /// <para>Notes to Inheritors: </para>
     /// <para>When overriding <c>OnParameterUpperBoundChanged</c> in a derived class, be sure to call the base class's <c>OnParameterUpperBoundChanged</c> method so that registered 
-    /// delegates receive the event.</para>
-    /// </remarks>
+    /// delegates receive the event.</para></remarks>
     /// <param name = "args">A <see cref = "ParameterLowerBoundChangedEventArgs">ParameterUpperBoundChangedEventArgs</see> that contains information about the event.</param>
     protected void OnParameterUpperBoundChanged(ParameterUpperBoundChangedEventArgs args)
     {
-        if (ParameterUpperBoundChanged != null)
-        {
-            ParameterUpperBoundChanged(this, args);
-        }
+        ParameterUpperBoundChanged?.Invoke(this, args);
     }
-
-
-    /// <summary>
-    /// Gets and sets the parameter value in the SI unit for its current dimensionality.
-    /// </summary>
-    /// <remarks>
-    /// The value is returned in the SI units for the dimensionality of the 
+    
+    /// <summary>Gets and sets the parameter value in the SI unit for its current dimensionality.</summary>
+    /// <remarks>The value is returned in the SI units for the dimensionality of the 
     /// parameter. For example, if the parameter was set as 1 atm, the return
     /// value would be 101325 (the value of 1 atm in the SI pressure 
-    /// unit of Pascals, Pa).
-    /// </remarks>
+    /// unit of Pascals, Pa).</remarks>
     /// <value>The value of the parameter in SI units.</value>
     /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
     /// <exception cref = "ECapeInvalidArgument">To be used when an invalid argument value is passed.</exception>
-    [System.ComponentModel.Browsable(true)]
-    [System.ComponentModel.Category("Value")]
+    [Browsable(true),Category("Value")]
     public double SIValue
     {
-        get
-        {
-            return (double)m_parameter.value;
-        }
+        get => (double)_mParameter.value;
 
         set
         {
-            ParameterValueChangedEventArgs args = new ParameterValueChangedEventArgs(this.ComponentName, m_parameter.value, value);
+            var args = new ParameterValueChangedEventArgs(ComponentName, _mParameter.value, value);
             OnParameterValueChanged(args);
-            m_parameter.value = value;
-            this.NotifyPropertyChanged("Value");
+            _mParameter.value = value;
+            NotifyPropertyChanged("Value");
         }
     }
 
-    /// <summary>
-    /// Gets and sets the parameter value in the current unit for its dimensionality.
-    /// </summary>
-    /// <remarks>
-    /// The value is returned in the parameter's current unit. For example, if the 
+    /// <summary>Gets and sets the parameter value in the current unit for its dimensionality.</summary>
+    /// <remarks>The value is returned in the parameter's current unit. For example, if the 
     /// parameter was set as 101325 Pa and the unit was changed to atm, 
-    /// the return value would be 1 (the value of 101325 Pa in atmospheres).
-    /// </remarks>
+    /// the return value would be 1 (the value of 101325 Pa in atmospheres).</remarks>
     /// <value>The value of the parameter in the current unit.</value>
     /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
-    /// <exception cref = "ECapeInvalidArgument">To be used when an invalid argument value is passed, for example, an unrecognised Compound identifier or UNDEFINED for the props argument.</exception>
-    [System.ComponentModel.Browsable(true)]
-    [System.ComponentModel.Category("Value")]
+    /// <exception cref = "ECapeInvalidArgument">To be used when an invalid argument value is passed, for example, an unrecognised Compound identifier or UNDEFINED for the props' argument.</exception>
+    [Browsable(true),Category("Value")]
     public double DimensionedValue
     {
-        get
-        {
-            return ConvertTo(this.Unit);
-        }
+        get => ConvertTo(Unit);
 
         set
         {
-            double newValue = this.ConvertToSI(value, this.Unit);
-            ParameterValueChangedEventArgs args = new ParameterValueChangedEventArgs(this.ComponentName, m_parameter.value, newValue);
-            string message = string.Empty;
-            if (((ICapeRealParameterSpecCOM)this.m_parameter).Validate((double)value, ref message))
+            var newValue = ConvertToSI(value, Unit);
+            var args = new ParameterValueChangedEventArgs(ComponentName, _mParameter.value, newValue);
+            var message = string.Empty;
+            if (((ICapeRealParameterSpecCOM)_mParameter).Validate(value, ref message))
             {
-                m_parameter.value = newValue;
-                this.NotifyPropertyChanged("Value");
+                _mParameter.value = newValue;
+                NotifyPropertyChanged("Value");
                 OnParameterValueChanged(args);
             }
             else
@@ -1497,299 +1126,186 @@ class RealParameterWrapper : CapeParameter,
         }
     }
 
-    /// <summary>
-    /// Validates the current value of the parameter against the 
-    /// specification of the parameter. 
-    /// </summary>
-    /// <remarks>
-    /// The parameter is considered valid if the current value is 
+    /// <summary>Validates the current value of the parameter against the 
+    /// specification of the parameter. </summary>
+    /// <remarks>The parameter is considered valid if the current value is 
     /// between the upper and lower bound. The message is used to 
     /// return the reason that the parameter is invalid. This function also
     /// sets the CapeValidationStatus of the parameter based upon the results
-    /// of the validation.
-    /// </remarks>
-    /// <returns>
-    /// True if the parameter is valid, false if not valid.
-    /// </returns>
-    /// <param name = "message">Reference to a string that will conain a message regarding the validation of the parameter.</param>
+    /// of the validation.</remarks>
+    /// <returns>True if the parameter is valid, false if not valid.</returns>
+    /// <param name = "message">Reference to a string that will contain a message regarding the validation of the parameter.</param>
     /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
-    /// <exception cref = "ECapeInvalidArgument">To be used when an invalid argument value is passed, for example, an unrecognised Compound identifier or UNDEFINED for the props argument.</exception>
-    public override bool Validate(ref String message)
+    /// <exception cref = "ECapeInvalidArgument">To be used when an invalid argument value is passed, for example, an unrecognised Compound identifier or UNDEFINED for the props' argument.</exception>
+    public override bool Validate(ref string message)
     {
-        ParameterValidatedEventArgs args;
-        CapeValidationStatus valStatus = m_parameter.ValStatus;
-        bool retval = m_parameter.Validate(message);
-        args = new ParameterValidatedEventArgs(this.ComponentName, message, ValStatus, m_parameter.ValStatus);
+        var pValStatus = _mParameter.ValStatus;
+        var retVal = _mParameter.Validate(message);
+        var args = new ParameterValidatedEventArgs(ComponentName, message, ValStatus, pValStatus);
         OnParameterValidated(args);
-        this.NotifyPropertyChanged("ValStatus");
-        return retval;
+        NotifyPropertyChanged("ValStatus");
+        return retVal;
     }
 
-    /// <summary>
-    /// Sets the value of the parameter to its default value.
-    /// </summary>
-    /// <remarks>
-    ///  This method sets the parameter's value to the default value.
-    /// </remarks>
+    /// <summary>Sets the value of the parameter to its default value.</summary>
+    /// <remarks> This method sets the parameter's value to the default value.</remarks>
     /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
     public override void Reset()
     {
-        ParameterResetEventArgs args = new ParameterResetEventArgs(this.ComponentName);
-        m_parameter.Reset();
-        this.NotifyPropertyChanged("Value");
+        var args = new ParameterResetEventArgs(ComponentName);
+        _mParameter.Reset();
+        NotifyPropertyChanged("Value");
         OnParameterReset(args);
     }
 
     // ICapeParameterSpec
-    // ICapeParameterSpec
-    /// <summary>
-    /// Gets the type of the parameter. 
-    /// </summary>
-    /// <remarks>
-    /// Gets the <see cref = "CapeParamType"/> of the parameter for which this is a specification: real 
+    /// <summary>Gets the type of the parameter. </summary>
+    /// <remarks>Gets the <see cref = "CapeParamType"/> of the parameter for which this is a specification: real 
     /// (CAPE_REAL), integer(CAPE_INT), option(CAPE_OPTION), boolean(CAPE_BOOLEAN) 
-    /// or array(CAPE_ARRAY).
-    /// </remarks>
+    /// or array(CAPE_ARRAY).</remarks>
     /// <value>The parameter type. </value>
     /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
     /// <exception cref = "ECapeInvalidArgument">To be used when an invalid argument value is passed.</exception>
-    [System.ComponentModel.Browsable(false)]
-    [System.ComponentModel.Category("ICapeParameterSpec")]
-    public override CapeParamType Type
-    {
-        get
-        {
-            return CapeParamType.CAPE_REAL;
-        }
-    }
+    [Browsable(false),Category("ICapeParameterSpec")]
+    public override CapeParamType Type => CapeParamType.CAPE_REAL;
 
     //ICapeRealParameterSpec
-
-    /// <summary>
-    /// Gets and sets the default value of the parameter.
-    /// </summary>
-    /// <remarks>
-    /// The default value is the value that the specification is set to after
-    /// the Reset() method is called.
-    /// </remarks>
+    /// <summary>Gets and sets the default value of the parameter.</summary>
+    /// <remarks>The default value is the value that the specification is set to after
+    /// the Reset() method is called.</remarks>
     /// <value>The parameter type. </value>
     /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
     /// <exception cref = "ECapeInvalidArgument">To be used when an invalid argument value is passed.</exception>
-    [System.ComponentModel.BrowsableAttribute(false)]
+    [Browsable(false)]
     public double DimensionedDefaultValue
     {
-        get
-        {
-            return this.ConvertToDimensioned(((ICapeRealParameterSpecCOM)m_parameter.Specification).DefaultValue, this.Unit);
-        }
-        set
-        {
-        }
+        get => ConvertToDimensioned(((ICapeRealParameterSpecCOM)_mParameter.Specification)
+            .DefaultValue, Unit);
+        set { }
     }
 
-    /// <summary>
-    /// Gets and sets the default value of the parameter.
-    /// </summary>
-    /// <remarks>
-    /// The default value is the value that the specification is set to after
-    /// the Reset() method is called.
-    /// </remarks>
+    /// <summary>Gets and sets the default value of the parameter.</summary>
+    /// <remarks>The default value is the value that the specification is set to after
+    /// the Reset() method is called.</remarks>
     /// <value>The parameter type. </value>
     /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
     /// <exception cref = "ECapeInvalidArgument">To be used when an invalid argument value is passed.</exception>
-    [System.ComponentModel.Category("Parameter Specification")]
+    [Category("Parameter Specification")]
     public double SIDefaultValue
     {
-        get
-        {
-            return (double)((ICapeRealParameterSpecCOM)m_parameter.Specification).DefaultValue;
-        }
-        set
-        {
-        }
+        get => ((ICapeRealParameterSpecCOM)_mParameter.Specification).DefaultValue;
+        set { }
     }
 
-    /// <summary>
-    /// Gets and sets the lower bound of the parameter in SI units corresponding to the <see cref="UnitCategory"/> of 
-    /// the parameter.
-    /// </summary>
-    /// <remarks>
-    /// The lower bound can be a valid double precision value. 
-    /// By default, it is set to Double.MinValue, negative 1.79769313486232e308.
-    /// </remarks>			
+    /// <summary>Gets and sets the lower bound of the parameter in SI units corresponding to the <see cref="UnitCategory"/> of 
+    /// the parameter.</summary>
+    /// <remarks>The lower bound can be a valid double precision value. 
+    /// By default, it is set to Double.MinValue, negative 1.79769313486232e308.</remarks>			
     /// <value>The parameter type. </value>
     /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
     /// <exception cref = "ECapeInvalidArgument">To be used when an invalid argument value is passed.</exception>
-    [System.ComponentModel.Category("Parameter Specification")]
+    [Category("Parameter Specification")]
     public double SILowerBound
     {
-        get
-        {
-            return (double)((ICapeRealParameterSpecCOM)m_parameter.Specification).LowerBound;
-        }
-        set
-        {
-        }
+        get => ((ICapeRealParameterSpecCOM)_mParameter.Specification).LowerBound;
+        set { }
     }
 
-    /// <summary>
-    /// Gets and sets the lower bound of the parameter. 
-    /// </summary>
-    /// <remarks>
-    /// The lower bound can be a valid double precision value. 
+    /// <summary>Gets and sets the lower bound of the parameter. </summary>
+    /// <remarks>The lower bound can be a valid double precision value. 
     /// By default, it is set to Double.MaxValue, 
-    /// 1.79769313486232e308.
-    /// </remarks>			
+    /// 1.79769313486232e308.</remarks>			
     /// <value>The upper bound for the parameter. </value>
     /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
-    /// <exception cref = "ECapeInvalidArgument">To be used when an invalid argument value is passed, for example, an unrecognised Compound identifier or UNDEFINED for the props argument.</exception>
-    [System.ComponentModel.BrowsableAttribute(false)]
+    /// <exception cref = "ECapeInvalidArgument">To be used when an invalid argument value is passed, for example, an unrecognised Compound identifier or UNDEFINED for the props' argument.</exception>
+    [Browsable(false)]
     public double DimensionedLowerBound
     {
-        get
-        {
-            return this.ConvertToDimensioned((double)((ICapeRealParameterSpecCOM)m_parameter.Specification).LowerBound, this.Unit);
-        }
-        set
-        {
-        }
+        get => ConvertToDimensioned(((ICapeRealParameterSpecCOM)_mParameter.Specification).LowerBound, Unit);
+        set { }
     }
 
-    /// <summary>
-    /// Gets and sets the upper bound of the parameter. 
-    /// </summary>
-    /// <remarks>
-    /// The lower bound can be a valid double precision value. 
+    /// <summary>Gets and sets the upper bound of the parameter. </summary>
+    /// <remarks>The lower bound can be a valid double precision value. 
     /// By default, it is set to Double.MaxValue, 
-    /// 1.79769313486232e308.
-    /// </remarks>			
+    /// 1.79769313486232e308.</remarks>			
     /// <value>The upper bound for the parameter. </value>
     /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
-    /// <exception cref = "ECapeInvalidArgument">To be used when an invalid argument value is passed, for example, an unrecognised Compound identifier or UNDEFINED for the props argument.</exception>
-    [System.ComponentModel.Category("Parameter Specification")]
+    /// <exception cref = "ECapeInvalidArgument">To be used when an invalid argument value is passed, for example, an unrecognised Compound identifier or UNDEFINED for the props' argument.</exception>
+    [Category("Parameter Specification")]
     public double SIUpperBound
     {
-        get
-        {
-            return (double)((ICapeRealParameterSpecCOM)m_parameter.Specification).UpperBound;
-        }
-        set
-        {
-        }
+        get => ((ICapeRealParameterSpecCOM)_mParameter.Specification).UpperBound;
+        set { }
     }
 
-    /// <summary>
-    /// Gets and sets the upper bound of the parameter. 
-    /// </summary>
-    /// <remarks>
-    /// The lower bound can be a valid double precision value. 
+    /// <summary>Gets and sets the upper bound of the parameter. </summary>
+    /// <remarks>The lower bound can be a valid double precision value. 
     /// By default, it is set to Double.MaxValue, 
-    /// 1.79769313486232e308.
-    /// </remarks>			
+    /// 1.79769313486232e308.</remarks>			
     /// <value>The upper bound for the parameter. </value>
     /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
-    /// <exception cref = "ECapeInvalidArgument">To be used when an invalid argument value is passed, for example, an unrecognised Compound identifier or UNDEFINED for the props argument.</exception>
-    [System.ComponentModel.BrowsableAttribute(false)]
+    /// <exception cref = "ECapeInvalidArgument">To be used when an invalid argument value is passed, for example, an unrecognised Compound identifier or UNDEFINED for the props' argument.</exception>
+    [Browsable(false)]
     public double DimensionedUpperBound
     {
-        get
-        {
-            return this.ConvertToDimensioned((double)((ICapeRealParameterSpecCOM)m_parameter.Specification).UpperBound, this.Unit);
-        }
-        set
-        {
-        }
+        get => ConvertToDimensioned(((ICapeRealParameterSpecCOM)_mParameter.Specification)
+            .UpperBound, Unit);
+        set { }
     }
 
-    /// <summary>
-    /// Validates the value sent against the specification of the parameter.
-    /// </summary>
-    /// <remarks>
-    /// The value is considered valid if it is between the upper and lower 
+    /// <summary>Validates the pValue sent against the specification of the parameter.</summary>
+    /// <remarks>The pValue is considered valid if it is between the upper and lower 
     /// bound of the parameter. The message is used to return the reason that 
-    /// the parameter is invalid.
-    /// </remarks>
-    /// <returns>
-    /// True if the parameter is valid, false if not valid.
-    /// </returns>
-    /// <param name = "value">The name of the unit that the value should be converted to.</param>
-    /// <param name = "message">Reference to a string that will conain a message regarding the validation of the parameter.</param>
+    /// the parameter is invalid.</remarks>
+    /// <returns>True if the parameter is valid, false if not valid.</returns>
+    /// <param name = "pValue">The name of the unit that the pValue should be converted to.</param>
+    /// <param name = "message">Reference to a string that will contain a message regarding the validation of the parameter.</param>
     /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
-    /// <exception cref = "ECapeInvalidArgument">To be used when an invalid argument value is passed, for example, an unrecognised Compound identifier or UNDEFINED for the props argument.</exception>
-    public bool SIValidate(double value, ref String message)
+    /// <exception cref = "ECapeInvalidArgument">To be used when an invalid argument pValue is passed, for example, an unrecognised Compound identifier or UNDEFINED for the props' argument.</exception>
+    public bool SIValidate(double pValue, ref string message)
     {
-        return ((ICapeRealParameterSpecCOM)m_parameter.Specification).Validate(value, message);
+        return ((ICapeRealParameterSpecCOM)_mParameter.Specification).Validate(pValue, message);
     }
         
-    /// <summary>
-    /// Validates the value sent against the specification of the parameter.
-    /// </summary>
-    /// <remarks>
-    /// The value is considered valid if it is between the upper and lower 
+    /// <summary>Validates the pValue sent against the specification of the parameter.</summary>
+    /// <remarks>The pValue is considered valid if it is between the upper and lower 
     /// bound of the parameter. The message is used to return the reason that 
-    /// the parameter is invalid.
-    /// </remarks>
-    /// <returns>
-    /// True if the parameter is valid, false if not valid.
-    /// </returns>
-    /// <param name = "value">The name of the unit that the value should be converted to.</param>
-    /// <param name = "message">Reference to a string that will conain a message regarding the validation of the parameter.</param>
+    /// the parameter is invalid.</remarks>
+    /// <returns>True if the parameter is valid, false if not valid.</returns>
+    /// <param name = "pValue">The name of the unit that the pValue should be converted to.</param>
+    /// <param name = "message">Reference to a string that will contain a message regarding the validation of the parameter.</param>
     /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
-    /// <exception cref = "ECapeInvalidArgument">To be used when an invalid argument value is passed, for example, an unrecognised Compound identifier or UNDEFINED for the props argument.</exception>
-    public bool DimensionedValidate(double value, ref String message)
+    /// <exception cref = "ECapeInvalidArgument">To be used when an invalid argument pValue is passed, for example, an unrecognised Compound identifier or UNDEFINED for the props' argument.</exception>
+    public bool DimensionedValidate(double pValue, ref string message)
     {
-        return ((ICapeRealParameterSpecCOM)m_parameter.Specification).Validate(this.ConvertToSI(value, this.Unit), message);
+        return ((ICapeRealParameterSpecCOM)_mParameter.Specification).Validate(ConvertToSI(pValue, Unit), message);
     }
 
-    /// <summary>
-    /// Gets the Aspen display unit for the parameter.
-    /// </summary>
-    /// <remarks>
-    /// <para>DisplayUnits defines the unit of measurement symbol for a parameter.</para>
+    /// <summary>Gets the Aspen display unit for the parameter.</summary>
+    /// <remarks><para>DisplayUnits defines the unit of measurement symbol for a parameter.</para>
     /// <para>Note: The symbol must be one of the uppercase strings recognized by Aspen
     /// Plus to ensure that it can perform unit of measurement conversions on the 
     /// parameter value. The system converts the parameter's value from SI units for
-    /// display in the data browser and converts updated values back into SI.
-    /// </para>
-    /// </remarks>
-    /// <value>
-    /// Defines the display unit for the parameter.
-    /// </value>
+    /// display in the data browser and converts updated values back into SI.</para></remarks>
+    /// <value>Defines the display unit for the parameter.</value>
     /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
-    [System.ComponentModel.Category("Value")]
-    [System.ComponentModel.DescriptionAttribute(" Provide the Aspen Plus display units for for this parameter.")]
-    [System.ComponentModel.Browsable(true)]
-    [System.ComponentModel.TypeConverter(typeof(System.ComponentModel.StringConverter))]
-    public String SIUnit
-    {
-        get
-        {
-            return CapeOpen.CDimensions.FindSIUnit(m_unit);
-        }
-    }
-    /// <summary>
-    /// Gets the Aspen display unit for the parameter.
-    /// </summary>
-    /// <remarks>
-    /// <para>DisplayUnits defines the unit of measurement symbol for a parameter.</para>
+    [Category("Value")]
+    [Description("Provide the Aspen Plus display units for for this parameter.")]
+    [Browsable(true)]
+    [TypeConverter(typeof(StringConverter))]
+    public string SIUnit => CDimensions.FindSIUnit(_mUnit);
+
+    /// <summary>Gets the Aspen display unit for the parameter.</summary>
+    /// <remarks><para>DisplayUnits defines the unit of measurement symbol for a parameter.</para>
     /// <para>Note: The symbol must be one of the uppercase strings recognized by Aspen
     /// Plus to ensure that it can perform unit of measurement conversions on the 
     /// parameter value. The system converts the parameter's value from SI units for
-    /// display in the data browser and converts updated values back into SI.
-    /// </para>
-    /// </remarks>
-    /// <value>
-    /// Defines the display unit for the parameter.
-    /// </value>
+    /// display in the data browser and converts updated values back into SI.</para></remarks>
+    /// <value>Defines the display unit for the parameter.</value>
     /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
-    [System.ComponentModel.Category("Dimensionality")]
-    [System.ComponentModel.DescriptionAttribute(" Provide the Aspen Plus display units for for this parameter.")]
-    [System.ComponentModel.Browsable(false)]
-    public String DisplayUnits
-    {
-        get
-        {
-            return CapeOpen.CDimensions.AspenUnit(m_unit);
-        }
-    }
-};
+    [Category("Dimensionality")]
+    [Description("Provide the Aspen Plus display units for for this parameter.")]
+    [Browsable(false)]
+    public string DisplayUnits => CDimensions.AspenUnit(_mUnit);
+}

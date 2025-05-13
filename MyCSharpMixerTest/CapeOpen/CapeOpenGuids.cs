@@ -372,4 +372,8 @@ internal abstract class CapeOpenGuids
     // public const string MaterObjWrap10Iid = "5A65B4B2-2FDD-4208-813D-7CC527FB91BD";
     // Material Object Wrapper 11
     // public const string MaterObjWrap11Iid = "5A65B4B2-2FDD-4208-813D-7CC527FB91BD";
+    // Real Parameter
+    public const string InRealPaSpecEveIid = "058B416C-FC61-4E64-802A-19070CB39703";
+    public const string PpRealParTerIid = "77E39C43-046B-4b1f-9EE0-AA9EFC55D2EE";
+    public const string PpRealParTerWapIid = "C7095FE4-E61D-4FFF-BA02-013FD38DBAE9";
 }
