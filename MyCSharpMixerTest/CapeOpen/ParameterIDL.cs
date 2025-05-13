@@ -303,13 +303,13 @@ public interface ICapeIntegerParameterSpec
     /// the upper and lower bound. The message is used to return the reason 
     /// that the parameter is invalid.</remarks>
     /// <returns>True if the parameter is valid, false if not valid.</returns>
-    /// <param name = "value">Integer value that will be validated against the parameter's current specification.</param>
+    /// <param name = "pValue">Integer value that will be validated against the parameter's current specification.</param>
     /// <param name = "message">Reference to a string that will contain a message regarding the validation of the parameter.</param>
     /// <exception cref ="ECapeUnknown">The error to be raised when other error(s), specified for this operation, are not suitable.</exception>
     /// <exception cref = "ECapeInvalidArgument">To be used when an invalid argument value is passed, for example, an unrecognised Compound identifier or UNDEFINED for the props' argument.</exception>
     [DispId(4),Description("Check if value is OK for this spec as double")]
     [return: MarshalAs(UnmanagedType.VariantBool)]
-    bool Validate(int value, ref string message);
+    bool Validate(int pValue, ref string message);
 }
 
 /// <summary>当参数是一个选项时，该接口用于参数说明。一个字符串列表，从中选择一个。</summary>
