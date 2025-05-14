@@ -417,4 +417,6 @@ internal abstract class CapeOpenGuids
     // Reactions IDL
     public const string PpCapeReactTypeIid = "678c0b00-0100-11d2-a67d-00105a42887f";
     public const string PpCapeReactRaBaIid = "678c0aff-0100-11d2-a67d-00105a42887f";
+    // Unit Operation Manager
+    public const string PpUnitOperaWrapIid = "B41DECE0-6C99-4CA4-B0EB-EFADBDCE23E9";
 }
