@@ -25,7 +25,7 @@ namespace CapeOpen;
 /// Properties components that need an ICapeThermoMaterial interface in order to set 
 /// and get a Material’s property values.</summary>
 [ComImport,ComVisible(false)]
-[Guid(CapeOpenGuids.InCapeTheMateConComIid)]  // "678C0A9C-7D66-11D2-A67D-00105A42887F"
+[Guid(CapeGuids.InCapeTheMateConComIid)]  // "678C0A9C-7D66-11D2-A67D-00105A42887F"
 [Description("ICapeThermoMaterialContext Interface")]
 internal interface ICapeThermoMaterialContextCOM
 {
@@ -560,7 +560,7 @@ public interface ICapeThermoCompounds
 /// </remarks>
 [ComImport]
 [ComVisible(false)]
-[Guid(CapeOpenGuids.InCapeTheCompUndComIid)]  // "678C0A9D-7D66-11D2-A67D-00105A42887F"
+[Guid(CapeGuids.InCapeTheCompUndComIid)]  // "678C0A9D-7D66-11D2-A67D-00105A42887F"
 [Description("ICapeThermoCompounds Interface")]
 internal interface ICapeThermoCompoundsCOM
 {
@@ -1051,7 +1051,7 @@ public interface ICapeThermoPhases
 /// ICapeThermoMaterial interface.</remarks>
 [ComImport]
 [ComVisible(false)]
-[Guid(CapeOpenGuids.InCapeThePhasesComIid)]  // "678C0A9E-7D66-11D2-A67D-00105A42887F"
+[Guid(CapeGuids.InCapeThePhasesComIid)]  // "678C0A9E-7D66-11D2-A67D-00105A42887F"
 [Description("ICapeThermoPhases Interface")]
 internal interface ICapeThermoPhasesCOM
 {

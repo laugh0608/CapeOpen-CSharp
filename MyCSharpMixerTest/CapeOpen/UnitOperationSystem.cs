@@ -17,7 +17,7 @@ namespace CapeOpen;
 /// unit operation classes registered with COM and all .Net-based property unit operations that are contained in the Global Assembly Cache.</para>
 /// </remarks>
 [ComVisible(false)]
-[Guid(CapeOpenGuids.InUnitOperaSystemIid)]  // "08D7828D-40FD-4CA1-A71D-2F25617DA133"
+[Guid(CapeGuids.InUnitOperaSystemIid)]  // "08D7828D-40FD-4CA1-A71D-2F25617DA133"
 [Description("IUnitOperationSystem Interface")]
 public interface IUnitOperationSystem
 {
@@ -114,7 +114,7 @@ internal struct UnitOperationInformation
 /// classes Property Packages registered with COM and all .Net-based property packages that are contained in the Global Assembly Cache.</para>
 /// </remarks>
 [ComVisible(true)]
-[Guid(CapeOpenGuids.PpUnitOperaSystemIid)]  // "3A223DEE-8414-4802-8391-D1B11B276A0F"
+[Guid(CapeGuids.PpUnitOperaSystemIid)]  // "3A223DEE-8414-4802-8391-D1B11B276A0F"
 [Description("CapeThermoSystem Wrapper")]
 [ClassInterface(ClassInterfaceType.None)]
 public class UnitOperationSystem : IUnitOperationSystem

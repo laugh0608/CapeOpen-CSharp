@@ -16,7 +16,7 @@ namespace CapeOpen;
 /// classes Property Packages registered with COM and all .Net-based property packages that are contained in the Global Assembly Cache.</para>
 /// </remarks>
 [ComVisible(true)]
-[Guid(CapeOpenGuids.PpCapeThermoSystemIid)]  // "B5483FD2-E8AB-4ba4-9EA6-53BBDB77CE81"
+[Guid(CapeGuids.PpCapeThermoSystemIid)]  // "B5483FD2-E8AB-4ba4-9EA6-53BBDB77CE81"
 [Description("CapeThermoSystem Wrapper")]
 [ClassInterface(ClassInterfaceType.None)]
 public abstract class CapeThermoSystem : CapeIdentification, ICapeThermoSystem, ICapeThermoSystemCOM

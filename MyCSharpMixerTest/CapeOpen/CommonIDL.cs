@@ -26,7 +26,7 @@ namespace CapeOpen;
 /// (ii) invalid(CAPE_INVALID): The last time that the PMC's Validate() method was called it returned false.
 /// (iii) valid(CAPE_VALID): the last time that the PMC's Validate() method was called it returned true.</remarks>
 [Serializable, ComVisible(true)]
-[Guid(CapeOpenGuids.CapeValidationStatus_IID)]
+[Guid(CapeGuids.CapeValidationStatus_IID)]
 public enum CapeValidationStatus
 {
     /// <summary>PMC 的 Validate() 方法在其值上次更改后未被调用。</summary>
@@ -41,7 +41,7 @@ public enum CapeValidationStatus
 
 /// <summary>事件，表示组件名称已更改。</summary>
 [ComVisible(true)]
-[Guid(CapeOpenGuids.InComNameChEvArgsIid)] // F79EA405-4002-4fb2-AED0-C1E48793637D
+[Guid(CapeGuids.InComNameChEvArgsIid)] // F79EA405-4002-4fb2-AED0-C1E48793637D
 [Description("CapeIdentificationEvents Interface")]
 [InterfaceType(ComInterfaceType.InterfaceIsIDispatch)]
 internal interface IComponentNameChangedEventArgs
@@ -59,7 +59,7 @@ internal interface IComponentNameChangedEventArgs
 
 /// <summary>抛出的事件，表示组件的描述已更改。</summary>
 [ComVisible(true)]
-[Guid(CapeOpenGuids.InComDescChEvArgsIid)] // 34C43BD3-86B2-46d4-8639-E0FA5721EC5C
+[Guid(CapeGuids.InComDescChEvArgsIid)] // 34C43BD3-86B2-46d4-8639-E0FA5721EC5C
 [Description("CapeIdentificationEvents Interface")]
 [InterfaceType(ComInterfaceType.InterfaceIsIDispatch)]
 internal interface IComponentDescriptionChangedEventArgs
@@ -78,7 +78,7 @@ internal interface IComponentDescriptionChangedEventArgs
 /// <summary>为 CapeIdentification.ComponentNameChanged 事件提供数据。</summary>
 /// <remarks>CapeIdentification.NameChangedEventArgs 事件指定了 PMC 的新旧名称。</remarks>
 [Serializable, ComVisible(true)]
-[Guid(CapeOpenGuids.ComNameChEvArgsIid)]  // D78014E7-FB1D-43ab-B807-B219FAB97E8B
+[Guid(CapeGuids.ComNameChEvArgsIid)]  // D78014E7-FB1D-43ab-B807-B219FAB97E8B
 [ClassInterface(ClassInterfaceType.None)]
 public class ComponentNameChangedEventArgs : EventArgs //, IComponentNameChangedEventArgs
 {
@@ -106,7 +106,7 @@ public class ComponentNameChangedEventArgs : EventArgs //, IComponentNameChanged
 /// <summary>为 CapeIdentification.ComponentDescriptionChanged 事件提供数据。</summary>
 /// <remarks>CapeIdentification.NameChangedEventArgs 事件指定了 PMC 的新旧名称。</remarks>
 [Serializable, ComVisible(true)]
-[Guid(CapeOpenGuids.ComDescChEvArgsIid)] // 0C51C4F1-20E8-413d-93E1-4704B888354A
+[Guid(CapeGuids.ComDescChEvArgsIid)] // 0C51C4F1-20E8-413d-93E1-4704B888354A
 [ClassInterface(ClassInterfaceType.None)]
 public class ComponentDescriptionChangedEventArgs : EventArgs, IComponentDescriptionChangedEventArgs
 {
@@ -149,7 +149,7 @@ public class ComponentDescriptionChangedEventArgs : EventArgs, IComponentDescrip
 /// CO 的 SMST组件包依赖于识别接口组件包。接口 ICapeSMSTFactory 必须提供识别功能。参考 Identification Common 接口。</remarks>
 [InterfaceType(ComInterfaceType.InterfaceIsIDispatch)]
 [ComVisible(true)]
-[Guid(CapeOpenGuids.InCapeIdentEvIid)] // 5F5087A7-B27B-4b4f-902D-5F66E34A0CBE
+[Guid(CapeGuids.InCapeIdentEvIid)] // 5F5087A7-B27B-4b4f-902D-5F66E34A0CBE
 [Description("CapeIdentificationEvents Interface")]
 internal interface ICapeIdentificationEvents
 {
@@ -197,7 +197,7 @@ internal interface ICapeIdentificationEvents
 /// SMST 接口有以下要求：
 /// CO 的 SMST组件包依赖于识别接口组件包。接口 ICapeSMSTFactory 必须提供识别功能。参考 Identification Common 接口。</remarks>
 [ComImport, ComVisible(true)]
-[Guid(CapeOpenGuids.CapeIdentification_IID)]
+[Guid(CapeGuids.CapeIdentification_IID)]
 [Description("CapeIdentification Interface")]
 public interface ICapeIdentification
 {
@@ -242,7 +242,7 @@ public delegate void ComponentDescriptionChangedHandler(object sender, Component
 [Serializable]
 [ComSourceInterfaces(typeof(ICapeIdentificationEvents), typeof(INotifyPropertyChanged))]
 [ComVisible(true)]
-[Guid(CapeOpenGuids.CapeIdentIid)] // BF54DF05-924C-49a5-8EBB-733E37C38085
+[Guid(CapeGuids.CapeIdentIid)] // BF54DF05-924C-49a5-8EBB-733E37C38085
 [Description("CapeIdentification Interface")]
 [ClassInterface(ClassInterfaceType.None)]
 public abstract class CapeIdentification : // System.ComponentModel.Component,
@@ -458,7 +458,7 @@ public abstract class CapeIdentification : // System.ComponentModel.Component,
 /// 那就足够了。一个暴露集合接口的 CAPE-OPEN 规范必须清楚地说明集合中的所有项目必须实现哪些接口。
 /// 参考文档：Collection Common 接口。</remarks>
 [ComImport, ComVisible(false)]
-[Guid(CapeOpenGuids.ICapeCollection_IID)]
+[Guid(CapeGuids.ICapeCollection_IID)]
 [Description("ICapeCollection Interface")]
 internal interface ICapeCollection
 {
@@ -519,7 +519,7 @@ internal interface ICapeCollection
 /// (ii) 析构函数：PMC 的主要对象应该在这里销毁所有次要对象。如果 PMC 对象之间存在循环引用，依赖原生析构函数可能会导致死锁。在下面的示例图中可以看到，在客户端释放其对 Unit Operation 的引用后，Unit 和 Parameter 都被其他对象使用。因此，如果没有显式的终止方法，它们都不会被终止。
 /// 参考文档： Utilities Common 接口。</remarks>
 [ComImport, ComVisible(false)]
-[Guid(CapeOpenGuids.ICapeUtilities_IID)]
+[Guid(CapeGuids.ICapeUtilities_IID)]
 [Description("ICapeUtilities Interface")]
 internal interface ICapeUtilitiesCOM
 {

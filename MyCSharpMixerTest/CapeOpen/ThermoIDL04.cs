@@ -35,7 +35,7 @@ namespace CapeOpen;
 ///</remarks>
 [ComImport]
 [ComVisible(false)]
-[Guid(CapeOpenGuids.InCapeTheProPerRouComIid)]  // "678C0A9F-7D66-11D2-A67D-00105A42887F"
+[Guid(CapeGuids.InCapeTheProPerRouComIid)]  // "678C0A9F-7D66-11D2-A67D-00105A42887F"
 [Description("ICapeThermoPropertyRoutine Interface")]
 internal interface ICapeThermoPropertyRoutineCOM
 {
@@ -741,7 +741,7 @@ public interface ICapeThermoEquilibriumRoutine
 /// </remarks>
 [ComImport]
 [ComVisible(false)]
-[Guid(CapeOpenGuids.InCapeTheEqBrRouComIid)]  // "678C0AA0-7D66-11D2-A67D-00105A42887F"
+[Guid(CapeGuids.InCapeTheEqBrRouComIid)]  // "678C0AA0-7D66-11D2-A67D-00105A42887F"
 [Description("ICapeThermoEquilibriumRoutine Interface")]
 internal interface ICapeThermoEquilibriumRoutineCOM
 {
@@ -927,7 +927,7 @@ internal interface ICapeThermoEquilibriumRoutineCOM
 /// Objects being used by CAPE-OPEN Unit Operations.</remarks>
 [ComImport]
 [ComVisible(false)]
-[Guid(CapeOpenGuids.InCapeTheUnSalConComIid)]  // "678C0AA1-7D66-11D2-A67D-00105A42887F"
+[Guid(CapeGuids.InCapeTheUnSalConComIid)]  // "678C0AA1-7D66-11D2-A67D-00105A42887F"
 [Description("ICapeThermoUniversalConstant Interface")]
 internal interface ICapeThermoUniversalConstantCOM
 {
@@ -1035,7 +1035,7 @@ public interface ICapeThermoUniversalConstant
 /// Property Packages managed by such a component.</summary>
 [ComImport]
 [ComVisible(false)]
-[Guid(CapeOpenGuids.InCapeTheProPackManComIid)]  // "678C0AA2-7D66-11D2-A67D-00105A42887F"
+[Guid(CapeGuids.InCapeTheProPackManComIid)]  // "678C0AA2-7D66-11D2-A67D-00105A42887F"
 [Description("ICapeThermoPropertyPackageManager Interface")]
 internal interface ICapeThermoPropertyPackageManagerCOM
 {

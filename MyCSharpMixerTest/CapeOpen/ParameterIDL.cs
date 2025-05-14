@@ -106,7 +106,7 @@ public interface ICapeParameterSpec
 
 /// <remarks>参考文件： 参数通用接口</remarks>
 [ComImport, ComVisible(false)]
-[Guid(CapeOpenGuids.ICapeParameterSpec_IID)]
+[Guid(CapeGuids.ICapeParameterSpec_IID)]
 [Description("ICapeParameterSpec Interface")]
 internal interface ICapeParameterSpecCOM
 {
@@ -226,7 +226,7 @@ public interface ICapeRealParameterSpec
 
 /// <summary>当参数具有双精度浮点数值时，该接口用于参数规范。 参数具有双精度浮点数值时的参数规格。</summary>
 [ComImport, ComVisible(false)]
-[Guid(CapeOpenGuids.ICapeRealParameterSpec_IID)]
+[Guid(CapeGuids.ICapeRealParameterSpec_IID)]
 [Description("ICapeRealParameterSpec Interface")]
 internal interface ICapeRealParameterSpecCOM
 {
@@ -270,7 +270,7 @@ internal interface ICapeRealParameterSpecCOM
 
 /// <summary>当参数为整数值时，该接口用于参数说明。</summary>
 [ComImport, ComVisible(false)]
-[Guid(CapeOpenGuids.ICapeIntegerParameterSpec_IID)]
+[Guid(CapeGuids.ICapeIntegerParameterSpec_IID)]
 [Description("ICapeIntegerParameterSpec Interface")]
 public interface ICapeIntegerParameterSpec
 {
@@ -359,7 +359,7 @@ public interface ICapeOptionParameterSpec
 
 /// <summary>当参数是选项时，此接口用于参数规范，它表示从其中选择一个的字符串列表。</summary>
 [ComImport, ComVisible(false)]
-[Guid(CapeOpenGuids.ICapeOptionParameterSpec_IID)]
+[Guid(CapeGuids.ICapeOptionParameterSpec_IID)]
 [Description("ICapeOptionParameterSpec Interface")]
 internal interface ICapeOptionParameterSpecCOM
 {
@@ -406,7 +406,7 @@ internal interface ICapeOptionParameterSpecCOM
 
 /// <summary>当参数是布尔值时，该接口用于参数规范。</summary>
 [ComImport, ComVisible(false)]
-[Guid(CapeOpenGuids.ICapeBooleanParameterSpec_IID)]
+[Guid(CapeGuids.ICapeBooleanParameterSpec_IID)]
 [Description("ICapeBooleanParameterSpec Interface")]
 public interface ICapeBooleanParameterSpec
 {
@@ -434,7 +434,7 @@ public interface ICapeBooleanParameterSpec
 
 /// <summary>该接口用于指定参数 当参数是一个数值数组时（可能是整数、实数、布尔值或数组），由其表示。</summary>
 [ComImport, ComVisible(false)]
-[Guid(CapeOpenGuids.ICapeArrayParameterSpec_IID)]
+[Guid(CapeGuids.ICapeArrayParameterSpec_IID)]
 [Description("ICapeArrayParameterSpec Interface")]
 public interface ICapeArrayParameterSpec
 {
@@ -480,7 +480,7 @@ public interface ICapeArrayParameterSpec
 
 /// <summary>定义实际参数数量的界面。</summary>
 [ComImport, ComVisible(false)]
-[Guid(CapeOpenGuids.ICapeParameter_IID)]
+[Guid(CapeGuids.ICapeParameter_IID)]
 [Description("ICapeParameter Interface")]
 public interface ICapeParameter
 {
@@ -560,7 +560,7 @@ public interface ICapeParameter
 
 [InterfaceType(ComInterfaceType.InterfaceIsIDispatch)]
 [ComVisible(true)]
-[Guid(CapeOpenGuids.InParameterEventsIid)]  // "3C32AD8E-490D-4822-8A8E-073F5EDFF3F5"
+[Guid(CapeGuids.InParameterEventsIid)]  // "3C32AD8E-490D-4822-8A8E-073F5EDFF3F5"
 [Description("CapeParameterEvents Interface")]
 internal interface IParameterEvents
 {
@@ -652,7 +652,7 @@ internal class ParameterTypeConverter : ExpandableObjectConverter
 /// Instead, a parameter can implement the IATCapeXRealParameterSpec interface which can be used to define the
 /// display unit for a parameter value.</para></remarks>
 [ComImport, ComVisible(false)]
-[Guid(CapeOpenGuids.IatCapeXRealPaTeSpecIid)]  // "B777A1BD-0C88-11D3-822E-00C04F4F66C9"
+[Guid(CapeGuids.IatCapeXRealPaTeSpecIid)]  // "B777A1BD-0C88-11D3-822E-00C04F4F66C9"
 [Description("IATCapeXRealParameterSpec Interface")]
 internal interface IATCapeXRealParameterSpec
 {
@@ -676,7 +676,7 @@ public delegate void ParameterValueChangedHandler(object sender, ParameterValueC
 /// <summary>为与参数相关的值更改事件提供数据。</summary>
 /// <remarks>The IParameterValueChangedEventArgs interface specifies the old and new value of the parameter.</remarks>
 [ComVisible(true)]
-[Guid(CapeOpenGuids.InParTeVaChEvArgsIid)]  // "41E1A3C4-F23C-4B39-BC54-39851A1D09C9"
+[Guid(CapeGuids.InParTeVaChEvArgsIid)]  // "41E1A3C4-F23C-4B39-BC54-39851A1D09C9"
 [Description("CapeIdentificationEvents Interface")]
 internal interface IParameterValueChangedEventArgs
 {
@@ -697,7 +697,7 @@ internal interface IParameterValueChangedEventArgs
 /// <summary>为与参数相关的值更改事件提供数据。</summary>
 /// <remarks>The ParameterValueChangedEventArgs event specifies the old and new value of the parameter.</remarks>
 [Serializable,ComVisible(true)]
-[Guid(CapeOpenGuids.ParTeVaChEvArgsIid)]  // "C3592B59-92E8-4A24-A2EB-E23C38F88E7F"
+[Guid(CapeGuids.ParTeVaChEvArgsIid)]  // "C3592B59-92E8-4A24-A2EB-E23C38F88E7F"
 [ClassInterface(ClassInterfaceType.None)]
 public class ParameterValueChangedEventArgs : EventArgs, IParameterValueChangedEventArgs
 {
@@ -736,7 +736,7 @@ public delegate void ParameterDefaultValueChangedHandler(object sender, Paramete
 /// <summary>为与参数相关的值更改事件提供数据。</summary>
 /// <remarks>The IParameterDefaultValueChangedEventArgs interface specifies the old and new default value of the parameter.</remarks>
 [ComVisible(true)]
-[Guid(CapeOpenGuids.InParDefValChaEveArgsIid)]  // "E5D9CE6A-9B10-4A81-9E06-1B6C6C5257F3"
+[Guid(CapeGuids.InParDefValChaEveArgsIid)]  // "E5D9CE6A-9B10-4A81-9E06-1B6C6C5257F3"
 [Description("CapeIdentificationEvents Interface")]
 internal interface IParameterDefaultValueChangedEventArgs
 {
@@ -757,7 +757,7 @@ internal interface IParameterDefaultValueChangedEventArgs
 /// <summary>为与参数相关的值更改事件提供数据。</summary>
 /// <remarks>The ParameterDefaultValueChangedEventArgs event specifies the old and new default value of the parameter.</remarks>
 [Serializable, ComVisible(true)]
-[Guid(CapeOpenGuids.ParDefValChaEveArgsIid)]  // "355A5BDD-F6B5-4EEE-97C7-F1533DD28889"
+[Guid(CapeGuids.ParDefValChaEveArgsIid)]  // "355A5BDD-F6B5-4EEE-97C7-F1533DD28889"
 [ClassInterface(ClassInterfaceType.None)]
 public class ParameterDefaultValueChangedEventArgs : EventArgs,
     IParameterDefaultValueChangedEventArgs
@@ -798,7 +798,7 @@ public delegate void ParameterLowerBoundChangedHandler(object sender, ParameterL
 /// <summary>为与参数相关的值更改事件提供数据。</summary>
 /// <remarks>The IParameterLowerBoundChangedEventArgs interface specifies the old and new lower bound of the parameter.</remarks>
 [ComVisible(true)]
-[Guid(CapeOpenGuids.InParLowBoChaEveArgsIid)]  // "FBCE7FC9-0F58-492B-88F9-8A23A23F93B1"
+[Guid(CapeGuids.InParLowBoChaEveArgsIid)]  // "FBCE7FC9-0F58-492B-88F9-8A23A23F93B1"
 [Description("CapeIdentificationEvents Interface")]
 internal interface IParameterLowerBoundChangedEventArgs
 {
@@ -819,7 +819,7 @@ internal interface IParameterLowerBoundChangedEventArgs
 /// <summary>为与参数相关的值更改事件提供数据。</summary>
 /// <remarks>The ParameterLowerBoundChangedEventArgs event specifies the old and new lower bound of the parameter.</remarks>
 [Serializable,ComVisible(true)]
-[Guid(CapeOpenGuids.ParLowBoChaEveArgsIid)]  // "A982AD29-10B5-4C86-AF74-3914DD902384"
+[Guid(CapeGuids.ParLowBoChaEveArgsIid)]  // "A982AD29-10B5-4C86-AF74-3914DD902384"
 [ClassInterface(ClassInterfaceType.None)]
 public class ParameterLowerBoundChangedEventArgs : EventArgs,
     IParameterLowerBoundChangedEventArgs
@@ -865,7 +865,7 @@ delegate void ParameterUpperBoundChangedHandlerCOM(object sender, object args);
 /// <summary>Provides data for the upper bound changed event associated with the parameters.</summary>
 /// <remarks>The IParameterUpperBoundChangedEventArgs interface specifies the old and new lower bound of the parameter.</remarks>
 [ComVisible(true)]
-[Guid(CapeOpenGuids.InParUpBoChaEveArgsIid)]  // "A2D0FAAB-F30E-48F5-82F1-4877F61950E9"
+[Guid(CapeGuids.InParUpBoChaEveArgsIid)]  // "A2D0FAAB-F30E-48F5-82F1-4877F61950E9"
 [Description("CapeIdentificationEvents Interface")]
 internal interface IParameterUpperBoundChangedEventArgs
 {
@@ -886,7 +886,7 @@ internal interface IParameterUpperBoundChangedEventArgs
 /// <summary>Provides data for the upper bound changed event associated with the parameters.</summary>
 /// <remarks>The ParameterUpperBoundChangedEventArgs event specifies the old and new lower bound of the parameter.</remarks>
 [Serializable,ComVisible(true)]
-[Guid(CapeOpenGuids.ParUpBoChaEveArgsIid)]  // "92BF83FE-0855-4382-A15E-744890B5BBF2"
+[Guid(CapeGuids.ParUpBoChaEveArgsIid)]  // "92BF83FE-0855-4382-A15E-744890B5BBF2"
 [ClassInterface(ClassInterfaceType.None)]
 public class ParameterUpperBoundChangedEventArgs : EventArgs,
     IParameterUpperBoundChangedEventArgs
@@ -927,7 +927,7 @@ public delegate void ParameterModeChangedHandler(object sender, ParameterModeCha
 /// <summary>Provides data for the mode changed event associated with the parameters.</summary>
 /// <remarks>The IParameterModeChangedEventArgs interface specifies the old and new mode of the parameter.</remarks>
 [ComVisible(true)]
-[Guid(CapeOpenGuids.InParModeChaEveArgsIid)]  // "5405E831-4B5F-4A57-A410-8E91BBF9FFD3"
+[Guid(CapeGuids.InParModeChaEveArgsIid)]  // "5405E831-4B5F-4A57-A410-8E91BBF9FFD3"
 [Description("CapeIdentificationEvents Interface")]
 internal interface IParameterModeChangedEventArgs
 {
@@ -948,7 +948,7 @@ internal interface IParameterModeChangedEventArgs
 /// <summary>Provides data for the mode changed event associated with the parameters.</summary>
 /// <remarks>The ParameterModeChangedEventArgs event specifies the old and new mode of the parameter.</remarks>
 [Serializable,ComVisible(true)]
-[Guid(CapeOpenGuids.ParModeChaEveArgsIid)]  // "3C953F15-A1F3-47A9-829A-9F7590CEB5E9"
+[Guid(CapeGuids.ParModeChaEveArgsIid)]  // "3C953F15-A1F3-47A9-829A-9F7590CEB5E9"
 [ClassInterface(ClassInterfaceType.None)]
 public class ParameterModeChangedEventArgs : EventArgs, IParameterModeChangedEventArgs
 {
@@ -988,7 +988,7 @@ public delegate void ParameterValidatedHandler(object sender, ParameterValidated
 /// <summary>The parameter was validated.</summary>
 /// <remarks>Provides information about the validation of the parameter.</remarks>
 [ComVisible(true)]
-[Guid(CapeOpenGuids.InParValEveArgsIid)]  // "EFD819A4-E4EC-462E-90E6-5D994CA44F8E"
+[Guid(CapeGuids.InParValEveArgsIid)]  // "EFD819A4-E4EC-462E-90E6-5D994CA44F8E"
 [Description("ParameterValidatedEvent Interface")]
 internal interface IParameterValidatedEventArgs
 {
@@ -1016,7 +1016,7 @@ internal interface IParameterValidatedEventArgs
 /// <summary>The parameter was validated.</summary>
 /// <remarks>Provides information about the validation of the parameter.</remarks>
 [Serializable, ComVisible(true)]
-[Guid(CapeOpenGuids.ParValEveArgsIid)]  // "5727414A-838D-49F8-AFEF-1CC8C578D756"
+[Guid(CapeGuids.ParValEveArgsIid)]  // "5727414A-838D-49F8-AFEF-1CC8C578D756"
 [ClassInterface(ClassInterfaceType.None)]
 public class ParameterValidatedEventArgs : EventArgs, IParameterValidatedEventArgs
 {
@@ -1064,7 +1064,7 @@ public delegate void ParameterResetHandler(object sender, ParameterResetEventArg
 /// <summary>The parameter was reset.</summary>
 /// <remarks>The parameter was reset.</remarks>
 [ComVisible(true)]
-[Guid(CapeOpenGuids.InParResetEveArgsIid)]  // "12067518-B797-4895-9B26-EA71C60A8803"
+[Guid(CapeGuids.InParResetEveArgsIid)]  // "12067518-B797-4895-9B26-EA71C60A8803"
 [Description("ParameterResetEventArgs Interface")]
 internal interface IParameterResetEventArgs
 {
@@ -1075,7 +1075,7 @@ internal interface IParameterResetEventArgs
 /// <summary>The parameter was reset.</summary>
 /// <remarks>The parameter was reset.</remarks>
 [Serializable, ComVisible(true)]
-[Guid(CapeOpenGuids.ParResetEveArgsIid)]  // "01BF391B-415E-4F5E-905D-395A707DC125"
+[Guid(CapeGuids.ParResetEveArgsIid)]  // "01BF391B-415E-4F5E-905D-395A707DC125"
 [ClassInterface(ClassInterfaceType.None)]
 public class ParameterResetEventArgs : EventArgs, IParameterResetEventArgs
 {
@@ -1100,7 +1100,7 @@ public delegate void ParameterOptionListChangedHandler(object sender, ParameterO
 /// <summary>The parameter was reset.</summary>
 /// <remarks>The parameter was reset.</remarks>
 [ComVisible(true)]
-[Guid(CapeOpenGuids.InParOpListChEvArgsIid)]  // "78E06E7B-00AB-4295-9915-546DC1CD64A6"
+[Guid(CapeGuids.InParOpListChEvArgsIid)]  // "78E06E7B-00AB-4295-9915-546DC1CD64A6"
 [Description("ParameterOptionListChangedEventArgs Interface")]
 internal interface IParameterOptionListChangedEventArgs
 {
@@ -1113,7 +1113,7 @@ internal interface IParameterOptionListChangedEventArgs
 ///// <summary>The parameter was reset.</summary>
 ///// <remarks>The parameter was reset.</remarks>
 //[ComVisibleAttribute(true)]
-//[Guid(CapeOpenGuids.PpParOpListChEvArgsIid)]  // "7B4DE7D2-1E39-4239-B8C5-4F876DDB15A4"
+//[Guid(CapeGuids.PpParOpListChEvArgsIid)]  // "7B4DE7D2-1E39-4239-B8C5-4F876DDB15A4"
 //[Description("ParameterOptionListChangedEventArgs Interface")]
 //public interface IParameterOptionsListChangedEventArgs
 //{
@@ -1124,7 +1124,7 @@ internal interface IParameterOptionListChangedEventArgs
 /// <summary>The parameter option list was changed.</summary>
 /// <remarks>The parameter option list was changed.</remarks>
 [Serializable, ComVisible(true)]
-[Guid(CapeOpenGuids.ParOpListChEvArgsIid)]  // "2AEC279F-EBEC-4806-AA00-CC215432DB82"
+[Guid(CapeGuids.ParOpListChEvArgsIid)]  // "2AEC279F-EBEC-4806-AA00-CC215432DB82"
 [ClassInterface(ClassInterfaceType.None)]
 public class ParameterOptionListChangedEventArgs : EventArgs,
     IParameterOptionListChangedEventArgs
@@ -1146,7 +1146,7 @@ public class ParameterOptionListChangedEventArgs : EventArgs,
 /// <summary>The restriction to the options list of a parameter was changed.</summary>
 /// <remarks>The restriction to the options list of a parameter was changed.</remarks>
 [ComVisible(true)]
-[Guid(CapeOpenGuids.InParRestToLiChEvArgsIid)]  // "7F357261-095A-4FD4-99C1-ACDAEDA36141"
+[Guid(CapeGuids.InParRestToLiChEvArgsIid)]  // "7F357261-095A-4FD4-99C1-ACDAEDA36141"
 [Description("ParameterOptionListChangedEventArgs Interface")]
 internal interface IParameterRestrictedToListChangedEventArgs
 {
@@ -1159,7 +1159,7 @@ internal interface IParameterRestrictedToListChangedEventArgs
 /// <summary>The parameter restriction to the option list was changed.</summary>
 /// <remarks>The parameter restriction to the option list was changed.</remarks>
 [Serializable, ComVisible(true)]
-[Guid(CapeOpenGuids.ParRestToLiChEvArgsIid)]  // "82E0E6C2-3103-4B5A-A5BC-EBAB971B069A"
+[Guid(CapeGuids.ParRestToLiChEvArgsIid)]  // "82E0E6C2-3103-4B5A-A5BC-EBAB971B069A"
 [ClassInterface(ClassInterfaceType.None)]
 public class ParameterRestrictedToListChangedEventArgs : EventArgs,
     IParameterRestrictedToListChangedEventArgs
@@ -1209,7 +1209,7 @@ public delegate void EquilibriumReactionsChangedHandler(object sender, EventArgs
 [Serializable]
 [ComSourceInterfaces(typeof(IParameterEvents))]
 [ComVisible(true)]
-[Guid(CapeOpenGuids.CapeParameterIid)]  // "F027B4D1-A215-4107-AA75-34E929DD00A5"
+[Guid(CapeGuids.CapeParameterIid)]  // "F027B4D1-A215-4107-AA75-34E929DD00A5"
 [Description("CapeIdentification Interface")]
 [ClassInterface(ClassInterfaceType.None)]
 [TypeConverter(typeof(ParameterTypeConverter))]

@@ -27,7 +27,7 @@ namespace CapeOpen;
 /// the physical property calculation.  It might be a boolean.  It
 /// might be an enumerated type, or it might be a real number.</remarks>
 [ComImport,ComVisible(false)]
-[Guid(CapeOpenGuids.ICapeThermoReliability_IID)]
+[Guid(CapeGuids.ICapeThermoReliability_IID)]
 [Description("ICapeThermoReliability Interface")]
 public interface ICapeThermoReliability
 {
@@ -36,7 +36,7 @@ public interface ICapeThermoReliability
 
 /// <summary>Material Template interface</summary>
 [ComImport,ComVisible(false)]
-[Guid(CapeOpenGuids.ICapeThermoMaterialTemplate_IID)]
+[Guid(CapeGuids.ICapeThermoMaterialTemplate_IID)]
 [Description("ICapeThermoMaterialTemplate Interface")]
 public interface ICapeThermoMaterialTemplate
 {
@@ -65,7 +65,7 @@ public interface ICapeThermoMaterialTemplate
 
 /// <summary>Material object interface</summary>
 [ComImport,ComVisible(false)]
-[Guid(CapeOpenGuids.ICapeThermoMaterialObject_IID)]
+[Guid(CapeGuids.ICapeThermoMaterialObject_IID)]
 [Description("ICapeThermoMaterialObject Interface")]
 internal interface ICapeThermoMaterialObjectCOM
 {
@@ -578,7 +578,7 @@ public interface ICapeThermoMaterialObject
 /// <para>In the class library, the <see cref ="CapeThermoSystem">CapeThermoSystem</see> class provides a list of all
 /// classes Property Packages registered with COM and all .Net-based property packages that are contained in the Global Assembly Cache.</para></remarks>
 [ComImport,ComVisible(false)]
-[Guid(CapeOpenGuids.ICapeThermoSystem_IID)]
+[Guid(CapeGuids.ICapeThermoSystem_IID)]
 [Description("ICapeThermoSystem Interface")]
 internal interface ICapeThermoSystemCOM
 {

@@ -16,7 +16,7 @@ namespace CapeOpen;
 /// CapeUserException 类暴露了 <see c="ECapeRoot"/> 和 <see c="ECapeUser"/> 接口。这样，由过程建模组件抛出的所有异常，
 /// 除了作为派生异常类型被捕获外，还可以作为 CapeRootException 或 System.ApplicationException 被捕获。</remarks>
 [Serializable, ComVisible(true)]
-[Guid(CapeOpenGuids.CapeUserExIid)] // "28686562-77AD-448f-8A41-8CF9C3264A3E"
+[Guid(CapeGuids.CapeUserExIid)] // "28686562-77AD-448f-8A41-8CF9C3264A3E"
 [Description("")]
 [ClassInterface(ClassInterfaceType.None)]
 public abstract class CapeUserException : ApplicationException,
@@ -176,7 +176,7 @@ public abstract class CapeUserException : ApplicationException,
 /// <remarks>A standard exception that can be thrown by a CAPE-OPEN object to indicate that the error
 /// that occurred was not one that was suitable for any of the other errors supported by the object.</remarks>
 [Serializable, ComVisible(true)]
-[Guid(CapeOpenGuids.CapeUnKnExIid)] // "B550B2CA-6714-4e7f-813E-C93248142410"
+[Guid(CapeGuids.CapeUnKnExIid)] // "B550B2CA-6714-4e7f-813E-C93248142410"
 [Description("")]
 [ClassInterface(ClassInterfaceType.None)]
 public class CapeUnknownException : CapeUserException, ECapeUnknown
@@ -231,7 +231,7 @@ public class CapeUnknownException : CapeUserException, ECapeUnknown
 /// <remarks>A standard exception that can be thrown by a CAPE-OPEN object to indicate that the error
 /// that occurred was not one that was suitable for any of the other errors supported by the object.</remarks>
 [Serializable, ComVisible(true)]
-[Guid(CapeOpenGuids.CapeUnPeExIid)] // "16049506-E086-4baf-9905-9ED13D50D0E3"
+[Guid(CapeGuids.CapeUnPeExIid)] // "16049506-E086-4baf-9905-9ED13D50D0E3"
 [Description("")]
 [ClassInterface(ClassInterfaceType.None)]
 public class CapeUnexpectedException : CapeUserException
@@ -286,7 +286,7 @@ public class CapeUnexpectedException : CapeUserException
 /// arguments of operations, the parameters coming from the Parameter Common Interface 
 /// and information on licence key.</remarks>
 [Serializable]
-[Guid(CapeOpenGuids.CapeDataExPtIid)] // "53551E7C-ECB2-4894-B71A-CCD1E7D40995"
+[Guid(CapeGuids.CapeDataExPtIid)] // "53551E7C-ECB2-4894-B71A-CCD1E7D40995"
 [ComVisible(true)]
 [ClassInterface(ClassInterfaceType.None)]
 public class CapeDataException : CapeUserException, ECapeData
@@ -338,7 +338,7 @@ public class CapeDataException : CapeUserException, ECapeData
 /// <summary>参数（参数公共接口的对象）的状态无效。</summary>
 /// <remarks>The name of the invalid parameter, along with the parameter itself are available from the exception.</remarks>
 [Serializable]
-[Guid(CapeOpenGuids.CapeBadCoParaIid)] // "667D34E9-7EF7-4ca8-8D17-C7577F2C5B62"
+[Guid(CapeGuids.CapeBadCoParaIid)] // "667D34E9-7EF7-4ca8-8D17-C7577F2C5B62"
 [ComVisible(true)]
 [ClassInterface(ClassInterfaceType.None)]
 public class CapeBadCoParameter : CapeDataException, 
@@ -431,7 +431,7 @@ public class CapeBadCoParameter : CapeDataException,
 /// <remarks>An argument value of the operation is not correct. The position of the 
 /// argument value within the signature of the operation. First argument is as position 1.</remarks>
 [Serializable]
-[Guid(CapeOpenGuids.CapeBadArExPtiIid)] // "D168E99F-C1EF-454c-8574-A8E26B62ADB1"
+[Guid(CapeGuids.CapeBadArExPtiIid)] // "D168E99F-C1EF-454c-8574-A8E26B62ADB1"
 [ComVisible(true)]
 [ClassInterface(ClassInterfaceType.None)]
 public class CapeBadArgumentException : CapeDataException,
@@ -519,7 +519,7 @@ public class CapeBadArgumentException : CapeDataException,
 /// describes the value, its type and its boundaries. This is an abstract class. No real
 /// error can be raised from this class.</remarks>
 [Serializable]
-[Guid(CapeOpenGuids.CapeBoDaExPtIid)] // "62B1EE2F-E488-4679-AFA3-D490694D6B33"
+[Guid(CapeGuids.CapeBoDaExPtIid)] // "62B1EE2F-E488-4679-AFA3-D490694D6B33"
 [ComVisible(true)]
 [ClassInterface(ClassInterfaceType.None)]
 public abstract class CapeBoundariesException : CapeUserException, ECapeBoundaries
@@ -628,7 +628,7 @@ public abstract class CapeBoundariesException : CapeUserException, ECapeBoundari
 /// <remarks>This class is derived from the <see c="CapeBoundariesException">CapeBoundariesException</see>
 /// class. It is used to indicate that one of the parameters is outside its bounds.</remarks>
 [Serializable]
-[Guid(CapeOpenGuids.CapeOutOfBoExPtIid)] // "4438458A-1659-48c2-9138-03AD8B4C38D8"
+[Guid(CapeGuids.CapeOutOfBoExPtIid)] // "4438458A-1659-48c2-9138-03AD8B4C38D8"
 [ComVisible(true)]
 [ClassInterface(ClassInterfaceType.None)]
 public class CapeOutOfBoundsException : CapeBoundariesException,
@@ -742,7 +742,7 @@ public class CapeOutOfBoundsException : CapeBoundariesException,
 /// <see c = "CapeTimeOutException">CapeOpen.CapeTimeOutException</see> 
 /// derive from this class.</remarks>
 [Serializable]
-[Guid(CapeOpenGuids.CapeComPuExPtIid)]  // "9D416BF5-B9E3-429a-B13A-222EE85A92A7"
+[Guid(CapeGuids.CapeComPuExPtIid)]  // "9D416BF5-B9E3-429a-B13A-222EE85A92A7"
 [ComVisible(true), ClassInterface(ClassInterfaceType.None)]
 public class CapeComputationException : CapeUserException, ECapeComputation
 {
@@ -794,7 +794,7 @@ public class CapeComputationException : CapeUserException, ECapeComputation
 /// <summary>当未执行必要地初始化或初始化失败时，会抛出此异常。</summary>
 /// <remarks>The pre-requisites operations are not valid. The necessary initialisation has not been performed or has failed.</remarks>
 [Serializable]
-[Guid(CapeOpenGuids.CapeFaInLiExPtIid)]  // "E407595C-6D1C-4b8c-A29D-DB0BE73EFDDA"
+[Guid(CapeGuids.CapeFaInLiExPtIid)]  // "E407595C-6D1C-4b8c-A29D-DB0BE73EFDDA"
 [ComVisible(true)]
 [ClassInterface(ClassInterfaceType.None)]
 public class CapeFailedInitialisationException : CapeComputationException, ECapeFailedInitialisation
@@ -852,7 +852,7 @@ public class CapeFailedInitialisationException : CapeComputationException, ECape
 /// <see c = "CapeLimitedImplException ">CapeOpen.CapeLimitedImplException </see>
 /// derive from this class.</remarks>
 [Serializable]
-[Guid(CapeOpenGuids.CapeImTaExPtIid)]  // "7828A87E-582D-4947-9E8F-4F56725B6D75"
+[Guid(CapeGuids.CapeImTaExPtIid)]  // "7828A87E-582D-4947-9E8F-4F56725B6D75"
 [ComVisible(true)]
 [ClassInterface(ClassInterfaceType.None)]
 public class CapeImplementationException : CapeUserException, ECapeImplementation
@@ -907,7 +907,7 @@ public class CapeImplementationException : CapeUserException, ECapeImplementatio
 /// <remarks>An argument value of the operation is invalid. The position of the 
 /// argument value within the signature of the operation. First argument is as position 1.</remarks>
 [Serializable]
-[Guid(CapeOpenGuids.CapeInValArExPtIid)] // "B30127DA-8E69-4d15-BAB0-89132126BAC9"
+[Guid(CapeGuids.CapeInValArExPtIid)] // "B30127DA-8E69-4d15-BAB0-89132126BAC9"
 [ComVisible(true)]
 [ClassInterface(ClassInterfaceType.None)]
 public class CapeInvalidArgumentException : CapeBadArgumentException, ECapeInvalidArgument
@@ -964,7 +964,7 @@ public class CapeInvalidArgumentException : CapeBadArgumentException, ECapeInval
 /// <summary>该操作在当前情况下无效。</summary>
 /// <remarks>This exception is thrown when an operation is attempted that is not valid in the current context.</remarks>
 [Serializable]
-[Guid(CapeOpenGuids.CapeInValOpTiExPtIid)]  // "C0B943FE-FB8F-46b6-A622-54D30027D18B"
+[Guid(CapeGuids.CapeInValOpTiExPtIid)]  // "C0B943FE-FB8F-46b6-A622-54D30027D18B"
 [ComVisible(true)]
 [ClassInterface(ClassInterfaceType.None)]
 public class CapeInvalidOperationException : CapeComputationException, ECapeInvalidOperation
@@ -1018,7 +1018,7 @@ public class CapeInvalidOperationException : CapeComputationException, ECapeInva
 /// <summary>在操作请求之前，尚未调用必要的先决操作。</summary>
 /// <remarks>The specified prerequisite operation must be called prior to the operation throwing this exception.</remarks>
 [Serializable]
-[Guid(CapeOpenGuids.CapeBadInvOrExPtIid)]  // "07EAD8B4-4130-4ca6-94C1-E8EC4E9B23CB"
+[Guid(CapeGuids.CapeBadInvOrExPtIid)]  // "07EAD8B4-4130-4ca6-94C1-E8EC4E9B23CB"
 [ComVisible(true)]
 [ClassInterface(ClassInterfaceType.None)]
 public class CapeBadInvOrderException : CapeComputationException, ECapeBadInvOrder
@@ -1096,7 +1096,7 @@ public class CapeBadInvOrderException : CapeComputationException, ECapeBadInvOrd
 /// <remarks>Of course, this type of error could also appear outside the CO scope. In this case, 
 /// the error does not belong to the CO error handling. It is specific to the platform.</remarks>
 [Serializable]
-[Guid(CapeOpenGuids.CapeLiCeErExPtIid)] // "CF4C55E9-6B0A-4248-9A33-B8134EA393F6"
+[Guid(CapeGuids.CapeLiCeErExPtIid)] // "CF4C55E9-6B0A-4248-9A33-B8134EA393F6"
 [ComVisible(true)]
 [ClassInterface(ClassInterfaceType.None)]
 public class CapeLicenceErrorException : CapeDataException, ECapeLicenceError
@@ -1154,7 +1154,7 @@ public class CapeLicenceErrorException : CapeDataException, ECapeLicenceError
 /// evaluation copy), when the caller requests for a second creation this error shows 
 /// that this implementation is limited.</remarks>
 [Serializable]
-[Guid(CapeOpenGuids.CapeLimitedImplExIid)] // "5E6B74A2-D603-4e90-A92F-608E3F1CD39D"
+[Guid(CapeGuids.CapeLimitedImplExIid)] // "5E6B74A2-D603-4e90-A92F-608E3F1CD39D"
 [ComVisible(true)]
 [ClassInterface(ClassInterfaceType.None)]
 public class CapeLimitedImplException : CapeImplementationException, ECapeLimitedImpl
@@ -1209,7 +1209,7 @@ public class CapeLimitedImplException : CapeImplementationException, ECapeLimite
 /// to the compatibility with the CO standard. That is to say that the operation 
 /// exists, but it is not supported by the current implementation.</remarks>
 [Serializable]
-[Guid(CapeOpenGuids.CapeNoImplExPtIid)]  // "1D2488A6-C428-4e38-AFA6-04F2107172DA"
+[Guid(CapeGuids.CapeNoImplExPtIid)]  // "1D2488A6-C428-4e38-AFA6-04F2107172DA"
 [ComVisible(true)]
 [ClassInterface(ClassInterfaceType.None)]
 public class CapeNoImplException : CapeImplementationException, ECapeNoImpl
@@ -1262,7 +1262,7 @@ public class CapeNoImplException : CapeImplementationException, ECapeNoImpl
 /// <summary>表示该操作所需的资源不可用的异常类。</summary>
 /// <remarks>The physical resources necessary to the execution of the operation are out of limits.</remarks>
 [Serializable]
-[Guid(CapeOpenGuids.CapeOutOfReCeExPtIid)]  // "42B785A7-2EDD-4808-AC43-9E6E96373616"
+[Guid(CapeGuids.CapeOutOfReCeExPtIid)]  // "42B785A7-2EDD-4808-AC43-9E6E96373616"
 [ComVisible(true)]
 [ClassInterface(ClassInterfaceType.None)]
 public class CapeOutOfResourcesException : CapeUserException, ECapeOutOfResources, ECapeComputation
@@ -1316,7 +1316,7 @@ public class CapeOutOfResourcesException : CapeUserException, ECapeOutOfResource
 /// <summary>表示该操作所需的内存不可用的异常类。</summary>
 /// <remarks>he physical memory necessary to the execution of the operation is out of limit.</remarks>
 [Serializable]
-[Guid(CapeOpenGuids.CapeNoMeMoExPtIid)]  // "1056A260-A996-4a1e-8BAE-9476D643282B"
+[Guid(CapeGuids.CapeNoMeMoExPtIid)]  // "1056A260-A996-4a1e-8BAE-9476D643282B"
 [ComVisible(true)]
 [ClassInterface(ClassInterfaceType.None)]
 public class CapeNoMemoryException : CapeUserException, ECapeNoMemory
@@ -1368,7 +1368,7 @@ public class CapeNoMemoryException : CapeUserException, ECapeNoMemory
 /// <summary>异常类，表示发生了与持久性相关的错误。</summary>
 /// <remarks>The base class of the errors hierarchy related to the persistence.</remarks>
 [Serializable]
-[Guid(CapeOpenGuids.CapePerSiTeExPtIid)]  // "3237C6F8-3D46-47ee-B25F-52485A5253D8"
+[Guid(CapeGuids.CapePerSiTeExPtIid)]  // "3237C6F8-3D46-47ee-B25F-52485A5253D8"
 [ComVisible(true)]
 [ClassInterface(ClassInterfaceType.None)]
 public class CapePersistenceException : CapeUserException, ECapePersistence
@@ -1421,7 +1421,7 @@ public class CapePersistenceException : CapeUserException, ECapePersistence
 /// <summary>表示未找到持久性的异常类。</summary>
 /// <remarks>The requested object, table, or something else within the persistence system was not found.</remarks>
 [Serializable]
-[Guid(CapeOpenGuids.CapePeSiTeNotFoExPtIid)]  // "271B9E29-637E-4eb0-9588-8A53203A3959"
+[Guid(CapeGuids.CapePeSiTeNotFoExPtIid)]  // "271B9E29-637E-4eb0-9588-8A53203A3959"
 [ComVisible(true)]
 [ClassInterface(ClassInterfaceType.None)]
 public class CapePersistenceNotFoundException : CapePersistenceException, ECapePersistenceNotFound
@@ -1498,7 +1498,7 @@ public class CapePersistenceNotFoundException : CapePersistenceException, ECapeP
 /// <summary>表示内部持久性系统溢出的异常类。</summary>
 /// <remarks>During the persistence process, an overflow of internal persistence system occurred.</remarks>
 [Serializable]
-[Guid(CapeOpenGuids.CapePeSiOverFlExcPtIid)]  // "A119DE0B-C11E-4a14-BA5E-9A2D20B15578"
+[Guid(CapeGuids.CapePeSiOverFlExcPtIid)]  // "A119DE0B-C11E-4a14-BA5E-9A2D20B15578"
 [ComVisible(true)]
 [ClassInterface(ClassInterfaceType.None)]
 public class CapePersistenceOverflowException : CapeUserException,
@@ -1553,7 +1553,7 @@ public class CapePersistenceOverflowException : CapeUserException,
 /// <summary>表示持久性系统发生严重错误的异常类。</summary>
 /// <remarks>During the persistence process, a severe error occurred within the persistence system.</remarks>
 [Serializable]
-[Guid(CapeOpenGuids.CapePeSiSysErExIid)]  // "85CB2D40-48F6-4c33-BF0C-79CB00684440"
+[Guid(CapeGuids.CapePeSiSysErExIid)]  // "85CB2D40-48F6-4c33-BF0C-79CB00684440"
 [ComVisible(true)]
 [ClassInterface(ClassInterfaceType.None)]
 public class CapePersistenceSystemErrorException : CapePersistenceException,
@@ -1608,7 +1608,7 @@ public class CapePersistenceSystemErrorException : CapePersistenceException,
 /// <summary>对持久性系统内某些内容的访问未获授权。</summary>
 /// <remarks>This exception is thrown when the access to something within the persistence system is not authorised.</remarks>
 [Serializable]
-[Guid(CapeOpenGuids.CapeIllAccEssExIid)]  // "45843244-ECC9-495d-ADC3-BF9980A083EB"
+[Guid(CapeGuids.CapeIllAccEssExIid)]  // "45843244-ECC9-495d-ADC3-BF9980A083EB"
 [ComVisible(true)]
 [ClassInterface(ClassInterfaceType.None)]
 public class CapeIllegalAccessException : CapePersistenceException, ECapeIllegalAccess
@@ -1662,7 +1662,7 @@ public class CapeIllegalAccessException : CapePersistenceException, ECapeIllegal
 /// <summary>表示数值算法因故失败的异常类。</summary>
 /// <remarks>Indicates that a numerical algorithm failed for any reason.</remarks>
 [Serializable]
-[Guid(CapeOpenGuids.CapeSoLvErrExIid)]  // "F617AFEA-0EEE-4395-8C82-288BF8F2A136"
+[Guid(CapeGuids.CapeSoLvErrExIid)]  // "F617AFEA-0EEE-4395-8C82-288BF8F2A136"
 [ComVisible(true)]
 [ClassInterface(ClassInterfaceType.None)]
 public class CapeSolvingErrorException : CapeComputationException, ECapeSolvingError
@@ -1715,7 +1715,7 @@ public class CapeSolvingErrorException : CapeComputationException, ECapeSolvingE
 /// <summary>当 MINLP 算法的 Hessian 矩阵不可用时抛出的异常。</summary>
 /// <remarks>Exception thrown when the Hessian for the MINLP problem is not available.</remarks>
 [Serializable]
-[Guid(CapeOpenGuids.CapeHeInoNotAvBlExIid)]  // "3044EA08-F054-4315-B67B-4E3CD2CF0B1E"
+[Guid(CapeGuids.CapeHeInoNotAvBlExIid)]  // "3044EA08-F054-4315-B67B-4E3CD2CF0B1E"
 [ComVisible(true)]
 [ClassInterface(ClassInterfaceType.None)]
 public class CapeHessianInfoNotAvailableException : CapeSolvingErrorException,
@@ -1769,7 +1769,7 @@ public class CapeHessianInfoNotAvailableException : CapeSolvingErrorException,
 /// <summary>达到超时标准时抛出的异常。</summary>
 /// <remarks>Exception thrown when the time-out criterion is reached.</remarks>
 [Serializable]
-[Guid(CapeOpenGuids.CapeTimeOutExPtIid)]  // "0D5CA7D8-6574-4c7b-9B5F-320AA8375A3C"
+[Guid(CapeGuids.CapeTimeOutExPtIid)]  // "0D5CA7D8-6574-4c7b-9B5F-320AA8375A3C"
 [ComVisible(true)]
 [ClassInterface(ClassInterfaceType.None)]
 public class CapeTimeOutException : CapeUserException, ECapeTimeOut
@@ -1834,7 +1834,7 @@ public class CapeTimeOutException : CapeUserException, ECapeTimeOut
 /// appropriate .Net exception so users can use the .Net exception handling protocols.</remarks>
 /// <see c="COMExceptionHandler">COMExceptionHandler</see> 
 [Serializable]
-[Guid(CapeOpenGuids.ComCaOpExPtWrPerIid)]  // "31CD55DE-AEFD-44ff-8BAB-F6252DD43F16"
+[Guid(CapeGuids.ComCaOpExPtWrPerIid)]  // "31CD55DE-AEFD-44ff-8BAB-F6252DD43F16"
 [ComVisible(true)]
 [ClassInterface(ClassInterfaceType.None)]
 public class COMCapeOpenExceptionWrapper : CapeUserException
@@ -1871,7 +1871,7 @@ public class COMCapeOpenExceptionWrapper : CapeUserException
 /// <summary>当所请求的热力学属性不可用时抛出的异常。</summary>
 /// <remarks>Exception thrown when a requested thermodynamic property is not available.</remarks>
 [Serializable]
-[Guid(CapeOpenGuids.CapeThProPeNotAvBlExIid)]  // "5BA36B8F-6187-4e5e-B263-0924365C9A81"
+[Guid(CapeGuids.CapeThProPeNotAvBlExIid)]  // "5BA36B8F-6187-4e5e-B263-0924365C9A81"
 [ComVisible(true)]
 [ClassInterface(ClassInterfaceType.None)]
 public class CapeThrmPropertyNotAvailableException : CapeUserException,

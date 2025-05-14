@@ -13,7 +13,7 @@ namespace CapeOpen;
 /// </remarks>
 [Serializable]
 [ComVisible(true)]
-[Guid(CapeOpenGuids.CofeStreamTypeIid)]  // "D1B15843-C0F5-4CB7-B462-E1B80456808E"
+[Guid(CapeGuids.CofeStreamTypeIid)]  // "D1B15843-C0F5-4CB7-B462-E1B80456808E"
 public enum CofeStreamType
 {
 	/// <summary>
@@ -38,7 +38,7 @@ public enum CofeStreamType
 /// </remarks>
 [ComImport]
 [ComVisible(true)]
-[Guid(CapeOpenGuids.InCofeStreamIid)] // "B2A15C45-D878-4E56-A19A-DED6A6AD6F91"
+[Guid(CapeGuids.InCofeStreamIid)] // "B2A15C45-D878-4E56-A19A-DED6A6AD6F91"
 [Description("ICOFEStream Interface")]
 public interface ICOFEStream 
 {
@@ -98,7 +98,7 @@ public interface ICOFEStream
 /// </remarks>
 [ComImport]
 [ComVisible(true)]
-[Guid(CapeOpenGuids.InCofeMaterialIid)]  // "2BFFCBD3-7DAB-439D-9E25-FBECC8146BE8"
+[Guid(CapeGuids.InCofeMaterialIid)]  // "2BFFCBD3-7DAB-439D-9E25-FBECC8146BE8"
 [Description("ICOFEMaterial Interface")]
 public interface ICOFEMaterial
 {
@@ -126,7 +126,7 @@ public interface ICOFEMaterial
 
 [ComImport]
 [ComVisible(true)]
-[Guid(CapeOpenGuids.InCofeIconIid)]  // "5F6333E0-434F-4C03-85E2-6EB493EAE846"
+[Guid(CapeGuids.InCofeIconIid)]  // "5F6333E0-434F-4C03-85E2-6EB493EAE846"
 [Description("ICOFEIcon Interface")]
 internal interface ICOFEIcon
 {

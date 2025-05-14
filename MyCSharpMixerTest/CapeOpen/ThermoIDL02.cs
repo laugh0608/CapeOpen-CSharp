@@ -24,7 +24,7 @@ namespace CapeOpen;
 /// <summary>ICapeThermoCalculationRoutine is a mechanism for adding foreign calculation 
 /// routines to a physical property package.</summary>
 [ComImport,ComVisible(false)]
-[Guid(CapeOpenGuids.ICapeThermoCalculationRoutine_IID)]
+[Guid(CapeGuids.ICapeThermoCalculationRoutine_IID)]
 [Description("ICapeThermoCalculationRoutine Interface")]
 internal interface ICapeThermoCalculationRoutineCOM
 {
@@ -106,7 +106,7 @@ internal interface ICapeThermoCalculationRoutineCOM
 /// system provides them as CAPE-OPEN compliant components). A Properties Package may be a Simple 
 /// Properties Package, or at a vendors discretion, made up from Option Sets (see definition of Option Set).</para></remarks>
 [ComImport,ComVisible(false)]
-[Guid(CapeOpenGuids.ICapeThermoPropertyPackage_IID)]
+[Guid(CapeGuids.ICapeThermoPropertyPackage_IID)]
 [Description("ICapeThermoPropertyPackage Interface")]
 internal interface ICapeThermoPropertyPackageCOM
 {
@@ -282,7 +282,7 @@ internal interface ICapeThermoPropertyPackageCOM
 /// <summary>ICapeThermoCalculationRoutine interface is the mechanism for adding foreign
 /// calculation routines to a physical property package.</summary>
 [ComImport,ComVisible(false)]
-[Guid(CapeOpenGuids.ICapeThermoEquilibriumServer_IID)]
+[Guid(CapeGuids.ICapeThermoEquilibriumServer_IID)]
 [Description("ICapeThermoEquilibriumServer Interface")]
 public interface ICapeThermoEquilibriumServer
 {
@@ -382,7 +382,7 @@ public interface ICapeThermoEquilibriumServer
 /// to retrieve results and information stored in the Material Object.</summary>
 [ComImport]
 [ComVisible(false)]
-[Guid(CapeOpenGuids.InCapeTheMateComIid)]  // "678C0A9B-7D66-11D2-A67D-00105A42887F"
+[Guid(CapeGuids.InCapeTheMateComIid)]  // "678C0A9B-7D66-11D2-A67D-00105A42887F"
 [Description("ICapeThermoMaterial Interface")]
 internal interface ICapeThermoMaterialCOM
 {

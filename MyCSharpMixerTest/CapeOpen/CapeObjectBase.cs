@@ -273,7 +273,7 @@ public abstract class CapeObjectBase : CapeIdentification,
         var keyname = string.Concat("CLSID\\{", t.GUID.ToString(), "}");
         var classKey = baseKey.CreateSubKey(keyname);
         var catidKey = classKey.CreateSubKey("Implemented Categories");
-        catidKey.CreateSubKey(CapeOpenGuids.CapeOpenComponent_CATID);
+        catidKey.CreateSubKey(CapeGuids.CapeOpenComponent_CATID);
 
         var attributes = t.GetCustomAttributes(false);
         var nameInfoString = t.FullName;
@@ -287,19 +287,19 @@ public abstract class CapeObjectBase : CapeIdentification,
             switch (pt)
             {
                 case CapeUnitOperationAttribute:
-                    catidKey.CreateSubKey(CapeOpenGuids.CapeUnitOperation_CATID);
+                    catidKey.CreateSubKey(CapeGuids.CapeUnitOperation_CATID);
                     break;
                 case CapeFlowsheetMonitoringAttribute:
-                    catidKey.CreateSubKey(CapeOpenGuids.CATID_MONITORING_OBJECT);
+                    catidKey.CreateSubKey(CapeGuids.CATID_MONITORING_OBJECT);
                     break;
                 case CapeConsumesThermoAttribute:
-                    catidKey.CreateSubKey(CapeOpenGuids.Consumes_Thermo_CATID);
+                    catidKey.CreateSubKey(CapeGuids.Consumes_Thermo_CATID);
                     break;
                 case CapeSupportsThermodynamics10Attribute:
-                    catidKey.CreateSubKey(CapeOpenGuids.SupportsThermodynamics10_CATID);
+                    catidKey.CreateSubKey(CapeGuids.SupportsThermodynamics10_CATID);
                     break;
                 case CapeSupportsThermodynamics11Attribute:
-                    catidKey.CreateSubKey(CapeOpenGuids.SupportsThermodynamics11_CATID);
+                    catidKey.CreateSubKey(CapeGuids.SupportsThermodynamics11_CATID);
                     break;
                 case CapeNameAttribute nameAttribute:
                     nameInfoString = nameAttribute.Name;

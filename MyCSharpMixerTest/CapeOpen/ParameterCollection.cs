@@ -44,7 +44,7 @@ internal class ParameterCollectionTypeConverter : ExpandableObjectConverter
     typeof(ICapeIdentificationEvents), 
     /*typeof(ICapeCollectionEvents),*/ 
     typeof(IBindingList))]
-[Guid(CapeOpenGuids.PpParameterCollectionIid)] // ICapeThermoMaterialObject_IID "64A1B36C-106B-4d05-B585-D176CD4DD1DB"
+[Guid(CapeGuids.PpParameterCollectionIid)] // ICapeThermoMaterialObject_IID "64A1B36C-106B-4d05-B585-D176CD4DD1DB"
 [Description("")]
 //[TypeConverter(typeof(ParameterCollectionTypeConverter))]
 [ClassInterface(ClassInterfaceType.None)]

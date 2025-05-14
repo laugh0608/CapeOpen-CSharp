@@ -16,7 +16,7 @@ namespace CapeOpen;
 /// </remarks>
 [InterfaceType(ComInterfaceType.InterfaceIsIDispatch)]
 [ComVisible(true)]
-[Guid(CapeOpenGuids.InCaBoolParaSpecEveIid)]  // "07D17ED3-B25A-48EA-8261-5ED2D076ABDD"
+[Guid(CapeGuids.InCaBoolParaSpecEveIid)]  // "07D17ED3-B25A-48EA-8261-5ED2D076ABDD"
 [Description("CapeRealParameterEvents Interface")]
 internal interface ICapeBooleanParameterSpecEvents
 {
@@ -60,7 +60,7 @@ internal interface ICapeBooleanParameterSpecEvents
 [Serializable]
 [ComSourceInterfaces(typeof(ICapeBooleanParameterSpecEvents))]
 [ComVisible(true)]
-[Guid(CapeOpenGuids.PpBooleanParameterIid)]  // "8B8BC504-EEB5-4a13-B016-9614543E4536"
+[Guid(CapeGuids.PpBooleanParameterIid)]  // "8B8BC504-EEB5-4a13-B016-9614543E4536"
 [ClassInterface(ClassInterfaceType.None)]
 public class BooleanParameter : CapeParameter,
     ICapeParameter, ICapeParameterSpec, ICapeParameterSpecCOM,
@@ -278,7 +278,7 @@ public class BooleanParameter : CapeParameter,
 [Serializable]
 [ComSourceInterfaces(typeof(ICapeBooleanParameterSpecEvents))]
 [ComVisible(true)]
-[Guid(CapeOpenGuids.BooleanParameterWrapIid)]  // "A6751A39-8A2C-4AFC-AD57-6395FFE0A7FE"
+[Guid(CapeGuids.BooleanParameterWrapIid)]  // "A6751A39-8A2C-4AFC-AD57-6395FFE0A7FE"
 [ClassInterface(ClassInterfaceType.None)]
 internal class BooleanParameterWrapper : CapeParameter,
     ICapeParameter, ICapeParameterSpec, ICapeBooleanParameterSpec   

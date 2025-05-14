@@ -11,7 +11,7 @@ namespace CapeOpen;
 /// Summary for WAR
 /// </summary>
 [Serializable,ComVisible(true)]
-[Guid(CapeOpenGuids.PpWarAddInIid)]  // "0BE9CCFD-29B4-4a42-B34E-76F5FE9B6BB4"
+[Guid(CapeGuids.PpWarAddInIid)]  // "0BE9CCFD-29B4-4a42-B34E-76F5FE9B6BB4"
 [CapeName("WAR Add-In")]
 [CapeAbout("Waste Reduction Algorithm Add-in")]
 [CapeDescription("Waste Reduction Algorithm Add-in")]

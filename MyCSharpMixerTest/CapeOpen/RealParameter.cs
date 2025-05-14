@@ -44,7 +44,7 @@ internal class RealParameterTypeConverter : ParameterTypeConverter
 
 [InterfaceType(ComInterfaceType.InterfaceIsIDispatch)]
 [ComVisible(true)]
-[Guid(CapeOpenGuids.InRealPaSpecEveIid)]  // "058B416C-FC61-4E64-802A-19070CB39703"
+[Guid(CapeGuids.InRealPaSpecEveIid)]  // "058B416C-FC61-4E64-802A-19070CB39703"
 [Description("CapeRealParameterEvents Interface")]
 internal interface IRealParameterSpecEvents
 {
@@ -97,7 +97,7 @@ internal interface IRealParameterSpecEvents
 [Serializable]
 [ComSourceInterfaces(typeof(IParameterEvents), typeof(IRealParameterSpecEvents))]
 [ComVisible(true)]
-[Guid(CapeOpenGuids.PpRealParTerIid)]  //ICapeThermoMaterialObject_IID  "77E39C43-046B-4b1f-9EE0-AA9EFC55D2EE"
+[Guid(CapeGuids.PpRealParTerIid)]  //ICapeThermoMaterialObject_IID  "77E39C43-046B-4b1f-9EE0-AA9EFC55D2EE"
 [ClassInterface(ClassInterfaceType.None)]
 [TypeConverter(typeof(RealParameterTypeConverter))]
 public class RealParameter : CapeParameter,
@@ -823,7 +823,7 @@ public class RealParameter : CapeParameter,
 [Serializable]
 [ComSourceInterfaces(typeof(IRealParameterSpecEvents))]
 [ComVisible(true)]
-[Guid(CapeOpenGuids.PpRealParTerWapIid)]  //ICapeThermoMaterialObject_IID)  "C7095FE4-E61D-4FFF-BA02-013FD38DBAE9"
+[Guid(CapeGuids.PpRealParTerWapIid)]  //ICapeThermoMaterialObject_IID)  "C7095FE4-E61D-4FFF-BA02-013FD38DBAE9"
 [ClassInterface(ClassInterfaceType.None)]
 [TypeConverter(typeof(RealParameterTypeConverter))]
 internal class RealParameterWrapper : CapeParameter,

@@ -14,7 +14,7 @@ This file can view properly with any basic editors and browsers (validation done
 
 namespace CapeOpen;
 
-internal abstract class CapeOpenGuids
+internal abstract class CapeGuids
 {
     // CAPE-OPEN Category
     public const string CapeOpenComponent_CATID = "{678c09a1-7d66-11d2-a67d-00105a42887f}";

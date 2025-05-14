@@ -16,7 +16,7 @@ namespace CapeOpen;
 /// </remarks>
 [InterfaceType(ComInterfaceType.InterfaceIsIDispatch)]
 [ComVisible(true)]
-[Guid(CapeOpenGuids.InCapeIntParaSpecEveIid)]  // "2EA7C47A-A4E0-47A2-8AC1-658F96A0B79D"
+[Guid(CapeGuids.InCapeIntParaSpecEveIid)]  // "2EA7C47A-A4E0-47A2-8AC1-658F96A0B79D"
 [Description("CapeIntegerParameterEvents Interface")]
 internal interface ICapeIntegerParameterSpecEvents
 {
@@ -93,7 +93,7 @@ internal interface ICapeIntegerParameterSpecEvents
 [Serializable]
 [ComSourceInterfaces(typeof(ICapeIntegerParameterSpecEvents))]
 [ComVisible(true)]
-[Guid(CapeOpenGuids.PpIntegerParameterIid)]  // "2C57DC9F-1368-42eb-888F-5BC6ED7DDFA7"
+[Guid(CapeGuids.PpIntegerParameterIid)]  // "2C57DC9F-1368-42eb-888F-5BC6ED7DDFA7"
 [ClassInterface(ClassInterfaceType.None)]
 public class IntegerParameter : CapeParameter, ICapeParameter, ICapeParameterSpec,
     ICapeParameterSpecCOM, ICapeIntegerParameterSpec //, INotifyPropertyChanged
@@ -440,7 +440,7 @@ public class IntegerParameter : CapeParameter, ICapeParameter, ICapeParameterSpe
 [Serializable]
 [ComVisible(true)]
 [ComSourceInterfaces(typeof(ICapeIntegerParameterSpecEvents))]
-[Guid(CapeOpenGuids.IntegerParaWrapperIid)]  // ICapeThermoMaterialObject_IID "EFC01B53-9A6A-4AD9-97BE-3F0294B3BBFB"
+[Guid(CapeGuids.IntegerParaWrapperIid)]  // ICapeThermoMaterialObject_IID "EFC01B53-9A6A-4AD9-97BE-3F0294B3BBFB"
 [ClassInterface(ClassInterfaceType.None)]
 internal class IntegerParameterWrapper : CapeParameter,
     ICapeParameter, ICapeParameterSpec, ICapeIntegerParameterSpec, ICloneable //, INotifyPropertyChanged

@@ -25,7 +25,7 @@ namespace CapeOpen;
 /// <remarks>由 PME 支持的接口，用于将指向 ICapeUtilities:SetSimulation 的引用传递给 PMC。
 /// 然后，PMC 可以使用 PME COSE 接口中的任何接口。</remarks>
 [ComImport, ComVisible(false)]
-[Guid(CapeOpenGuids.ICapeSimulationContext_IID)]
+[Guid(CapeGuids.ICapeSimulationContext_IID)]
 [Description("ICapeSimulation Context Interface")]
 public interface ICapeSimulationContext
 {
@@ -39,7 +39,7 @@ public interface ICapeSimulationContext
 /// 错误通用接口无法满足这些要求，因为它们会停止 PMC 代码的执行并向 PME 发出异常情况信号。
 /// 该文件处理简单信息或警告消息的传递。</remarks>
 [ComImport, ComVisible(false)]
-[Guid(CapeOpenGuids.ICapeDiagnostic_IID)]
+[Guid(CapeGuids.ICapeDiagnostic_IID)]
 [Description("ICapeDiagnostic Interface")]
 public interface ICapeDiagnostic
 {
@@ -68,7 +68,7 @@ public interface ICapeDiagnostic
 /// 因此，将执行此选择和创建热力学引擎的责任委托给 COSE，而不是每个 PMC 实现支持，将导致更薄和更易于编码的单元操作组件。
 /// 如果流股对象模板的配置在 PME 侧，则单元操作仅需要额外的功能即可访问已配置的物料模板列表并从中选择一个。</remarks>
 [ComImport, ComVisible(false)]
-[Guid(CapeOpenGuids.ICapeMaterialTemplateSystem_IID)]
+[Guid(CapeGuids.ICapeMaterialTemplateSystem_IID)]
 [Description("ICapeMaterialTemplateSystem Interface")]
 public interface ICapeMaterialTemplateSystem
 {
@@ -112,7 +112,7 @@ public interface ICapeMaterialTemplateSystem
 /// 在 PME 和 PMC 属于同一计算进程时出现，显然，这种 FORTRAN 通道功能仅在架构不是分布式时适用。由于我们将来
 /// 可以交换此类信息，因此必须建立一个通用且可扩展的机制。调用模式是一个很好的候选者。因此，FORTRAN 通道的特定字符串值将被标准化。</remarks>
 [ComImport, ComVisible(false)]
-[Guid(CapeOpenGuids.ICapeCOSEUtilities_IID)]
+[Guid(CapeGuids.ICapeCOSEUtilities_IID)]
 [Description("ICapeCOSEUtilities Interface")]
 public interface ICapeCOSEUtilities
 {

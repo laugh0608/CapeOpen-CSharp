@@ -25,7 +25,7 @@ Petroleum Fractions interfaces
 /// Provides methods to identify a CAPE-OPEN component.
 /// </summary>
 [ComImport,ComVisible(false)]
-[Guid(CapeOpenGuids.InCapePetFractionsIid)]  // "72A94DE9-9A69-4369-B508-C033CDFD4F81"
+[Guid(CapeGuids.InCapePetFractionsIid)]  // "72A94DE9-9A69-4369-B508-C033CDFD4F81"
 [Description("ICapePetroFractions Interface")]
 public interface ICapePetroFractions
 {
@@ -96,7 +96,7 @@ public interface ICapePetroFractions
 /// The type of compound for use in petroleum fractions
 /// </summary>
 [Serializable]
-[Guid(CapeOpenGuids.CapeCompoundTypeIid)]  // "8091E285-3CFA-4a41-A5C4-141D0D709D87"
+[Guid(CapeGuids.CapeCompoundTypeIid)]  // "8091E285-3CFA-4a41-A5C4-141D0D709D87"
 public enum CapeCompoundType
 {
     CAPE_COMPOUND_REAL,

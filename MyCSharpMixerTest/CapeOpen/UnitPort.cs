@@ -35,7 +35,7 @@ public delegate void PortConnectedHandler(object sender, PortConnectedEventArgs 
 
 [InterfaceType(ComInterfaceType.InterfaceIsIDispatch)]
 [ComVisible(true)]
-[Guid(CapeOpenGuids.InUnitPortEventsIid)]  // "3530B780-5E59-42B1-801B-3C18F2AD08EE"
+[Guid(CapeGuids.InUnitPortEventsIid)]  // "3530B780-5E59-42B1-801B-3C18F2AD08EE"
 [Description("CapeRealParameterEvents Interface")]
 internal interface IUnitPortEvents
 {
@@ -73,7 +73,7 @@ internal interface IUnitPortEvents
 ///	the interface to a useful degree. Each port type is to be distinguished by the value of an attribute.</para></remarks>
 [Serializable,ComVisible(true)]
 [ComSourceInterfaces(typeof(IUnitPortEvents))]
-[Guid(CapeOpenGuids.PpUnitPortIid)] //ICapeThermoMaterialObject_IID  "51066F52-C0F9-48d7-939E-3A229010E77C"
+[Guid(CapeGuids.PpUnitPortIid)] //ICapeThermoMaterialObject_IID  "51066F52-C0F9-48d7-939E-3A229010E77C"
 [Description("")]
 [ClassInterface(ClassInterfaceType.None)]
 [TypeConverter(typeof(PortConverter))]

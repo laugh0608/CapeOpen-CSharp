@@ -28,7 +28,7 @@ internal class OptionParameterValueConverter : StringConverter
 
 [InterfaceType(ComInterfaceType.InterfaceIsIDispatch)]
 [ComVisible(true)]
-[Guid(CapeOpenGuids.InOptParSpecEveIid)]  // "991F95FB-2210-4E44-99B3-4AB793FF46C2"
+[Guid(CapeGuids.InOptParSpecEveIid)]  // "991F95FB-2210-4E44-99B3-4AB793FF46C2"
 [Description("CapeRealParameterEvents Interface")]
 internal interface IOptionParameterSpecEvents
 {
@@ -99,7 +99,7 @@ internal interface IOptionParameterSpecEvents
 [Serializable]
 [ComSourceInterfaces(typeof(IOptionParameterSpecEvents))]
 [ComVisible(true)]
-[Guid(CapeOpenGuids.PpOptionParameterIid)]  // "8EB0F647-618C-4fcc-A16F-39A9D57EA72E"
+[Guid(CapeGuids.PpOptionParameterIid)]  // "8EB0F647-618C-4fcc-A16F-39A9D57EA72E"
 [ClassInterface(ClassInterfaceType.None)]
 public class OptionParameter : CapeParameter,
     ICapeParameter, ICapeParameterSpec, ICapeParameterSpecCOM, ICapeOptionParameterSpec,
@@ -489,7 +489,7 @@ public class OptionParameter : CapeParameter,
 [Serializable]
 [ComSourceInterfaces(typeof(IOptionParameterSpecEvents))]
 [ComVisible(true)]
-[Guid(CapeOpenGuids.OptParaWrapperIid)]  // "70994E8C-179E-40E1-A51B-54A5C0F64A84"
+[Guid(CapeGuids.OptParaWrapperIid)]  // "70994E8C-179E-40E1-A51B-54A5C0F64A84"
 [ClassInterface(ClassInterfaceType.None)]
 class OptionParameterWrapper : CapeParameter,
     ICapeParameter, ICapeParameterSpec, ICapeOptionParameterSpec, ICapeOptionParameterSpecCOM,

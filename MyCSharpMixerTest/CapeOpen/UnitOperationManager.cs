@@ -34,7 +34,7 @@ namespace CapeOpen;
 /// </remarks>
 [Serializable]
 [ComVisible(true)]
-[Guid(CapeOpenGuids.PpUnitOperaWrapIid)]  // ICapeThermoMaterialObject_IID "B41DECE0-6C99-4CA4-B0EB-EFADBDCE23E9"
+[Guid(CapeGuids.PpUnitOperaWrapIid)]  // ICapeThermoMaterialObject_IID "B41DECE0-6C99-4CA4-B0EB-EFADBDCE23E9"
 [CapeName("UnitOperationWrapper")]
 [CapeDescription("This class provides access to unit operations based upon .Net-based assembly location rules.")]
 [CapeVersion("1.0")]

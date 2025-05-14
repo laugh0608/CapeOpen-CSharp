@@ -120,7 +120,7 @@ public enum CapeErrorInterfaceHR
 /// <summary>这个接口提供了关于由于值超出其范围而导致的错误的信息。它可以被抛出，以指示方法参数或对象参数值超出范围。</summary>
 /// <remarks>ECapeBoundaries是一个“实用程序”接口，它分解了一个描述值、其类型和界限的状态。</remarks>
 [ComImport, ComVisible(false)]
-[Guid(CapeOpenGuids.ECapeBoundaries_IID)]
+[Guid(CapeGuids.ECapeBoundaries_IID)]
 [Description("ECapeBoundaries Interface")]
 public interface ECapeBoundaries
 {
@@ -153,7 +153,7 @@ public interface ECapeBoundaries
 /// <summary>CAPE-OPEN “根”异常接口。</summary>
 /// <remarks>CAPE-OPEN 错误层次结构的接口。系统包和 ECapeUser 接口依赖于此错误。</remarks>
 [ComImport, ComVisible(false)]
-[Guid(CapeOpenGuids.ECapeRoot_IID)]
+[Guid(CapeGuids.ECapeRoot_IID)]
 [Description("ECapeRoot Interface")]
 public interface ECapeRoot
 {
@@ -166,7 +166,7 @@ public interface ECapeRoot
 /// <summary>CAPE-OPEN 错误层次结构的底层接口。</summary>
 /// <remarks>ECapeUser 接口定义了 CAPE-OPEN 错误的最低状态。</remarks>
 [ComImport, ComVisible(false)]
-[Guid(CapeOpenGuids.ECapeUser_IID)]
+[Guid(CapeGuids.ECapeUser_IID)]
 [Description("ECapeUser Interface")]
 public interface ECapeUser
 {
@@ -219,7 +219,7 @@ public interface ECapeUser
 /// <summary>当由操作指定的其他错误不适用时，将引发此异常。</summary>
 /// <remarks>CAPE-OPEN 对象可以抛出的标准异常，表示发生的错误不适合该对象支持的其他任何错误。</remarks>
 [ComImport, ComVisible(false)]
-[Guid(CapeOpenGuids.ECapeUnknown_IID)]
+[Guid(CapeGuids.ECapeUnknown_IID)]
 [Description("ECapeUnknown Interface")]
 public interface ECapeUnknown { }
 
@@ -228,7 +228,7 @@ public interface ECapeUnknown { }
 /// <remarks> ECapeDataException 接口是与数据相关的错误的基础接口。数据是操作的参数，
 /// 来自Parameter Common Interface 的参数和关于许可证密钥的信息。</remarks>
 [ComImport, ComVisible(false)]
-[Guid(CapeOpenGuids.ECapeData_IID)]
+[Guid(CapeGuids.ECapeData_IID)]
 [Description("ECapeData Interface")]
 public interface ECapeData { }
 
@@ -236,7 +236,7 @@ public interface ECapeData { }
 /// <summary>操作无法完成，因为许可证协议未得到验证。</summary>
 /// <remarks>当然，这种错误也可能出现在 CO 的范围之外。在这种情况下，错误不属于 CO 的错误处理。它是特定于平台的。</remarks>
 [ComImport, ComVisible(false)]
-[Guid(CapeOpenGuids.ECapeLicenceError_IID)]
+[Guid(CapeGuids.ECapeLicenceError_IID)]
 [Description("ECapeLicenceError Interface")]
 public interface ECapeLicenceError { }
 
@@ -244,7 +244,7 @@ public interface ECapeLicenceError { }
 /// <summary>参数，即来自参数公共接口的对象，具有无效状态。</summary>
 /// <remarks>无效参数的名称以及参数本身可以从异常中获取。</remarks>
 [ComImport, ComVisible(false)]
-[Guid(CapeOpenGuids.ECapeBadCOParameter_IID)]
+[Guid(CapeGuids.ECapeBadCOParameter_IID)]
 [Description("ECapeBadCOParameter Interface")]
 public interface ECapeBadCOParameter
 {
@@ -264,7 +264,7 @@ public interface ECapeBadCOParameter
 /// <summary>传递了无效的参数值。</summary>
 /// <remarks>函数调用包含无效的参数值。例如，过渡阶段名称不属于 CO 阶段列表。</remarks>
 [ComImport, ComVisible(false)]
-[Guid(CapeOpenGuids.ECapeBadArg093Iid)] // 678c0b16-7d66-11d2-a67d-00105a42887f
+[Guid(CapeGuids.ECapeBadArg093Iid)] // 678c0b16-7d66-11d2-a67d-00105a42887f
 [Description("ECapeBadArgument Interface")]
 public interface ECapeBadArgument093
 {
@@ -280,7 +280,7 @@ public interface ECapeBadArgument093
 /// <summary>传递了无效的参数值。</summary>
 /// <remarks>函数调用包含无效的参数值。例如，过渡阶段名称不属于 CO 阶段列表。</remarks>
 [ComImport, ComVisible(false)]
-[Guid(CapeOpenGuids.ECapeBadArgument_IID)]
+[Guid(CapeGuids.ECapeBadArgument_IID)]
 [Description("ECapeBadArgument Interface")]
 public interface ECapeBadArgument
 {
@@ -296,7 +296,7 @@ public interface ECapeBadArgument
 /// <summary>传递了无效的参数值。例如，传递的相位名称不属于 CO 相位列表。</summary>
 /// <remarks>操作的一个参数值无效。参数值在操作签名中的位置。第一个参数是位置 1。</remarks>
 [ComImport, ComVisible(false)]
-[Guid(CapeOpenGuids.ECapeInvalidArgument_IID)]
+[Guid(CapeGuids.ECapeInvalidArgument_IID)]
 [Description("ECapeInvalidArgument Interface")]
 public interface ECapeInvalidArgument { }
 
@@ -304,7 +304,7 @@ public interface ECapeInvalidArgument { }
 /// <summary>参数值超出范围。</summary>
 /// <remarks>这个类是从 <see cref = "ECapeBoundaries"/> 接口派生的。它用于指示其中一个参数超出了其范围。</remarks>
 [ComImport, ComVisible(false)]
-[Guid(CapeOpenGuids.ECapeOutOfBounds_IID)]
+[Guid(CapeGuids.ECapeOutOfBounds_IID)]
 [Description("ECapeOutOfBounds Interface")]
 public interface ECapeOutOfBounds { }
 
@@ -312,7 +312,7 @@ public interface ECapeOutOfBounds { }
 /// <summary>一个异常，表示当前对象没有实现请求的操作。</summary>
 /// <remarks>即使由于与 CO 标准的兼容性可以调用此操作，该操作“不”被实现。也就是说，操作存在，但当前实现不支持它。</remarks>
 [ComImport, ComVisible(false)]
-[Guid(CapeOpenGuids.ECapeNoImpl_IID)]
+[Guid(CapeGuids.ECapeNoImpl_IID)]
 [Description("ECapeNoImpl Interface")]
 public interface ECapeNoImpl { }
 
@@ -322,7 +322,7 @@ public interface ECapeNoImpl { }
 /// 如果调用者请求 PH 闪蒸，则此错误表示支持特定的闪蒸计算，但不支持所请求的闪蒸计算。
 /// 该工厂只能创建一个实例（因为组件是评估副本），当调用者请求第二个创建时，此错误表明此实现是有限的。</remarks>
 [ComImport, ComVisible(false)]
-[Guid(CapeOpenGuids.ECapeLimitedImpl_IID)]
+[Guid(CapeGuids.ECapeLimitedImpl_IID)]
 [Description("ECapeLimitedImpl Interface")]
 public interface ECapeLimitedImpl { }
 
@@ -331,7 +331,7 @@ public interface ECapeLimitedImpl { }
 /// <remarks>该类用于表示在对象的实现过程中发生了错误。
 /// <see cref = "ECapeNoImpl"/> 和 <see cref = "ECapeLimitedImpl"/> 等与实现相关的类都派生于该类。</remarks>
 [ComImport, ComVisible(false)]
-[Guid(CapeOpenGuids.ECapeImplementation_IID)]
+[Guid(CapeGuids.ECapeImplementation_IID)]
 [Description("ECapeImplementation Interface")]
 public interface ECapeImplementation { }
 
@@ -339,7 +339,7 @@ public interface ECapeImplementation { }
 /// <summary>一个异常，表示此操作所需的资源不可用。</summary>
 /// <remarks>执行操作所需的实物资源超出了限制。</remarks>
 [ComImport, ComVisible(false)]
-[Guid(CapeOpenGuids.ECapeOutOfResources_IID)]
+[Guid(CapeGuids.ECapeOutOfResources_IID)]
 [Description("ECapeOutOfResources Interface")]
 public interface ECapeOutOfResources { }
 
@@ -347,14 +347,14 @@ public interface ECapeOutOfResources { }
 /// <summary>一个异常，表示此操作所需的内存不可用。</summary>
 /// <remarks>执行该操作所需的物理内存超出限制。</remarks>
 [ComImport, ComVisible(false)]
-[Guid(CapeOpenGuids.ECapeNoMemory_IID)]
+[Guid(CapeGuids.ECapeNoMemory_IID)]
 [Description("ECapeNoMemory Interface")]
 public interface ECapeNoMemory { }
 
 // ECapeTimeOut 接口
 /// <summary>达到超时标准时引发异常。</summary>
 [ComImport, ComVisible(false)]
-[Guid(CapeOpenGuids.ECapeTimeOut_IID)]
+[Guid(CapeGuids.ECapeTimeOut_IID)]
 [Description("ECapeTimeOut Interface")]
 public interface ECapeTimeOut { }
 
@@ -362,7 +362,7 @@ public interface ECapeTimeOut { }
 /// <summary>当必要地初始化没有执行或失败时，抛出该异常。</summary>
 /// <remarks>先决条件操作无效。必要地初始化尚未执行或已失败。</remarks>
 [ComImport, ComVisible(false)]
-[Guid(CapeOpenGuids.ECapeFailedInitialisation_IID)]
+[Guid(CapeGuids.ECapeFailedInitialisation_IID)]
 [Description("ECapeFailedInitialisation Interface")]
 public interface ECapeFailedInitialisation { }
 
@@ -370,7 +370,7 @@ public interface ECapeFailedInitialisation { }
 /// <summary>一种异常，表示数值算法由于某种原因而失败。</summary>
 /// <remarks>表示数值算法因任何原因失败。</remarks>
 [ComImport, ComVisible(false)]
-[Guid(CapeOpenGuids.ECapeSolvingError_IID)]
+[Guid(CapeGuids.ECapeSolvingError_IID)]
 [Description("ECapeSolvingError Interface")]
 public interface ECapeSolvingError { }
 
@@ -378,7 +378,7 @@ public interface ECapeSolvingError { }
 /// <summary>在操作请求之前，没有调用必要的先决条件操作。</summary>
 /// <remarks>在引发此异常的操作之前，必须调用指定的先决条件操作。</remarks>
 [ComImport, ComVisible(false)]
-[Guid(CapeOpenGuids.ECapeBadInvOrder_IID)]
+[Guid(CapeGuids.ECapeBadInvOrder_IID)]
 [Description("ECapeBadInvOrder Interface")]
 public interface ECapeBadInvOrder
 {
@@ -391,7 +391,7 @@ public interface ECapeBadInvOrder
 /// <summary>此操作在当前上下文中无效。</summary>
 /// <remarks>当试图执行在当前上下文中无效的操作时，将引发此异常。</remarks>
 [ComImport, ComVisible(false)]
-[Guid(CapeOpenGuids.ECapeInvalidOperation_IID)]
+[Guid(CapeGuids.ECapeInvalidOperation_IID)]
 [Description("ECapeInvalidOperation Interface")]
 public interface ECapeInvalidOperation { }
 
@@ -406,7 +406,7 @@ public interface ECapeInvalidOperation { }
 /// <see cref = "ECapeNoMemory"/>, 和 
 /// <see cref = "ECapeTimeOut"/> </remarks>
 [ComImport, ComVisible(false)]
-[Guid(CapeOpenGuids.ECapeComputation_IID)]
+[Guid(CapeGuids.ECapeComputation_IID)]
 [Description("ECapeComputation Interface")]
 public interface ECapeComputation { }
 
@@ -414,7 +414,7 @@ public interface ECapeComputation { }
 /// <summary>一个异常，指示发生了与持久性相关的错误。</summary>
 /// <remarks>与持久性相关的错误层次结构的基础。</remarks>
 [ComImport, ComVisible(false)]
-[Guid(CapeOpenGuids.ECapePersistence_IID)]
+[Guid(CapeGuids.ECapePersistence_IID)]
 [Description("ECapePersistence Interface")]
 public interface ECapePersistence { }
 
@@ -422,7 +422,7 @@ public interface ECapePersistence { }
 /// <summary>对持久性系统中的某些内容的访问是未经授权的。</summary>
 /// <remarks>当对持久性系统中的某些内容的访问未经授权时，就会抛出这个异常。</remarks>
 [ComImport, ComVisible(false)]
-[Guid(CapeOpenGuids.ECapeIllegalAccess_IID)]
+[Guid(CapeGuids.ECapeIllegalAccess_IID)]
 [Description("ECapeIllegalAccess Interface")]
 public interface ECapeIllegalAccess { }
 
@@ -430,7 +430,7 @@ public interface ECapeIllegalAccess { }
 /// <summary>指示未找到持久性的异常。</summary>
 /// <remarks>在持久性系统中找不到请求的对象、表或其他内容。</remarks>
 [ComImport, ComVisible(false)]
-[Guid(CapeOpenGuids.ECapePersistenceNotFound_IID)]
+[Guid(CapeGuids.ECapePersistenceNotFound_IID)]
 [Description("ECapePersistenceNotFound Interface")]
 public interface ECapePersistenceNotFound
 {
@@ -445,7 +445,7 @@ public interface ECapePersistenceNotFound
 /// <summary>指示持久性系统中发生严重错误的异常。</summary>
 /// <remarks>During the persistence process, a severe error occurred within the persistence system.</remarks>
 [ComImport, ComVisible(false)]
-[Guid(CapeOpenGuids.ECapePersistenceSystemError_IID)]
+[Guid(CapeGuids.ECapePersistenceSystemError_IID)]
 [Description("ECapePersistenceSystemError Interface")]
 public interface ECapePersistenceSystemError { }
 
@@ -453,7 +453,7 @@ public interface ECapePersistenceSystemError { }
 /// <summary>指示内部持久性系统溢出的异常。</summary>
 /// <remarks>During the persistence process, an overflow of internal persistence system occurred.</remarks>
 [ComImport, ComVisible(false)]
-[Guid(CapeOpenGuids.ECapePersistenceOverflow_IID)]
+[Guid(CapeGuids.ECapePersistenceOverflow_IID)]
 [Description("ECapePersistenceOverflow Interface")]
 public interface ECapePersistenceOverflow { }
 
@@ -461,14 +461,14 @@ public interface ECapePersistenceOverflow { }
 /// <remarks>请求的属性中至少有一个项目无法返回。这可能是由于属性不能在
 /// 指定的条件下或指定的阶段计算。如果未实现属性计算，则应返回 <see cref = "ECapeLimitedImpl"/>。</remarks>
 [ComImport, ComVisible(false)]
-[Guid(CapeOpenGuids.ECapeThProNotAvIid)] // 678C09B6-7D66-11D2-A67D-00105A42887F
+[Guid(CapeGuids.ECapeThProNotAvIid)] // 678C09B6-7D66-11D2-A67D-00105A42887F
 [Description("ECapeThrmPropertyNotAvailable Interface")]
 public interface ECapeThrmPropertyNotAvailable { }
 
 /// <summary>当 MINLP 问题的海森矩阵不可用时抛出异常。</summary>
 /// <remarks>混合整数非线性规划（MINLP）算法</remarks>
 [ComImport, ComVisible(false)]
-[Guid(CapeOpenGuids.ECapeHeInfoNotAvIid)] // 3FF0B24B-4299-4DAC-A46E-7843728AD205
+[Guid(CapeGuids.ECapeHeInfoNotAvIid)] // 3FF0B24B-4299-4DAC-A46E-7843728AD205
 [Description("ECapeHessianInfoNotAvailable Interface")]
 public interface ECapeHessianInfoNotAvailable
 {
@@ -518,7 +518,7 @@ public interface ECapeHessianInfoNotAvailable
 
 /// <summary>当问题超出求解器的范围时引发异常。</summary>
 [ComImport, ComVisible(false)]
-[Guid(CapeOpenGuids.ECapeOutSoScopeIid)] // 678c0b0f-7d66-11d2-a67d-00105a42887f
+[Guid(CapeGuids.ECapeOutSoScopeIid)] // 678c0b0f-7d66-11d2-a67d-00105a42887f
 [Description("ECapeOutsideSolverScope Interface")]
 public interface ECapeOutsideSolverScope
 {
@@ -568,7 +568,7 @@ public interface ECapeOutsideSolverScope
 /// <summary>ECapeErrorDummy 接口不适合使用。</summary>
 /// <remarks>只有在这里才能确保 MIDL 编译器导出 CapeErrorInterfaceHR 枚举。编译器只导出枚举，如果它用于导出接口的方法中。</remarks>
 [ComImport, ComVisible(false)]
-[Guid(CapeOpenGuids.ECapeErrorDummy_IID)]
+[Guid(CapeGuids.ECapeErrorDummy_IID)]
 [Description("ECapeErrorDummy Interface")]
 public interface ECapeErrorDummy
 {

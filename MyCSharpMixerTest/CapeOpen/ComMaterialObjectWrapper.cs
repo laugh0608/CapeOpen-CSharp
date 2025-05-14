@@ -22,7 +22,7 @@ namespace CapeOpen;
 /// </remarks>
 [Serializable]
 [ComVisible(true)]
-[Guid(CapeOpenGuids.ComMateObjWrapIid)]  // "5A65B4B2-2FDD-4208-813D-7CC527FB91BD"
+[Guid(CapeGuids.ComMateObjWrapIid)]  // "5A65B4B2-2FDD-4208-813D-7CC527FB91BD"
 [Description("ICapeThermoMaterialObject Interface")]
 internal class ComMaterialObjectWrapper : CapeObjectBase,
     ICapeThermoMaterialObjectCOM, ICapeThermoMaterialCOM,

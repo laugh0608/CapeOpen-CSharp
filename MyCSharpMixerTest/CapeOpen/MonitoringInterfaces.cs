@@ -25,7 +25,7 @@ namespace CapeOpen;
 /// <remarks>This enumeration provides the flowsheeting monitoring object with information about the solution status of the flowsheet.</remarks>
 [Serializable]
 [ComVisible(false)]
-[Guid(CapeOpenGuids.CapeSolutionStatusIid)]  // "D1B15843-C0F5-4CB7-B462-E1B80456808E"
+[Guid(CapeGuids.CapeSolutionStatusIid)]  // "D1B15843-C0F5-4CB7-B462-E1B80456808E"
 public enum CapeSolutionStatus
 {
     /// <summary>流程图无误解决。</summary>
@@ -96,7 +96,7 @@ public enum CapeSolutionStatus
 /// </remarks>
 [ComImport]
 [ComVisible(false)]
-[Guid(CapeOpenGuids.InCapeFlShMoToIid)]  // "834F65CC-29AE-41c7-AA32-EE8B2BAB7FC2"
+[Guid(CapeGuids.InCapeFlShMoToIid)]  // "834F65CC-29AE-41c7-AA32-EE8B2BAB7FC2"
 [Description("ICapeFlowsheetMonitoring Interface")]
 public interface ICapeFlowsheetMonitoring
 {
@@ -174,7 +174,7 @@ public interface ICapeFlowsheetMonitoring
 /// should expose the Monitoring Object category ID:</para>
 /// <para>CATID_MONITORING_OBJECT = 7BA1AF89-B2E4-493d-BD80-2970BF4CBE99</para></remarks>
 [ComImport, ComVisible(false)]
-[Guid(CapeOpenGuids.ICapeFlowsheetMonitoring_IID)]
+[Guid(CapeGuids.ICapeFlowsheetMonitoring_IID)]
 [Description("ICapeFlowsheetMonitoring Interface")]
 public interface ICapeFlowsheetMonitoringOld
 {

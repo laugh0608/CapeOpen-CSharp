@@ -471,8 +471,8 @@ namespace CapeOpen
 
             String keyname = String.Concat("CLSID\\{", t.GUID.ToString(), "}\\Implemented Categories");
             Microsoft.Win32.RegistryKey catidKey = Microsoft.Win32.Registry.ClassesRoot.OpenSubKey(keyname, true);
-            catidKey.CreateSubKey(CapeOpenGuids.CapeOpenComponent_CATID);
-            catidKey.CreateSubKey(CapeOpenGuids.CapeUnitOperation_CATID);
+            catidKey.CreateSubKey(CapeGuids.CapeOpenComponent_CATID);
+            catidKey.CreateSubKey(CapeGuids.CapeUnitOperation_CATID);
 
             keyname = String.Concat("CLSID\\{", t.GUID.ToString(), "}\\InprocServer32");
             Microsoft.Win32.RegistryKey key = Microsoft.Win32.Registry.ClassesRoot.OpenSubKey(keyname, true);
@@ -499,10 +499,10 @@ namespace CapeOpen
             String aboutInfoString = "";
             for (int i = 0; i < attributes.Length; i++)
             {
-                if (attributes[i] is CapeFlowsheetMonitoringAttribute) catidKey.CreateSubKey(CapeOpenGuids.CATID_MONITORING_OBJECT);
-                if (attributes[i] is CapeConsumesThermoAttribute) catidKey.CreateSubKey(CapeOpenGuids.Consumes_Thermo_CATID);
-                if (attributes[i] is CapeSupportsThermodynamics10Attribute) catidKey.CreateSubKey(CapeOpenGuids.SupportsThermodynamics10_CATID);
-                if (attributes[i] is CapeSupportsThermodynamics11Attribute) catidKey.CreateSubKey(CapeOpenGuids.SupportsThermodynamics11_CATID);
+                if (attributes[i] is CapeFlowsheetMonitoringAttribute) catidKey.CreateSubKey(CapeGuids.CATID_MONITORING_OBJECT);
+                if (attributes[i] is CapeConsumesThermoAttribute) catidKey.CreateSubKey(CapeGuids.Consumes_Thermo_CATID);
+                if (attributes[i] is CapeSupportsThermodynamics10Attribute) catidKey.CreateSubKey(CapeGuids.SupportsThermodynamics10_CATID);
+                if (attributes[i] is CapeSupportsThermodynamics11Attribute) catidKey.CreateSubKey(CapeGuids.SupportsThermodynamics11_CATID);
                 if (attributes[i] is CapeNameAttribute) nameInfoString = ((CapeNameAttribute)attributes[i]).Name;
                 if (attributes[i] is CapeDescriptionAttribute) descriptionInfoString = ((CapeDescriptionAttribute)attributes[i]).Description;
                 if (attributes[i] is CapeVersionAttribute) versionInfoString = ((CapeVersionAttribute)attributes[i]).Version;

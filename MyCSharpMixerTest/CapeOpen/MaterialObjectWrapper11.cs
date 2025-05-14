@@ -13,7 +13,7 @@ namespace CapeOpen;
 /// ICapeThermoMaterialObject</see> interface to the desired .Net object types. This eliminates the need to convert the data types
 /// when you use a COM-based CAPE-OPEN material object.</para></remarks>
 [ComVisible(false)]
-[Guid(CapeOpenGuids.MaterObjWrapIid)]  // "5A65B4B2-2FDD-4208-813D-7CC527FB91BD"
+[Guid(CapeGuids.MaterObjWrapIid)]  // "5A65B4B2-2FDD-4208-813D-7CC527FB91BD"
 [Description("ICapeThermoMaterialObject Interface")]
 internal class MaterialObjectWrapper11 : CapeObjectBase,
     ICapeThermoMaterial, ICapeThermoCompounds, ICapeThermoPhases,

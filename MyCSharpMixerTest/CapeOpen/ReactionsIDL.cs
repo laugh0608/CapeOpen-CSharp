@@ -29,7 +29,7 @@ namespace CapeOpen
     /// Indicates whether the reaction package is for equilibrium or kinetic type reactions.
     /// </remarks>
     [ComVisible(true)]
-    [Guid(CapeOpenGuids.PpCapeReactTypeIid)] // CapeReactionType_IID "678c0b00-0100-11d2-a67d-00105a42887f"
+    [Guid(CapeGuids.PpCapeReactTypeIid)] // CapeReactionType_IID "678c0b00-0100-11d2-a67d-00105a42887f"
     public enum CapeReactionType
     {
         /// <summary>
@@ -50,7 +50,7 @@ namespace CapeOpen
     /// Indicates whether the reaction occurs in a homgeneous phase of is a heterogeneous reaction..
     /// </remarks>
     [ComVisible(true)]
-    [Guid(CapeOpenGuids.PpCapeReactRaBaIid)] // CapeReactionRateBasis_IID "678c0aff-0100-11d2-a67d-00105a42887f"
+    [Guid(CapeGuids.PpCapeReactRaBaIid)] // CapeReactionRateBasis_IID "678c0aff-0100-11d2-a67d-00105a42887f"
     public enum CapeReactionRateBasis
     {
         /// <summary>
@@ -79,7 +79,7 @@ namespace CapeOpen
     /// </para>
     /// </remarks>
     [ComImport,ComVisible(false)]
-    [Guid(CapeOpenGuids.ICapeKineticReactionContext_IID)]
+    [Guid(CapeGuids.ICapeKineticReactionContext_IID)]
     [Description("ICapeKineticReactionContext Interface")]
     internal interface ICapeKineticReactionContextCOM
     {
@@ -151,7 +151,7 @@ namespace CapeOpen
     /// </para>
     /// </remarks>
     [ComImport,ComVisible(false)]
-    [Guid(CapeOpenGuids.ICapeElectrolyteReactionContext_IID)]
+    [Guid(CapeGuids.ICapeElectrolyteReactionContext_IID)]
     [Description("ICapeElectrolyteReactionContext Interface")]
     internal interface ICapeElectrolyteReactionContextCOM
     {
@@ -217,7 +217,7 @@ namespace CapeOpen
     /// Provides a list of all supported reaction packages and resolves the selected package.
     /// </remarks>
     [ComImport,ComVisible(false)]
-    [Guid(CapeOpenGuids.ICapeReactionsPackageManager_IID)]
+    [Guid(CapeGuids.ICapeReactionsPackageManager_IID)]
     [Description("ICapeReactionsPackageManager Interface")]
     internal interface ICapeReactionsPackageManagerCOM
     {
@@ -310,7 +310,7 @@ namespace CapeOpen
     /// radicals. 
     /// </remarks>
     [ComImport,ComVisible(false)]
-    [Guid(CapeOpenGuids.ICapeReactionChemistry_IID)]
+    [Guid(CapeGuids.ICapeReactionChemistry_IID)]
     [Description("ICapeChemistry Interface")]
     internal interface ICapeReactionChemistryCOM
     {
@@ -819,7 +819,7 @@ namespace CapeOpen
     /// provide access to the properties of a particular reaction will implement this interface. 
     /// </remarks>
     [ComImport,ComVisible(false)]
-    [Guid(CapeOpenGuids.ICapeReactionProperties_IID)]
+    [Guid(CapeGuids.ICapeReactionProperties_IID)]
     [Description("ICapeReactionProperties Interface")]
     internal interface ICapeReactionPropertiesCOM
     {
@@ -1012,7 +1012,7 @@ namespace CapeOpen
     /// using so that the Reactions components can make Physical Property calculation calls. 
     /// </remarks>
     [ComImport,ComVisible(false)]
-    [Guid(CapeOpenGuids.ICapeThermoContext_IID)]
+    [Guid(CapeGuids.ICapeThermoContext_IID)]
     [Description("ICapeThermoContext Interface")]
     internal interface ICapeThermoContextCOM
     {
@@ -1049,7 +1049,7 @@ namespace CapeOpen
     /// that deals with electrolytes.
     /// </remarks>
     [ComImport,ComVisible(false)]
-    [Guid(CapeOpenGuids.ICapeReactionsRoutine_IID)]
+    [Guid(CapeGuids.ICapeReactionsRoutine_IID)]
     [Description("ICapeReactionsRoutine Interface")]
     internal interface ICapeReactionsRoutineCOM
     {
