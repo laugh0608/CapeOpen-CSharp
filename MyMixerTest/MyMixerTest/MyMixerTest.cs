@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.ComponentModel;
+using System.Runtime.InteropServices;
 
 namespace CapeOpen
 {
@@ -18,19 +17,19 @@ namespace CapeOpen
     /// as a demonstration of integer, boolean and option parameters.</para>
     /// </remarks>
     [Serializable]
-    [System.Runtime.InteropServices.ComVisible(true)]
-    [System.Runtime.InteropServices.Guid("883D46FE-5713-424C-BF10-7ED34263CD6D")]//ICapeThermoMaterialObject_IID)
-    [System.ComponentModel.Description("")]
-    [CapeOpen.CapeNameAttribute("MixerExample")]
-    [CapeOpen.CapeDescriptionAttribute("An example mixer unit operation written in C#.")]
-    [CapeOpen.CapeVersionAttribute("1.0")]
-    [CapeOpen.CapeVendorURLAttribute("http:\\www.epa.gov")]
-    [CapeOpen.CapeHelpURLAttribute("http:\\www.epa.gov")]
-    [CapeOpen.CapeAboutAttribute("US Environmental Protection Agency\nCincinnati, Ohio")]
-    [CapeOpen.CapeConsumesThermoAttribute(true)]
-    [CapeOpen.CapeUnitOperation(true)]
-    [CapeOpen.CapeSupportsThermodynamics10Attribute(true)]
-    [System.Runtime.InteropServices.ClassInterface(System.Runtime.InteropServices.ClassInterfaceType.None)]
+    [ComVisible(true)]
+    [Guid("883D46FE-5713-424C-BF10-7ED34263CD6D")]//ICapeThermoMaterialObject_IID)
+    [Description("")]
+    [CapeName("MixerExample")]
+    [CapeDescription("An example mixer unit operation written in C#.")]
+    [CapeVersion("1.0")]
+    [CapeVendorURL("http:\\www.epa.gov")]
+    [CapeHelpURL("http:\\www.epa.gov")]
+    [CapeAbout("US Environmental Protection Agency\nCincinnati, Ohio")]
+    [CapeConsumesThermo(true)]
+    [CapeUnitOperation(true)]
+    [CapeSupportsThermodynamics10(true)]
+    [ClassInterface(ClassInterfaceType.None)]
     public class MixerExample : CapeUnitBase
     {
         /// <summary>
@@ -82,28 +81,28 @@ namespace CapeOpen
         public MixerExample()
         {
             // Add Ports using the UnitPort constructor.
-            this.Ports.Add(new UnitPort("Inlet Port1", "Test Inlet Port1", CapePortDirection.CAPE_INLET, CapePortType.CAPE_MATERIAL));
-            this.Ports.Add(new UnitPort("Inlet Port2", "Test Inlet Port2", CapePortDirection.CAPE_INLET, CapePortType.CAPE_MATERIAL));
-            this.Ports.Add(new UnitPort("Outlet Port", "Test Outlet Port", CapePortDirection.CAPE_OUTLET, CapePortType.CAPE_MATERIAL));
+            Ports.Add(new UnitPort("Inlet Port1", "Test Inlet Port1", CapePortDirection.CAPE_INLET, CapePortType.CAPE_MATERIAL));
+            Ports.Add(new UnitPort("Inlet Port2", "Test Inlet Port2", CapePortDirection.CAPE_INLET, CapePortType.CAPE_MATERIAL));
+            Ports.Add(new UnitPort("Outlet Port", "Test Outlet Port", CapePortDirection.CAPE_OUTLET, CapePortType.CAPE_MATERIAL));
 
             // Add a real valued parameter using the RealParameter  constructor.
             RealParameter real = new RealParameter("PressureDrop", "Drop in pressure between the outlet from the mixer and the pressure of the lower pressure inlet.", 0.0, 0.0, 0.0, 100000000.0, CapeParamMode.CAPE_INPUT, "Pa");
-            this.Parameters.Add(real);
+            Parameters.Add(real);
 
             // Add a real valued parameter using the IntegerParameter  constructor.
-            this.Parameters.Add(new IntegerParameter("Integer Parameter", "This is an example of an integer parameter.", 12, 12, 0, 100, CapeParamMode.CAPE_INPUT_OUTPUT));
+            Parameters.Add(new IntegerParameter("Integer Parameter", "This is an example of an integer parameter.", 12, 12, 0, 100, CapeParamMode.CAPE_INPUT_OUTPUT));
 
             // Add a real valued parameter using the BooleanParameter  constructor.
-            this.Parameters.Add(new BooleanParameter("Boolean Parameter", "This is an example of a boolean parameter.", false, false, CapeOpen.CapeParamMode.CAPE_INPUT_OUTPUT));
+            Parameters.Add(new BooleanParameter("Boolean Parameter", "This is an example of a boolean parameter.", false, false, CapeParamMode.CAPE_INPUT_OUTPUT));
 
             // Create an array of strings for the option parameter restricted value list.
             String[] options = { "Test Value", "Another Value" };
 
             // Add a string valued parameter using the OptionParameter constructor.
-            this.Parameters.Add(new OptionParameter("OptionParameter", "This is an example of an option parameter.", "Test Value", "Test Value", options, true, CapeParamMode.CAPE_INPUT_OUTPUT));
+            Parameters.Add(new OptionParameter("OptionParameter", "This is an example of an option parameter.", "Test Value", "Test Value", options, true, CapeParamMode.CAPE_INPUT_OUTPUT));
 
             // Add an available report.
-            this.Reports.Add("Report 2");
+            Reports.Add("Report 2");
         }
 
         /// <summary>
@@ -376,8 +375,8 @@ namespace CapeOpen
         protected override void Calculate()
         {
             // Log a message using the simulation context (pop-up message commented out.
-            if (this.SimulationContext != null)
-                ((ICapeDiagnostic)this.SimulationContext).LogMessage("Starting Mixer Calculation");
+            if (SimulationContext != null)
+                ((ICapeDiagnostic)SimulationContext).LogMessage("Starting Mixer Calculation");
             //(CapeOpen.ICapeDiagnostic>(this.SimulationContext).PopUpMessage("Starting Mixer Calculation");
 
             // Get the material Object from Port 0.
@@ -385,25 +384,25 @@ namespace CapeOpen
             ICapeThermoMaterialObject tempMO = null;
             try
             {
-                tempMO = (ICapeThermoMaterialObject)this.Ports[0].connectedObject;
+                tempMO = (ICapeThermoMaterialObject)Ports[0].connectedObject;
             }
-            catch (System.Exception p_Ex)
+            catch (Exception p_Ex)
             {
-                this.OnUnitOperationEndCalculation("Error - Material object does not support CAPE-OPEN Thermodynamics 1.0.");
-                CapeOpen.CapeInvalidOperationException ex = new CapeOpen.CapeInvalidOperationException("Material object does not support CAPE-OPEN Thermodynamics 1.0.", p_Ex);
-                this.throwException(ex);
+                OnUnitOperationEndCalculation("Error - Material object does not support CAPE-OPEN Thermodynamics 1.0.");
+                CapeInvalidOperationException ex = new CapeInvalidOperationException("Material object does not support CAPE-OPEN Thermodynamics 1.0.", p_Ex);
+                throwException(ex);
             }
 
             // Duplicate the port, its an input port, always use a duplicate.
             try
             {
-                in1 = (ICapeThermoMaterialObject)tempMO.Duplicate();
+                in1 = tempMO.Duplicate();
             }
-            catch (System.Exception p_Ex)
+            catch (Exception p_Ex)
             {
-                this.OnUnitOperationEndCalculation("Error - Object connected to Inlet Port 1 does not support CAPE-OPEN Thermodynamics 1.0.");
-                CapeOpen.CapeInvalidOperationException ex = new CapeOpen.CapeInvalidOperationException("Object connected to Inlet Port 1 does not support CAPE-OPEN Thermodynamics 1.0.", p_Ex);
-                this.throwException(ex);
+                OnUnitOperationEndCalculation("Error - Object connected to Inlet Port 1 does not support CAPE-OPEN Thermodynamics 1.0.");
+                CapeInvalidOperationException ex = new CapeInvalidOperationException("Object connected to Inlet Port 1 does not support CAPE-OPEN Thermodynamics 1.0.", p_Ex);
+                throwException(ex);
             }
             // Arrays for the GetProps and SetProps call for enthaply.
             String[] phases = { "Overall" };
@@ -420,17 +419,17 @@ namespace CapeOpen
             try
             {
                 // Get Strings, must cast to string array data type.
-                in1Comps = (String[])in1.ComponentIds;
+                in1Comps = in1.ComponentIds;
 
                 // Get flow. Arguments are the property; phase, in this case, Overall; compound identifications
                 // in this case, the null returns the property for all components; calculation type, in this case,  
                 // null, no calculation type; and lastly, the basis, moles. Result is cast to a double array, and will contain one value.
-                in1Flow = (double[])in1.GetProp("flow", "Overall", null, null, "mole");
+                in1Flow = in1.GetProp("flow", "Overall", null, null, "mole");
 
                 // Get pressure. Arguments are the property; phase, in this case, Overall; compound identifications
                 // in this case, the null returns the property for all components; calculation type, in this case, the 
                 // mixture; and lastly, the basis, moles. Result is cast to a double array, and will contain one value.
-                pressure = (double[])in1.GetProp("Pressure", "Overall", null, "Mixture", null);
+                pressure = in1.GetProp("Pressure", "Overall", null, "Mixture", null);
 
                 // The following code adds the individual flows to get the total flow for the stream.
                 for (int i = 0; i < in1Flow.Length; i++)
@@ -444,18 +443,18 @@ namespace CapeOpen
                 // Get the enthalpy of the stream. Arguments are the property, enthalpy; the phase, overall;
                 // a null pointer, required as the overall enthalpy is desired; the calculation type is
                 // mixture; and the basis is moles.
-                in1Enthalpy = (double[])in1.GetProp("enthalpy", "Overall", null, "Mixture", "mole");
+                in1Enthalpy = in1.GetProp("enthalpy", "Overall", null, "Mixture", "mole");
             }
-            catch (System.Exception p_Ex)
+            catch (Exception p_Ex)
             {
                 // Exception handling, wraps a COM exception, shows the message, and re-throws the excecption.
 
-                if (p_Ex is System.Runtime.InteropServices.COMException)
+                if (p_Ex is COMException)
                 {
-                    System.Runtime.InteropServices.COMException comException = (System.Runtime.InteropServices.COMException)p_Ex;
-                    p_Ex = CapeOpen.COMExceptionHandler.ExceptionForHRESULT(in1, p_Ex);
+                    COMException comException = (COMException)p_Ex;
+                    p_Ex = COMExceptionHandler.ExceptionForHRESULT(in1, p_Ex);
                 }
-                this.throwException(p_Ex);
+                throwException(p_Ex);
             }
             IDisposable disp = in1 as IDisposable;
             if (disp != null)
@@ -469,25 +468,25 @@ namespace CapeOpen
             tempMO = null;
             try
             {
-                tempMO = (ICapeThermoMaterialObject)this.Ports[1].connectedObject;
+                tempMO = (ICapeThermoMaterialObject)Ports[1].connectedObject;
             }
-            catch (System.Exception p_Ex)
+            catch (Exception p_Ex)
             {
-                this.OnUnitOperationEndCalculation("Error - Material object does not support CAPE-OPEN Thermodynamics 1.0.");
-                CapeOpen.CapeInvalidOperationException ex = new CapeOpen.CapeInvalidOperationException("Material object does not support CAPE-OPEN Thermodynamics 1.0.", p_Ex);
-                this.throwException(ex);
+                OnUnitOperationEndCalculation("Error - Material object does not support CAPE-OPEN Thermodynamics 1.0.");
+                CapeInvalidOperationException ex = new CapeInvalidOperationException("Material object does not support CAPE-OPEN Thermodynamics 1.0.", p_Ex);
+                throwException(ex);
             }
 
             // Duplicate the port, its an input port, always use a duplicate.
             try
             {
-                in2 = (ICapeThermoMaterialObject)tempMO.Duplicate();
+                in2 = tempMO.Duplicate();
             }
-            catch (System.Exception p_Ex)
+            catch (Exception p_Ex)
             {
-                this.OnUnitOperationEndCalculation("Error - Object connected to Inlet Port 1 does not support CAPE-OPEN Thermodynamics 1.0.");
-                CapeOpen.CapeInvalidOperationException ex = new CapeOpen.CapeInvalidOperationException("Object connected to Inlet Port 1 does not support CAPE-OPEN Thermodynamics 1.0.", p_Ex);
-                this.throwException(ex);
+                OnUnitOperationEndCalculation("Error - Object connected to Inlet Port 1 does not support CAPE-OPEN Thermodynamics 1.0.");
+                CapeInvalidOperationException ex = new CapeInvalidOperationException("Object connected to Inlet Port 1 does not support CAPE-OPEN Thermodynamics 1.0.", p_Ex);
+                throwException(ex);
             }
             
             // Declare variables.
@@ -527,14 +526,14 @@ namespace CapeOpen
                 // mixture; and the basis is moles.
                 in2Enthalpy = in2.GetProp("enthalpy", "Overall", null, "Mixture", "mole");
             }
-            catch (System.Exception p_Ex)
+            catch (Exception p_Ex)
             {
-                System.Runtime.InteropServices.COMException comException = (System.Runtime.InteropServices.COMException)p_Ex;
+                COMException comException = (COMException)p_Ex;
                 if (comException != null)
                 {
-                    p_Ex = CapeOpen.COMExceptionHandler.ExceptionForHRESULT(in2, p_Ex);
+                    p_Ex = COMExceptionHandler.ExceptionForHRESULT(in2, p_Ex);
                 }
-                this.throwException(p_Ex);
+                throwException(p_Ex);
             }
             // Release the material object if it is a COM object.
             disp = in2 as IDisposable;
@@ -545,7 +544,7 @@ namespace CapeOpen
 
 
             // Get the outlet material object.
-            ICapeThermoMaterialObject outPort = (ICapeThermoMaterialObject)this.Ports[2].connectedObject;
+            ICapeThermoMaterialObject outPort = (ICapeThermoMaterialObject)Ports[2].connectedObject;
             
             // An empty, one-member array to set values in the outlet material stream.
             double[] values = new double[1];
@@ -560,7 +559,7 @@ namespace CapeOpen
 
                 // Set the outlet pressure to the lower of the to inlet pressures less the value of the 
                 // pressure drop parameter.
-                pressure[0] = pressure[0] - (((RealParameter)(this.Parameters[0])).SIValue); 
+                pressure[0] = pressure[0] - (((RealParameter)(Parameters[0])).SIValue); 
 
                 // Set the outlet pressure.
                 outPort.SetProp("Pressure", "Overall", null, null, null, pressure);
@@ -583,22 +582,22 @@ namespace CapeOpen
                 // Release the material object if it is a COM object.
                 if (outPort.GetType().IsCOMObject)
                 {
-                    System.Runtime.InteropServices.Marshal.FinalReleaseComObject(outPort);
+                    Marshal.FinalReleaseComObject(outPort);
                 }
             }
-            catch (System.Exception p_Ex)
+            catch (Exception p_Ex)
             {
-                System.Runtime.InteropServices.COMException comException = (System.Runtime.InteropServices.COMException)p_Ex;
+                COMException comException = (COMException)p_Ex;
                 if (comException != null)
                 {
-                    p_Ex = CapeOpen.COMExceptionHandler.ExceptionForHRESULT(outPort, p_Ex);
+                    p_Ex = COMExceptionHandler.ExceptionForHRESULT(outPort, p_Ex);
                 }
-                this.throwException(p_Ex);
+                throwException(p_Ex);
             }
             
             // Log the end of the calculation.
-            if (this.SimulationContext != null)
-                ((CapeOpen.ICapeDiagnostic)this.SimulationContext).LogMessage("Ending Mixer Calculation");
+            if (SimulationContext != null)
+                ((ICapeDiagnostic)SimulationContext).LogMessage("Ending Mixer Calculation");
             //(CapeOpen.ICapeDiagnostic>(this.SimulationContext).PopUpMessage("Ending Mixer Calculation");
         }
 
@@ -629,9 +628,9 @@ namespace CapeOpen
         /// <exception cref = "ECapeNoImpl">ECapeNoImpl</exception>
         public override string ProduceReport()
         {
-            if (this.selectedReport == "Default Report") return base.ProduceReport();
-            if (this.selectedReport == "Report 2") return "This is the alternative Report.";
+            if (selectedReport == "Default Report") return base.ProduceReport();
+            if (selectedReport == "Report 2") return "This is the alternative Report.";
             return string.Empty;
         }
-    };
+    }
 }
