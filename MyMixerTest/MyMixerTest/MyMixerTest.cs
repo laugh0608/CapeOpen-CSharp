@@ -1,8 +1,9 @@
-﻿using System;
+﻿using CapeOpen;
+using System;
 using System.ComponentModel;
 using System.Runtime.InteropServices;
 
-namespace CapeOpen
+namespace MyMixerTest
 {
     /// <summary>
     /// This is a mixer eample class that models an adiabtic mixer.

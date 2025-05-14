@@ -51,7 +51,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ArrayParameter.cs" />
-    <Compile Include="BaseUnitEditor.cs" />
+    <Compile Include="BaseUnitEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="BaseUnitEditor.Designer.cs" />
     <Compile Include="BooleanParameter.cs" />
     <Compile Include="CapeMaterialObjectBase.cs" />
@@ -87,10 +89,14 @@
     <Compile Include="UnitOperationManager.cs" />
     <Compile Include="UnitOperationSystem.cs" />
     <Compile Include="UnitPort.cs" />
-    <Compile Include="UnitSelector.cs" />
+    <Compile Include="UnitSelector.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="UnitSelector.Designer.cs" />
     <Compile Include="War.cs" />
-    <Compile Include="WARalgorithm.cs" />
+    <Compile Include="WARalgorithm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="WARalgorithm.Designer.cs" />
   </ItemGroup>
   <ItemGroup>

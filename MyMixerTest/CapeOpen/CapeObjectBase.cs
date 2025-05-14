@@ -73,7 +73,7 @@ namespace CapeOpen
                     return 0;
                 return 1;
             }
-            catch(System.Exception p_Ex)
+            catch(System.Exception)
             {
                 throw new CapeNoImplException("No editor available");
             }
