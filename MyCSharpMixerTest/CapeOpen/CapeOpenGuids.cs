@@ -411,4 +411,7 @@ internal abstract class CapeOpenGuids
     public const string InOptParSpecEveIid = "991F95FB-2210-4E44-99B3-4AB793FF46C2";
     public const string PpOptionParameterIid = "8EB0F647-618C-4fcc-A16F-39A9D57EA72E";
     public const string OptParaWrapperIid = "70994E8C-179E-40E1-A51B-54A5C0F64A84";
+    // Petro Fractions IDL
+    public const string InCapePetFractionsIid = "72A94DE9-9A69-4369-B508-C033CDFD4F81";
+    public const string CapeCompoundTypeIid = "8091E285-3CFA-4a41-A5C4-141D0D709D87";
 }
