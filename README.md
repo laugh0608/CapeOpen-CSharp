@@ -1,18 +1,20 @@
-## About
+# About
 
-### CapeOpen-CSharp
+## CapeOpen-CSharp
 
 基于 CAPE-OPEN 的 C# 类库源码，原作者为 wbarret1，仓库地址：
 
 https://github.com/wbarret1/CapeOpen
 
-### CapeOpen-Docs
+## MyCSharpMixerTest
 
-关于 CAPE-OPEN 的一些文档，包括类库、命名空间等，部分由 wbarret1 编写，部分为网络资源。
+我自己的 C# 混合器测试代码，基于 CapeOpen-CSharp，使用 .NET Core 8.0 重构。
 
-### MyCSharpMixerTest
+> 由于项目框架的不兼容性，重构后测试无法进行 COM 互操作，该项目宣布失败。
 
-我自己的 C# 混合器测试代码，基于 CapeOpen-CSharp 开发。
+## MyMixerTest
+
+我自己的 C# 混合器测试代码，基于 CapeOpen-CSharp，使用 .NET Framework 4.8 重构。
 
 ## CapeOpen-dotNetToolkit
 
