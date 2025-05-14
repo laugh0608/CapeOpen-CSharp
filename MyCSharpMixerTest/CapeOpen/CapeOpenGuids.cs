@@ -421,4 +421,8 @@ internal abstract class CapeOpenGuids
     public const string PpUnitOperaWrapIid = "B41DECE0-6C99-4CA4-B0EB-EFADBDCE23E9";
     // WAR
     public const string PpWarAddInIid = "0BE9CCFD-29B4-4a42-B34E-76F5FE9B6BB4";
+    // UnitOperation System
+    public const string InUnitOperaSystemIid = "08D7828D-40FD-4CA1-A71D-2F25617DA133";
+    public const string PpUnitOperaSystemIid = "3A223DEE-8414-4802-8391-D1B11B276A0F";
+
 }

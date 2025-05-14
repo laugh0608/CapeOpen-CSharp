@@ -1,4 +1,6 @@
-﻿using System.Data;
+﻿// 大白萝卜重构于 2025.05.14，使用 .NET8.O-windows、Microsoft Visual Studio 2022 Preview 和 Rider 2024.3。
+
+using System.Data;
 using System.Runtime.InteropServices;
 using System.Xml;
 using CapeOpen.Properties;
