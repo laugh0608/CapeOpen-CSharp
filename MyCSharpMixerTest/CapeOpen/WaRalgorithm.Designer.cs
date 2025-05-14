@@ -1,6 +1,6 @@
 ﻿namespace CapeOpen
 {
-    partial class WARalgorithm
+    partial class WaRalgorithm
     {
         /// <summary>
         /// Required designer variable.
@@ -13,28 +13,28 @@
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
-            foreach (object obj in p_Streams)
+            foreach (object obj in _pStreams)
             {
                 if (obj.GetType().IsCOMObject)
                 {
                     System.Runtime.InteropServices.Marshal.FinalReleaseComObject(obj);
                 }
             }
-            foreach (object obj in p_InletStreams)
+            foreach (object obj in _pInletStreams)
             {
                 if (obj.GetType().IsCOMObject)
                 {
                     System.Runtime.InteropServices.Marshal.FinalReleaseComObject(obj);
                 }
             }
-            foreach (object obj in p_OutletStreams)
+            foreach (object obj in _pOutletStreams)
             {
                 if (obj.GetType().IsCOMObject)
                 {
                     System.Runtime.InteropServices.Marshal.FinalReleaseComObject(obj);
                 }
             }
-            foreach (object obj in p_Units)
+            foreach (object obj in _pUnits)
             {
                 if (obj.GetType().IsCOMObject)
                 {
@@ -61,7 +61,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(WARalgorithm));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(WaRalgorithm));
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
@@ -753,7 +753,7 @@
             this.Controls.Add(this.menuStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
-            this.Name = "WARalgorithm";
+            this.Name = "WaRalgorithm";
             this.Text = "WARalgorithm";
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();

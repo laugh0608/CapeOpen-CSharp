@@ -288,7 +288,7 @@ public class WarAddIn : CapeObjectBase
     {
         try
         {
-            var war = new WARalgorithm(_warDataTable, FlowsheetMonitoring);
+            var war = new WaRalgorithm(_warDataTable, FlowsheetMonitoring);
             var result = war.ShowDialog();
             war.Dispose();
             return result;
