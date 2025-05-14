@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿// 大白萝卜重构于 2025.05.14，使用 .NET8.O-windows、Microsoft Visual Studio 2022 Preview 和 Rider 2024.3。
 
 /* IMPORTANT NOTICE
 (c) The CAPE-OPEN Laboratory Network, 2002.
@@ -10,28 +7,19 @@ All rights are reserved unless specifically stated otherwise
 Visit the web site at www.colan.org
 
 This file has been edited using the editor from Microsoft Visual Studio 6.0
-This file can viewed properly with any basic editors and browsers (validation done under MS Windows and Unix)
+This file can view properly with any basic editors and browsers (validation done under MS Windows and Unix)
 */
 
-// This file was developed/modified by JEAN-PIERRE BELAUD for CO-LaN organisation - March 2003
-
+// This file was developed/modified by JEAN-PIERRE-BELAUD for CO-LaN organisation - March 2003
 
 // ---- The scope of the Reactions interfaces -------------------
 // Reference document: Chemical Reactions
 
-// Types of reactions 
-/*[
-uuid(CapeReactionType_IID),
-version(1.0)
-]
-typedef enum eCapeReactionType {
-CAPE_EQUILIBRIUM 	= 0,
-CAPE_KINETIC		= 1,
-} CapeReactionType;
-*/
+using System.ComponentModel;
+using System.Runtime.InteropServices;
+
 namespace CapeOpen
 {
-
     // interface ICapeReactionProperties
 
     /// <summary>
@@ -40,54 +28,41 @@ namespace CapeOpen
     /// <remarks>
     /// Indicates whether the reaction package is for equilibrium or kinetic type reactions.
     /// </remarks>
-    [
-        System.Runtime.InteropServices.ComVisibleAttribute(true),
-        System.Runtime.InteropServices.GuidAttribute("678c0b00-0100-11d2-a67d-00105a42887f")//CapeReactionType_IID),
-    ]
+    [ComVisible(true)]
+    [Guid(CapeOpenGuids.PpCapeReactTypeIid)] // CapeReactionType_IID "678c0b00-0100-11d2-a67d-00105a42887f"
     public enum CapeReactionType
     {
         /// <summary>
         /// Equilibrium reactions.
         /// </summary>
         CAPE_EQUILIBRIUM = 0,
+
         /// <summary>
         /// Kinetic reactions.
         /// </summary>
         CAPE_KINETIC = 1,
-    };
-    //typedef CapeReactionType eCapeReactionType;
-    /*
-    [
-    uuid(CapeReactionRateBasis_IID),
-    version(1.0)
-    ]
-    typedef enum eCapeReactionRateBasis {
-    CAPE_HOMOGENEOUS 	= 0,
-    CAPE_HETEROGENEOUS 	= 1,
-    } CapeReactionRateBasis;
-    */
+    }
+
     /// <summary>
     /// Enumeration for the rate basis for the reaction.
     /// </summary>
     /// <remarks>
     /// Indicates whether the reaction occurs in a homgeneous phase of is a heterogeneous reaction..
     /// </remarks>
-    [
-        System.Runtime.InteropServices.ComVisibleAttribute(true),
-        System.Runtime.InteropServices.GuidAttribute("678c0aff-0100-11d2-a67d-00105a42887f")//CapeReactionRateBasis_IID),
-    ]
+    [ComVisible(true)]
+    [Guid(CapeOpenGuids.PpCapeReactRaBaIid)] // CapeReactionRateBasis_IID "678c0aff-0100-11d2-a67d-00105a42887f"
     public enum CapeReactionRateBasis
     {
         /// <summary>
         /// Homogeneous reaction.
         /// </summary>
         CAPE_HOMOGENEOUS = 0,
+
         /// <summary>
         /// Heterogeneous reaction.
         /// </summary>
         CAPE_HETEROGENEOUS = 1,
-    };
-    // typedef CapeReactionRateBasis eCapeReactionRateBasis;
+    }
 
     // ICapeKineticReactionContext interface
     /// <summary>
@@ -103,11 +78,10 @@ namespace CapeOpen
     /// will take place. Calculated reaction properties will be stored in this reaction object.
     /// </para>
     /// </remarks>
-    [System.Runtime.InteropServices.ComImport()]
-    [System.Runtime.InteropServices.ComVisibleAttribute(false)]
-    [System.Runtime.InteropServices.Guid(COGuids.ICapeKineticReactionContext_IID)]
-    [System.ComponentModel.DescriptionAttribute("ICapeKineticReactionContext Interface")]
-    interface ICapeKineticReactionContextCOM
+    [ComImport,ComVisible(false)]
+    [Guid(CapeOpenGuids.ICapeKineticReactionContext_IID)]
+    [Description("ICapeKineticReactionContext Interface")]
+    internal interface ICapeKineticReactionContextCOM
     {
         /// <summary>
         /// Provides access to the properties of a set of kinetic reactions.
@@ -123,10 +97,9 @@ namespace CapeOpen
         /// <exception cref ="ECapeInvalidArgument">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
         /// <exception cref ="ECapeFailedInitialisation">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
         /// <exception cref ="ECapeNoImpl">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
-        [System.Runtime.InteropServices.DispIdAttribute(1)]
-        [System.ComponentModel.DescriptionAttribute("SetMaterial")]
-        void SetReactionObject(ref Object reactionsObject);
-    };
+        [DispId(1),Description("SetMaterial")]
+        void SetReactionObject(ref object reactionsObject);
+    }
 
     // ICapeKineticReactionContext interface
     /// <summary>
@@ -142,8 +115,8 @@ namespace CapeOpen
     /// will take place. Calculated reaction properties will be stored in this reaction object.
     /// </para>
     /// </remarks>
-    [System.Runtime.InteropServices.ComVisibleAttribute(false)]
-    [System.ComponentModel.DescriptionAttribute("ICapeKineticReactionContext Interface")]
+    [ComVisible(false)]
+    [Description("ICapeKineticReactionContext Interface")]
     public interface ICapeKineticReactionContext
     {
         /// <summary>
@@ -160,10 +133,9 @@ namespace CapeOpen
         /// <exception cref ="ECapeInvalidArgument">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
         /// <exception cref ="ECapeFailedInitialisation">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
         /// <exception cref ="ECapeNoImpl">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
-        [System.Runtime.InteropServices.DispIdAttribute(1)]
-        [System.ComponentModel.DescriptionAttribute("SetMaterial")]
+        [DispId(1),Description("SetMaterial")]
         void SetReactionObject(ref ICapeReactionProperties reactionsObject);
-    };
+    }
 
     /// <summary>
     /// Provides access to the properties of a set of electrolyte reactions.
@@ -178,11 +150,10 @@ namespace CapeOpen
     /// will take place. Calculated reaction properties will be stored in this reaction object.
     /// </para>
     /// </remarks>
-    [System.Runtime.InteropServices.ComImport()]
-    [System.Runtime.InteropServices.ComVisibleAttribute(false)]
-    [System.Runtime.InteropServices.Guid(COGuids.ICapeElectrolyteReactionContext_IID)]
-    [System.ComponentModel.DescriptionAttribute("ICapeElectrolyteReactionContext Interface")]
-    interface ICapeElectrolyteReactionContextCOM
+    [ComImport,ComVisible(false)]
+    [Guid(CapeOpenGuids.ICapeElectrolyteReactionContext_IID)]
+    [Description("ICapeElectrolyteReactionContext Interface")]
+    internal interface ICapeElectrolyteReactionContextCOM
     {
         /// <summary>
         /// Provides access to the properties of a set of equilibrium reactions.
@@ -198,10 +169,9 @@ namespace CapeOpen
         /// <exception cref ="ECapeInvalidArgument">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
         /// <exception cref ="ECapeFailedInitialisation">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
         /// <exception cref ="ECapeNoImpl">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
-        [System.Runtime.InteropServices.DispIdAttribute(1)]
-        [System.ComponentModel.DescriptionAttribute("SetMaterial")]
-        void SetReactionObject(ref Object reactionsObject);
-    };
+        [DispId(1),Description("SetMaterial")]
+        void SetReactionObject(ref object reactionsObject);
+    }
 
 
     /// <summary>
@@ -217,8 +187,8 @@ namespace CapeOpen
     /// will take place. Calculated reaction properties will be stored in this reaction object.
     /// </para>
     /// </remarks>
-    [System.Runtime.InteropServices.ComVisibleAttribute(false)]
-    [System.ComponentModel.DescriptionAttribute("ICapeElectrolyteReactionContext Interface")]
+    [ComVisible(false)]
+    [Description("ICapeElectrolyteReactionContext Interface")]
     public interface ICapeElectrolyteReactionContext
     {
         /// <summary>
@@ -235,11 +205,10 @@ namespace CapeOpen
         /// <exception cref ="ECapeInvalidArgument">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
         /// <exception cref ="ECapeFailedInitialisation">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
         /// <exception cref ="ECapeNoImpl">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
-        [System.Runtime.InteropServices.DispIdAttribute(1)]
-        [System.ComponentModel.DescriptionAttribute("SetMaterial")]
+        [DispId(1),Description("SetMaterial")]
         void SetReactionObject(ref ICapeReactionProperties reactionsObject);
-    };
-    
+    }
+
     /// <summary>
     /// Similar in scope to the <see cref = "ICapeThermoSystem"/>. These interfaces will be implemented by a 
     /// Reactions Package Manager component.
@@ -247,11 +216,10 @@ namespace CapeOpen
     /// <remarks>
     /// Provides a list of all supported reaction packages and resolves the selected package.
     /// </remarks>
-    [System.Runtime.InteropServices.ComImport()]
-    [System.Runtime.InteropServices.ComVisibleAttribute(false)]
-    [System.Runtime.InteropServices.Guid(COGuids.ICapeReactionsPackageManager_IID)]
-    [System.ComponentModel.DescriptionAttribute("ICapeReactionsPackageManager Interface")]
-    interface ICapeReactionsPackageManagerCOM
+    [ComImport,ComVisible(false)]
+    [Guid(CapeOpenGuids.ICapeReactionsPackageManager_IID)]
+    [Description("ICapeReactionsPackageManager Interface")]
+    internal interface ICapeReactionsPackageManagerCOM
     {
         /// <summary>
         /// A list of all available reaction packages.
@@ -264,9 +232,8 @@ namespace CapeOpen
         /// <exception cref ="ECapeInvalidArgument">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
         /// <exception cref ="ECapeFailedInitialisation">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
         /// <exception cref ="ECapeNoImpl">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
-        [System.Runtime.InteropServices.DispIdAttribute(1)]
-        [System.ComponentModel.DescriptionAttribute("method GetListOfReactionsPackages")]
-        Object GetListOfReactionsPackages();
+        [DispId(1),Description("Method GetListOfReactionsPackages")]
+        object GetListOfReactionsPackages();
 
 
         /// <summary>
@@ -283,11 +250,9 @@ namespace CapeOpen
         /// <exception cref ="ECapeInvalidArgument">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
         /// <exception cref ="ECapeFailedInitialisation">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
         /// <exception cref ="ECapeNoImpl">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
-        [System.Runtime.InteropServices.DispIdAttribute(2)]
-        [System.ComponentModel.DescriptionAttribute("method ResolveReactionsPackage")]
-        Object ResolveReactionsPackage(String reactionsPkg);
-
-    };
+        [DispId(2),Description("Method ResolveReactionsPackage")]
+        object ResolveReactionsPackage(string reactionsPkg);
+    }
 
 
     /// <summary>
@@ -297,8 +262,8 @@ namespace CapeOpen
     /// <remarks>
     /// Provides a list of all supported reaction packages and resolves the selected package.
     /// </remarks>
-    [System.Runtime.InteropServices.ComVisibleAttribute(false)]
-    [System.ComponentModel.DescriptionAttribute("ICapeReactionsPackageManager Interface")]
+    [ComVisible(false)]
+    [Description("ICapeReactionsPackageManager Interface")]
     public interface ICapeReactionsPackageManager
     {
         /// <summary>
@@ -312,8 +277,7 @@ namespace CapeOpen
         /// <exception cref ="ECapeInvalidArgument">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
         /// <exception cref ="ECapeFailedInitialisation">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
         /// <exception cref ="ECapeNoImpl">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
-        [System.Runtime.InteropServices.DispIdAttribute(1)]
-        [System.ComponentModel.DescriptionAttribute("method GetListOfReactionsPackages")]
+        [DispId(1),Description("Method GetListOfReactionsPackages")]
         string[] GetListOfReactionsPackages();
 
 
@@ -331,10 +295,9 @@ namespace CapeOpen
         /// <exception cref ="ECapeInvalidArgument">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
         /// <exception cref ="ECapeFailedInitialisation">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
         /// <exception cref ="ECapeNoImpl">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
-        [System.Runtime.InteropServices.DispIdAttribute(2)]
-        [System.ComponentModel.DescriptionAttribute("method ResolveReactionsPackage")]
-        ICapeReactionChemistry ResolveReactionsPackage(String reactionsPkg);
-    };
+        [DispId(2),Description("Method ResolveReactionsPackage")]
+        ICapeReactionChemistry ResolveReactionsPackage(string reactionsPkg);
+    }
 
     /// <summary>
     /// Provides information about the reactions in the reaction package.
@@ -346,11 +309,10 @@ namespace CapeOpen
     /// electrolyte	systems, salt complexes and ions. In the case of detailed reaction mechanisms, 
     /// radicals. 
     /// </remarks>
-    [System.Runtime.InteropServices.ComImport()]
-    [System.Runtime.InteropServices.ComVisibleAttribute(false)]
-    [System.Runtime.InteropServices.Guid(COGuids.ICapeReactionChemistry_IID)]
-    [System.ComponentModel.DescriptionAttribute("ICapeChemistry Interface")]
-    interface ICapeReactionChemistryCOM
+    [ComImport,ComVisible(false)]
+    [Guid(CapeOpenGuids.ICapeReactionChemistry_IID)]
+    [Description("ICapeChemistry Interface")]
+    internal interface ICapeReactionChemistryCOM
     {
         /// <summary>
         /// Number of reactions contained within this reaction package.
@@ -363,8 +325,7 @@ namespace CapeOpen
         /// <exception cref ="ECapeInvalidArgument">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
         /// <exception cref ="ECapeFailedInitialisation">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
         /// <exception cref ="ECapeNoImpl">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
-        [System.Runtime.InteropServices.DispIdAttribute(1)]
-        [System.ComponentModel.DescriptionAttribute("method GetNumberOfReactions")]
+        [DispId(1),Description("Method GetNumberOfReactions")]
         int GetNumberOfReactions();
 
         /// <summary>
@@ -378,9 +339,8 @@ namespace CapeOpen
         /// <exception cref ="ECapeInvalidArgument">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
         /// <exception cref ="ECapeFailedInitialisation">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
         /// <exception cref ="ECapeNoImpl">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
-        [System.Runtime.InteropServices.DispIdAttribute(2)]
-        [System.ComponentModel.DescriptionAttribute("method GetReactionsIds")]
-        Object GetReactionsIds();
+        [DispId(2),Description("Method GetReactionsIds")]
+        object GetReactionsIds();
 
         /// <summary>
         /// The <see cref = "CapeReactionType"/> of the reaction.
@@ -390,15 +350,14 @@ namespace CapeOpen
         /// reactions. It informs whether the reaction is an equilibrium or kinetic
         /// reaction
         /// </remarks>
-        /// <param name = "reacID">The name of the reaction obtained from the <see cref = "GetReactionsIds"/> method.</param>
+        /// <param name = "reactId">The name of the reaction obtained from the <see cref = "GetReactionsIds"/> method.</param>
         /// <returns>Returns the <see cref = "CapeReactionType"/> type of a particular reaction.</returns>
         /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
         /// <exception cref ="ECapeInvalidArgument">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
         /// <exception cref ="ECapeFailedInitialisation">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
         /// <exception cref ="ECapeNoImpl">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
-        [System.Runtime.InteropServices.DispIdAttribute(3)]
-        [System.ComponentModel.DescriptionAttribute("method GetReactionType")]
-        CapeReactionType GetReactionType(String reacID);
+        [DispId(3),Description("Method GetReactionType")]
+        CapeReactionType GetReactionType(string reactId);
 
         /// <summary>
         /// The number of compounds in the specified reaction.
@@ -406,15 +365,14 @@ namespace CapeOpen
         /// <remarks>
         /// Gets the number of compounds occurring in a particular reaction within a Reactions Package.
         /// </remarks>
-        /// <param name = "reacID">The name of the reaction obtained from the <see cref = "GetReactionsIds"/> method.</param>
+        /// <param name = "reactId">The name of the reaction obtained from the <see cref = "GetReactionsIds"/> method.</param>
         /// <returns>Returns the number of compounds participating in the specified reaction.</returns>
         /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
         /// <exception cref ="ECapeInvalidArgument">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
         /// <exception cref ="ECapeFailedInitialisation">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
         /// <exception cref ="ECapeNoImpl">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
-        [System.Runtime.InteropServices.DispIdAttribute(4)]
-        [System.ComponentModel.DescriptionAttribute("method GetNumberOfReactionCompounds")]
-        int GetNumberOfReactionCompounds(String reacID);
+        [DispId(4),Description("Method GetNumberOfReactionCompounds")]
+        int GetNumberOfReactionCompounds(string reactId);
 
         // returns the compIds, formulas, CAS numbers and compNames of all
         // compounds participating in the specified reaction
@@ -428,20 +386,17 @@ namespace CapeOpen
         /// number should be used to identify the compounds for validation purposes because 
         /// it is unambiguous.
         /// </remarks>
-        /// <param name = "reacId">The name of the reaction obtained from the <see cref = "GetReactionsIds"/> method.</param>
+        /// <param name = "reactId">The name of the reaction obtained from the <see cref = "GetReactionsIds"/> method.</param>
         /// <param name = "compIds">List of compound IDs.</param>
         /// <param name = "compCharge">The charge for each compound.</param>
-        /// <param name = "compCASNumber">The CAS Registry numbers for the compounds.</param>
+        /// <param name = "compCasNumber">The CAS Registry numbers for the compounds.</param>
         /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
         /// <exception cref ="ECapeInvalidArgument">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
         /// <exception cref ="ECapeFailedInitialisation">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
         /// <exception cref ="ECapeNoImpl">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
-        [System.Runtime.InteropServices.DispIdAttribute(5)]
-        [System.ComponentModel.DescriptionAttribute("method GetReactionCompoundIds")]
-        void GetReactionCompoundIds(String reacId,
-            ref System.Object compIds,
-            ref System.Object compCharge,
-            ref System.Object compCASNumber);
+        [DispId(5),Description("Method GetReactionCompoundIds")]
+        void GetReactionCompoundIds(string reactId,
+            ref object compIds, ref object compCharge, ref object compCasNumber);
 
         // returns the stoichiometry of the specified reaction. Stoichiometric coefficients
         // are ordered consistently with the list of compounds returned by GetReactionsComponentsIDS
@@ -457,14 +412,13 @@ namespace CapeOpen
         /// the <see cref = "GetReactionCompoundIds"/> method for the same reaction.
         /// </remarks>
         /// <returns>The stoichiometry of the specified reaction.</returns>
-        /// <param name = "reacId">The name of the reaction obtained from the <see cref = "GetReactionsIds"/> method.</param>
+        /// <param name = "reactId">The name of the reaction obtained from the <see cref = "GetReactionsIds"/> method.</param>
         /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
         /// <exception cref ="ECapeInvalidArgument">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
         /// <exception cref ="ECapeFailedInitialisation">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
         /// <exception cref ="ECapeNoImpl">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
-        [System.Runtime.InteropServices.DispIdAttribute(6)]
-        [System.ComponentModel.DescriptionAttribute("method GetStoichiometricCoefficients")]
-        System.Object GetStoichiometricCoefficients(String reacId);
+        [DispId(6),Description("Method GetStoichiometricCoefficients")]
+        object GetStoichiometricCoefficients(string reactId);
 
         /// <summary>
         /// Gets the phase on which a particular reaction contained in the Reactions Package will take place.
@@ -473,14 +427,13 @@ namespace CapeOpen
         /// The string returned by this method must match one of the phase labels known to the Property Package.
         /// </remarks>
         /// <returns>The phase label of the phase where the reaction tackes place.</returns>
-        /// <param name = "reacId">The name of the reaction obtained from the <see cref = "GetReactionsIds"/> method.</param>
+        /// <param name = "reactId">The name of the reaction obtained from the <see cref = "GetReactionsIds"/> method.</param>
         /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
         /// <exception cref ="ECapeInvalidArgument">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
         /// <exception cref ="ECapeFailedInitialisation">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
         /// <exception cref ="ECapeNoImpl">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
-        [System.Runtime.InteropServices.DispIdAttribute(7)]
-        [System.ComponentModel.DescriptionAttribute("method GetReactionPhase")]
-        String GetReactionPhase(String reacId);
+        [DispId(7),Description("Method GetReactionPhase")]
+        string GetReactionPhase(string reactId);
 
         /// <summary>
         /// Get the basis for the reaction rate will be expressed in (i.e. homogeneous
@@ -493,14 +446,13 @@ namespace CapeOpen
         /// kgmole/h/kg-cat.
         /// </remarks>
         /// <returns>A <see cref = "CapeReactionRateBasis"/> for the rate basis.</returns>
-        /// <param name = "reacId">The name of the reaction obtained from the <see cref = "GetReactionsIds"/> method.</param>
+        /// <param name = "reactId">The name of the reaction obtained from the <see cref = "GetReactionsIds"/> method.</param>
         /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
         /// <exception cref ="ECapeInvalidArgument">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
         /// <exception cref ="ECapeFailedInitialisation">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
         /// <exception cref ="ECapeNoImpl">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
-        [System.Runtime.InteropServices.DispIdAttribute(8)]
-        [System.ComponentModel.DescriptionAttribute("method GetReactionRateBasis")]
-        CapeReactionRateBasis GetReactionRateBasis(String reacId);
+        [DispId(8),Description("Method GetReactionRateBasis")]
+        CapeReactionRateBasis GetReactionRateBasis(string reactId);
 
         /// <summary>
         /// Get the concentration basis the reaction package will use to calculate the
@@ -518,14 +470,13 @@ namespace CapeOpen
         /// </remarks>
         /// <returns>The concentration basis the reaction package will use to calculate the
         /// specified reaction rate.</returns>
-        /// <param name = "reacId">The name of the reaction obtained from the <see cref = "GetReactionsIds"/> method.</param>
+        /// <param name = "reactId">The name of the reaction obtained from the <see cref = "GetReactionsIds"/> method.</param>
         /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
         /// <exception cref ="ECapeInvalidArgument">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
         /// <exception cref ="ECapeFailedInitialisation">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
         /// <exception cref ="ECapeNoImpl">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
-        [System.Runtime.InteropServices.DispIdAttribute(9)]
-        [System.ComponentModel.DescriptionAttribute("method GetReactionConcBasis")]
-        String GetReactionConcBasis(String reacId);
+        [DispId(9),Description("Method GetReactionConBasis")]
+        string GetReactionConBasis(string reactId);
 
         // returns the base reactant for the specified reaction
 
@@ -536,14 +487,13 @@ namespace CapeOpen
         /// Returns the name of the base reactant for a particular reaction..
         /// </remarks>
         /// <returns>The name of the base reactant for a particular reaction.</returns>
-        /// <param name = "reacId">The name of the reaction obtained from the <see cref = "GetReactionsIds"/> method.</param>
+        /// <param name = "reactId">The name of the reaction obtained from the <see cref = "GetReactionsIds"/> method.</param>
         /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
         /// <exception cref ="ECapeInvalidArgument">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
         /// <exception cref ="ECapeFailedInitialisation">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
         /// <exception cref ="ECapeNoImpl">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
-        [System.Runtime.InteropServices.DispIdAttribute(10)]
-        [System.ComponentModel.DescriptionAttribute("method GetBaseReactant")]
-        String GetBaseReactant(String reacId);
+        [DispId(10),Description("Method GetBaseReactant")]
+        string GetBaseReactant(string reactId);
 
         /// <summary>
         /// Returns the number and ids of the compounds in the specified phase.
@@ -552,16 +502,15 @@ namespace CapeOpen
         /// Returns the number and ids of the compounds in the specified phase.
         /// </remarks>
         /// <returns>The name of the base reactant for a particular reaction.</returns>
-        /// <param name = "reacID">Label of the required phase.</param>
+        /// <param name = "reactId">Label of the required phase.</param>
         /// <param name = "compNo">The number of compounds in the requested phase.</param>
         /// <param name = "compIds">The ids of the compounds present in the specified phase.</param>
         /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
         /// <exception cref ="ECapeInvalidArgument">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
         /// <exception cref ="ECapeFailedInitialisation">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
         /// <exception cref ="ECapeNoImpl">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
-        [System.Runtime.InteropServices.DispIdAttribute(11)]
-        [System.ComponentModel.DescriptionAttribute("method GetPhaseCompounds")]
-        void GetPhaseCompounds(String reacID, ref int compNo, ref Object compIds);
+        [DispId(11),Description("Method GetPhaseCompounds")]
+        void GetPhaseCompounds(string reactId, ref int compNo, ref object compIds);
 
         /// <summary>
         /// Returns a collection containing the rate expression parameters for a particular reaction.
@@ -596,15 +545,14 @@ namespace CapeOpen
         /// </para>
         /// </remarks>
         /// <returns>A collection containing the rate expression parameters for a particular reaction.</returns>
-        /// <param name = "reacId">The name of the reaction obtained from the <see cref = "GetReactionsIds"/> method.</param>
+        /// <param name = "reactId">The name of the reaction obtained from the <see cref = "GetReactionsIds"/> method.</param>
         /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
         /// <exception cref ="ECapeInvalidArgument">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
         /// <exception cref ="ECapeFailedInitialisation">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
         /// <exception cref ="ECapeNoImpl">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
-        [System.Runtime.InteropServices.DispIdAttribute(12)]
-        [System.ComponentModel.DescriptionAttribute("method GetReactionParameters")]
-        Object GetReactionParameters(String reacId);
-    };
+        [DispId(12),Description("Method GetReactionParameters")]
+        object GetReactionParameters(string reactId);
+    }
 
 
     /// <summary>
@@ -617,8 +565,8 @@ namespace CapeOpen
     /// electrolyte	systems, salt complexes and ions. In the case of detailed reaction mechanisms, 
     /// radicals. 
     /// </remarks>
-    [System.Runtime.InteropServices.ComVisibleAttribute(false)]
-    [System.ComponentModel.DescriptionAttribute("ICapeChemistry Interface")]
+    [ComVisible(false)]
+    [Description("ICapeChemistry Interface")]
     public interface ICapeReactionChemistry
     {
         /// <summary>
@@ -632,8 +580,7 @@ namespace CapeOpen
         /// <exception cref ="ECapeInvalidArgument">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
         /// <exception cref ="ECapeFailedInitialisation">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
         /// <exception cref ="ECapeNoImpl">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
-        [System.Runtime.InteropServices.DispIdAttribute(1)]
-        [System.ComponentModel.DescriptionAttribute("method GetNumberOfReactions")]
+        [DispId(1),Description("Method GetNumberOfReactions")]
         int GetNumberOfReactions();
 
         /// <summary>
@@ -647,8 +594,7 @@ namespace CapeOpen
         /// <exception cref ="ECapeInvalidArgument">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
         /// <exception cref ="ECapeFailedInitialisation">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
         /// <exception cref ="ECapeNoImpl">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
-        [System.Runtime.InteropServices.DispIdAttribute(2)]
-        [System.ComponentModel.DescriptionAttribute("method GetReactionsIds")]
+        [DispId(2),Description("Method GetReactionsIds")]
         string[] GetReactionsIds();
 
         /// <summary>
@@ -659,15 +605,14 @@ namespace CapeOpen
         /// reactions. It informs whether the reaction is an equilibrium or kinetic
         /// reaction
         /// </remarks>
-        /// <param name = "reacID">The name of the reaction obtained from the <see cref = "GetReactionsIds"/> method.</param>
+        /// <param name = "reactId">The name of the reaction obtained from the <see cref = "GetReactionsIds"/> method.</param>
         /// <returns>Returns the <see cref = "CapeReactionType"/> type of a particular reaction.</returns>
         /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
         /// <exception cref ="ECapeInvalidArgument">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
         /// <exception cref ="ECapeFailedInitialisation">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
         /// <exception cref ="ECapeNoImpl">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
-        [System.Runtime.InteropServices.DispIdAttribute(3)]
-        [System.ComponentModel.DescriptionAttribute("method GetReactionType")]
-        CapeReactionType GetReactionType(String reacID);
+        [DispId(3),Description("Method GetReactionType")]
+        CapeReactionType GetReactionType(string reactId);
 
         /// <summary>
         /// The number of compounds in the specified reaction.
@@ -675,15 +620,14 @@ namespace CapeOpen
         /// <remarks>
         /// Gets the number of compounds occurring in a particular reaction within a Reactions Package.
         /// </remarks>
-        /// <param name = "reacID">The name of the reaction obtained from the <see cref = "GetReactionsIds"/> method.</param>
+        /// <param name = "reactId">The name of the reaction obtained from the <see cref = "GetReactionsIds"/> method.</param>
         /// <returns>Returns the number of compounds participating in the specified reaction.</returns>
         /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
         /// <exception cref ="ECapeInvalidArgument">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
         /// <exception cref ="ECapeFailedInitialisation">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
         /// <exception cref ="ECapeNoImpl">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
-        [System.Runtime.InteropServices.DispIdAttribute(4)]
-        [System.ComponentModel.DescriptionAttribute("method GetNumberOfReactionCompounds")]
-        int GetNumberOfReactionCompounds(String reacID);
+        [DispId(4),Description("Method GetNumberOfReactionCompounds")]
+        int GetNumberOfReactionCompounds(string reactId);
 
         // returns the compIds, formulas, CAS numbers and compNames of all
         // compounds participating in the specified reaction
@@ -697,20 +641,19 @@ namespace CapeOpen
         /// number should be used to identify the compounds for validation purposes because 
         /// it is unambiguous.
         /// </remarks>
-        /// <param name = "reacId">The name of the reaction obtained from the <see cref = "GetReactionsIds"/> method.</param>
+        /// <param name = "reactId">The name of the reaction obtained from the <see cref = "GetReactionsIds"/> method.</param>
         /// <param name = "compIds">List of compound IDs.</param>
         /// <param name = "compCharge">The charge for each compound.</param>
-        /// <param name = "compCASNumber">The CAS Registry numbers for the compounds.</param>
+        /// <param name = "compCasNumber">The CAS Registry numbers for the compounds.</param>
         /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
         /// <exception cref ="ECapeInvalidArgument">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
         /// <exception cref ="ECapeFailedInitialisation">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
         /// <exception cref ="ECapeNoImpl">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
-        [System.Runtime.InteropServices.DispIdAttribute(5)]
-        [System.ComponentModel.DescriptionAttribute("method GetReactionCompoundIds")]
-        void GetReactionCompoundIds(String reacId,
+        [DispId(5),Description("Method GetReactionCompoundIds")]
+        void GetReactionCompoundIds(string reactId,
             ref string[] compIds,
             ref double[] compCharge,
-            ref string[] compCASNumber);
+            ref string[] compCasNumber);
 
         // returns the stoichiometry of the specified reaction. Stoichiometric coefficients
         // are ordered consistently with the list of compounds returned by GetReactionsComponentsIDS
@@ -726,14 +669,13 @@ namespace CapeOpen
         /// the <see cref = "GetReactionCompoundIds"/> method for the same reaction.
         /// </remarks>
         /// <returns>The stoichiometry of the specified reaction.</returns>
-        /// <param name = "reacId">The name of the reaction obtained from the <see cref = "GetReactionsIds"/> method.</param>
+        /// <param name = "reactId">The name of the reaction obtained from the <see cref = "GetReactionsIds"/> method.</param>
         /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
         /// <exception cref ="ECapeInvalidArgument">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
         /// <exception cref ="ECapeFailedInitialisation">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
         /// <exception cref ="ECapeNoImpl">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
-        [System.Runtime.InteropServices.DispIdAttribute(6)]
-        [System.ComponentModel.DescriptionAttribute("method GetStoichiometricCoefficients")]
-        double[] GetStoichiometricCoefficients(String reacId);
+        [DispId(6),Description("Method GetStoichiometricCoefficients")]
+        double[] GetStoichiometricCoefficients(string reactId);
 
         /// <summary>
         /// Gets the phase on which a particular reaction contained in the Reactions Package will take place.
@@ -742,14 +684,13 @@ namespace CapeOpen
         /// The string returned by this method must match one of the phase labels known to the Property Package.
         /// </remarks>
         /// <returns>The phase label of the phase where the reaction tackes place.</returns>
-        /// <param name = "reacId">The name of the reaction obtained from the <see cref = "GetReactionsIds"/> method.</param>
+        /// <param name = "reactId">The name of the reaction obtained from the <see cref = "GetReactionsIds"/> method.</param>
         /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
         /// <exception cref ="ECapeInvalidArgument">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
         /// <exception cref ="ECapeFailedInitialisation">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
         /// <exception cref ="ECapeNoImpl">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
-        [System.Runtime.InteropServices.DispIdAttribute(7)]
-        [System.ComponentModel.DescriptionAttribute("method GetReactionPhase")]
-        String GetReactionPhase(String reacId);
+        [DispId(7),Description("Method GetReactionPhase")]
+        string GetReactionPhase(string reactId);
 
         /// <summary>
         /// Get the basis for the reaction rate will be expressed in (i.e. homogeneous
@@ -762,14 +703,13 @@ namespace CapeOpen
         /// kgmole/h/kg-cat.
         /// </remarks>
         /// <returns>A <see cref = "CapeReactionRateBasis"/> for the rate basis.</returns>
-        /// <param name = "reacId">The name of the reaction obtained from the <see cref = "GetReactionsIds"/> method.</param>
+        /// <param name = "reactId">The name of the reaction obtained from the <see cref = "GetReactionsIds"/> method.</param>
         /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
         /// <exception cref ="ECapeInvalidArgument">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
         /// <exception cref ="ECapeFailedInitialisation">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
         /// <exception cref ="ECapeNoImpl">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
-        [System.Runtime.InteropServices.DispIdAttribute(8)]
-        [System.ComponentModel.DescriptionAttribute("method GetReactionRateBasis")]
-        CapeReactionRateBasis GetReactionRateBasis(String reacId);
+        [DispId(8),Description("Method GetReactionRateBasis")]
+        CapeReactionRateBasis GetReactionRateBasis(string reactId);
 
         /// <summary>
         /// Get the concentration basis the reaction package will use to calculate the
@@ -787,14 +727,13 @@ namespace CapeOpen
         /// </remarks>
         /// <returns>The concentration basis the reaction package will use to calculate the
         /// specified reaction rate.</returns>
-        /// <param name = "reacId">The name of the reaction obtained from the <see cref = "GetReactionsIds"/> method.</param>
+        /// <param name = "reactId">The name of the reaction obtained from the <see cref = "GetReactionsIds"/> method.</param>
         /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
         /// <exception cref ="ECapeInvalidArgument">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
         /// <exception cref ="ECapeFailedInitialisation">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
         /// <exception cref ="ECapeNoImpl">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
-        [System.Runtime.InteropServices.DispIdAttribute(9)]
-        [System.ComponentModel.DescriptionAttribute("method GetReactionConcBasis")]
-        String GetReactionConcBasis(String reacId);
+        [DispId(9),Description("Method GetReactionConBasis")]
+        string GetReactionConBasis(string reactId);
 
         // returns the base reactant for the specified reaction
 
@@ -805,14 +744,13 @@ namespace CapeOpen
         /// Returns the name of the base reactant for a particular reaction..
         /// </remarks>
         /// <returns>The name of the base reactant for a particular reaction.</returns>
-        /// <param name = "reacId">The name of the reaction obtained from the <see cref = "GetReactionsIds"/> method.</param>
+        /// <param name = "reactId">The name of the reaction obtained from the <see cref = "GetReactionsIds"/> method.</param>
         /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
         /// <exception cref ="ECapeInvalidArgument">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
         /// <exception cref ="ECapeFailedInitialisation">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
         /// <exception cref ="ECapeNoImpl">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
-        [System.Runtime.InteropServices.DispIdAttribute(10)]
-        [System.ComponentModel.DescriptionAttribute("method GetBaseReactant")]
-        String GetBaseReactant(String reacId);
+        [DispId(10),Description("Method GetBaseReactant")]
+        string GetBaseReactant(string reactId);
 
         /// <summary>
         /// Returns the number and ids of the compounds in the specified phase.
@@ -821,16 +759,15 @@ namespace CapeOpen
         /// Returns the number and ids of the compounds in the specified phase.
         /// </remarks>
         /// <returns>The name of the base reactant for a particular reaction.</returns>
-        /// <param name = "reacID">Label of the required phase.</param>
+        /// <param name = "reactId">Label of the required phase.</param>
         /// <param name = "compNo">The number of compounds in the requested phase.</param>
         /// <param name = "compIds">The ids of the compounds present in the specified phase.</param>
         /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
         /// <exception cref ="ECapeInvalidArgument">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
         /// <exception cref ="ECapeFailedInitialisation">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
         /// <exception cref ="ECapeNoImpl">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
-        [System.Runtime.InteropServices.DispIdAttribute(11)]
-        [System.ComponentModel.DescriptionAttribute("method GetPhaseCompounds")]
-        void GetPhaseCompounds(String reacID, ref int compNo, ref string[] compIds);
+        [DispId(11),Description("Method GetPhaseCompounds")]
+        void GetPhaseCompounds(string reactId, ref int compNo, ref string[] compIds);
 
         /// <summary>
         /// Returns a collection containing the rate expression parameters for a particular reaction.
@@ -865,15 +802,14 @@ namespace CapeOpen
         /// </para>
         /// </remarks>
         /// <returns>A collection containing the rate expression parameters for a particular reaction.</returns>
-        /// <param name = "reacId">The name of the reaction obtained from the <see cref = "GetReactionsIds"/> method.</param>
+        /// <param name = "reactId">The name of the reaction obtained from the <see cref = "GetReactionsIds"/> method.</param>
         /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
         /// <exception cref ="ECapeInvalidArgument">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
         /// <exception cref ="ECapeFailedInitialisation">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
         /// <exception cref ="ECapeNoImpl">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
-        [System.Runtime.InteropServices.DispIdAttribute(12)]
-        [System.ComponentModel.DescriptionAttribute("method GetReactionParameters")]
-        ParameterCollection GetReactionParameters(String reacId);
-    };
+        [DispId(12),Description("Method GetReactionParameters")]
+        ParameterCollection GetReactionParameters(string reactId);
+    }
 
     /// <summary>
     /// Provides access to the properties of a particular reaction.
@@ -882,11 +818,10 @@ namespace CapeOpen
     /// Similar in scope to ICapeThermoMaterialObject. A component or a PME that needs to 
     /// provide access to the properties of a particular reaction will implement this interface. 
     /// </remarks>
-    [System.Runtime.InteropServices.ComImport()]
-    [System.Runtime.InteropServices.ComVisibleAttribute(false)]
-    [System.Runtime.InteropServices.Guid(COGuids.ICapeReactionProperties_IID)]
-    [System.ComponentModel.DescriptionAttribute("ICapeReactionProperties Interface")]
-    interface ICapeReactionPropertiesCOM
+    [ComImport,ComVisible(false)]
+    [Guid(CapeOpenGuids.ICapeReactionProperties_IID)]
+    [Description("ICapeReactionProperties Interface")]
+    internal interface ICapeReactionPropertiesCOM
     {
         /// <summary>
         /// Gets the value of the specified reaction property within a reactions object.
@@ -894,13 +829,13 @@ namespace CapeOpen
         /// <remarks>
         /// The qualifiers passed in determine the reactions, phase and calculation basis for 
         /// which the property will be got. The order of the array is the same as in the passed
-        /// in reacIds array (i.e. property value for reaction reacIds[1] will be stored in 
+        /// in reactIds array (i.e. property value for reaction reactIds[1] will be stored in 
         /// property[1]).
         /// </remarks>
         /// <returns>The name of the base reactant for a particular reaction.</returns>
         /// <param name = "property">The Reaction Property to be retrieved.</param>
         /// <param name = "phase">The qualified phase for the Reaction Property.</param>
-        /// <param name = "reacIds">The qualified reactions for the Reaction Property. NULL to
+        /// <param name = "reactIds">The qualified reactions for the Reaction Property. NULL to
         /// specify all reactions in the set.</param>
         /// <param name = "basis"><para>Qualifies the basis of the Reaction Property (i.e., mass 
         /// /mole). Default is mole. Use NULL only as a placeholder for property for which basis 
@@ -913,9 +848,8 @@ namespace CapeOpen
         /// <exception cref ="ECapeInvalidArgument">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
         /// <exception cref ="ECapeFailedInitialisation">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
         /// <exception cref ="ECapeNoImpl">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
-        [System.Runtime.InteropServices.DispIdAttribute(1)]
-        [System.ComponentModel.DescriptionAttribute("method GetReactionProp")]
-        Object GetReactionProp(String property, String phase, Object reacIds, String basis);
+        [DispId(1),Description("Method GetReactionProp")]
+        object GetReactionProp(string property, string phase, object reactIds, string basis);
 
         /// <summary>
         /// Sets the values of the specified reaction property within a reactions object.
@@ -927,7 +861,7 @@ namespace CapeOpen
         /// <returns>The name of the base reactant for a particular reaction.</returns>
         /// <param name = "property">The Reaction Property to be retrieved.</param>
         /// <param name = "phase">The qualified phase for the Reaction Property.</param>
-        /// <param name = "reacIds">The qualified reactions for the Reaction Property. NULL to
+        /// <param name = "reactIds">The qualified reactions for the Reaction Property. NULL to
         /// specify all reactions in the set.</param>
         /// <param name = "basis"><para>Qualifies the basis of the Reaction Property (i.e., mass 
         /// /mole). Default is mole. Use NULL only as a placeholder for property for which basis 
@@ -937,16 +871,15 @@ namespace CapeOpen
         /// be specified.</para>
         /// </param>
         /// <param name = "propVals">The values of the requested reaction property. The order of 
-        /// the array is the same as in the passed in reacIds array (i.e. property value for 
-        /// reaction reacIds[1] will be stored in property[1]).</param>
+        /// the array is the same as in the passed in reactIds array (i.e. property value for 
+        /// reaction reactIds[1] will be stored in property[1]).</param>
         /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
         /// <exception cref ="ECapeInvalidArgument">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
         /// <exception cref ="ECapeFailedInitialisation">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
         /// <exception cref ="ECapeNoImpl">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
-        [System.Runtime.InteropServices.DispIdAttribute(2)]
-        [System.ComponentModel.DescriptionAttribute("method SetReactionProp")]
-        void SetReactionProp(String property, String phase, Object reacIds, String basis, Object propVals);
-    };
+        [DispId(2),Description("Method SetReactionProp")]
+        void SetReactionProp(string property, string phase, object reactIds, string basis, object propVals);
+    }
 
     /// <summary>
     /// Provides access to the properties of a particular reaction.
@@ -955,8 +888,7 @@ namespace CapeOpen
     /// Similar in scope to ICapeThermoMaterialObject. A component or a PME that needs to 
     /// provide access to the properties of a particular reaction will implement this interface. 
     /// </remarks>
-    [System.Runtime.InteropServices.ComVisibleAttribute(false)]
-    [System.ComponentModel.DescriptionAttribute("ICapeReactionProperties Interface")]
+    [ComVisible(false),Description("ICapeReactionProperties Interface")]
     public interface ICapeReactionProperties
     {
         /// <summary>
@@ -965,13 +897,13 @@ namespace CapeOpen
         /// <remarks>
         /// The qualifiers passed in determine the reactions, phase and calculation basis for 
         /// which the property will be got. The order of the array is the same as in the passed
-        /// in reacIds array (i.e. property value for reaction reacIds[1] will be stored in 
+        /// in reactIds array (i.e. property value for reaction reactIds[1] will be stored in 
         /// property[1]).
         /// </remarks>
         /// <returns>The name of the base reactant for a particular reaction.</returns>
         /// <param name = "property">The Reaction Property to be retrieved.</param>
         /// <param name = "phase">The qualified phase for the Reaction Property.</param>
-        /// <param name = "reacIds">The qualified reactions for the Reaction Property. NULL to
+        /// <param name = "reactIds">The qualified reactions for the Reaction Property. NULL to
         /// specify all reactions in the set.</param>
         /// <param name = "basis"><para>Qualifies the basis of the Reaction Property (i.e., mass 
         /// /mole). Default is mole. Use NULL only as a placeholder for property for which basis 
@@ -984,9 +916,8 @@ namespace CapeOpen
         /// <exception cref ="ECapeInvalidArgument">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
         /// <exception cref ="ECapeFailedInitialisation">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
         /// <exception cref ="ECapeNoImpl">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
-        [System.Runtime.InteropServices.DispIdAttribute(1)]
-        [System.ComponentModel.DescriptionAttribute("method GetReactionProp")]
-        double[] GetReactionProp(String property, String phase, string[] reacIds, String basis);
+        [DispId(1),Description("Method GetReactionProp")]
+        double[] GetReactionProp(string property, string phase, string[] reactIds, string basis);
 
         /// <summary>
         /// Sets the values of the specified reaction property within a reactions object.
@@ -998,7 +929,7 @@ namespace CapeOpen
         /// <returns>The name of the base reactant for a particular reaction.</returns>
         /// <param name = "property">The Reaction Property to be retrieved.</param>
         /// <param name = "phase">The qualified phase for the Reaction Property.</param>
-        /// <param name = "reacIds">The qualified reactions for the Reaction Property. NULL to
+        /// <param name = "reactIds">The qualified reactions for the Reaction Property. NULL to
         /// specify all reactions in the set.</param>
         /// <param name = "basis"><para>Qualifies the basis of the Reaction Property (i.e., mass 
         /// /mole). Default is mole. Use NULL only as a placeholder for property for which basis 
@@ -1008,16 +939,15 @@ namespace CapeOpen
         /// be specified.</para>
         /// </param>
         /// <param name = "propVals">The values of the requested reaction property. The order of 
-        /// the array is the same as in the passed in reacIds array (i.e. property value for 
-        /// reaction reacIds[1] will be stored in property[1]).</param>
+        /// the array is the same as in the passed in reactIds array (i.e. property value for 
+        /// reaction reactIds[1] will be stored in property[1]).</param>
         /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
         /// <exception cref ="ECapeInvalidArgument">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
         /// <exception cref ="ECapeFailedInitialisation">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
         /// <exception cref ="ECapeNoImpl">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
-        [System.Runtime.InteropServices.DispIdAttribute(2)]
-        [System.ComponentModel.DescriptionAttribute("method SetReactionProp")]
-        void SetReactionProp(String property, String phase, string[] reacIds, String basis, double[] propVals);
-    };
+        [DispId(2),Description("Method SetReactionProp")]
+        void SetReactionProp(string property, string phase, string[] reactIds, string basis, double[] propVals);
+    }
 
     /// <summary>
     /// Provides a material object for physical property calculations.
@@ -1026,8 +956,7 @@ namespace CapeOpen
     /// Allows a material object to be passed between a PME and the Reactions components it is 
     /// using so that the Reactions components can make Physical Property calculation calls. 
     /// </remarks>
-    [System.Runtime.InteropServices.ComVisibleAttribute(false)]
-    [System.ComponentModel.DescriptionAttribute("ICapeThermoContext Interface")]
+    [ComVisible(false),Description("ICapeThermoContext Interface")]
     public interface ICapeThermoContext
     {
         /// <summary>
@@ -1049,8 +978,7 @@ namespace CapeOpen
         /// <exception cref ="ECapeInvalidArgument">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
         /// <exception cref ="ECapeFailedInitialisation">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
         /// <exception cref ="ECapeNoImpl">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
-        [System.Runtime.InteropServices.DispIdAttribute(1)]
-        [System.ComponentModel.DescriptionAttribute("SetMaterial")]
+        [DispId(1),Description("SetMaterial")]
         void SetMaterial(ICapeThermoMaterial materialObject);
 
         /// <summary>
@@ -1072,10 +1000,9 @@ namespace CapeOpen
         /// <exception cref ="ECapeInvalidArgument">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
         /// <exception cref ="ECapeFailedInitialisation">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
         /// <exception cref ="ECapeNoImpl">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
-        [System.Runtime.InteropServices.DispIdAttribute(1)]
-        [System.ComponentModel.DescriptionAttribute("SetMaterial")]
+        [DispId(1),Description("SetMaterial")]
         void SetMaterial(ICapeThermoMaterialObject materialObject);
-    };
+    }
 
     /// <summary>
     /// Provides a material object for physical property calculations.
@@ -1084,11 +1011,10 @@ namespace CapeOpen
     /// Allows a material object to be passed between a PME and the Reactions components it is 
     /// using so that the Reactions components can make Physical Property calculation calls. 
     /// </remarks>
-    [System.Runtime.InteropServices.ComImport()]
-    [System.Runtime.InteropServices.ComVisibleAttribute(false)]
-    [System.Runtime.InteropServices.Guid(COGuids.ICapeThermoContext_IID)]
-    [System.ComponentModel.DescriptionAttribute("ICapeThermoContext Interface")]
-    interface ICapeThermoContextCOM
+    [ComImport,ComVisible(false)]
+    [Guid(CapeOpenGuids.ICapeThermoContext_IID)]
+    [Description("ICapeThermoContext Interface")]
+    internal interface ICapeThermoContextCOM
     {
         /// <summary>
         /// Allows the client of a component that implements this interface to pass an 
@@ -1109,11 +1035,10 @@ namespace CapeOpen
         /// <exception cref ="ECapeInvalidArgument">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
         /// <exception cref ="ECapeFailedInitialisation">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
         /// <exception cref ="ECapeNoImpl">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
-        [System.Runtime.InteropServices.DispIdAttribute(1)]
-        [System.ComponentModel.DescriptionAttribute("SetMaterial")]
-        void SetMaterial(Object materialObject);
-    };
-    
+        [DispId(1),Description("SetMaterial")]
+        void SetMaterial(object materialObject);
+    }
+
     /// <summary>
     /// Calculates the values of reaction (or reaction related) properties.
     /// </summary>
@@ -1123,13 +1048,11 @@ namespace CapeOpen
     /// interface. It may also be implemented by a Physical Property package component
     /// that deals with electrolytes.
     /// </remarks>
-    [System.Runtime.InteropServices.ComImport()]
-    [System.Runtime.InteropServices.ComVisibleAttribute(false)]
-    [System.Runtime.InteropServices.Guid(COGuids.ICapeReactionsRoutine_IID)]
-    [System.ComponentModel.DescriptionAttribute("ICapeReactionsRoutine Interface")]
-    interface ICapeReactionsRoutineCOM
+    [ComImport,ComVisible(false)]
+    [Guid(CapeOpenGuids.ICapeReactionsRoutine_IID)]
+    [Description("ICapeReactionsRoutine Interface")]
+    internal interface ICapeReactionsRoutineCOM
     {
-
         /// <summary>
         /// Sets the values of the specified reaction property within a reactions object.
         /// </summary>
@@ -1152,7 +1075,7 @@ namespace CapeOpen
         /// <returns>The name of the base reactant for a particular reaction.</returns>
         /// <param name = "props">The Reaction Property to be calculated.</param>
         /// <param name = "phase">The qualified phase for the results.</param>
-        /// <param name = "reacIds">The qualified reactions for the Reaction Property. NULL to
+        /// <param name = "reactIds">The qualified reactions for the Reaction Property. NULL to
         /// specify all reactions in the set.</param>
         /// <param name = "basis">Qualifies the basis of the Reaction Property (i.e., mass 
         /// /mole). Default is mole. Use NULL only as a placeholder for property for which basis 
@@ -1162,10 +1085,9 @@ namespace CapeOpen
         /// <exception cref ="ECapeInvalidArgument">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
         /// <exception cref ="ECapeFailedInitialisation">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
         /// <exception cref ="ECapeNoImpl">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
-        [System.Runtime.InteropServices.DispIdAttribute(1)]
-        [System.ComponentModel.DescriptionAttribute("method CalcReactionProp")]
-        void CalcReactionProp(Object props, String phase, Object reacIds, String basis);
-    };
+        [DispId(1),Description("Method CalcReactionProp")]
+        void CalcReactionProp(object props, string phase, object reactIds, string basis);
+    }
 
 
     /// <summary>
@@ -1177,11 +1099,9 @@ namespace CapeOpen
     /// interface. It may also be implemented by a Physical Property package component
     /// that deals with electrolytes.
     /// </remarks>
-    [System.Runtime.InteropServices.ComVisibleAttribute(false)]
-    [System.ComponentModel.DescriptionAttribute("ICapeReactionsRoutine Interface")]
+    [ComVisible(false),Description("ICapeReactionsRoutine Interface")]
     public interface ICapeReactionsRoutine
     {
-
         /// <summary>
         /// Sets the values of the specified reaction property within a reactions object.
         /// </summary>
@@ -1204,7 +1124,7 @@ namespace CapeOpen
         /// <returns>The name of the base reactant for a particular reaction.</returns>
         /// <param name = "props">The Reaction Property to be calculated.</param>
         /// <param name = "phase">The qualified phase for the results.</param>
-        /// <param name = "reacIds">The qualified reactions for the Reaction Property. NULL to
+        /// <param name = "reactIds">The qualified reactions for the Reaction Property. NULL to
         /// specify all reactions in the set.</param>
         /// <param name = "basis">Qualifies the basis of the Reaction Property (i.e., mass 
         /// /mole). Default is mole. Use NULL only as a placeholder for property for which basis 
@@ -1214,11 +1134,7 @@ namespace CapeOpen
         /// <exception cref ="ECapeInvalidArgument">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
         /// <exception cref ="ECapeFailedInitialisation">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
         /// <exception cref ="ECapeNoImpl">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
-        [System.Runtime.InteropServices.DispIdAttribute(1)]
-        [System.ComponentModel.DescriptionAttribute("method CalcReactionProp")]
-        void CalcReactionProp(string[] props, String phase, string[] reacIds, String basis);
-    };
-};
-
-
-
+        [DispId(1),Description("Method CalcReactionProp")]
+        void CalcReactionProp(string[] props, string phase, string[] reactIds, string basis);
+    }
+}

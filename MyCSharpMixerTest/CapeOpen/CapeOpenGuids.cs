@@ -414,4 +414,7 @@ internal abstract class CapeOpenGuids
     // Petro Fractions IDL
     public const string InCapePetFractionsIid = "72A94DE9-9A69-4369-B508-C033CDFD4F81";
     public const string CapeCompoundTypeIid = "8091E285-3CFA-4a41-A5C4-141D0D709D87";
+    // Reactions IDL
+    public const string PpCapeReactTypeIid = "678c0b00-0100-11d2-a67d-00105a42887f";
+    public const string PpCapeReactRaBaIid = "678c0aff-0100-11d2-a67d-00105a42887f";
 }
