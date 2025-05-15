@@ -160,10 +160,10 @@
             "ComponentsUrl" = "8:"
                 "Items"
                 {
-                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.7.2"
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.8"
                     {
-                    "Name" = "8:Microsoft .NET Framework 4.7.2 (x86 and x64)"
-                    "ProductCode" = "8:.NETFramework,Version=v4.7.2"
+                    "Name" = "8:Microsoft .NET Framework 4.8 (x86 和 x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.8"
                     }
                 }
             }
@@ -471,7 +471,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:MyMixerTestSetup"
         "ProductCode" = "8:{1D2FE729-0F10-4CE4-81FB-3BF6E64796C4}"
-        "PackageCode" = "8:{0652CBBE-6333-4118-960C-9FEAC8973482}"
+        "PackageCode" = "8:{A974CD45-B661-44A7-8EB2-5D8DC2FDD9B0}"
         "UpgradeCode" = "8:{A861AA30-FB28-40C3-834E-265A78139BA0}"
         "AspNetVersion" = "8:2.0.50727.0"
         "RestartWWWService" = "11:FALSE"
@@ -645,6 +645,20 @@
             "Folder" = "8:_1B2CD1A768F344A295FCA1E0668AB568"
             "WorkingFolder" = "8:_0A1C946822EA4D7BAEA71007A56B0F70"
             "Icon" = "8:_F181943724B24DC5B637005E2A25B741"
+            "Feature" = "8:"
+            }
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_DA388245C3434F05BBCC26B95D48714D"
+            {
+            "Name" = "8:卸载模块"
+            "Arguments" = "8:"
+            "Description" = "8:"
+            "ShowCmd" = "3:1"
+            "IconIndex" = "3:0"
+            "Transitive" = "11:FALSE"
+            "Target" = "8:_8BFCDD5EDF8E46CB89474D6D5577E329"
+            "Folder" = "8:_1B2CD1A768F344A295FCA1E0668AB568"
+            "WorkingFolder" = "8:_0A1C946822EA4D7BAEA71007A56B0F70"
+            "Icon" = "8:"
             "Feature" = "8:"
             }
         }

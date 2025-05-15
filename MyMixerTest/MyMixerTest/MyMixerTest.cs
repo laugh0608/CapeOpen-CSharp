@@ -5,28 +5,16 @@ using System.Runtime.InteropServices;
 
 namespace MyMixerTest
 {
-    /// <summary>
-    /// This is a mixer eample class that models an adiabtic mixer.
-    /// </summary>
-    /// <remarks>
-    /// <para>The mixer  conducts a material and energy balance to determine output flow
-    /// from the input flows.</para>
-    /// <para> There are four parameters. Only one is used in the calculation, the
-    /// real-valued pressure drop. The pressure of the material attached to the outlet
-    /// port is set to the pressure of the lower inlet material objects less the 
-    /// value of the pressure drop parameter. The remaining parameters are provided
-    /// as a demonstration of integer, boolean and option parameters.</para>
-    /// </remarks>
     [Serializable]
     [ComVisible(true)]
-    [Guid("883D46FE-5713-424C-BF10-7ED34263CD6D")]//ICapeThermoMaterialObject_IID)
-    [Description("")]
-    [CapeName("MixerExample")]
-    [CapeDescription("An example mixer unit operation written in C#.")]
+    [Guid("883D46FE-5713-424C-BF10-7ED34263CD6D")] // ICapeThermoMaterialObject_IID
+    [Description("测试混合器模块。")]
+    [CapeName("MyMixerTest")]
+    [CapeDescription("一个用 C# 开发的测试 CO 单元模块。")]
     [CapeVersion("1.0")]
-    [CapeVendorURL("http:\\www.epa.gov")]
-    [CapeHelpURL("http:\\www.epa.gov")]
-    [CapeAbout("US Environmental Protection Agency\nCincinnati, Ohio")]
+    [CapeVendorURL("https:\\www.epa.gov")]
+    [CapeHelpURL("https:\\www.imbhj.com")]
+    [CapeAbout("大白萝卜嘻嘻。")]
     [CapeConsumesThermo(true)]
     [CapeUnitOperation(true)]
     [CapeSupportsThermodynamics10(true)]

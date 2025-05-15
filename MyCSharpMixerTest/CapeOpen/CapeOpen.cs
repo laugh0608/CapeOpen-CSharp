@@ -47,7 +47,7 @@ public class CapeNameAttribute : Attribute
     /// <summary>初始化 CapeDescriptionAttribute 类的新实例</summary>
     /// <remarks>注册功能使用描述值设置 CapeDescription[Description] 注册密钥的值</remarks>
     /// <param name = "name">CAPE-OPEN 组件说明</param>
-    public CapeNameAttribute(String name)
+    public CapeNameAttribute(string name)
     {
         Name = name;
     }
@@ -55,7 +55,7 @@ public class CapeNameAttribute : Attribute
     /// <summary>获取名称信息</summary>
     /// <remarks>名称的值</remarks>
     /// <value>CAPE-OPEN 组件名称</value>
-    public String Name { get; }
+    public string Name { get; }
 }
 
 /// <summary>为 CAPE-OPEN 对象的注册提供文字说明</summary>
@@ -71,7 +71,7 @@ public class CapeDescriptionAttribute : Attribute
     /// <summary>初始化 CapeDescriptionAttribute 类的新实例</summary>
     /// <remarks>注册功能使用描述值设置 CapeDescription[Description] 注册密钥的值</remarks>
     /// <param name = "description">CAPE-OPEN 组件说明</param>
-    public CapeDescriptionAttribute(String description)
+    public CapeDescriptionAttribute(string description)
     {
         Description = description;
     }
@@ -79,7 +79,7 @@ public class CapeDescriptionAttribute : Attribute
     /// <summary>获取描述</summary>
     /// <remarks>描述的值</remarks>
     /// <value>CAPE-OPEN 组件描述</value>
-    public String Description { get; }
+    public string Description { get; }
 }
 
 /// <summary>为注册 CAPE-OPEN 对象提供 CAPE-OPEN 版本号</summary>
@@ -95,7 +95,7 @@ public class CapeVersionAttribute : Attribute
     /// <summary>初始化 CapeVersionAttribute 类的新实例</summary>
     /// <remarks>设置 CapeDescription[CapeVersion] 注册键值</remarks>
     /// <param name = "version">该对象支持的 CAPE-OPEN 接口的版本</param>
-    public CapeVersionAttribute(String version)
+    public CapeVersionAttribute(string version)
     {
         Version = version;
     }
@@ -103,7 +103,7 @@ public class CapeVersionAttribute : Attribute
     /// <summary>获取版本号</summary>
     /// <remarks>版本号的值</remarks>
     /// <value>CAPE-OPEN 组件支持的版本号</value>
-    public String Version { get; }
+    public string Version { get; }
 }
 
 /// <summary>为注册 CAPE-OPEN 对象提供供应商链接</summary>
@@ -119,7 +119,7 @@ public class CapeVendorUrlAttribute : Attribute
     /// <summary>初始化 CapeVendorURLAttribute 类的新实例</summary>
     /// <remarks>注册功能使用描述值来设置 CapeDescription[VendorURL] 注册密钥的值。</remarks>
     /// <param name = "vendorUrl">CAPE-OPEN 组件的供应商链接</param>
-    public CapeVendorUrlAttribute(String vendorUrl)
+    public CapeVendorUrlAttribute(string vendorUrl)
     {
         VendorUrl = vendorUrl;
     }
@@ -127,7 +127,7 @@ public class CapeVendorUrlAttribute : Attribute
     /// <summary>获取供应商链接信息</summary>
     /// <remarks>供应商链接的值</remarks>
     /// <value>CAPE-OPEN 组件的供应商链接</value>
-    public String VendorUrl { get; }
+    public string VendorUrl { get; }
 }
 
 /// <summary>为注册 CAPE-OPEN 对象提供帮助 URL。</summary>
@@ -143,7 +143,7 @@ public class CapeHelpUrlAttribute : Attribute
     /// <summary>初始化 CapeHelpURLAttribute 类的新实例。</summary>
     /// <remarks>注册函数使用帮助 URL 的值来设置 CapeDescription[HelpURL] 注册密钥的值。</remarks>
     /// <param name = "helpUrl">CAPE-OPEN 组件帮助链接</param>
-    public CapeHelpUrlAttribute(String helpUrl)
+    public CapeHelpUrlAttribute(string helpUrl)
     {
         HelpUrl = helpUrl;
     }
@@ -151,7 +151,7 @@ public class CapeHelpUrlAttribute : Attribute
     /// <summary>获取帮助链接信息</summary>
     /// <remarks>帮助链接的值</remarks>
     /// <value>CAPE-OPEN 组件的帮助链接</value>
-    public String HelpUrl { get; }
+    public string HelpUrl { get; }
 }
 
 /// <summary>提供有关 CAPE-OPEN 对象注册信息的文本。</summary>
@@ -167,7 +167,7 @@ public class CapeAboutAttribute : Attribute
     /// <summary>初始化 CapeAboutAttribute 类的新实例。</summary>
     /// <remarks>注册功能使用关于文本的值来设置 CapeDescription[About] 注册密钥的值。</remarks>
     /// <param name = "about">CAPE-OPEN 组件关于信息</param>
-    public CapeAboutAttribute(String about)
+    public CapeAboutAttribute(string about)
     {
         About = about;
     }
@@ -175,7 +175,7 @@ public class CapeAboutAttribute : Attribute
     /// <summary>获取关于信息</summary>
     /// <remarks>关于信息的值</remarks>
     /// <value>CAPE-OPEN 组件关于信息</value>
-    public String About { get; }
+    public string About { get; }
 }
 
 /// <summary>提供有关对象是否为 CAPE-OPEN 单元的信息，在注册 CAPE-OPEN 对象时使用。</summary>
