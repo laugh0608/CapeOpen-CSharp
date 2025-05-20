@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.ComponentModel;
 using System.Configuration.Install;
 using System.IO;
@@ -66,9 +67,10 @@ namespace ComRegister
 
             MessageBox.Show("开始执行类库注册...");
 
-            // 获取安装路径
-            var setupDir = this.Context.Parameters["targetdir"];
-            MessageBox.Show($"安装完毕，读取到安装路径: {setupDir}");
+            // 获取原始安装路径，它可能包含末尾反斜杠，也可能因CustomActionData解析问题而有双反斜杠
+            var setupDirRaw = this.Context.Parameters["targetdir"];
+            // 使用 GetFullPath 规范化路径。它可以处理双反斜杠、相对路径等问题。
+            string setupDir = Path.GetFullPath(setupDirRaw);
             // 检查路径是否为空（虽然 Installer Project 通常会提供，但防御性检查是好的）
             if (string.IsNullOrEmpty(setupDir))
             {
@@ -78,16 +80,27 @@ namespace ComRegister
                 MessageBox.Show("错误：未能获取安装路径！", "安装错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return; // 退出方法
             }
-            // 定义要拼接的文件名
+            // 经过 Path.GetFullPath 处理后，setupDir 通常会是一个规范化的路径，通常不包含多余的末尾反斜杠
+            // 但为了安全起见，确保它以反斜杠结尾（对于目录路径通常是需要的）
+            if (!setupDir.EndsWith(Path.DirectorySeparatorChar.ToString()))
+            {
+                setupDir += Path.DirectorySeparatorChar;
+            }
+            MessageBox.Show($"安装完毕，读取到安装路径: {setupDir}");
+            // 使用 Path.Combine() 拼接目录和文件名。
+            // Path.Combine 会智能处理分隔符，如果 setupDir 已经是规范的，这里就不会出现双反斜杠。
             string coFileName = "CapeOpen.dll";
             string opFileName = "MyMixerTest.dll";
             // 使用 Path.Combine() 拼接目录和文件名
             string coPath = Path.Combine(setupDir, coFileName);
             string opPath = Path.Combine(setupDir, opFileName);
-            MessageBox.Show($"安装路径: {setupDir}\nCapeOpen.dll的完整路径: {coPath}",
-                            "安装信息",
-                            MessageBoxButtons.OK,
-                            MessageBoxIcon.Information);
+            var pathInfo = new string []{
+                $"安装路径: {setupDir}",
+                $"CapeOpen.dll的完整路径: {coPath}",
+                $"MyMixerTest.dll的完整路径: {opPath}"
+            };
+            MessageBox.Show(string.Join(Environment.NewLine,pathInfo),
+                "路径信息", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             // 安装完毕后触发 AfterInstall 事件，传入 dll 文件完整路径，并执行提权和注册逻辑
             //WaitForEnterAsync().Wait();
