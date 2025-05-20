@@ -46,6 +46,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ComInstaller.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ComInstaller.Designer.cs">
+      <DependentUpon>ComInstaller.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
