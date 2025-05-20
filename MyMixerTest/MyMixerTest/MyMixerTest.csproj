@@ -44,12 +44,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MyInstaller.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="MyInstaller.Designer.cs">
-      <DependentUpon>MyInstaller.cs</DependentUpon>
-    </Compile>
     <Compile Include="MyMixerTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

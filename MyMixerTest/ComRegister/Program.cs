@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
@@ -15,14 +14,14 @@ namespace ComRegister
             EnsureAdminAndExecuteAsync().Wait();
         }
 
-        // 提权并执行注册/取消注册逻辑
+        // 提权逻辑
         public static bool IsAdministrator()
         {
             var identity = System.Security.Principal.WindowsIdentity.GetCurrent();
             var principal = new System.Security.Principal.WindowsPrincipal(identity);
             return principal.IsInRole(System.Security.Principal.WindowsBuiltInRole.Administrator);
         }
-        // 检测是否提权成功
+        // 提权成功后注册逻辑
         public static async Task EnsureAdminAndExecuteAsync()
         {
             if (!IsAdministrator())
@@ -50,7 +49,7 @@ namespace ComRegister
             await Task.Delay(1000);
 
             RegistrationServices regSvcs = new RegistrationServices();
-            
+
             Assembly asm1 = Assembly.LoadFrom("CapeOpen.dll");
             regSvcs.RegisterAssembly(asm1, AssemblyRegistrationFlags.SetCodeBase);
 

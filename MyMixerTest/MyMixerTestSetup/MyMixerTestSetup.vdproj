@@ -16,13 +16,13 @@
         "Entry"
         {
         "MsmKey" = "8:_1F9768ACD004E31781CB37777F19A580"
-        "OwnerKey" = "8:_41D1CAF1F5E7483AAAC35084FC2EED5F"
+        "OwnerKey" = "8:_E80D7C35AC4A4D83BC7C67CD1850D14C"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_1F9768ACD004E31781CB37777F19A580"
-        "OwnerKey" = "8:_E80D7C35AC4A4D83BC7C67CD1850D14C"
+        "OwnerKey" = "8:_295FE1B632FC4511B923AA14F60AFEFC"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -33,7 +33,7 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_41D1CAF1F5E7483AAAC35084FC2EED5F"
+        "MsmKey" = "8:_295FE1B632FC4511B923AA14F60AFEFC"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -100,6 +100,12 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_295FE1B632FC4511B923AA14F60AFEFC"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_82DA5652733649FED2DAD87753A5E963"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -119,12 +125,6 @@
         {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_8BFCDD5EDF8E46CB89474D6D5577E329"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_41D1CAF1F5E7483AAAC35084FC2EED5F"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -471,7 +471,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:MyMixerTestSetup"
         "ProductCode" = "8:{FF50115F-FFF0-41DD-8869-9DC37BC4C677}"
-        "PackageCode" = "8:{853EDCBA-29FD-4554-8AE7-11E2565E8835}"
+        "PackageCode" = "8:{8EE440CA-78AC-4DC5-8710-0900894AFCF8}"
         "UpgradeCode" = "8:{A861AA30-FB28-40C3-834E-265A78139BA0}"
         "AspNetVersion" = "8:2.0.50727.0"
         "RestartWWWService" = "11:FALSE"
@@ -591,20 +591,6 @@
         }
         "Shortcut"
         {
-            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_0BF133A696BF4CBCBE5BA937C3E01BB1"
-            {
-            "Name" = "8:加载模块"
-            "Arguments" = "8:"
-            "Description" = "8:"
-            "ShowCmd" = "3:1"
-            "IconIndex" = "3:0"
-            "Transitive" = "11:FALSE"
-            "Target" = "8:_41D1CAF1F5E7483AAAC35084FC2EED5F"
-            "Folder" = "8:_C7DCE8EB8514460ABF1D40CACA3547A0"
-            "WorkingFolder" = "8:_0A1C946822EA4D7BAEA71007A56B0F70"
-            "Icon" = "8:"
-            "Feature" = "8:"
-            }
             "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_333FD52CD8AC4F8FB0FA3D5CE3F64698"
             {
             "Name" = "8:卸载整个程序"
@@ -631,20 +617,6 @@
             "Folder" = "8:_C7DCE8EB8514460ABF1D40CACA3547A0"
             "WorkingFolder" = "8:_0A1C946822EA4D7BAEA71007A56B0F70"
             "Icon" = "8:"
-            "Feature" = "8:"
-            }
-            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_D3E594A440AD4A7E89325D97FA9A6BA8"
-            {
-            "Name" = "8:加载模块"
-            "Arguments" = "8:"
-            "Description" = "8:"
-            "ShowCmd" = "3:1"
-            "IconIndex" = "3:0"
-            "Transitive" = "11:FALSE"
-            "Target" = "8:_41D1CAF1F5E7483AAAC35084FC2EED5F"
-            "Folder" = "8:_1B2CD1A768F344A295FCA1E0668AB568"
-            "WorkingFolder" = "8:_0A1C946822EA4D7BAEA71007A56B0F70"
-            "Icon" = "8:_F181943724B24DC5B637005E2A25B741"
             "Feature" = "8:"
             }
             "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_DA388245C3434F05BBCC26B95D48714D"
@@ -1060,7 +1032,7 @@
         }
         "ProjectOutput"
         {
-            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_41D1CAF1F5E7483AAAC35084FC2EED5F"
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_295FE1B632FC4511B923AA14F60AFEFC"
             {
             "SourcePath" = "8:..\\ComRegister\\obj\\Debug\\ComRegister.exe"
             "TargetName" = "8:"
