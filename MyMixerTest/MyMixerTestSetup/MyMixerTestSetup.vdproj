@@ -16,13 +16,13 @@
         "Entry"
         {
         "MsmKey" = "8:_1F9768ACD004E31781CB37777F19A580"
-        "OwnerKey" = "8:_E80D7C35AC4A4D83BC7C67CD1850D14C"
+        "OwnerKey" = "8:_295FE1B632FC4511B923AA14F60AFEFC"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_1F9768ACD004E31781CB37777F19A580"
-        "OwnerKey" = "8:_295FE1B632FC4511B923AA14F60AFEFC"
+        "OwnerKey" = "8:_E80D7C35AC4A4D83BC7C67CD1850D14C"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -100,12 +100,6 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_295FE1B632FC4511B923AA14F60AFEFC"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_82DA5652733649FED2DAD87753A5E963"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -125,6 +119,12 @@
         {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_8BFCDD5EDF8E46CB89474D6D5577E329"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_295FE1B632FC4511B923AA14F60AFEFC"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -205,6 +205,66 @@
     {
         "CustomAction"
         {
+            "{4AA51A2D-7D85-4A59-BA75-B0809FC8B380}:_B918A6A4323540B6AA501FD933759DD1"
+            {
+            "Name" = "8:主输出 from ComRegister (Active)"
+            "Condition" = "8:"
+            "Object" = "8:_295FE1B632FC4511B923AA14F60AFEFC"
+            "FileType" = "3:2"
+            "InstallAction" = "3:2"
+            "Arguments" = "8:"
+            "EntryPoint" = "8:"
+            "Sequence" = "3:1"
+            "Identifier" = "8:_36AE3C18_D50F_4A2C_9D79_5C7832F4E344"
+            "InstallerClass" = "11:TRUE"
+            "CustomActionData" = "8:/targetdir=\"[TARGETDIR]\\\""
+            "Run64Bit" = "11:TRUE"
+            }
+            "{4AA51A2D-7D85-4A59-BA75-B0809FC8B380}:_E260AA3AB88A46BEB6902D1E41BB8391"
+            {
+            "Name" = "8:主输出 from ComRegister (Active)"
+            "Condition" = "8:"
+            "Object" = "8:_295FE1B632FC4511B923AA14F60AFEFC"
+            "FileType" = "3:2"
+            "InstallAction" = "3:3"
+            "Arguments" = "8:"
+            "EntryPoint" = "8:"
+            "Sequence" = "3:1"
+            "Identifier" = "8:_FDB86C59_DBEB_4AF9_9D32_1789D151091C"
+            "InstallerClass" = "11:TRUE"
+            "CustomActionData" = "8:/targetdir=\"[TARGETDIR]\\\""
+            "Run64Bit" = "11:TRUE"
+            }
+            "{4AA51A2D-7D85-4A59-BA75-B0809FC8B380}:_E79D917B9FB349E0ABC6D287F14F0889"
+            {
+            "Name" = "8:主输出 from ComRegister (Active)"
+            "Condition" = "8:"
+            "Object" = "8:_295FE1B632FC4511B923AA14F60AFEFC"
+            "FileType" = "3:2"
+            "InstallAction" = "3:4"
+            "Arguments" = "8:"
+            "EntryPoint" = "8:"
+            "Sequence" = "3:1"
+            "Identifier" = "8:_BA46D67C_6968_4849_B260_91B3BFC4BFF8"
+            "InstallerClass" = "11:TRUE"
+            "CustomActionData" = "8:/targetdir=\"[TARGETDIR]\\\""
+            "Run64Bit" = "11:TRUE"
+            }
+            "{4AA51A2D-7D85-4A59-BA75-B0809FC8B380}:_F3DA3E65DBC0442891AA06924F011746"
+            {
+            "Name" = "8:主输出 from ComRegister (Active)"
+            "Condition" = "8:"
+            "Object" = "8:_295FE1B632FC4511B923AA14F60AFEFC"
+            "FileType" = "3:2"
+            "InstallAction" = "3:1"
+            "Arguments" = "8:"
+            "EntryPoint" = "8:"
+            "Sequence" = "3:1"
+            "Identifier" = "8:_5565432C_14D6_423B_806E_CD7AB32D1CDE"
+            "InstallerClass" = "11:TRUE"
+            "CustomActionData" = "8:/targetdir=\"[TARGETDIR]\\\""
+            "Run64Bit" = "11:TRUE"
+            }
         }
         "DefaultFeature"
         {
@@ -471,7 +531,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:MyMixerTestSetup"
         "ProductCode" = "8:{FF50115F-FFF0-41DD-8869-9DC37BC4C677}"
-        "PackageCode" = "8:{8EE440CA-78AC-4DC5-8710-0900894AFCF8}"
+        "PackageCode" = "8:{9F32684D-B1F9-43A4-85B7-60BB207CDF39}"
         "UpgradeCode" = "8:{A861AA30-FB28-40C3-834E-265A78139BA0}"
         "AspNetVersion" = "8:2.0.50727.0"
         "RestartWWWService" = "11:FALSE"
@@ -619,6 +679,20 @@
             "Icon" = "8:"
             "Feature" = "8:"
             }
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_97CAE88FA7344851897A927EEACD8CBC"
+            {
+            "Name" = "8:加载模块"
+            "Arguments" = "8:"
+            "Description" = "8:"
+            "ShowCmd" = "3:1"
+            "IconIndex" = "3:0"
+            "Transitive" = "11:FALSE"
+            "Target" = "8:_295FE1B632FC4511B923AA14F60AFEFC"
+            "Folder" = "8:_C7DCE8EB8514460ABF1D40CACA3547A0"
+            "WorkingFolder" = "8:_0A1C946822EA4D7BAEA71007A56B0F70"
+            "Icon" = "8:"
+            "Feature" = "8:"
+            }
             "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_DA388245C3434F05BBCC26B95D48714D"
             {
             "Name" = "8:卸载模块"
@@ -628,6 +702,20 @@
             "IconIndex" = "3:0"
             "Transitive" = "11:FALSE"
             "Target" = "8:_8BFCDD5EDF8E46CB89474D6D5577E329"
+            "Folder" = "8:_1B2CD1A768F344A295FCA1E0668AB568"
+            "WorkingFolder" = "8:_0A1C946822EA4D7BAEA71007A56B0F70"
+            "Icon" = "8:"
+            "Feature" = "8:"
+            }
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_EC570E5CA2D94D728C2D5A3E3445E26E"
+            {
+            "Name" = "8:加载模块"
+            "Arguments" = "8:"
+            "Description" = "8:"
+            "ShowCmd" = "3:1"
+            "IconIndex" = "3:0"
+            "Transitive" = "11:FALSE"
+            "Target" = "8:_295FE1B632FC4511B923AA14F60AFEFC"
             "Folder" = "8:_1B2CD1A768F344A295FCA1E0668AB568"
             "WorkingFolder" = "8:_0A1C946822EA4D7BAEA71007A56B0F70"
             "Icon" = "8:"
