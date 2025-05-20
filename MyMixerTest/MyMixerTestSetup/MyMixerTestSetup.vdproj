@@ -531,7 +531,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:MyMixerTestSetup"
         "ProductCode" = "8:{FF50115F-FFF0-41DD-8869-9DC37BC4C677}"
-        "PackageCode" = "8:{9F32684D-B1F9-43A4-85B7-60BB207CDF39}"
+        "PackageCode" = "8:{B3FE5506-47F9-425B-B1B7-EF5E20536BB8}"
         "UpgradeCode" = "8:{A861AA30-FB28-40C3-834E-265A78139BA0}"
         "AspNetVersion" = "8:2.0.50727.0"
         "RestartWWWService" = "11:FALSE"
