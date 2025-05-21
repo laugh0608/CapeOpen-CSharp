@@ -33,12 +33,6 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_1F9768ACD004E31781CB37777F19A580"
-        "OwnerKey" = "8:_8BFCDD5EDF8E46CB89474D6D5577E329"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_295FE1B632FC4511B923AA14F60AFEFC"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -71,12 +65,6 @@
         {
         "MsmKey" = "8:_82DA5652733649FED2DAD87753A5E963"
         "OwnerKey" = "8:_E80D7C35AC4A4D83BC7C67CD1850D14C"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_8BFCDD5EDF8E46CB89474D6D5577E329"
-        "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -119,12 +107,6 @@
         {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_61EC47CD254F858AB33AF911888B1D63"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_8BFCDD5EDF8E46CB89474D6D5577E329"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -1218,34 +1200,6 @@
             "OutputConfiguration" = "8:"
             "OutputGroupCanonicalName" = "8:Built"
             "OutputProjectGuid" = "8:{F542AD1F-BE6E-464A-96F5-998BF5C070B4}"
-            "ShowKeyOutput" = "11:TRUE"
-                "ExcludeFilters"
-                {
-                }
-            }
-            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_8BFCDD5EDF8E46CB89474D6D5577E329"
-            {
-            "SourcePath" = "8:..\\ComUnRegister\\obj\\Debug\\ComUnRegister.exe"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_0A1C946822EA4D7BAEA71007A56B0F70"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            "ProjectOutputGroupRegister" = "3:1"
-            "OutputConfiguration" = "8:"
-            "OutputGroupCanonicalName" = "8:Built"
-            "OutputProjectGuid" = "8:{C1B4AD81-C8E6-4B8F-B678-F7F1F1C44E2D}"
             "ShowKeyOutput" = "11:TRUE"
                 "ExcludeFilters"
                 {

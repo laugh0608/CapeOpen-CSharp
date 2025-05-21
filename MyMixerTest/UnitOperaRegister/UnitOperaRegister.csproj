@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{C1B4AD81-C8E6-4B8F-B678-F7F1F1C44E2D}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>ComUnRegister</RootNamespace>
-    <AssemblyName>ComUnRegister</AssemblyName>
+    <RootNamespace>UnitOperaRegister</RootNamespace>
+    <AssemblyName>UnitOperaRegister</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -24,13 +24,16 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <PlatformTarget>x64</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>epa_seal_medium.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -48,6 +51,15 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="epa_seal_medium.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MyMixerTest\MyMixerTest.csproj">
+      <Project>{9127dbe2-4889-4b26-977d-354b10e450f9}</Project>
+      <Name>MyMixerTest</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

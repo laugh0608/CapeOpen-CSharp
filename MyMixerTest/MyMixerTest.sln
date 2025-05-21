@@ -11,7 +11,7 @@ Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "MyMixerTestSetup", "MyMixer
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ComRegister", "ComRegister\ComRegister.csproj", "{F542AD1F-BE6E-464A-96F5-998BF5C070B4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ComUnRegister", "ComUnRegister\ComUnRegister.csproj", "{C1B4AD81-C8E6-4B8F-B678-F7F1F1C44E2D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitOperaRegister", "UnitOperaRegister\UnitOperaRegister.csproj", "{C1B4AD81-C8E6-4B8F-B678-F7F1F1C44E2D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
