@@ -6,15 +6,14 @@
 
 https://github.com/wbarret1/CapeOpen
 
-## MyCSharpMixerTest
-
-我自己的 C# 混合器测试代码，基于 CapeOpen-CSharp，使用 .NET Core 8.0 重构。
-
-> 由于项目框架的不兼容性，重构后测试无法进行 COM 互操作，该项目宣布失败。
-
 ## MyMixerTest
 
 我自己的 C# 混合器测试代码，基于 CapeOpen-CSharp，使用 .NET Framework 4.8 重构。
+
+已发布 Releases v0.1.0520 版本，其中：
+
+* MyMixerTestSetup.7z 是使用 Installer Package 打包的 MSI 安装包，解压之后双击 setup 即可进行安装；
+* MyMixerTestSetup.exe 是使用 7zip 打包的自解压文件，解压到指定目录后，双击运行 UnitOperaRegister.exe 即可进入命令行注册或卸载界面；
 
 ## CapeOpen-dotNetToolkit
 
