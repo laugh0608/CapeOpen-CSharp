@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Windows;
 
 namespace CapeOpen
 {
@@ -465,12 +466,43 @@ namespace CapeOpen
         /// </remarks>
         /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
         [System.Runtime.InteropServices.DispIdAttribute(5), System.ComponentModel.DescriptionAttribute("Displays the graphic interface")]
-        override public System.Windows.Forms.DialogResult Edit()
+        //override public System.Windows.Forms.DialogResult Edit()
+        //{
+        //    if (p_Unit is ICapeUtilitiesCOM)
+        //        return (System.Windows.Forms.DialogResult)((ICapeUtilitiesCOM)p_Unit).Edit();
+        //    System.Windows.Forms.MessageBox.Show("No default Editor Available.");
+        //    return System.Windows.Forms.DialogResult.Cancel;
+        //}
+        public override bool? Edit() // <-- New signature returning bool?
         {
-            if (p_Unit is ICapeUtilitiesCOM)
-                return (System.Windows.Forms.DialogResult)((ICapeUtilitiesCOM)p_Unit).Edit();
-            System.Windows.Forms.MessageBox.Show("No default Editor Available.");
-            return System.Windows.Forms.DialogResult.Cancel;
+            // Check if p_Unit implements the COM interface using pattern matching (C# 7.0+)
+            if (p_Unit is ICapeUtilitiesCOM capeComUnit)
+            {
+                // Call the COM interface's Edit method, which returns int (0 or 1)
+                int comResult = capeComUnit.Edit();
+
+                // Map the int result (0 or 1) from the COM call to a bool? result for this WPF method.
+                // Original code mapped 0 to DialogResult.OK (equivalent to true in WPF bool?).
+                // Let's map 1 (non-OK from COM) to false (equivalent to Cancel/non-OK in WPF bool?).
+                bool? wpfResult = (comResult == 0) ? (bool?)true : (bool?)false;
+
+                return wpfResult;
+            }
+            else
+            {
+                // If the object doesn't implement the COM interface, show a WPF message box.
+                // Replace System.Windows.Forms.MessageBox with System.Windows.MessageBox
+                // Added a title and icon for better user experience.
+                System.Windows.MessageBox.Show(
+                    "No default Editor Available.",
+                    "Editor Not Found", // Title
+                    MessageBoxButton.OK, // Buttons
+                    MessageBoxImage.Information // Icon
+                );
+
+                // Return false, equivalent to DialogResult.Cancel in the original WinForms code.
+                return false;
+            }
         }
 
         //// ICapeUnit Implementation
