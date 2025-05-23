@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Windows;
 
 namespace CapeOpen
 {
@@ -563,11 +564,40 @@ namespace CapeOpen
         /// tool as the unit not providing its own editor.</para>
         /// </remarks>
         /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
-        public override System.Windows.Forms.DialogResult Edit()
+        //public override System.Windows.Forms.DialogResult Edit()
+        //{
+        //    BaseUnitEditor editor = new BaseUnitEditor(this);
+        //    editor.ShowDialog();
+        //    return editor.DialogResult;
+        //}
+        public override bool? Edit()
         {
-            BaseUnitEditor editor = new BaseUnitEditor(this);
-            editor.ShowDialog();
-            return editor.DialogResult;
+            // No need for try/catch here if the base ICapeUtilitiesCOM.Edit() method
+            // already has a try/catch block handling the call to this virtual method
+            // as shown in the first refactoring example. Exceptions will bubble up to it.
+
+            // Assuming 'this' refers to the CapeUnitBase object (or derived) that is being edited,
+            // matching the constructor requirement of BaseUnitEditorWpf.
+            BaseUnitEditor editor = new BaseUnitEditor(this); // Instantiate the WPF editor
+
+            // Good Practice: Set the owner window for modality
+            // This ensures the dialog is centered relative to the owner and stays on top.
+            // Find a suitable owner window. Application.Current.MainWindow is a common choice
+            // if your main application window is suitable, or find the specific parent window.
+            // Handle cases where Application.Current is null (e.g., in some test environments).
+            if (Application.Current != null && Application.Current.MainWindow != null)
+            {
+                editor.Owner = Application.Current.MainWindow;
+            }
+            // Or if you have access to a parent Window object in the calling context:
+            // editor.Owner = yourParentWindow;
+
+            // Show the WPF window modally. Execution pauses here.
+            // ShowDialog() returns the value that was set to the window's DialogResult property (bool?).
+            bool? dialogResult = editor.ShowDialog();
+
+            // Return the bool? result obtained from ShowDialog()
+            return dialogResult;
         }
 
         /// <summary>
