@@ -194,7 +194,8 @@ namespace CapeOpen
             //    if (en.Key.ToString() == "units") temp = en.Value.ToString();
             //}
             System.Xml.XmlDocument reader = new System.Xml.XmlDocument();
-            reader.LoadXml(Properties.Resources.units);
+            //reader.LoadXml(Properties.Resources.units);
+            reader.LoadXml(Encoding.UTF8.GetString(Properties.Resources.units));
             System.Xml.XmlNodeList list = reader.SelectNodes("Units/Unit_Specs");
             System.Globalization.CultureInfo ci = new System.Globalization.CultureInfo(0x0409, false);
             for (int i = 0; i < list.Count; i++)
@@ -231,7 +232,8 @@ namespace CapeOpen
             //{
             //    if (en.Key.ToString() == "unitCategories") temp = en.Value.ToString();
             //}
-            reader.LoadXml(Properties.Resources.unitCategories);
+            //reader.LoadXml(Properties.Resources.unitCategories);
+            reader.LoadXml(Encoding.UTF8.GetString(Properties.Resources.units));
             list = reader.SelectNodes("CategorySpecifications/Category_Spec");
             for (int i = 0; i < list.Count; i++)
             {
