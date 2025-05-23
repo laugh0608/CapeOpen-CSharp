@@ -178,7 +178,7 @@ namespace CapeOpen
             String message = "";
             if (!this.Validate(ref message))
             {
-                System.Windows.Forms.MessageBox.Show(message, String.Concat("Invalid Parameter Value: ", this.ComponentName));
+                System.Windows.MessageBox.Show(message, String.Concat("Invalid Parameter Value: ", this.ComponentName));
             }
         }
 
