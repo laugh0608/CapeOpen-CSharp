@@ -376,7 +376,7 @@ namespace CapeOpen
                 }
             }
             if (!bUnitExisting)
-                System.Windows.Forms.MessageBox.Show("There is no unit named" + desiredUnit, "Unit Warning!");
+                System.Windows.MessageBox.Show("There is no unit named" + desiredUnit, "Unit Warning!");
             else
             {
                 retVal = (Convert.ToDouble(retVal) - Factor2) / Factor1;
@@ -420,7 +420,7 @@ namespace CapeOpen
                 }
             }
             if (!bUnitExisting)
-                System.Windows.Forms.MessageBox.Show("There is no unit named" + unit, "Unit Warning!");
+                System.Windows.MessageBox.Show("There is no unit named" + unit, "Unit Warning!");
             else
             {
                 retVal = (retVal * Factor1) + Factor2;
@@ -716,7 +716,7 @@ namespace CapeOpen
                 }
                 retVal = (Convert.ToDouble(retVal) - Factor2) / Factor1;
                 if (!bUnitExisting)
-                    System.Windows.Forms.MessageBox.Show("There is no unit named" + this.Unit, "Unit Warning!");
+                    System.Windows.MessageBox.Show("There is no unit named" + this.Unit, "Unit Warning!");
                 return retVal;
             }
             set
@@ -761,7 +761,7 @@ namespace CapeOpen
                 }
                 retVal = (Convert.ToDouble(retVal) - Factor2) / Factor1;
                 if (!bUnitExisting)
-                    System.Windows.Forms.MessageBox.Show("There is no unit named" + this.Unit, "Unit Warning!");
+                    System.Windows.MessageBox.Show("There is no unit named" + this.Unit, "Unit Warning!");
                 return retVal;
             }
             set
@@ -896,7 +896,7 @@ namespace CapeOpen
                 }
                 retVal = (Convert.ToDouble(retVal) - Factor2) / Factor1;
                 if (!bUnitExisting)
-                    System.Windows.Forms.MessageBox.Show("There is no unit named" + this.Unit, "Unit Warning!");
+                    System.Windows.MessageBox.Show("There is no unit named" + this.Unit, "Unit Warning!");
                 return retVal;
 
             }
@@ -1238,7 +1238,7 @@ namespace CapeOpen
                 }
             }
             if (!bUnitExisting)
-                System.Windows.Forms.MessageBox.Show("There is no unit named" + desiredUnit, "Unit Warning!");
+                System.Windows.MessageBox.Show("There is no unit named" + desiredUnit, "Unit Warning!");
             else
             {
                 retVal = (Convert.ToDouble(retVal) - Factor2) / Factor1;
@@ -1282,7 +1282,7 @@ namespace CapeOpen
                 }
             }
             if (!bUnitExisting)
-                System.Windows.Forms.MessageBox.Show("There is no unit named" + unit, "Unit Warning!");
+                System.Windows.MessageBox.Show("There is no unit named" + unit, "Unit Warning!");
             else
             {
                 retVal = (retVal * Factor1) + Factor2;
@@ -1326,7 +1326,7 @@ namespace CapeOpen
                 }
             }
             if (!bUnitExisting)
-                System.Windows.Forms.MessageBox.Show("There is no unit named" + unit, "Unit Warning!");
+                System.Windows.MessageBox.Show("There is no unit named" + unit, "Unit Warning!");
             else
             {
                 retVal = (retVal - Factor2)/Factor1;
