@@ -66,14 +66,34 @@ namespace CapeOpen
         /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
         int ICapeUtilitiesCOM.Edit()
         {
+            //try {
+            //    System.Windows.Forms.DialogResult result = this.Edit();
+            //    if (result == System.Windows.Forms.DialogResult.OK)
+            //        return 0;
+            //    return 1;
+            //} catch(System.Exception p_Ex) {
+            //    throw new CapeNoImplException("No editor available");
+            //}
             try
             {
-                System.Windows.Forms.DialogResult result = this.Edit();
-                if (result == System.Windows.Forms.DialogResult.OK)
-                    return 0;
-                return 1;
+                // 调用内部的虚拟 Edit 方法，该方法现在返回 bool?
+                bool? result = this.Edit();
+
+                // 将 bool? 结果映射回原始的 int 结果 (0 for OK, 1 otherwise)
+                // true 对应 WinForms 的 DialogResult.OK
+                if (result == true)
+                {
+                    return 0; // OK
+                }
+                else
+                {
+                    // false 或 null 都视为非 OK
+                    return 1; // Not OK
+                }
             }
-            catch(System.Exception p_Ex)
+            // 原始代码捕获 System.Exception 并抛出新的 CapeNoImplException
+            // 我们保留这个行为，尽管通常不推荐丢弃原始异常信息
+            catch (System.Exception)
             {
                 throw new CapeNoImplException("No editor available");
             }
@@ -537,8 +557,13 @@ namespace CapeOpen
         /// tool as the unit not providing its own editor.</para>
         /// </remarks>
         /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
-        public virtual System.Windows.Forms.DialogResult Edit()
+        //public virtual System.Windows.Forms.DialogResult Edit()
+        //{
+        //    throw new CapeNoImplException("No Object Editor");
+        //}
+        public virtual bool? Edit()
         {
+            // 这个异常通常表示派生类没有重写此方法或没有提供编辑功能
             throw new CapeNoImplException("No Object Editor");
         }
 

@@ -1497,7 +1497,8 @@ namespace CapeOpen
         /// </remarks>
         /// <exception cref ="ECapeUnknown">The error to be raised when other error(s),  specified for this operation, are not suitable.</exception>
         [System.Runtime.InteropServices.DispIdAttribute(5), System.ComponentModel.DescriptionAttribute("Displays the graphic interface")]
-        System.Windows.Forms.DialogResult Edit();
+        //System.Windows.Forms.DialogResult Edit();
+        bool? Edit();
     };
 
     /// <summary>
